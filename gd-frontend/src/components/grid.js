@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
 import '../App.css';
+import DatePreview from './date-preview';
+import ActivitiesList from '../store/ActivitiesList.js';
+import {Link} from 'react-router-dom';
 
 class Grid extends Component {
+    componentWillMount(){
+        this.setState({activities: ActivitiesList})
+
+    }
+
     render() {
+        let list = this.state.activities.map(function(activity){
+            return(
+                < DatePreview
+                id={activity.id}
+                image={activity.image}
+                title={activity.title}
+                />
+            )
+        })
+
         return (
-            <div class="grid">
-                <div className="one"></div>
-                <div className="two"></div>
-                <div className="three"></div>
-                <div className="one"></div>
-                <div className="two"></div>
-                <div className="three"></div>
-                <div className="one"></div>
-                <div className="two"></div>
-                <div className="three"></div>
-            </div>
+            <ul class="grid">
+                {list}
+            </ul>
         );
     }
 }

@@ -1,31 +1,32 @@
-body{
+body {
   text-align: center;
 }
 
-ul{
+ul {
   list-style-type: none;
   text-align:center;
 }
 
-li{
+li {
   display:inline-block;
 }
 
-.container{
+/* .container {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-}
+} */
 
-.thumbnails{
+.thumbnails {
+  display:block;
   width: 300px;
   height: 300px;
   object-fit: cover;
   border: 2px solid white;
 }
 
-.datePreview{
+.datePreview {
   width: 300px;
   height: 300px;
   object-fit: cover;
@@ -43,7 +44,7 @@ li{
   object-fit: cover;
 }
 
-.date-page{
+.date-page {
   margin-top: 25px;
   margin-left: 30%;
   margin-right: 30%;
@@ -53,16 +54,15 @@ li{
 
 }
 
-.back-button{
+.back-button {
   height: 45px;
   width: 200px;
   border-radius: 8px;
   margin-bottom: 15px;
 }
 
+
 /**************** Navbar ****************/
-
-
 
 
 .navbar {
@@ -96,12 +96,7 @@ a {
 }
 
 
-
-
 /**************** Title ****************/
-
-
-
 
 
 .title {
@@ -111,9 +106,7 @@ a {
 }
 
 
-
 /**************** Title-Button ****************/
-
 
 
 .date-btn-contain {
@@ -137,8 +130,6 @@ a {
 
 
 /**************** Browse Dates ****************/
-
-
 
 
 .line-contain {
@@ -180,9 +171,7 @@ a {
 }
 
 
-
 /**************** Grid ****************/
-
 
 
 .grid {
@@ -193,30 +182,25 @@ a {
   grid-row-gap: 10px;
   margin-left: 3%;
   margin-right: 3%;
+  background-size: cover;
 }
+/*
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+} */
 
-.one {
+
+.grid-child {
   background-repeat: no-repeat;
   background-size: cover;
-  background-position-y: -50px;
+  /* background-position-y: -50px; */
 }
-
-.two {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: -50px;
-}
-
-.three {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: -50px;
-}
-
 
 
 /**************** Login ****************/
-
 
 
 .login-wrapper {
@@ -328,10 +312,7 @@ a {
 }
 
 
-
 /**************** SignUp ****************/
-
-
 
 
 .signup-wrapper {
