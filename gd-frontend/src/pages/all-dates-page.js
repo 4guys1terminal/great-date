@@ -3,6 +3,7 @@ import ActivitiesList from '../store/ActivitiesList.js';
 import {Link} from 'react-router-dom';
 import DatePreview from '../components/date-preview.js';
 import { Button } from 'react-bootstrap';
+import NavBar from '../components/navbar.js';
 
 class AllDatesPage extends Component {
     componentWillMount(){
@@ -24,6 +25,8 @@ class AllDatesPage extends Component {
     return (
         <div className="all-dates-page">
 
+            <NavBar />
+            
             <h2>Browse All Dates</h2>
 
             <br/>

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
+import { Link } from 'react-router-dom';
+
 
 class BrowseDate extends Component {
     render() {
@@ -8,8 +10,13 @@ class BrowseDate extends Component {
                 <div className="line-contain">
                     <div className="line"></div>
                 </div>
+                
                 <div className="browse-title">
-                    <a href="#pg2">Browse Dates</a>
+                    <Link
+                        to='/all-dates-page'
+                        id='all-dates-link'
+                        className='browse-title'
+                        >Browse Dates</Link>
                 </div>
             </div>
         );

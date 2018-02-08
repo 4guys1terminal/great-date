@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
+import { Link } from 'react-router-dom';
 
 class SignUp extends Component {
     render() {
@@ -21,11 +22,19 @@ class SignUp extends Component {
                             <p className="agree">By signing up, you agree to our <br /> <span className="terms">Terms & Privacy Policy.</span></p>
                         </a>
                     </form>
+
                     <div className="login">
-                        <p className="login-text">Have an account? <a className="login-link" href="#">Log in</a></p>
+                        <p className="login-text">Have an account?
+                            <Link
+                                to='/login-page'
+                                className='login-link'
+                                id='login-link'
+                                > Log In </Link>
+                        </p>
+
                     </div>
                 </div>
-                    
+
             </div>
         );
     }

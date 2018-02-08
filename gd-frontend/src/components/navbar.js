@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
+import { Link } from 'react-router-dom';
 
 class Navigation extends Component {
     render() {
@@ -7,9 +8,19 @@ class Navigation extends Component {
             <div>
                 <nav class="navbar">
                     <div class="logo"><a href="#">Great Date</a></div>
+
                     <div class="nav-buttons">
-                        <a href="#"><div className="nav-btn1">Browse Dates</div></a>
-                        <a href="#"><div className="nav-btn2">Log In / Sign Up</div></a>
+                        <Link
+                            to='/all-dates-page'
+                            id='all-dates-nav'
+                            className='nav-btn1'
+                            >Browse Dates</Link>
+
+                        <Link
+                            to='/login-page'
+                            className='nav-btn2'
+                            id='login-link'
+                            > Log In / Sign Up</Link>
                     </div>
                 </nav>
             </div>

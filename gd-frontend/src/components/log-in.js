@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
     render() {
@@ -16,7 +17,12 @@ class Login extends Component {
                         </a>
                     </form>
                     <div className="sign-up">
-                        <p className="sign-up-text">Don't have an account? <a className="sign-up-link" href="#">Sign up</a></p>
+                        <p className="sign-up-text"> Dont have an account? <Link
+                            to='/sign-up-page'
+                            id='sign-up-link'
+                            className='sign-up-link'
+                            >Sign Up</Link></p>
+
                     </div>
                 </div>
             </div>
