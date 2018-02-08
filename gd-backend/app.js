@@ -3,6 +3,7 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 var validator = require('express-validator');
 var app = express();
+
 var User = require('./models').User;
 var Activity = require('./models').Activity;
 
@@ -12,8 +13,8 @@ app.use(validator())
 app.use(cors())
 
 // uncertain if we need this 'home' route, may just be a '/'
-app.get('/home', (req, res) => {
-    res.json({ message: 'api example app' })
+app.get('/', (req, res) => {
+    res.json({ message: 'API example app' })
 })
 
 // displays activities w/ raw json activities page
