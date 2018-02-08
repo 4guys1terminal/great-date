@@ -40,7 +40,6 @@ class DatePage extends Component {
                     cost={this.state.activity.cost}
                 />
 
-                <Link to='/'> <Button className="back-button" bsStyle="primary large">Back</Button> </Link>
 
             </div>
         );

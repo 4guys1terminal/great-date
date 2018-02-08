@@ -3,14 +3,15 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 var validator = require('express-validator');
 var app = express();
-var User = require('./models').User
-var Activity = require('./models').Activity
+var User = require('./models').User;
+var Activity = require('./models').Activity;
 
 app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(validator())
 app.use(cors())
 
+// uncertain if we need this 'home' route, may just be a '/'
 app.get('/home', (req, res) => {
     res.json({ message: 'api example app' })
 })
@@ -34,13 +35,15 @@ app.get('/activities/:id', (req, res) => {
 })
 
 // post route for creating activities
-// may not need this /new subdomain
-app.post('/activities/new', (req, res) => {
+app.post('/activities', (req, res) => {
+
+//sets up validation checks on all submit fields
     req.checkBody('title','is required').notEmpty()
     req.checkBody('description','is required').notEmpty()
     req.checkBody('location','is required').notEmpty()
     req.checkBody('cost','is required').notEmpty()
 
+// if there are no errors logged, then it allows the activity to be created
     req.getValidationResult()
         .then((validationErrors) => {
             if(validationErrors.isEmpty()){

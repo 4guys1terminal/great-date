@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { HashRouter, Route, Switch} from 'react-router-dom';
-import AllDatesPage from './pages/all-dates-page.js';
+import AllDatesPage from './all-dates-page.js';
 import {
     Col,
     ControlLabel,
@@ -31,6 +31,7 @@ class NewActivity extends Component {
         this.setState({form: formState})
     }
 
+    // need to attach this new activity component somewhere
     handleSubmit(){
         this.props.onSubmit(this.state.form)
         console.log(this.state.form);
@@ -58,7 +59,7 @@ class NewActivity extends Component {
                                 Please check the form and try again.
                             </Alert>
                         }
-                    </Col
+                    </Col>
                 </Row>
 
                 <div class='forms'>

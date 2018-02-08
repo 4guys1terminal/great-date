@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ActivitiesList from '../store/ActivitiesList.js';
 import {Link} from 'react-router-dom';
 import DatePreview from '../components/date-preview.js';
+import { Button } from 'react-bootstrap';
 
 class AllDatesPage extends Component {
     componentWillMount(){
@@ -40,6 +41,8 @@ class AllDatesPage extends Component {
             <ul className="container">
               {list}
             </ul>
+
+            <Link to='/activities/new'> <Button className="newActivity-button" bsStyle="primary large">Create New Date</Button> </Link>
 
         </div>
     );
