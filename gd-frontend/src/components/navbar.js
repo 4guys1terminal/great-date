@@ -11,6 +11,12 @@ class Navigation extends Component {
 
                     <div class="nav-buttons">
                         <Link
+                            to='/'
+                            id='home-nav'
+                            className='nav-btn1'
+                            >Home</Link>
+
+                        <Link
                             to='/all-dates-page'
                             id='all-dates-nav'
                             className='nav-btn1'

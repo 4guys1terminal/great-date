@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import logo from '../logo.svg';
 import '../App.css';
 import ActivitiesList from '../store/ActivitiesList.js';
-import DateInfo from './date-info.js';
+import DateInfo from '../components/date-info.js';
 
 class DatePage extends Component {
     constructor(props){
@@ -40,6 +40,12 @@ class DatePage extends Component {
                     cost={this.state.activity.cost}
                 />
 
+                <Link
+                    to='/all-dates-page'
+                    id='all-dates-back'
+                    className='back-button'
+                    ><Button className="back-button" bsStyle="primary large">Back</Button>
+                </Link>
 
             </div>
         );
