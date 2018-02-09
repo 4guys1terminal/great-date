@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import DatePreview from '../components/date-preview.js';
 import { Button } from 'react-bootstrap';
 import NavBar from '../components/navbar.js';
+import Grid from '../components/grid.js';
 
 class AllDatesPage extends Component {
     componentWillMount(){
@@ -12,43 +13,34 @@ class AllDatesPage extends Component {
     }
 
     render() {
-        let list = this.state.activities.map(function(activity){
-            return(
-                < DatePreview
-                id={activity.id}
-                image={activity.image}
-                title={activity.title}
-                />
-            )
-        })
+        return (
+            <div>
 
-    return (
-        <div className="all-dates-page">
+                <NavBar />
 
-            <NavBar />
-            
-            <h2>Browse All Dates</h2>
+                <div className="all-dates-page">
 
-            <br/>
+                    <h2>Browse All Dates</h2>
 
-            <ul>
-                <li>tag options</li>
-                <br/>
-                <li>tag options</li>
-                <br/>
-                <li>tag options</li>
-            </ul>
+                    <br/>
 
-            <br/>
+                    <ul>
+                        <li>tag options</li>
+                        <br/>
+                        <li>tag options</li>
+                        <br/>
+                        <li>tag options</li>
+                    </ul>
 
-            <ul className="container">
-              {list}
-            </ul>
+                    <br/>
 
-            <Link to='/activities/new'> <Button className="newActivity-button" bsStyle="primary large">Create New Date</Button> </Link>
+                    <Grid />
 
-        </div>
-    );
+                    <Link to='/new-activity'> <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button> </Link>
+                </div>
+
+            </div>
+        );
     }
 }
 

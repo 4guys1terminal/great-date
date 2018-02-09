@@ -7,8 +7,10 @@ class LoginPage extends Component {
     render() {
         return (
             <div>
-                <NavBar />
-                <LogIn />
+                < NavBar />
+                    <div className='login-page'>
+                        <LogIn />
+                    </div>
             </div>
         );
     }

@@ -7,20 +7,22 @@ import BrowseDate from '../components/browse-dates.js';
 import Grid from '../components/grid.js';
 import SeeMoreBtn from '../components/see-more-btn.js';
 import ReactDOM from "react-dom";
+import { Button } from 'reactstrap';
 
 class Home extends Component {
-  render() {
-    return (
-      <div>
-        <Navigation />
-        <Title />
-        <TitleButton />
-        <BrowseDate />
-        <Grid />
-        <SeeMoreBtn />
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div className='home'>
+                < Navigation />
+                < Title />
+                < TitleButton />
+                < BrowseDate />
+                < Grid />
+                < SeeMoreBtn />
+                < Button />
+            </div>
+        );
+    }
 }
 
 export default Home;

@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import ActivitiesList from '../store/ActivitiesList.js';
-
+import { Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button } from 'reactstrap';
 
 class DatePreview extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-        }
-    }
-
     render() {
         return (
-            <div className="date-preview">
+            <div className="date-preview hvr-grow-shadow">
 
-                <li className="child datePreview" key={this.props.id}>
+                <li className="datePreview cell" key={this.props.id}>
                     <Link to={`/activities/${this.props.id}`}>
-                        <img className="thumbnails" src={this.props.image} />
+                        <img className="thumbnails responsive-image" src={this.props.image} />
                         <p>{this.props.title}</p>
                     </Link>
                 </li>

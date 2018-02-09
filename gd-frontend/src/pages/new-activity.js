@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { HashRouter, Route, Switch} from 'react-router-dom';
-import AllDatesPage from './all-dates-page.js';
+import '../App.css';
+import { HashRouter, Route, Switch, Redirect} from 'react-router-dom';
 import {
     Col,
     ControlLabel,
@@ -9,152 +9,81 @@ import {
     Button,
     Row,
     HelpBlock,
-    Alert
+    Alert,
+    Checkbox
 } from 'react-bootstrap';
+import AllDatesPage from './all-dates-page.js';
+import NavBar from '../components/navbar.js';
+import NewActivityForm from '../components/new-activity-form.js';
 
 class NewActivity extends Component {
     constructor(props){
         super(props)
         this.state = {
-            form: {
-                title: '',
-                description: '',
-                location: '',
-                cost: ''
-            }
+            apiUrl: "http://localhost:3000",
+            activities: [],
+            newActivitySuccess: false,
+            errors: null
         }
     }
 
-    handleChange(event){
-        const formState = Object.assign({}, this.state.form)
-        formState[event.target.name] = event.target.value
-        this.setState({form: formState})
+    componentWillMount(){
+        fetch(`${this.state.apiUrl}/activities`)
+        .then((rawResponse) =>{
+            return rawResponse.json()
+        })
+        .then((parsedResponse) =>{
+            this.setState({activities: parsedResponse.activities})
+        })
     }
 
-    // need to attach this new activity component somewhere
-    handleSubmit(){
-        this.props.onSubmit(this.state.form)
-        console.log(this.state.form);
-    }
-
-    errorsFor(attribute){
-        var errorString = ''
-        if(this.props.errors){
-            const errors = this.props.errors.filter(error => error.param === attribute)
-            if(errors){
-                errorString = errors.map(error => error.msg ).join(", ")
+    handleNewActivity(params){
+        fetch( `${this.state.apiUrl}/activities`,
+            {
+                body: JSON.stringify(params), //stringifying json for the fetch
+                headers: { //specifying that we're sending JSON, and want JSON back
+                    'Content-Type': 'application/json'
+                },
+                method: "POST" //specifying our correct endpoint in the server
             }
-        }
-        return errorString === "" ? null : errorString
+        )
+        .then((rawResponse)=>{
+            return rawResponse.json()
+        })
+        .then((parsedResponse) =>{
+            if(parsedResponse.errors){ //checking for any server side errors
+                this.setState({errors: parsedResponse.errors})
+            }else{
+                const activities = Object.assign([], this.state.activities)
+                activities.push(parsedResponse.activity) //add new activity to list of activities
+                this.setState({
+                    activities: activities, // update activities in state
+                    errors: null, // clear out any errors if they exist
+                    newActivitySuccess: true
+                })
+            }
+        })
     }
+
 
     render() {
         return (
-            <form>
+            <div>
 
-                <Row>
-                    <Col xs={6}>
-                        {this.props.errors &&
-                            <Alert bsStyle="danger">
-                                Please check the form and try again.
-                            </Alert>
-                        }
-                    </Col>
-                </Row>
+                <NavBar />
 
-                <div class='forms'>
-                    <Row>
-                        <Col xs={6}>
-                        <FormGroup
-                            id = "title-form-group"
-                            validationState = {this.errorsFor('title') && 'error'}>
-                            <ControlLabel id="title">Title</ControlLabel>
-                            <FormControl
-                                type="text"
-                                name="title"
-                                value={this.state.form.title}
-                                onChange={this.handleChange.bind(this)}
-                            />
-                            {this.errorsFor('title') &&
-                            <HelpBlock id="title-help-block">{this.errorFor('title')}</HelpBlock>
-                        }
-                        </FormGroup>
-                        </Col>
-                    </Row>
+                <h1> Create a Date </h1>
 
+                <NewActivityForm
+                    onSubmit={this.handleNewActivity.bind(this)}
+                    errors={this.state.errors && this.state.errors.validations}
+                />
 
-                    <Row>
-                        <Col xs={6}>
-                        <FormGroup
-                            id = "description-form-group"
-                            validationState = {this.errorsFor('description') && 'error'}>
-                            <ControlLabel id="description">Description</ControlLabel>
-                            <FormControl
-                                type="text"
-                                name="description"
-                                value={this.state.form.description}
-                                onChange={this.handleChange.bind(this)}
-                            />
-                            {this.errorsFor('description') &&
-                            <HelpBlock id="description-help-block">{this.errorFor('description')}</HelpBlock>
-                        }
-                        </FormGroup>
-                        </Col>
-                    </Row>
+                {this.state.newActivitySuccess &&
+                    <Redirect to="/success" />
+                }
 
-
-                    <Row>
-                        <Col xs={6}>
-                        <FormGroup
-                            id = "location-form-group"
-                            validationState = {this.errorsFor('location') && 'error'}>
-                            <ControlLabel id="location">Location</ControlLabel>
-                            <FormControl
-                                type="text"
-                                name="location"
-                                value={this.state.form.location}
-                                onChange={this.handleChange.bind(this)}
-                            />
-                            {this.errorsFor('location') &&
-                            <HelpBlock id="location-help-block">{this.errorFor('location')}</HelpBlock>
-                        }
-                        </FormGroup>
-                        </Col>
-                    </Row>
-
-
-                    <Row>
-                        <Col xs={6}>
-                        <FormGroup
-                            id = "cost-form-group"
-                            validationState = {this.errorsFor('cost') && 'error'}>
-                            <ControlLabel id="cost">Cost</ControlLabel>
-                            <FormControl
-                                type="text"
-                                name="cost"
-                                value={this.state.form.cost}
-                                onChange={this.handleChange.bind(this)}
-                            />
-                            {this.errorsFor('cost') &&
-                            <HelpBlock id="cost-help-block">{this.errorFor('cost')}</HelpBlock>
-                        }
-                        </FormGroup>
-                        </Col>
-                    </Row>
-
-                    <Row>
-                        <Col xs={6}>
-                            <Button
-                                id="submit"
-                                onClick={this.handleSubmit.bind(this)}
-                                >Make Activity</Button>
-                        </Col>
-                    </Row>
-
-
-                </div>
-
-            </form>
+            </div>
         );
     }
 }
