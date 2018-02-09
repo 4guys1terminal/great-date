@@ -1,20 +1,20 @@
 {
   "development": {
-    "username": "danielhook",
+    "username": "kevin",
     "password": null,
     "database": "great-date",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "danielhook",
+    "username": "kevin",
     "password": null,
     "database": "great-date",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    "username": "danielhook",
+    "username": "kevin",
     "password": null,
     "database": "great-date",
     "host": "127.0.0.1",
