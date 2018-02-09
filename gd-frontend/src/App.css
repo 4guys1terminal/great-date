@@ -51,12 +51,30 @@ li {
   margin-bottom: 15px;
 }
 
-.newActivityButton{
+.newActivityButton {
     margin: 40px;
 
 }
 
-.createDateForm{
+.createDateForm {
+    margin: auto;
+    width: 100%;
+}
+
+#image-form-group {
+
+}
+
+.createDateDiv {
+    /* text-align:center; */
+    width:100%;
+    /* margin-left: auto;
+    margin-right: auto; */
+
+}
+
+.createDateDiv form {
+    display:inline-block;
 }
 
 /**************** Navbar ****************/
