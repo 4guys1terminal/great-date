@@ -14,27 +14,30 @@ class AllDatesPage extends Component {
 
     render() {
         return (
-            <div className="all-dates-page">
+            <div>
 
                 <NavBar />
 
-                <h2>Browse All Dates</h2>
+                <div className="all-dates-page">
 
-                <br/>
+                    <h2>Browse All Dates</h2>
 
-                <ul>
-                    <li>tag options</li>
                     <br/>
-                    <li>tag options</li>
+
+                    <ul>
+                        <li>tag options</li>
+                        <br/>
+                        <li>tag options</li>
+                        <br/>
+                        <li>tag options</li>
+                    </ul>
+
                     <br/>
-                    <li>tag options</li>
-                </ul>
 
-                <br/>
+                    <Grid />
 
-                <Grid />
-
-                <Link to='/activities/new'> <Button className="newActivity-button" bsStyle="primary large">Create New Date</Button> </Link>
+                    <Link to='/new-activity'> <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button> </Link>
+                </div>
 
             </div>
         );

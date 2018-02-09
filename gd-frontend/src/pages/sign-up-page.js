@@ -7,8 +7,10 @@ class SignUpPage extends Component {
     render() {
         return (
             <div>
-                <NavBar />
-                <SignUp />
+                < NavBar />
+                    <div className="signup-page">
+                        < SignUp />
+                    </div>
             </div>
         );
     }

@@ -88,3 +88,5 @@ app.put('/activities/edit/:id', (req, res) => {
         })
     })
 })
+
+module.exports = app

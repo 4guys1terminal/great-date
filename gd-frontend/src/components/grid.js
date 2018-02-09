@@ -7,7 +7,6 @@ import {Link} from 'react-router-dom';
 class Grid extends Component {
     componentWillMount(){
         this.setState({activities: ActivitiesList})
-
     }
 
     render() {
@@ -27,7 +26,6 @@ class Grid extends Component {
                     {list}
                 </div>
             </div>
-
         );
     }
 }
