@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { HashRouter, Route, Switch} from 'react-router-dom';
+import { HashRouter, Route, Switch, Redirect} from 'react-router-dom';
 import {
     Col,
     ControlLabel,
@@ -51,17 +51,18 @@ class NewActivity extends Component {
             return rawResponse.json()
         })
         .then((parsedResponse) =>{
-            if((parsedResponse.errors){ //checking for any server side errors
+            if(parsedResponse.errors){ //checking for any server side errors
                 this.setState({errors: parsedResponse.errors})
             }else{
                 const activities = Object.assign([], this.state.activities)
-                activites.push(parsedResponse.activity) //add new activity to list of activities
+                activities.push(parsedResponse.activity) //add new activity to list of activities
                 this.setState({
                     activities: activities, // update activities in state
-                    errors: null // clear out any errors if they exist
+                    errors: null, // clear out any errors if they exist
+                    newActivitySuccess: true
                 })
-            })
-        }
+            }
+        })
     }
 
 
@@ -77,6 +78,10 @@ class NewActivity extends Component {
                     onSubmit={this.handleNewActivity.bind(this)}
                     errors={this.state.errors && this.state.errors.validations}
                 />
+
+                {this.state.newActivitySuccess &&
+                    <Redirect to="/success" />
+                }
 
             </div>
         );

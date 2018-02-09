@@ -43,6 +43,7 @@ app.post('/activities', (req, res) => {
     req.checkBody('description','is required').notEmpty()
     req.checkBody('location','is required').notEmpty()
     req.checkBody('cost','is required').notEmpty()
+    req.checkBody('tag','is required').notEmpty()
 
 // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult()
@@ -52,7 +53,8 @@ app.post('/activities', (req, res) => {
                     title: req.body.title,
                     description: req.body.description,
                     location: req.body.location,
-                    cost: req.body.cost
+                    cost: req.body.cost,
+                    tags: req.body.tags
                 }).then((activity)=>{
                     res.status(201)
                     res.json({activity: activity})
@@ -66,8 +68,6 @@ app.post('/activities', (req, res) => {
 
 // put route for editing activities
 app.put('/activities/edit/:id', (req, res) => {
-    console.log(req.params.name);
-    console.log(req.body);
     const { name, content } = req.params;
     let id = parseInt(req.params.id);
 
@@ -76,7 +76,8 @@ app.put('/activities/edit/:id', (req, res) => {
             title: title,
             description: description,
             location: location,
-            cost: cost
+            cost: cost,
+            tags: tags
         },
         {
             where: {
