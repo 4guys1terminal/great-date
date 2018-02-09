@@ -22,9 +22,12 @@ class Grid extends Component {
         })
 
         return (
-            <ul class="grid">
-                {list}
-            </ul>
+            <div className="container">
+                <div className="grid">
+                    {list}
+                </div>
+            </div>
+
         );
     }
 }

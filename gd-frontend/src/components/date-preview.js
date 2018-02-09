@@ -14,9 +14,9 @@ class DatePreview extends Component {
         return (
             <div className="date-preview">
 
-                <li className="grid-child datePreview" key={this.props.id}>
+                <li className="datePreview cell" key={this.props.id}>
                     <Link to={`/activities/${this.props.id}`}>
-                        <img className="thumbnails" src={this.props.image} />
+                        <img className="thumbnails responsive-image" src={this.props.image} />
                         <p>{this.props.title}</p>
                     </Link>
                 </li>
