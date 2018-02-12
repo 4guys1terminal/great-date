@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import ActivitiesList from '../store/ActivitiesList.js';
 import { Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button } from 'reactstrap';
+  CardTitle, Button } from 'reactstrap';
 
 class DatePreview extends Component {
     render() {
@@ -12,7 +11,7 @@ class DatePreview extends Component {
                 <li className="datePreview cell" key={this.props.id}>
                     <Link to={`/activities/${this.props.id}`}>
 
-                        <Card body outline color="primary">
+                        <Card className="previewCard">
                             <CardImg top width='100%' src={this.props.image} alt="Date Image" className="thumbnails responsive-image" />
 
                             <CardBody>

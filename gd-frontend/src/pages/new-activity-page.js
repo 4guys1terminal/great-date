@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { HashRouter, Route, Switch, Redirect} from 'react-router-dom';
-import {
-    Col,
-    ControlLabel,
-    FormGroup,
-    FormControl,
-    Button,
-    Row,
-    HelpBlock,
-    Alert,
-    Checkbox
-} from 'react-bootstrap';
+import {Redirect} from 'react-router-dom';
+
 import AllDatesPage from './all-dates-page.js';
 import NavBar from '../components/navbar.js';
 import NewActivityForm from '../components/new-activity-form.js';

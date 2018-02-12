@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { HashRouter, Route, Switch} from 'react-router-dom';
 import {
     Col,
     ControlLabel,
@@ -10,9 +9,18 @@ import {
     Row,
     HelpBlock,
     Alert,
-    Checkbox
+    Radio
 } from 'react-bootstrap';
-import NavBar from '../components/navbar.js';
+import CheckboxComponent from './checkbox.js';
+
+const tagExamples = [
+    {tagTitle: 'Romantic', tagId: '1'},
+    {tagTitle: 'Thrilling', tagId: '2'},
+    {tagTitle: 'Morning', tagId: '3'},
+    {tagTitle: 'Afternoon', tagId: '4'},
+    {tagTitle: 'Evening', tagId: '5'},
+    {tagTitle: 'Outdoors', tagId: '6'}
+];
 
 
 class NewActivityForm extends Component {
@@ -24,26 +32,32 @@ class NewActivityForm extends Component {
                 description: '',
                 location: '',
                 cost: '',
-                tags: '',
+                tags: [],
                 image: ''
             }
         }
+        this.errorsFor = this.errorsFor.bind(this);
+    }
+
+    componentWillMount = () => {
+        this.selectedCheckboxes = new Set();
     }
 
     handleChange(event){
         const formState = Object.assign({}, this.state.form)
+        //if type===checkbox then do the weird tag push thing (one possible solution?)
         formState[event.target.name] = event.target.value
         this.setState({form: formState})
     }
 
-    // need to attach this new activity component somewhere
     handleSubmit(){
-        this.props.onSubmit(this.state.form)
+        console.log(this.selectedCheckboxes);
+        this.props.onSubmit(this.state.form);
         console.log(this.state.form);
     }
 
     errorsFor(attribute){
-        var errorString = ''
+        var errorString = "";
         if(this.props.errors){
             const errors = this.props.errors.filter(error => error.param === attribute)
             if(errors){
@@ -53,6 +67,46 @@ class NewActivityForm extends Component {
         return errorString === "" ? null : errorString
     }
 
+
+    createTagCheckbox = (tagExample) => {
+        return <CheckboxComponent
+            tagId={tagExample.tagId}
+            tagTitle={tagExample.tagTitle}
+            handleCheckboxChange={this.toggleCheckbox}
+            key={tagExample.tagTitle}
+        />
+    }
+
+    createTagCheckboxes = () => {
+        return tagExamples.map(this.createTagCheckbox)
+    }
+
+    toggleCheckbox = (tagId) =>{
+        if (this.selectedCheckboxes.has(tagId)) {
+            this.selectedCheckboxes.delete(tagId);
+        } else {
+            this.selectedCheckboxes.add(tagId);
+        }
+        const tagsArray = Array.from(this.selectedCheckboxes)
+        this.setState({
+            tags: tagsArray
+        })
+    }
+
+
+    // const newTags = this.state.form.tags
+    // for(const checkbox of this.selectedCheckboxes){
+    //         newTags.push(checkbox);
+    //     }
+    // this.setState({
+    //     tags: newTags
+    // })
+
+    // handleChange(event){
+    //     const formState = Object.assign({}, this.state.form)
+    //     formState[event.target.name] = event.target.value
+    //     this.setState({form: formState})
+    // }
 
     render() {
         return (
@@ -69,7 +123,7 @@ class NewActivityForm extends Component {
                             </Col>
                         </Row>
 
-                        <div class='forms'>
+                        <div className='forms'>
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -83,9 +137,13 @@ class NewActivityForm extends Component {
                                         value={this.state.form.title}
                                         onChange={this.handleChange.bind(this)}
                                     />
+                                    {/*
                                     {this.errorsFor('title') &&
-                                    <HelpBlock id="title-help-block">{this.errorFor('title')}</HelpBlock>
-                                }
+                                    <HelpBlock
+                                    id="title-help-block">{this.errorFor('title')}</HelpBlock>
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
@@ -105,9 +163,13 @@ class NewActivityForm extends Component {
                                         value={this.state.form.description}
                                         onChange={this.handleChange.bind(this)}
                                     />
+
+                                    {/*
                                     {this.errorsFor('description') &&
                                     <HelpBlock id="description-help-block">{this.errorFor('description')}</HelpBlock>
-                                }
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
@@ -136,10 +198,12 @@ class NewActivityForm extends Component {
 
                                     </FormControl>
 
-
+                                    {/*}
                                     {this.errorsFor('location') &&
                                     <HelpBlock id="location-help-block">{this.errorFor('location')}</HelpBlock>
-                                }
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
@@ -150,35 +214,62 @@ class NewActivityForm extends Component {
                                 <FormGroup
                                     id = "cost-form-group"
                                     validationState = {this.errorsFor('cost') && 'error'}>
-                                    <ControlLabel id="cost">Cost</ControlLabel>
-                                    <FormControl
-                                        componentClass="select"
-                                        placeholder="Average Cost"
-                                        name="cost"
-                                        value={this.state.form.cost}
-                                        onChange={this.handleChange.bind(this)}
-                                    >
+                                    <ControlLabel id="cost">Average Cost</ControlLabel>
 
-                                    <option value="avg_cost">Average Cost</option>
-                                    <option value="free">Free</option>
-                                    <option value="$">$</option>
-                                    <option value="$$">$$</option>
-                                    <option value="$$$">$$$</option>
+                                    <br/>
 
-                                    </FormControl>
+                                    <Radio inline name="cost" value="free">Free</Radio>
+                                    <Radio inline name="cost" value="$">$</Radio>
+                                    <Radio inline name="cost" value="$$">$$</Radio>
+                                    <Radio inline name="cost" value="$$$">$$$</Radio>
+
+                                    {/*
+                                        <FormControl
+                                            componentClass="radio"
+                                            placeholder="Average Cost"
+                                            name="cost"
+                                            value={this.state.form.cost}
+                                            onChange={this.handleChange.bind(this)}
+                                        >
+
 
                                     {this.errorsFor('cost') &&
                                     <HelpBlock id="cost-help-block">{this.errorFor('cost')}</HelpBlock>
-                                }
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
+
+
 
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
                                     id = "tags-form-group"
-                                    validationState = {this.errorsFor('cost') && 'error'}>
+                                    validationState = {this.errorsFor('tags') && 'error'}>
+                                    <ControlLabel id="tag">Tags</ControlLabel>
+                                    <br/>
+
+                                    {this.createTagCheckboxes()}
+
+                                    {/*}
+                                    {this.errorsFor('tags') &&
+                                    <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>
+                                    }
+                                    */}
+
+                                </FormGroup>
+                                </Col>
+                            </Row>
+
+                            {/*
+                            <Row>
+                                <Col xs={10} xsOffset={1}>
+                                <FormGroup
+                                    id = "tags-form-group"
+                                    validationState = {this.errorsFor('tags') && 'error'}>
                                     <ControlLabel id="tag">Tags</ControlLabel>
                                     <br/>
                                     <Checkbox
@@ -236,12 +327,15 @@ class NewActivityForm extends Component {
                                     > Evening
                                     </Checkbox>
 
-                                    {this.errorsFor('cost') &&
-                                    <HelpBlock id="cost-help-block">{this.errorFor('tags')}</HelpBlock>
+
+                                    {this.errorsFor('tags') &&
+                                    <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>
                                 }
                                 </FormGroup>
                                 </Col>
                             </Row>
+
+                            */}
 
                             <Row>
                                 <Col xs={10} xsOffset={1}>
@@ -255,9 +349,11 @@ class NewActivityForm extends Component {
                                         value={this.state.form.images}
                                         onChange={this.handleChange.bind(this)}
                                     />
+                                    {/*
                                     {this.errorsFor('cost') &&
                                     <HelpBlock id="cost-help-block">{this.errorFor('images')}</HelpBlock>
-                                }
+                                    }
+                                    */}
                                 </FormGroup>
                                 </Col>
                             </Row>

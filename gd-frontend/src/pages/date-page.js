@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import logo from '../logo.svg';
 import '../App.css';
 import ActivitiesList from '../store/ActivitiesList.js';
 import DateInfo from '../components/date-info.js';
@@ -36,7 +35,7 @@ class DatePage extends Component {
 
                     <h1>{this.state.activity.title}</h1>
 
-                    <img class="activityPic" src={`${this.state.activity.image}`} />
+                    <img class="activityPic" src={`${this.state.activity.image}`} alt="date"/>
 
                     <h3>{this.state.activity.title}</h3>
 
