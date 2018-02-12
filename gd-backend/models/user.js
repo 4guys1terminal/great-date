@@ -14,11 +14,11 @@ module.exports = function (sequelize, DataTypes) {
     },
     age: {
       type: DataTypes.INTEGER,
-      allowNull: false 
+      allowNull: true 
     },
     location: {
       type: DataTypes.STRING,
-      allowNull: false 
+      allowNull: true 
     },
     email: {
       type: DataTypes.STRING,

@@ -3,21 +3,88 @@ import '../App.css';
 import { Link } from 'react-router-dom';
 
 class SignUp extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            form: {
+                firstName: '',
+                lastName: '',
+                password: '',
+                email: ''
+            }
+        };
+    }
+
+    handleChange(e) {
+        const formState = Object.assign({}, this.state.form);
+        formState[e.target.name] = e.target.value;
+        this.setState({ form: formState });
+    }
+
+    handleSubmit() {
+
+        this.props.onSubmit(this.state.form);
+    }
+
+    errorsFor(attribute) {
+        var errorString = "";
+        if (this.props.errors) {
+            const errors = this.props.errors.filter(error => error.param === attribute);
+            if (errors) {
+                errorString = errors.map(error => error.msg).join(", ");
+            }
+        }
+        return errorString === "" ? null : errorString;
+    }
+
     render() {
         return (
             <div>
                 <div className="signup-wrapper">
-                    <form className="signup-form">
+                    <form className="signup-form" validationState={this.errorsFor('firstName') && 'error'}>
                         <p className="signup-form-title">Great Date</p>
                         <p className="signup-form-blurb">Sign up to see photos and <br /> videos from your friends.</p>
                         <button className="use-fb">Log in with Facebook</button><div className="center">
-                        <p className="or"><span className="hyphen1">______________</span>OR<span className="hyphen1">______________</span></p></div>
+                        <p className="or"><span className="hyphen1">_____________</span>OR<span className="hyphen1">_______________</span></p></div>
 
-                        <input className="lname" placeholder="Mobile number or email" type="email"></input>
-                        <input className="lname" placeholder="Full Name" type="username"></input>
-                        <input className="lname" placeholder="Last Name" type="username"></input>
-                        <input className="lname" placeholder="Password" type="password"></input>
-                        <button className="login-btn">Sign up</button>
+                        <input 
+                            className="lname" 
+                            placeholder="First Name" 
+                            name="firstName" 
+                            type="text" 
+                            value={this.state.form.firstName}
+                            onChange={this.handleChange.bind(this)}
+                            />
+                        <input 
+                            className="lname" 
+                            placeholder="Last Name" 
+                            type="text"
+                            name="lastName" 
+                            value={this.state.form.lastName}
+                            onChange={this.handleChange.bind(this)}
+                            />
+                        <input 
+                            className="lname" 
+                            placeholder="Email" 
+                            name="email" 
+                            type="email"
+                            value={this.state.form.email}
+                            onChange={this.handleChange.bind(this)}
+                            />
+                        <input 
+                            className="lname"
+                            placeholder="Password"
+                            name="password"
+                            type="password"
+                            value={this.state.form.password}
+                            onChange={this.handleChange.bind(this)}
+                            />
+                        <button 
+                            className="login-btn"
+                            onClick={this.handleChange.bind(this)}
+                            >
+                            Sign up
+                        </button>
                         <a className="forgot" href="#">
                             <p className="agree">By signing up, you agree to our <br /> <span className="terms">Terms & Privacy Policy.</span></p>
                         </a>

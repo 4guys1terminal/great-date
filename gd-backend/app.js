@@ -58,6 +58,12 @@ app.get('/activities/:id', (req, res) => {
     })
 })
 
+app.get('/users',(req, res) => {
+    User.findAll().then(users => {
+        res.json({ users: users })
+    })
+})
+
 app.post('/users', (req, res) => {
     User.create(
         {
@@ -67,6 +73,7 @@ app.post('/users', (req, res) => {
             email: req.body.email,
             location: req.body.location,
             password: req.body.password
+            
         }).then((user) => {
             res.json({
                 message: 'success',
@@ -108,6 +115,38 @@ app.post('/activities', (req, res) => {
                 res.json({errors: {validations: validationErrors.array()}})
             }
         })
+})
+
+// login form
+app.post('/sessions/new', (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+
+    console.log(req.body)
+
+    if (email && password) {
+        User.findOne({
+            where: { email: email }
+        }).then(user => {
+            if (user) {
+                let check = user.veryifyPassword(password)
+                if (check) {
+                    res.json({ message: 'login success' })
+                    // user.setAuthToken()
+                } else {
+                    res.json({ message: 'Password Invalid' })
+                }
+            } else {
+                res.status(401)
+                res.json({ message: 'Password Invalid' })
+            }
+        })
+    } else {
+        res.status(401)
+        res.json({
+            message: 'Email/Password Required'
+        })
+    }
 })
 
 // put route for editing activities
