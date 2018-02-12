@@ -10,36 +10,16 @@ import {
     Row,
     HelpBlock,
     Alert,
-    Radio
+    Radio,
+    Checkbox
 } from 'react-bootstrap';
-import CheckboxComponent from './checkbox.js';
 import RadioGroup from './radio-group.js';
-import Location from './location.js';
 // import 'bootstrap/dist/css/bootstrap.css'
 
 
 
-const tagExamples = [
-    {tagTitle: 'Romantic', tagId: '1'},
-    {tagTitle: 'Thrilling', tagId: '2'},
-    {tagTitle: 'Morning', tagId: '3'},
-    {tagTitle: 'Afternoon', tagId: '4'},
-    {tagTitle: 'Evening', tagId: '5'},
-    {tagTitle: 'Outdoors', tagId: '6'}
-];
-
-
-const locationExamples = [
-    {value: 'pacific_beach', title: 'Pacific Beach'},
-    {value: 'downtown', title: 'Downtown'},
-    {value: 'point_loma', title: 'Point Loma'},
-    {value: 'north_park', title: 'North Park'},
-    {value: 'la_jolla', title: 'La Jolla'}
-];
-
-
 class NewActivityForm extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             form: {
@@ -48,78 +28,110 @@ class NewActivityForm extends Component {
                 location: '',
                 cost: '',
                 tags: {
-                    tagID: true|false
+                    // tagID: true|false
                 },
                 image: ''
             },
-            test: ''
+            test: '',
+            locationExamples: [
+                {id: 1, value: 'pacific_beach', title: 'Pacific Beach'},
+                {id: 2, value: 'downtown', title: 'Downtown'},
+                {id: 3, value: 'point_loma', title: 'Point Loma'},
+                {id: 4, value: 'north_park', title: 'North Park'},
+                {id: 5, value: 'la_jolla', title: 'La Jolla'}
+            ],
+            tagExamples: [
+                {id: 1, title: 'Romantic'},
+                {id: 2, title: 'Thrilling'},
+                {id: 3, title: 'Morning'},
+                {id: 4, title: 'Afternoon'},
+                {id: 5, title: 'Evening'},
+                {id: 6, title: 'Outdoors'},
+            ]
         }
-        this.errorsFor = this.errorsFor.bind(this);
     }
 
-    componentWillMount = () => {
-        this.selectedCheckboxes = new Set();
-    }
-
-    handleChange(event){
+    handleChange(event) {
         const formState = Object.assign({}, this.state.form)
-        //if type===checkbox then do the weird tag push thing (one possible solution?)
         formState[event.target.name] = event.target.value
         this.setState({form: formState})
     }
 
 
-    handleSubmit(){
-        console.log(this.selectedCheckboxes);
+    handleSubmit() {
         console.log(this.state.form);
         this.props.onSubmit(this.state.form);
     }
 
-    errorsFor(attribute){
+    errorsFor(attribute) {
         var errorString = "";
-        if(this.props.errors){
+        if(this.props.errors) {
             const errors = this.props.errors.filter(error => error.param === attribute)
-            if(errors){
+            if(errors) {
                 errorString = errors.map(error => error.msg ).join(", ")
             }
         }
         return errorString === "" ? null : errorString
     }
 
-    createLocation = (locationExample) =>{
-        return <Location
-            value={locationExample.value}
-            title={locationExample.title}
-            key={locationExample.value}
-        />
+    createLocation = (location) => {
+        return(
+            <option
+                value={location.value}
+                key={location.id}>
+            {location.title}
+            </option>
+        )
     }
 
     createLocations = () => {
-        return locationExamples.map(this.createLocation)
+        return this.state.locationExamples.map((location) => {
+            return this.createLocation(location)
+        })
     }
 
 
-    createTagCheckbox = (tagExample) => {
-        return <CheckboxComponent
-            tagId={tagExample.tagId}
-            tagTitle={tagExample.tagTitle}
-            handleCheckboxChange={this.toggleCheckbox}
-            key={tagExample.tagTitle}
-        />
+    createTagCheckbox = (tag) => {
+        return (
+            <Checkbox
+                inline
+                type="checkbox"
+                key={tag.id}
+                name={tag.title}
+                value={tag.id}
+                onChange={this.toggleCheckbox.bind(this, tag.id)}>
+                    {tag.title}
+            </Checkbox>
+        )
     }
 
     createTagCheckboxes = () => {
-        return tagExamples.map(this.createTagCheckbox)
+        return this.state.tagExamples.map((tag) => {
+            return this.createTagCheckbox(tag)
+        })
     }
 
-    toggleCheckbox = (tagId) =>{
-        if (this.selectedCheckboxes.has(tagId)) {
-            this.selectedCheckboxes.delete(tagId);
-        } else {
-            this.selectedCheckboxes.add(tagId);
-        }
+    toggleCheckbox = (tagID, e) => {
+        const { form } = this.state
+        const { tags } = form
+
+        tags[tagID] = e.target.checked
+
+        form.tags = tags
+
+        this.setState({
+            form: form
+        })
+
+        // if (this.selectedCheckboxes.has(tagId)) {
+        //     this.selectedCheckboxes.delete(tagId);
+        // } else {
+        //     this.selectedCheckboxes.add(tagId);
+        // }
+
         // const newTags = this.state.form.tags
-        // for(const checkbox of this.selectedCheckboxes){
+        // newTags =
+        // for(const checkbox of this.selectedCheckboxes) {
         //         newTags.push(checkbox);
         //     }
         // this.setState({
@@ -128,7 +140,7 @@ class NewActivityForm extends Component {
 
     }
 
-    // handleChange(event){
+    // handleChange(event) {
     //     const formState = Object.assign({}, this.state.form)
     //     formState[event.target.name] = event.target.value
     //     this.setState({form: formState})
