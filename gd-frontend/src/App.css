@@ -58,7 +58,7 @@ li {
 
 .createDateForm {
     margin: auto;
-    width: 100%;
+    width: 800px;
 }
 
 #image-form-group {
@@ -78,7 +78,9 @@ li {
     padding: 10px;
 }
 
-
+input[type=file] {
+    margin: 0 auto;
+}
 /**************** Navbar ****************/
 
 

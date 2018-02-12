@@ -12,7 +12,6 @@ app.use(bodyParser.json())
 app.use(validator())
 app.use(cors())
 
-// uncertain if we need this 'home' route, may just be a '/'
 app.get('/', (req, res) => {
     res.json({ message: 'API example app' })
 })

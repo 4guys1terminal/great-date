@@ -6,12 +6,18 @@ import {
     FormGroup,
     FormControl,
     Button,
+    ButtonGroup,
     Row,
     HelpBlock,
     Alert,
     Radio
 } from 'react-bootstrap';
 import CheckboxComponent from './checkbox.js';
+import RadioGroup from './radio-group.js';
+import Location from './location.js';
+// import 'bootstrap/dist/css/bootstrap.css'
+
+
 
 const tagExamples = [
     {tagTitle: 'Romantic', tagId: '1'},
@@ -20,6 +26,15 @@ const tagExamples = [
     {tagTitle: 'Afternoon', tagId: '4'},
     {tagTitle: 'Evening', tagId: '5'},
     {tagTitle: 'Outdoors', tagId: '6'}
+];
+
+
+const locationExamples = [
+    {value: 'pacific_beach', title: 'Pacific Beach'},
+    {value: 'downtown', title: 'Downtown'},
+    {value: 'point_loma', title: 'Point Loma'},
+    {value: 'north_park', title: 'North Park'},
+    {value: 'la_jolla', title: 'La Jolla'}
 ];
 
 
@@ -32,9 +47,12 @@ class NewActivityForm extends Component {
                 description: '',
                 location: '',
                 cost: '',
-                tags: [],
+                tags: {
+                    tagID: true|false
+                },
                 image: ''
-            }
+            },
+            test: ''
         }
         this.errorsFor = this.errorsFor.bind(this);
     }
@@ -50,10 +68,11 @@ class NewActivityForm extends Component {
         this.setState({form: formState})
     }
 
+
     handleSubmit(){
         console.log(this.selectedCheckboxes);
-        this.props.onSubmit(this.state.form);
         console.log(this.state.form);
+        this.props.onSubmit(this.state.form);
     }
 
     errorsFor(attribute){
@@ -65,6 +84,18 @@ class NewActivityForm extends Component {
             }
         }
         return errorString === "" ? null : errorString
+    }
+
+    createLocation = (locationExample) =>{
+        return <Location
+            value={locationExample.value}
+            title={locationExample.title}
+            key={locationExample.value}
+        />
+    }
+
+    createLocations = () => {
+        return locationExamples.map(this.createLocation)
     }
 
 
@@ -87,20 +118,15 @@ class NewActivityForm extends Component {
         } else {
             this.selectedCheckboxes.add(tagId);
         }
-        const tagsArray = Array.from(this.selectedCheckboxes)
-        this.setState({
-            tags: tagsArray
-        })
+        // const newTags = this.state.form.tags
+        // for(const checkbox of this.selectedCheckboxes){
+        //         newTags.push(checkbox);
+        //     }
+        // this.setState({
+        //     tags: newTags
+        // })
+
     }
-
-
-    // const newTags = this.state.form.tags
-    // for(const checkbox of this.selectedCheckboxes){
-    //         newTags.push(checkbox);
-    //     }
-    // this.setState({
-    //     tags: newTags
-    // })
 
     // handleChange(event){
     //     const formState = Object.assign({}, this.state.form)
@@ -191,10 +217,8 @@ class NewActivityForm extends Component {
                                     >
 
                                     <option value="location">Location</option>
-                                    <option value="pacific_beach">Pacific Beach</option>
-                                    <option value="downtown">Downtown</option>
-                                    <option value="point_loma">Point Loma</option>
-                                    <option value="north_park">North Park</option>
+
+                                    {this.createLocations()}
 
                                     </FormControl>
 
@@ -218,20 +242,22 @@ class NewActivityForm extends Component {
 
                                     <br/>
 
-                                    <Radio inline name="cost" value="free">Free</Radio>
-                                    <Radio inline name="cost" value="$">$</Radio>
-                                    <Radio inline name="cost" value="$$">$$</Radio>
-                                    <Radio inline name="cost" value="$$$">$$$</Radio>
+                                    <RadioGroup
+                                      name="cost"
+                                      onChange={this.handleChange.bind(this)}
+                                      options={[
+                                        ['free', 'Free'],
+                                        ['$', '$'],
+                                        ['$$', '$$'],
+                                        ['$$$', '$$$']
+                                      ]}
+                                      value={this.state.test}
+                                    />
+
+
+
 
                                     {/*
-                                        <FormControl
-                                            componentClass="radio"
-                                            placeholder="Average Cost"
-                                            name="cost"
-                                            value={this.state.form.cost}
-                                            onChange={this.handleChange.bind(this)}
-                                        >
-
 
                                     {this.errorsFor('cost') &&
                                     <HelpBlock id="cost-help-block">{this.errorFor('cost')}</HelpBlock>
@@ -363,7 +389,7 @@ class NewActivityForm extends Component {
                                     <Button
                                         id="submit"
                                         onClick={this.handleSubmit.bind(this)}
-                                        >Make Activity</Button>
+                                        >Submit</Button>
                                 </Col>
                             </Row>
 

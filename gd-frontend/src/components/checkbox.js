@@ -24,8 +24,7 @@ class CheckboxComponent extends Component {
 
 
     render() {
-        const { tagTitle } = this.props;
-        const { tagId } = this.props;
+        const { tagTitle, tagId } = this.props;
 
         return (
 
@@ -36,7 +35,7 @@ class CheckboxComponent extends Component {
                 onChange={this.toggleCheckboxChange}>
                     {tagTitle}
             </Checkbox>
-            
+
         );
     }
 }
