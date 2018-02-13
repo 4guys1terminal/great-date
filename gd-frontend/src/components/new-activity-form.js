@@ -15,7 +15,6 @@ import {
 } from 'react-bootstrap';
 import RadioGroup from './radio-group.js';
 import Dropzone from 'react-dropzone';
-// import 'bootstrap/dist/css/bootstrap.css'
 
 
 
@@ -64,7 +63,6 @@ class NewActivityForm extends Component {
 
     handleSubmit() {
         console.log(this.state.form);
-        console.log(this.state.filesToBeSent);
         this.props.onSubmit(this.state.form);
     }
 
@@ -138,19 +136,18 @@ class NewActivityForm extends Component {
     handleClear(event,index){
         var filesToBeSent=this.state.filesToBeSent;
         filesToBeSent.splice(index,1);
-        var filesPreview=[];
-        for(var i in filesToBeSent){
-            filesPreview.push(
-                filesToBeSent[i][0].name
-            )
-          }
-          this.setState({filesToBeSent,filesPreview});
+
+        var imageFile=this.state.form.imageFile;
+        imageFile.splice(index,1)
+
+        this.setState({filesToBeSent,imageFile});
     }
 
 
     onDrop = (acceptedFiles,rejectedFiles) => {
         var filesToBeSent = this.state.filesToBeSent
 
+        // sending all accepted files to state as filesToBeSent
         if(filesToBeSent.length < this.state.imagesAllowed) {
             filesToBeSent.push(acceptedFiles);
             this.setState({filesToBeSent});
@@ -158,20 +155,20 @@ class NewActivityForm extends Component {
             alert("Please, only one image per date.")
         }
 
-        var imageBase64 = []
+        //converting the filesToBeSent into base64
+        const form = this.state.form
+        var imageBase64 = form.imageFile
+
         filesToBeSent.forEach(image => {
             const reader = new FileReader();
             reader.readAsDataURL(image[0])
             reader.onload = () => {
                 imageBase64.push(reader.result)
-                console.log(imageBase64);
             };
             reader.onabort = () => console.log('image reading was aborted');
             reader.onerror = () => console.log('image reading has failed');
-
-
         })
-
+        this.setState({imageFile: imageBase64})
     }
 
 
@@ -191,6 +188,10 @@ class NewActivityForm extends Component {
                         </Row>
 
                         <div className='forms'>
+
+                        {/* All form inputs labeled and minimized because DAMN that's a lot of code. Highly consider componentizing each of these form inputs out in the future.*/}
+
+                        {/*Title*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -215,7 +216,7 @@ class NewActivityForm extends Component {
                                 </Col>
                             </Row>
 
-
+                        {/*Description*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -241,7 +242,7 @@ class NewActivityForm extends Component {
                                 </Col>
                             </Row>
 
-
+                        {/*Location*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -273,7 +274,7 @@ class NewActivityForm extends Component {
                                 </Col>
                             </Row>
 
-
+                        {/*Cost*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -308,8 +309,7 @@ class NewActivityForm extends Component {
                                 </Col>
                             </Row>
 
-
-
+                        {/*Tags*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -330,12 +330,12 @@ class NewActivityForm extends Component {
                                 </Col>
                             </Row>
 
-
+                        {/*Image*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
                                     id = "image-form-group"
-                                    validationState = {this.errorsFor('cost') && 'error'}>
+                                    validationState = {this.errorsFor('image') && 'error'}>
                                     <ControlLabel id="image">Image</ControlLabel>
 
                                     <div className="image-upload-div">
@@ -355,12 +355,12 @@ class NewActivityForm extends Component {
                                     <div>
                                         File Preview:
 
-                                        {this.state.filesToBeSent.map((image) => {
-                                            // console.log(image);
-                                            // console.log(image[0]);
+                                        {this.state.filesToBeSent.map((image, index) => {
                                             return (
-                                                <div>
-                                                    <img src={image[0].preview} />
+                                                <div
+                                                    key={index}
+                                                >
+                                                    <img src={image[0].preview} className="image-preview"/>
                                                     <p> {image[0].name} </p>
                                                     <br/>
                                                     <Button onClick={(event) =>
@@ -369,18 +369,12 @@ class NewActivityForm extends Component {
                                                     </Button>
                                                 </div>
                                             )
-                                            })
-                                        }
+                                        })}
+
                                     </div>
 
 
                                     {/*
-
-                                        <Button
-                                            label="upload-button"
-                                            onClick={(event) => this.handleImageUpload(event)}> Upload Image </Button>
-
-
                                     {this.errorsFor('image') &&
                                     <HelpBlock id="image-help-block">{this.errorFor('images')}</HelpBlock>
                                     }

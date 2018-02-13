@@ -88,6 +88,10 @@ input[type=file] {
     justify-content: center;
 }
 
+.image-preview {
+    width: 300px;
+}
+
 /**************** Navbar ****************/
 
 
