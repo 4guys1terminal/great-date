@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { HashRouter, Route, Switch} from 'react-router-dom';
+import ScrollToTop from './components/scroll-to-top.js';
 
 import Home from './pages/home.js';
 import LogInPage from './pages/log-in-page.js';
@@ -16,6 +17,7 @@ class App extends Component {
         return (
             <HashRouter>
                 <Switch>
+                    <ScrollToTop>
 
                     <Route exact path='/' component={Home}/>
                     <Route path='/activities/:id' component={DatePage}/>
@@ -25,6 +27,7 @@ class App extends Component {
                     <Route path='/new-activity' component={NewDatePage}/>
                     <Route path='/success' component={NewActivitySuccess}/>
 
+                    </ScrollToTop>
                 </Switch>
             </HashRouter>
         );

@@ -32,7 +32,8 @@ class NewActivityForm extends Component {
                 imageFile: []
             },
             filesToBeSent:[],
-            imagesAllowed: 1,
+            filesPreview:[],
+            printcount: 1,
             locationExamples: [
                 {id: 1, value: 'pacific_beach', title: 'Pacific Beach'},
                 {id: 2, value: 'downtown', title: 'Downtown'},
@@ -55,6 +56,8 @@ class NewActivityForm extends Component {
         const { form } = this.state
 
         form[e.target.name] = e.target.value
+
+        console.log(form);
 
         this.setState({
             form: form
@@ -140,40 +143,69 @@ class NewActivityForm extends Component {
         filesToBeSent.splice(index,1);
         var filesPreview=[];
         for(var i in filesToBeSent){
-            filesPreview.push(
-                filesToBeSent[i][0].name
+            filesPreview.push(<div>
+            {filesToBeSent[i][0].name}
+              <Button onClick={(event) => this.handleClear(event,i)}>
+              >Clear</Button>
+              </div>
             )
           }
           this.setState({filesToBeSent,filesPreview});
     }
 
-
-    onDrop = (acceptedFiles,rejectedFiles) => {
-        var filesToBeSent = this.state.filesToBeSent
-
-        if(filesToBeSent.length < this.state.imagesAllowed) {
+    onDrop = (acceptedFiles, rejectedFiles) => {
+        console.log('Accepted files: ', acceptedFiles[0].name);
+        var filesToBeSent = this.state.filesToBeSent;
+        if(filesToBeSent.length < this.state.printcount) {
             filesToBeSent.push(acceptedFiles);
-            this.setState({filesToBeSent});
+            var filesPreview = [];
+
+            for (var i in filesToBeSent){
+                console.log(filesToBeSent[i][0]);
+                filesPreview.push(
+                    <div>
+                        <img src={filesToBeSent[i][0].preview} />
+                        <br/>
+                        <Button onClick={(event) => this.handleClear(event,i)}>
+                            Clear
+                        </Button>
+                    </div>
+                )
+            }
+            this.setState({filesToBeSent, filesPreview});
         } else {
             alert("Please, only one image per date.")
         }
-
-        var imageBase64 = []
-        filesToBeSent.forEach(image => {
-            const reader = new FileReader();
-            reader.readAsDataURL(image[0])
-            reader.onload = () => {
-                imageBase64.push(reader.result)
-                console.log(imageBase64);
-            };
-            reader.onabort = () => console.log('image reading was aborted');
-            reader.onerror = () => console.log('image reading has failed');
-
-
-        })
-
     }
 
+
+// TODO: take image file and convert to BASE64
+// TODO: put that BASE64 image info into the form to send to the backend
+
+
+
+
+// function encodeImageFileAsURL() {
+//
+//    var filesSelected = document.getElementById("inputFileToLoad").files;
+//    if (filesSelected.length > 0) {
+//      var fileToLoad = filesSelected[0];
+//
+//      var fileReader = new FileReader();
+//
+//      fileReader.onload = function(fileLoadedEvent) {
+//        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+//
+//        var newImage = document.createElement('img');
+//        newImage.src = srcData;
+//
+//        document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+//        alert("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+//        console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+//      }
+//      fileReader.readAsDataURL(fileToLoad);
+//    }
+// }
 
     render() {
         return (
@@ -342,6 +374,8 @@ class NewActivityForm extends Component {
                                         <Dropzone
                                             accept='image/*'
                                             onDrop={(files) => {
+                                                console.log(files);
+
                                                 this.onDrop(files)
                                             }}
                                         >
@@ -353,29 +387,17 @@ class NewActivityForm extends Component {
                                     </div>
 
                                     <div>
-                                        File Preview:
+                                    File Preview:
+                                    {this.state.filesPreview}
+                                    </div>
 
-                                        {this.state.filesToBeSent.map((image) => {
-                                            // console.log(image);
-                                            // console.log(image[0]);
-                                            return (
-                                                <div>
-                                                    <img src={image[0].preview} />
-                                                    <p> {image[0].name} </p>
-                                                    <br/>
-                                                    <Button onClick={(event) =>
-                                                    this.handleClear(event)}>
-                                                        Clear
-                                                    </Button>
-                                                </div>
-                                            )
-                                            })
-                                        }
+                                    <div>
+                                    {this.state.uploadingMessage}
                                     </div>
 
 
-                                    {/*
 
+                                    {/*
                                         <Button
                                             label="upload-button"
                                             onClick={(event) => this.handleImageUpload(event)}> Upload Image </Button>
@@ -393,7 +415,6 @@ class NewActivityForm extends Component {
 
                             <Row>
                                 <Col xs={10} xsOffset={1}>
-                                    <br/>
                                     <Button
                                         id="submit"
                                         onClick={this.handleSubmit.bind(this)}
@@ -401,6 +422,13 @@ class NewActivityForm extends Component {
                                 </Col>
                             </Row>
 
+                            {this.state.images.map((image) => {
+                                return (
+
+                                )
+
+
+                            })}
                         </div>
 
                 </form>

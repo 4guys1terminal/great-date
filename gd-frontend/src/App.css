@@ -81,6 +81,13 @@ li {
 input[type=file] {
     margin: 0 auto;
 }
+
+.image-upload-div {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
 /**************** Navbar ****************/
 
 
