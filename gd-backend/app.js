@@ -6,6 +6,8 @@ var app = express();
 
 var User = require('./models').User;
 var Activity = require('./models').Activity;
+var Tags = require('./models').Tag;
+var ActivityTag = require('./models').ActivityTag;
 
 app.use(express.static('public'))
 app.use(bodyParser.json())
@@ -35,6 +37,13 @@ app.get('/activities/:id', (req, res) => {
     })
 })
 
+app.get('/tags', (req, res) => {
+    Tags.findAll().then( (tags) =>{
+        res.json({tags: tags})
+    })
+})
+
+
 // post route for creating activities
 app.post('/activities', (req, res) => {
 
@@ -43,27 +52,51 @@ app.post('/activities', (req, res) => {
     req.checkBody('description','is required').notEmpty()
     req.checkBody('location','is required').notEmpty()
     req.checkBody('cost','is required').notEmpty()
-    req.checkBody('tag','is required').notEmpty()
+    // req.checkBody('tag','is required').notEmpty()
 
 // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult()
         .then((validationErrors) => {
             if(validationErrors.isEmpty()){
+
                 Activity.create({
                     title: req.body.title,
                     description: req.body.description,
                     location: req.body.location,
                     cost: req.body.cost,
-                    tags: req.body.tags
                 }).then((activity)=>{
                     res.status(201)
                     res.json({activity: activity})
+                    // console.log(activity)
                 })
             } else{
                 res.status(400)
                 res.json({errors: {validations: validationErrors.array()}})
             }
+          })
+
+      Activity.max('id').then(max => {
+        tags = Object.keys(req.body.tags)
+        console.log(tags);
+        var tagArr = []
+        for(i=0; i <tags.length; i++){
+
+          tagArr.push({
+            ActivityId: max + 1,
+            TagId: tags[i]
+          })
+        }
+
+        ActivityTag.bulkCreate(tagArr).then(() => {
+          return ActivityTag.findAll();
+        }).then(activityTags => {
+          // console.log(activityTags);
         })
+        console.log(tagArr);
+
+
+      })
+
 })
 
 // put route for editing activities

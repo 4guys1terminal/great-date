@@ -16,7 +16,7 @@ import NavBar from '../components/navbar.js';
 
 
 class NewActivityForm extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             form: {
@@ -24,29 +24,49 @@ class NewActivityForm extends Component {
                 description: '',
                 location: '',
                 cost: '',
-                tags: '',
+                tags: {},
                 image: ''
-            }
+            },
+            filesToBeSent:[],
+            filesPreview:[],
+            printcount: 1,
+            test: '',
+            locationExamples: [
+                {id: 1, value: 'pacific beach', title: 'Pacific Beach'},
+                {id: 2, value: 'downtown', title: 'Downtown'},
+                {id: 3, value: 'point_loma', title: 'Point Loma'},
+                {id: 4, value: 'north_park', title: 'North Park'},
+                {id: 5, value: 'la_jolla', title: 'La Jolla'}
+            ],
+            tagExamples: [
+                {id: 1, title: 'Romantic'},
+                {id: 2, title: 'Thrilling'},
+                {id: 3, title: 'Morning'},
+                {id: 4, title: 'Afternoon'},
+                {id: 5, title: 'Evening'},
+                {id: 6, title: 'Outdoors'},
+            ]
         }
     }
 
-    handleChange(event){
+    handleChange(event) {
         const formState = Object.assign({}, this.state.form)
         formState[event.target.name] = event.target.value
         this.setState({form: formState})
     }
 
-    // need to attach this new activity component somewhere
-    handleSubmit(){
-        this.props.onSubmit(this.state.form)
+
+    handleSubmit() {
         console.log(this.state.form);
+        this.props.onSubmit(this.state.form);
     }
 
-    errorsFor(attribute){
-        var errorString = ''
-        if(this.props.errors){
+
+    errorsFor(attribute) {
+        var errorString = "";
+        if(this.props.errors) {
             const errors = this.props.errors.filter(error => error.param === attribute)
-            if(errors){
+            if(errors) {
                 errorString = errors.map(error => error.msg ).join(", ")
             }
         }
@@ -54,6 +74,58 @@ class NewActivityForm extends Component {
     }
 
 
+    createLocation = (location) => {
+        return(
+            <option
+                value={location.value}
+                key={location.id}>
+            {location.title}
+            </option>
+        )
+    }
+
+
+    createLocations = () => {
+        return this.state.locationExamples.map((location) => {
+            return this.createLocation(location)
+        })
+    }
+
+
+    createTagCheckbox = (tag) => {
+        return (
+            <Checkbox
+                inline
+                type="checkbox"
+                key={tag.id}
+                name={tag.title}
+                value={tag.id}
+                onChange={this.toggleCheckbox.bind(this, tag.id)}>
+                    {tag.title}
+            </Checkbox>
+        )
+    }
+
+
+    createTagCheckboxes = () => {
+        return this.state.tagExamples.map((tag) => {
+            return this.createTagCheckbox(tag)
+        })
+    }
+
+
+    toggleCheckbox = (tagID, e) => {
+        const { form } = this.state
+        const { tags } = form
+
+        tags[tagID] = e.target.checked
+
+        form.tags = tags
+
+        this.setState({
+            form: form
+        })
+    }
     render() {
         return (
             <div className="createDateDiv">
@@ -69,7 +141,7 @@ class NewActivityForm extends Component {
                             </Col>
                         </Row>
 
-                        <div class='forms'>
+                        <div className='forms'>
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -83,9 +155,13 @@ class NewActivityForm extends Component {
                                         value={this.state.form.title}
                                         onChange={this.handleChange.bind(this)}
                                     />
+                                    {/*
                                     {this.errorsFor('title') &&
-                                    <HelpBlock id="title-help-block">{this.errorFor('title')}</HelpBlock>
-                                }
+                                    <HelpBlock
+                                    id="title-help-block">{this.errorFor('title')}</HelpBlock>
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
@@ -105,9 +181,13 @@ class NewActivityForm extends Component {
                                         value={this.state.form.description}
                                         onChange={this.handleChange.bind(this)}
                                     />
+
+                                    {/*
                                     {this.errorsFor('description') &&
                                     <HelpBlock id="description-help-block">{this.errorFor('description')}</HelpBlock>
-                                }
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
@@ -129,21 +209,20 @@ class NewActivityForm extends Component {
                                     >
 
                                     <option value="location">Location</option>
-                                    <option value="pacific_beach">Pacific Beach</option>
-                                    <option value="downtown">Downtown</option>
-                                    <option value="point_loma">Point Loma</option>
-                                    <option value="north_park">North Park</option>
+
+                                    {this.createLocations()}
 
                                     </FormControl>
 
-
+                                    {/*}
                                     {this.errorsFor('location') &&
                                     <HelpBlock id="location-help-block">{this.errorFor('location')}</HelpBlock>
-                                }
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
-
 
                             <Row>
                                 <Col xs={10} xsOffset={1}>
@@ -168,7 +247,7 @@ class NewActivityForm extends Component {
                                     </FormControl>
 
                                     {this.errorsFor('cost') &&
-                                    <HelpBlock id="cost-help-block">{this.errorFor('cost')}</HelpBlock>
+                                    <HelpBlock id="cost-help-block">{this.errorsFor('cost')}</HelpBlock>
                                 }
                                 </FormGroup>
                                 </Col>
@@ -178,67 +257,18 @@ class NewActivityForm extends Component {
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
                                     id = "tags-form-group"
-                                    validationState = {this.errorsFor('cost') && 'error'}>
+                                    validationState = {this.errorsFor('tags') && 'error'}>
                                     <ControlLabel id="tag">Tags</ControlLabel>
                                     <br/>
-                                    <Checkbox
 
-                                        inline
-                                        type="checkbox"
-                                        name="1"
-                                        value={this.state.form.tags}
-                                        onChange={this.handleChange.bind(this)}
-                                    > Romantic
-                                    </Checkbox>
+                                    {this.createTagCheckboxes()}
 
-                                    <Checkbox
-                                        inline
-                                        type="checkbox"
-                                        name="2"
-                                        value={this.state.form.tags}
-                                        onChange={this.handleChange.bind(this)}
-                                    > Outdoors
-                                    </Checkbox>
+                                    {/*}
+                                    {this.errorsFor('tags') &&
+                                    <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>
+                                    }
+                                    */}
 
-                                    <Checkbox
-                                        inline
-                                        type="checkbox"
-                                        name="3"
-                                        value={this.state.form.tags}
-                                        onChange={this.handleChange.bind(this)}
-                                    > Thrilling
-                                    </Checkbox>
-
-                                    <Checkbox
-                                        inline
-                                        type="checkbox"
-                                        name="4"
-                                        value={this.state.form.tags}
-                                        onChange={this.handleChange.bind(this)}
-                                    > Morning
-                                    </Checkbox>
-
-                                    <Checkbox
-                                        inline
-                                        type="checkbox"
-                                        name="5"
-                                        value={this.state.form.tags}
-                                        onChange={this.handleChange.bind(this)}
-                                    > Afternoon
-                                    </Checkbox>
-
-                                    <Checkbox
-                                        inline
-                                        type="checkbox"
-                                        name="6"
-                                        value={this.state.form.tags}
-                                        onChange={this.handleChange.bind(this)}
-                                    > Evening
-                                    </Checkbox>
-
-                                    {this.errorsFor('cost') &&
-                                    <HelpBlock id="cost-help-block">{this.errorFor('tags')}</HelpBlock>
-                                }
                                 </FormGroup>
                                 </Col>
                             </Row>
@@ -256,7 +286,7 @@ class NewActivityForm extends Component {
                                         onChange={this.handleChange.bind(this)}
                                     />
                                     {this.errorsFor('cost') &&
-                                    <HelpBlock id="cost-help-block">{this.errorFor('images')}</HelpBlock>
+                                    <HelpBlock id="cost-help-block">{this.errorsFor('images')}</HelpBlock>
                                 }
                                 </FormGroup>
                                 </Col>
