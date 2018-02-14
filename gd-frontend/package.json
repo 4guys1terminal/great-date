@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "express-session": "^1.15.6",
     "bootstrap": "4.0.0",
     "react": "^16.0.0",
     "react-bootstrap": "^0.32.1",

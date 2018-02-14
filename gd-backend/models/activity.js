@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
           through: models.ActivityTag,
          })
       }
-    }
-  });
+    });
   return Activity;
 };
