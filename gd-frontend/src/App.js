@@ -8,8 +8,13 @@ import LogInPage from './pages/log-in-page.js';
 import SignUpPage from './pages/sign-up-page.js';
 import LoggedInPage from './pages/logged-in-page.js';
 import { BrowserRouter as Router, Redirect } from 'react-router-dom';
+import AllDatesPage from './pages/all-dates-page.js';
+import DatePage from './pages/date-page.js';
+import NewDatePage from './pages/new-activity-page.js';
+import NewActivitySuccess from './pages/new-activity-success.js';
 
 const API = "http://localhost:3000";
+
 
 class App extends Component {
     constructor(props) {
@@ -19,13 +24,8 @@ class App extends Component {
             newUserSuccess: false,
             errors: null
         };
-import AllDatesPage from './pages/all-dates-page.js';
-import DatePage from './pages/date-page.js';
-import NewDatePage from './pages/new-activity-page.js';
-import NewActivitySuccess from './pages/new-activity-success.js';
-
-
-class App extends Component {
+    }
+    
     render() {
         return (
             <HashRouter>
