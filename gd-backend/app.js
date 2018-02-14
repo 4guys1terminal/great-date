@@ -52,6 +52,29 @@ app.post('/activities', (req, res) => {
                 res.json({activity: activity})
                 // console.log(activity)
             })
+
+            Activity.max('id').then(max => {
+                tags = Object.keys(req.body.tags)
+                console.log(tags);
+                var tagArr = []
+                for (i = 0; i < tags.length; i++) {
+
+                    tagArr.push({
+                        ActivityId: max + 1,
+                        TagId: tags[i]
+                    })
+                }
+
+                ActivityTag.bulkCreate(tagArr).then(() => {
+                    return ActivityTag.findAll();
+                }).then(activityTags => {
+                    // console.log(activityTags);
+                })
+                console.log(tagArr);
+
+            })
+
+
         } else {
             res.status(400)
             res.json({
@@ -60,27 +83,6 @@ app.post('/activities', (req, res) => {
                 }
             })
         }
-    })
-
-    Activity.max('id').then(max => {
-        tags = Object.keys(req.body.tags)
-        console.log(tags);
-        var tagArr = []
-        for (i = 0; i < tags.length; i++) {
-
-            tagArr.push({
-                ActivityId: max + 1,
-                TagId: tags[i]
-            })
-        }
-
-        ActivityTag.bulkCreate(tagArr).then(() => {
-            return ActivityTag.findAll();
-        }).then(activityTags => {
-            // console.log(activityTags);
-        })
-        console.log(tagArr);
-
     })
 
 })
