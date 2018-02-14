@@ -16,6 +16,7 @@ class Grid extends Component {
                 id={activity.id}
                 image={activity.image}
                 title={activity.title}
+                description={activity.description}
                 />
             )
         })

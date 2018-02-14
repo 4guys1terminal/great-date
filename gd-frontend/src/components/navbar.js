@@ -6,10 +6,16 @@ class Navigation extends Component {
     render() {
         return (
             <div>
-                <nav class="navbar">
-                    <div class="logo"><a href="#">Great Date</a></div>
+                <nav className="navbar">
+                    <div className="logo">
+                        <Link
+                            to='/'
+                            id='home-nav'
+                            className='nav-btn1'
+                            >[Logo] Great Date</Link>
+                    </div>
 
-                    <div class="nav-buttons">
+                    <div className="nav-buttons">
                         <Link
                             to='/'
                             id='home-nav'

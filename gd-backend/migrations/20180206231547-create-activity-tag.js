@@ -8,12 +8,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      activity_id: {
-        type: Sequelize.INTEGER
+      ActivityId: {
+        type: Sequelize.INTEGER,
+        references: { model: 'Activities', key: 'id' },
+        onDelete: 'CASCADE'
       },
-      tag_id: {
-        type: Sequelize.INTEGER
-      },
+      TagId: {
+      type: Sequelize.INTEGER,
+      references: { model: 'Tags', key: 'id' },
+      onDelete: 'CASCADE'
+    },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
