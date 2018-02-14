@@ -6,6 +6,8 @@ var app = express();
 
 var User = require('./models').User;
 var Activity = require('./models').Activity;
+var Tags = require('./models').Tag;
+var ActivityTag = require('./models').ActivityTag;
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -31,6 +33,13 @@ app.get('/activities/:id', (req, res) => {
         res.json({activity: activity});
     });
 });
+
+app.get('/tags', (req, res) => {
+    Tags.findAll().then( (tags) =>{
+        res.json({tags: tags})
+    })
+})
+
 
 // post route for creating activities
 // post route for creating activities

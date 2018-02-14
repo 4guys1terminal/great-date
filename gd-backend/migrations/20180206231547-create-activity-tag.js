@@ -10,12 +10,10 @@ module.exports = {
       },
       ActivityId: {
         type: Sequelize.INTEGER,
-        references: { model: 'Activities', key: 'id' },
         onDelete: 'CASCADE'
       },
       TagId: {
       type: Sequelize.INTEGER,
-      references: { model: 'Tags', key: 'id' },
       onDelete: 'CASCADE'
     },
       createdAt: {
