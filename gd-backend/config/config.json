@@ -1,20 +1,32 @@
 {
   "development": {
+<<<<<<< HEAD
     "username": "kevin",
+=======
+    "username": "jakeparolin",
+>>>>>>> master
     "password": null,
     "database": "great-date",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
+<<<<<<< HEAD
     "username": "kevin",
+=======
+    "username": "jakeparolin",
+>>>>>>> master
     "password": null,
     "database": "great-date",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
+<<<<<<< HEAD
     "username": "kevin",
+=======
+    "username": "jakeparolin",
+>>>>>>> master
     "password": null,
     "database": "great-date",
     "host": "127.0.0.1",

@@ -1,40 +1,31 @@
-body{
+body {
   text-align: center;
+  box-sizing: border-box;
+  margin: 0;
 }
 
-ul{
+ul {
   list-style-type: none;
   text-align:center;
 }
 
-li{
+li {
   display:inline-block;
 }
 
-.container{
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
-}
-
-.thumbnails{
+.thumbnails {
+  display:block;
   width: 300px;
   height: 300px;
   object-fit: cover;
   border: 2px solid white;
 }
 
-.datePreview{
+.datePreview {
   width: 300px;
   height: 300px;
   object-fit: cover;
   border: 2px solid white;
-}
-
-.thumbnails:hover {
-  cursor: pointer;
-  border: 4px solid gray;
 }
 
 .activityPic {
@@ -43,7 +34,7 @@ li{
   object-fit: cover;
 }
 
-.date-page{
+.date-page {
   margin-top: 25px;
   margin-left: 30%;
   margin-right: 30%;
@@ -53,16 +44,55 @@ li{
 
 }
 
-.back-button{
+.back-button {
   height: 45px;
   width: 200px;
   border-radius: 8px;
   margin-bottom: 15px;
 }
 
+.newActivityButton {
+    margin: 40px;
+
+}
+
+.createDateForm {
+    margin: auto;
+    width: 800px;
+}
+
+#image-form-group {
+
+}
+
+.createDateDiv {
+    width:100%;
+}
+
+.createDateDiv form {
+    display:inline-block;
+}
+
+.previewCard {
+    border: 1px solid rgba(64, 153, 180, 0.25);
+    padding: 10px;
+}
+
+input[type=file] {
+    margin: 0 auto;
+}
+
+.image-upload-div {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.image-preview {
+    width: 300px;
+}
+
 /**************** Navbar ****************/
-
-
 
 
 .navbar {
@@ -96,12 +126,7 @@ a {
 }
 
 
-
-
 /**************** Title ****************/
-
-
-
 
 
 .title {
@@ -111,9 +136,7 @@ a {
 }
 
 
-
 /**************** Title-Button ****************/
-
 
 
 .date-btn-contain {
@@ -139,8 +162,6 @@ a {
 /**************** Browse Dates ****************/
 
 
-
-
 .line-contain {
   margin: auto;
   width: 80%;
@@ -163,6 +184,7 @@ a {
 
 .see-more-contain {
   text-align: center;
+  margin: 20px;
 }
 
 .see-more-btn {
@@ -179,44 +201,7 @@ a {
   cursor: pointer;
 }
 
-
-
-/**************** Grid ****************/
-
-
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 250px;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-  margin-left: 3%;
-  margin-right: 3%;
-}
-
-.one {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: -50px;
-}
-
-.two {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: -50px;
-}
-
-.three {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: -50px;
-}
-
-
-
 /**************** Login ****************/
-
 
 
 .login-wrapper {
@@ -332,10 +317,7 @@ a {
 }
 
 
-
 /**************** SignUp ****************/
-
-
 
 
 .signup-wrapper {
@@ -449,3 +431,120 @@ a {
   font-weight: bold;
   color: rgb(160, 153, 153);
 }
+
+/* Date image gallery flexbox */
+
+
+.container {
+    margin: auto;
+    max-width: 1200px;
+    padding: 0 1rem;
+}
+
+.responsive-image {
+    max-width: 100%;
+}
+
+.cell img {
+    display: block;
+}
+
+.cell {
+    margin: 1rem;
+}
+
+@media screen and (min-width: 600px) {
+    .grid {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+    }
+    .cell {
+        width: 50% - 2rem;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .cell {
+        width: calc((100% / 3) -2rem);
+    }
+}
+
+/* Float Shadow */
+.hvr-float-shadow {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+  position: relative;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+.hvr-float-shadow:before {
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  content: '';
+  top: 100%;
+  left: 5%;
+  height: 10px;
+  width: 90%;
+  opacity: 0;
+  background: -webkit-radial-gradient(center, ellipse, rgba(0, 0, 0, 0.35) 0%, transparent 80%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, transparent 80%);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform, opacity;
+  transition-property: transform, opacity;
+}
+.hvr-float-shadow:hover, .hvr-float-shadow:focus, .hvr-float-shadow:active {
+  -webkit-transform: translateY(-5px);
+  transform: translateY(-5px);
+  /* move the element up by 5px */
+}
+.hvr-float-shadow:hover:before, .hvr-float-shadow:focus:before, .hvr-float-shadow:active:before {
+  opacity: 1;
+  -webkit-transform: translateY(5px);
+  transform: translateY(5px);
+  /* move the element down by 5px (it will stay in place because it's attached to the element that also moves up 5px) */
+}
+
+
+
+/* Grow Shadow */
+.hvr-grow-shadow {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: box-shadow, transform;
+  transition-property: box-shadow, transform;
+}
+.hvr-grow-shadow:hover, .hvr-grow-shadow:focus, .hvr-grow-shadow:active {
+  box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0);
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+/* GLOW */
+/* .hvr-glow {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: box-shadow;
+  transition-property: box-shadow;
+}
+.hvr-glow:hover, .hvr-glow:focus, .hvr-glow:active {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+} */

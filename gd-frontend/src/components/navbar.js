@@ -7,7 +7,17 @@ class Navigation extends Component {
         return (
             <div>
                 <nav className="navbar">
+<<<<<<< HEAD
                     <div className="logo"><a href="#">Great Date</a></div>
+=======
+                    <div className="logo">
+                        <Link
+                            to='/'
+                            id='home-nav'
+                            className='nav-btn1'
+                            >[Logo] Great Date</Link>
+                    </div>
+>>>>>>> master
 
                     <div className="nav-buttons">
                         <Link

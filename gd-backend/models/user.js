@@ -1,4 +1,5 @@
 'use strict';
+<<<<<<< HEAD
 const crypto = require('crypto')
 const uuid = require('uuid/v1')
 
@@ -85,3 +86,21 @@ module.exports = function (sequelize, DataTypes) {
     });
   return User;
 };
+=======
+module.exports = (sequelize, DataTypes) => {
+    var User = sequelize.define('User', {
+        firstName: DataTypes.STRING,
+        lastName: DataTypes.STRING,
+        age: DataTypes.INTEGER,
+        email: DataTypes.STRING,
+        location: DataTypes.STRING
+    }, {
+        classMethods: {
+            associate: function(models) {
+                // associations can be defined here
+            }
+        }
+    });
+    return User;
+};
+>>>>>>> master

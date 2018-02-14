@@ -4,8 +4,9 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     location: DataTypes.STRING,
     title: DataTypes.STRING,
-    cost: DataTypes.INTEGER
+    cost: DataTypes.STRING
   }, {
+<<<<<<< HEAD
       classMethods: {
         associate: function (models) {
           Activity.belongsToMany(models.Tag, {
@@ -13,6 +14,13 @@ module.exports = (sequelize, DataTypes) => {
           });
           sequelize.sync()
         }
+=======
+    classMethods: {
+      associate: function(models) {
+        Activity.belongsToMany(models.Tag, {
+          through: models.ActivityTag,
+         })
+>>>>>>> master
       }
     });
   return Activity;

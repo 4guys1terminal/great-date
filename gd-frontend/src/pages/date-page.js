@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import logo from '../logo.svg';
 import '../App.css';
 import ActivitiesList from '../store/ActivitiesList.js';
 import DateInfo from '../components/date-info.js';
+import NavBar from '../components/navbar.js';
 
 class DatePage extends Component {
     constructor(props){
@@ -27,26 +27,32 @@ class DatePage extends Component {
 
     render() {
         return (
-            <div className="date-page">
-                <h1>{this.state.activity.title}</h1>
+            <div>
 
-                <img class="activityPic" src={`${this.state.activity.image}`} />
+                <NavBar/>
 
-                <h3>{this.state.activity.title}</h3>
+                <div className="date-page">
 
-                <DateInfo
-                    description={this.state.activity.description}
-                    location={this.state.activity.location}
-                    cost={this.state.activity.cost}
-                />
+                    <h1>{this.state.activity.title}</h1>
 
-                <Link
-                    to='/all-dates-page'
-                    id='all-dates-back'
-                    className='back-button'
-                    ><Button className="back-button" bsStyle="primary large">Back</Button>
-                </Link>
+                    <img class="activityPic" src={`${this.state.activity.image}`} alt="date"/>
 
+                    <h3>{this.state.activity.title}</h3>
+
+                    <DateInfo
+                        description={this.state.activity.description}
+                        location={this.state.activity.location}
+                        cost={this.state.activity.cost}
+                    />
+
+                    <Link
+                        to='/all-dates-page'
+                        id='all-dates-back'
+                        className='back-button'
+                        ><Button className="back-button" bsStyle="primary large">Back</Button>
+                    </Link>
+
+                </div>
             </div>
         );
     }

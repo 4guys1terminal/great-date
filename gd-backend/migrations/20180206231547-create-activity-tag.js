@@ -8,12 +8,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      activity_id: {
-        type: Sequelize.INTEGER
+      ActivityId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE'
       },
-      tag_id: {
-        type: Sequelize.INTEGER
-      },
+      TagId: {
+      type: Sequelize.INTEGER,
+      onDelete: 'CASCADE'
+    },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
