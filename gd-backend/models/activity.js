@@ -6,13 +6,22 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     cost: DataTypes.STRING
   }, {
+<<<<<<< HEAD
+      classMethods: {
+        associate: function (models) {
+          Activity.belongsToMany(models.Tag, {
+            through: 'ActivityTag'
+          });
+          sequelize.sync()
+        }
+=======
     classMethods: {
       associate: function(models) {
         Activity.belongsToMany(models.Tag, {
           through: models.ActivityTag,
          })
+>>>>>>> master
       }
-    }
-  });
+    });
   return Activity;
 };

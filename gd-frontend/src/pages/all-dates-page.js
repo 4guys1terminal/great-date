@@ -1,17 +1,71 @@
 import React, { Component } from 'react';
-import ActivitiesList from '../store/ActivitiesList.js';
+import ActivitiesList from '../store/ActivitiesList';
 import {Link} from 'react-router-dom';
+<<<<<<< HEAD
+import DatePreview from '../components/date-preview';
+import { Button } from 'react-bootstrap';
+import NavBar from '../components/navbar';
+import LoggedInNav from '../components/logged-in-navbar';
+=======
 import { Button } from 'react-bootstrap';
 import NavBar from '../components/navbar.js';
 import Grid from '../components/grid.js';
+>>>>>>> master
 
 class AllDatesPage extends Component {
     componentWillMount(){
-        this.setState({activities: ActivitiesList})
+        this.setState({activities: ActivitiesList});
 
     }
 
+    isUserLoggedIn() {
+        if (typeof localStorage.name === 'undefined') {
+            return < NavBar />;
+        } else {
+            return <LoggedInNav />;
+        }
+    }
+
     render() {
+<<<<<<< HEAD
+        let list = this.state.activities.map(function(activity){
+            return(
+                < DatePreview
+                id={activity.id}
+                image={activity.image}
+                title={activity.title}
+                />
+            );
+        });
+
+    return (
+        <div className="all-dates-page">
+
+            {this.isUserLoggedIn()}
+            
+            <h2>Browse All Dates</h2>
+
+            <br/>
+
+            <ul>
+                <li>tag options</li>
+                <br/>
+                <li>tag options</li>
+                <br/>
+                <li>tag options</li>
+            </ul>
+
+            <br/>
+
+            <ul className="container">
+              {list}
+            </ul>
+
+            <Link to='/activities/new'> <Button className="newActivity-button" bsStyle="primary large">Create New Date</Button> </Link>
+
+        </div>
+    );
+=======
         return (
             <div>
 
@@ -40,6 +94,7 @@ class AllDatesPage extends Component {
 
             </div>
         );
+>>>>>>> master
     }
 }
 

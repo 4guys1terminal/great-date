@@ -15,12 +15,24 @@ module.exports = {
         type: Sequelize.STRING
       },
       age: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
+      },
+      location: {
+        type: Sequelize.STRING,
       },
       email: {
         type: Sequelize.STRING
       },
-      location: {
+      encryptedPassword: {
+        type: Sequelize.STRING
+      },
+      authToken: {
+        type: Sequelize.STRING
+      },
+      authTokenExpiration: {
+        type: Sequelize.DATE
+      },
+      salt: {
         type: Sequelize.STRING
       },
       createdAt: {

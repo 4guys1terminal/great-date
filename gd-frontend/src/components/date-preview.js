@@ -4,6 +4,15 @@ import { Card, CardImg, CardText, CardBody,
   CardTitle, Button } from 'reactstrap';
 
 class DatePreview extends Component {
+<<<<<<< HEAD
+    constructor(props){
+        super(props);
+        this.state = {
+        };
+    }
+
+=======
+>>>>>>> master
     render() {
         return (
             <div className="date-preview hvr-grow-shadow">
