@@ -7,7 +7,6 @@ var app = express();
 var User = require('./models').User;
 var Activity = require('./models').Activity;
 
-
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(validator());
@@ -34,36 +33,63 @@ app.get('/activities/:id', (req, res) => {
 });
 
 // post route for creating activities
+// post route for creating activities
 app.post('/activities', (req, res) => {
+
     //sets up validation checks on all submit fields
-    req.checkBody('title', 'is required').notEmpty();
-    req.checkBody('description', 'is required').notEmpty();
-    req.checkBody('location', 'is required').notEmpty();
-    req.checkBody('cost', 'is required').notEmpty();
-    req.checkBody('tag', 'is required').notEmpty();
+    req.checkBody('title', 'is required').notEmpty()
+    req.checkBody('description', 'is required').notEmpty()
+    req.checkBody('location', 'is required').notEmpty()
+    req.checkBody('cost', 'is required').notEmpty()
+    // req.checkBody('tag','is required').notEmpty()
 
     // if there are no errors logged, then it allows the activity to be created
-    req.getValidationResult().then(validationErrors => {
+    req.getValidationResult().then((validationErrors) => {
         if (validationErrors.isEmpty()) {
-            Activity.create({title: req.body.title, description: req.body.description, location: req.body.location, cost: req.body.cost, tags: req.body.tags}).then(activity => {
-                res.status(201);
-                res.json({activity: activity});
-            });
+
+            Activity.create({title: req.body.title, description: req.body.description, location: req.body.location, cost: req.body.cost}).then((activity) => {
+                res.status(201)
+                res.json({activity: activity})
+                // console.log(activity)
+            })
         } else {
-            res.status(400);
+            res.status(400)
             res.json({
                 errors: {
                     validations: validationErrors.array()
                 }
-            });
+            })
         }
-    });
-});
+    })
+
+    Activity.max('id').then(max => {
+        tags = Object.keys(req.body.tags)
+        console.log(tags);
+        var tagArr = []
+        for (i = 0; i < tags.length; i++) {
+
+            tagArr.push({
+                ActivityId: max + 1,
+                TagId: tags[i]
+            })
+        }
+
+        ActivityTag.bulkCreate(tagArr).then(() => {
+            return ActivityTag.findAll();
+        }).then(activityTags => {
+            // console.log(activityTags);
+        })
+        console.log(tagArr);
+
+    })
+
+})
 
 // put route for editing activities
 app.put('/activities/edit/:id', (req, res) => {
     const {name, content} = req.params;
     let id = parseInt(req.params.id);
+    x
 
     Activity.findById(id).then(page => {
         Activity.update({
@@ -82,15 +108,5 @@ app.put('/activities/edit/:id', (req, res) => {
         });
     });
 });
-
-// NOTE: Decoding base64 image
-
-
-// one attempt:
-// var fs = require("fs");
-//
-//   fs.writeFile("arghhhh.jpg", new Buffer(request.body.photo, "base64"), function(err) {});
-
-
 
 module.exports = app;
