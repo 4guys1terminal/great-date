@@ -16,7 +16,7 @@ class DatePreview extends Component {
 
                             <CardBody>
                                 <CardTitle className='cardTitle'>{this.props.title}</CardTitle>
-                                <Link to={`/activities/${this.props.id}`}><Button color="info">The Details</Button></Link>
+                                <Button color="info">The Details</Button>
                             </CardBody>
                         </Card>
 

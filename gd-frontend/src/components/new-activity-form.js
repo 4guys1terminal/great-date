@@ -62,8 +62,13 @@ class NewActivityForm extends Component {
 
 
     handleSubmit() {
-        console.log(this.state.form);
-        this.props.onSubmit(this.state.form);
+        let { form } = this.state
+
+        form.cost = parseFloat(form.cost)
+
+        console.log(form)
+
+        this.props.onSubmit(form)
     }
 
 
@@ -132,6 +137,10 @@ class NewActivityForm extends Component {
         })
     }
 
+// borderline positive that this function and the onDrop() function below it
+// can be cut down a bit by merging this filesToBeSent step with the encoding
+// step. will take a look at down the line (as it works fine for now)
+// - JD 2/14/2018
 
     handleClear(event,index){
         var filesToBeSent=this.state.filesToBeSent;
@@ -145,30 +154,35 @@ class NewActivityForm extends Component {
 
 
     onDrop = (acceptedFiles,rejectedFiles) => {
-        var filesToBeSent = this.state.filesToBeSent
+        let { filesToBeSent, imagesAllowed, form } = this.state
 
         // sending all accepted files to state as filesToBeSent
-        if(filesToBeSent.length < this.state.imagesAllowed) {
+        if(filesToBeSent.length < imagesAllowed) {
             filesToBeSent.push(acceptedFiles);
-            this.setState({filesToBeSent});
         } else {
             alert("Please, only one image per date.")
         }
 
-        //converting the filesToBeSent into base64
-        const form = this.state.form
-        var imageBase64 = form.imageFile
-
         filesToBeSent.forEach(image => {
-            const reader = new FileReader();
-            reader.readAsDataURL(image[0])
+            const reader = new FileReader()
+
+            // register the handlers
             reader.onload = () => {
-                imageBase64.push(reader.result)
-            };
-            reader.onabort = () => console.log('image reading was aborted');
-            reader.onerror = () => console.log('image reading has failed');
+                form.imageFile.push(reader.result)
+            }
+            reader.onabort = () => console.log('image reading was aborted')
+            reader.onerror = () => console.log('image reading has failed')
+            // end register
+
+            reader.readAsDataURL(image[0])
         })
-        this.setState({imageFile: imageBase64})
+
+        console.log(form)
+
+        this.setState({
+            form: form,
+            filesToBeSent: filesToBeSent
+        })
     }
 
 
@@ -189,7 +203,10 @@ class NewActivityForm extends Component {
 
                         <div className='forms'>
 
-                        {/* All form inputs labeled and minimized because DAMN that's a lot of code. Highly consider componentizing each of these form inputs out in the future.*/}
+                        {/*
+                         Highly consider componentizing each of these form inputs out in the future.
+                        - JD 2/12/2018
+                        */}
 
                         {/*Title*/}
                             <Row>
@@ -288,10 +305,10 @@ class NewActivityForm extends Component {
                                       name="cost"
                                       onChange={this.handleChange.bind(this)}
                                       options={[
-                                        ['free', 'Free'],
-                                        ['$', '$'],
-                                        ['$$', '$$'],
-                                        ['$$$', '$$$']
+                                        ['0', 'Free'],
+                                        ['0.33', '$'],
+                                        ['0.66', '$$'],
+                                        ['1', '$$$']
                                       ]}
 
                                       value={this.state.form.cost}

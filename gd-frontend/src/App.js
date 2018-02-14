@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import './App.css';
 import { HashRouter, Route, Switch} from 'react-router-dom';
-import ScrollToTop from './components/scroll-to-top.js';
 
 import Home from './pages/home.js';
 import LogInPage from './pages/log-in-page.js';
 import SignUpPage from './pages/sign-up-page.js';
 import LoggedInPage from './pages/logged-in-page.js';
-import { BrowserRouter as Router, Redirect } from 'react-router-dom';
 import AllDatesPage from './pages/all-dates-page.js';
 import DatePage from './pages/date-page.js';
 import NewDatePage from './pages/new-activity-page.js';
 import NewActivitySuccess from './pages/new-activity-success.js';
+import ScrollToTop from './components/scroll-to-top.js';
 
+
+// will need to update this to the actual API once we change things up
 const API = "http://localhost:3000";
-
 
 class App extends Component {
     constructor(props) {
@@ -25,7 +25,7 @@ class App extends Component {
             errors: null
         };
     }
-    
+
     render() {
         return (
             <HashRouter>

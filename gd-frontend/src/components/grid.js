@@ -13,6 +13,7 @@ class Grid extends Component {
         let list = this.state.activities.map(function(activity){
             return(
                 < DatePreview
+                key={activity.id}
                 id={activity.id}
                 image={activity.image}
                 title={activity.title}

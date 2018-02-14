@@ -26,7 +26,7 @@ class AllDatesPage extends Component {
         return (
             <div>
                 {this.isUserLoggedIn()}
-                
+
                 <div className="all-dates-page">
 
                     <h2>Browse All Dates</h2>
@@ -45,7 +45,7 @@ class AllDatesPage extends Component {
 
                     <Grid />
 
-                    <Link to='/new-activity'> <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button> </Link>
+                <Link to='/new-activity'> <Button className="newActivityButton" bsStyle="primary" bsSize="large">Create New Date</Button> </Link>
                 </div>
 
             </div>
