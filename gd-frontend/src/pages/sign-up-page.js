@@ -57,17 +57,10 @@ handleNewUser(params) {
     render() {
         return (
             <div>
-<<<<<<< HEAD
                 <NavBar />
                 <SignUp onSubmit = { this.handleNewUser.bind(this) } />
                     {this.state.newUserSuccess ? <Redirect to={"/logged-in-page"} /> : null}
                     {this.state.newUserSuccess ? localStorage.setItem('name', this.state.form.email) : null}
-=======
-                < NavBar />
-                    <div className="signup-page">
-                        < SignUp />
-                    </div>
->>>>>>> master
             </div>
         );
     }

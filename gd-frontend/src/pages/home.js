@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import '../App.css';
-<<<<<<< HEAD
+import NavBar from '../components/navbar.js';
+import TitleBlock from '../components/title-block.js';
+import Grid from '../components/grid.js';
+import ReactDOM from "react-dom";
+import {Button} from 'reactstrap';
+import {Link} from 'react-router-dom';
 import Navigation from '../components/navbar';
 import Title from '../components/title';
 import TitleButton from '../components/title-button';
@@ -13,38 +18,18 @@ import LoggedInNav from '../components/logged-in-navbar';
 
 class Home extends Component {
 
-isUserLoggedIn() {
-  if (typeof localStorage.name === 'undefined') {
-    return < Navigation />;
-  } else {
-    return < LoggedInNav />;
-  }
-}
+    isUserLoggedIn() {
+      if (typeof localStorage.name === 'undefined') {
+        return < Navigation />;
+      } else {
+        return < LoggedInNav />;
+      }
+    }
 
-  render() {
-
-    return (
-      <div>
-        {this.isUserLoggedIn()}
-        <Title />
-        <TitleButton />
-        <BrowseDate />
-        <Grid />
-        <SeeMoreBtn />
-      </div>
-    );
-  }
-=======
-import NavBar from '../components/navbar.js';
-import TitleBlock from '../components/title-block.js';
-import Grid from '../components/grid.js';
-import ReactDOM from "react-dom";
-import {Button} from 'reactstrap';
-import {Link} from 'react-router-dom'
-
-class Home extends Component {
     render() {
         return (<div className='home'>
+
+            {this.isUserLoggedIn()}
 
             < NavBar/>
 
@@ -77,7 +62,6 @@ class Home extends Component {
 
         </div>);
     }
->>>>>>> master
 }
 
 export default Home;

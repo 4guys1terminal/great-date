@@ -7,10 +7,7 @@ var app = express();
 var Tag = require('./models').Tag
 var User = require('./models').User;
 var Activity = require('./models').Activity;
-<<<<<<< HEAD
-=======
 var Tags = require('./models').Tag;
->>>>>>> master
 var ActivityTag = require('./models').ActivityTag;
 
 app.use(express.static('public'));
@@ -18,7 +15,6 @@ app.use(bodyParser.json());
 app.use(validator());
 app.use(cors());
 
-<<<<<<< HEAD
 // authorization token
 const authorization = (req, res, next) => {
     const token = req.query.authToken || req.body.authToken;
@@ -41,25 +37,16 @@ const authorization = (req, res, next) => {
 }
 
 // uncertain if we need this 'home' route, may just be a '/'
-=======
->>>>>>> master
 app.get('/', (req, res) => {
     res.json({message: 'API example app'});
 });
 
 // displays activities w/ raw json activities page
 app.get('/activities', (req, res) => {
-<<<<<<< HEAD
-    Activity.findAll().then( (activities) => {
-        res.json({activities: activities})
-    })
-})
-=======
     Activity.findAll().then(activities => {
         res.json({activities: activities});
     });
 });
->>>>>>> master
 
 // displays specific activity by ID
 app.get('/activities/:id', (req, res) => {
@@ -76,7 +63,6 @@ app.get('/tags', (req, res) => {
     })
 })
 
-<<<<<<< HEAD
 app.get('/users',(req, res) => {
     User.findAll().then(users => {
         res.json({ users: users })
@@ -111,10 +97,6 @@ app.post('/users', (req, res) => {
         })
 })
 
-=======
-
-// post route for creating activities
->>>>>>> master
 // post route for creating activities
 app.post('/activities', (req, res) => {
 
@@ -225,7 +207,6 @@ app.put('/activities/edit/:id', (req, res) => {
     });
 });
 
-<<<<<<< HEAD
 // runs authorization check, responds with JSON to current user
 app.get('/login',
     authorization,
@@ -233,19 +214,5 @@ app.get('/login',
         res.json({ user: request.currentUser })
     })
 
-app.post('/activity/new', (req, res) => {
-  Activity.create({
-    title: req.body.title,
-    cost: req.body.cost,
-    location: req.body.location,
-    description: req.body.description
-  }).then((activity)=>{
-    res.status(201)
-    res.json({activity: activity})
-  })
-})
 
 module.exports = app
-=======
-module.exports = app;
->>>>>>> master
