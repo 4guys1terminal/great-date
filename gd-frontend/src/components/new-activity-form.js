@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { HashRouter, Route, Switch} from 'react-router-dom';
 import {
     Col,
     ControlLabel,
     FormGroup,
     FormControl,
     Button,
+    ButtonGroup,
     Row,
     HelpBlock,
     Alert,
+    Radio,
     Checkbox
 } from 'react-bootstrap';
-import NavBar from '../components/navbar.js';
+import RadioGroup from './radio-group.js';
+import Dropzone from 'react-dropzone';
+
 
 
 class NewActivityForm extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             form: {
@@ -24,33 +27,148 @@ class NewActivityForm extends Component {
                 description: '',
                 location: '',
                 cost: '',
-                tags: '',
-                image: ''
-            }
+                tags: {},
+                imageFile: []
+            },
+            filesToBeSent:[],
+            imagesAllowed: 1,
+            locationExamples: [
+                {id: 1, value: 'pacific_beach', title: 'Pacific Beach'},
+                {id: 2, value: 'downtown', title: 'Downtown'},
+                {id: 3, value: 'point_loma', title: 'Point Loma'},
+                {id: 4, value: 'north_park', title: 'North Park'},
+                {id: 5, value: 'la_jolla', title: 'La Jolla'}
+            ],
+            tagExamples: [
+                {id: 1, title: 'Romantic'},
+                {id: 2, title: 'Thrilling'},
+                {id: 3, title: 'Morning'},
+                {id: 4, title: 'Afternoon'},
+                {id: 5, title: 'Evening'},
+                {id: 6, title: 'Outdoors'},
+            ]
         }
     }
 
-    handleChange(event){
-        const formState = Object.assign({}, this.state.form)
-        formState[event.target.name] = event.target.value
-        this.setState({form: formState})
+    handleChange(e) {
+        const { form } = this.state
+
+        form[e.target.name] = e.target.value
+
+        this.setState({
+            form: form
+        })
     }
 
-    // need to attach this new activity component somewhere
-    handleSubmit(){
-        this.props.onSubmit(this.state.form)
+
+    handleSubmit() {
         console.log(this.state.form);
+        this.props.onSubmit(this.state.form);
     }
 
-    errorsFor(attribute){
-        var errorString = ''
-        if(this.props.errors){
+
+    errorsFor(attribute) {
+        var errorString = "";
+        if(this.props.errors) {
             const errors = this.props.errors.filter(error => error.param === attribute)
-            if(errors){
+            if(errors) {
                 errorString = errors.map(error => error.msg ).join(", ")
             }
         }
         return errorString === "" ? null : errorString
+    }
+
+
+    createLocation = (location) => {
+        return(
+            <option
+                value={location.value}
+                key={location.id}>
+            {location.title}
+            </option>
+        )
+    }
+
+
+    createLocations = () => {
+        return this.state.locationExamples.map((location) => {
+            return this.createLocation(location)
+        })
+    }
+
+
+    createTagCheckbox = (tag) => {
+        return (
+            <Checkbox
+                inline
+                type="checkbox"
+                key={tag.id}
+                name={tag.title}
+                value={tag.id}
+                onChange={this.toggleCheckbox.bind(this, tag.id)}>
+                    {tag.title}
+            </Checkbox>
+        )
+    }
+
+
+    createTagCheckboxes = () => {
+        return this.state.tagExamples.map((tag) => {
+            return this.createTagCheckbox(tag)
+        })
+    }
+
+
+    toggleCheckbox = (tagID, e) => {
+        const { form } = this.state
+        const { tags } = form
+
+        tags[tagID] = e.target.checked
+
+        form.tags = tags
+
+        this.setState({
+            form: form
+        })
+    }
+
+
+    handleClear(event,index){
+        var filesToBeSent=this.state.filesToBeSent;
+        filesToBeSent.splice(index,1);
+
+        var imageFile=this.state.form.imageFile;
+        imageFile.splice(index,1)
+
+        this.setState({filesToBeSent,imageFile});
+    }
+
+
+    onDrop = (acceptedFiles,rejectedFiles) => {
+        var filesToBeSent = this.state.filesToBeSent
+
+        // sending all accepted files to state as filesToBeSent
+        if(filesToBeSent.length < this.state.imagesAllowed) {
+            filesToBeSent.push(acceptedFiles);
+            this.setState({filesToBeSent});
+        } else {
+            alert("Please, only one image per date.")
+        }
+
+        //converting the filesToBeSent into base64
+        const form = this.state.form
+        var imageBase64 = form.imageFile
+
+        filesToBeSent.forEach(image => {
+            const reader = new FileReader();
+            reader.readAsDataURL(image[0])
+            reader.onload = () => {
+                imageBase64.push(reader.result)
+            };
+            reader.onabort = () => console.log('image reading was aborted');
+            reader.onerror = () => console.log('image reading has failed');
+        })
+        this.setState({imageFile: imageBase64})
     }
 
 
@@ -69,7 +187,11 @@ class NewActivityForm extends Component {
                             </Col>
                         </Row>
 
-                        <div class='forms'>
+                        <div className='forms'>
+
+                        {/* All form inputs labeled and minimized because DAMN that's a lot of code. Highly consider componentizing each of these form inputs out in the future.*/}
+
+                        {/*Title*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -83,14 +205,18 @@ class NewActivityForm extends Component {
                                         value={this.state.form.title}
                                         onChange={this.handleChange.bind(this)}
                                     />
+                                    {/*
                                     {this.errorsFor('title') &&
-                                    <HelpBlock id="title-help-block">{this.errorFor('title')}</HelpBlock>
-                                }
+                                    <HelpBlock
+                                    id="title-help-block">{this.errorFor('title')}</HelpBlock>
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
 
-
+                        {/*Description*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -105,14 +231,18 @@ class NewActivityForm extends Component {
                                         value={this.state.form.description}
                                         onChange={this.handleChange.bind(this)}
                                     />
+
+                                    {/*
                                     {this.errorsFor('description') &&
                                     <HelpBlock id="description-help-block">{this.errorFor('description')}</HelpBlock>
-                                }
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
 
-
+                        {/*Location*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -129,148 +259,141 @@ class NewActivityForm extends Component {
                                     >
 
                                     <option value="location">Location</option>
-                                    <option value="pacific_beach">Pacific Beach</option>
-                                    <option value="downtown">Downtown</option>
-                                    <option value="point_loma">Point Loma</option>
-                                    <option value="north_park">North Park</option>
+
+                                    {this.createLocations()}
 
                                     </FormControl>
 
-
+                                    {/*}
                                     {this.errorsFor('location') &&
                                     <HelpBlock id="location-help-block">{this.errorFor('location')}</HelpBlock>
-                                }
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
 
-
+                        {/*Cost*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
                                     id = "cost-form-group"
                                     validationState = {this.errorsFor('cost') && 'error'}>
-                                    <ControlLabel id="cost">Cost</ControlLabel>
-                                    <FormControl
-                                        componentClass="select"
-                                        placeholder="Average Cost"
-                                        name="cost"
-                                        value={this.state.form.cost}
-                                        onChange={this.handleChange.bind(this)}
-                                    >
+                                    <ControlLabel id="cost">Average Cost</ControlLabel>
 
-                                    <option value="avg_cost">Average Cost</option>
-                                    <option value="free">Free</option>
-                                    <option value="$">$</option>
-                                    <option value="$$">$$</option>
-                                    <option value="$$$">$$$</option>
+                                    <br/>
 
-                                    </FormControl>
+                                    <RadioGroup
+                                      name="cost"
+                                      onChange={this.handleChange.bind(this)}
+                                      options={[
+                                        ['free', 'Free'],
+                                        ['$', '$'],
+                                        ['$$', '$$'],
+                                        ['$$$', '$$$']
+                                      ]}
+
+                                      value={this.state.form.cost}
+                                    />
+
+
+                                    {/*
 
                                     {this.errorsFor('cost') &&
                                     <HelpBlock id="cost-help-block">{this.errorFor('cost')}</HelpBlock>
-                                }
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
 
+                        {/*Tags*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
                                     id = "tags-form-group"
-                                    validationState = {this.errorsFor('cost') && 'error'}>
+                                    validationState = {this.errorsFor('tags') && 'error'}>
                                     <ControlLabel id="tag">Tags</ControlLabel>
                                     <br/>
-                                    <Checkbox
 
-                                        inline
-                                        type="checkbox"
-                                        name="1"
-                                        value={this.state.form.tags}
-                                        onChange={this.handleChange.bind(this)}
-                                    > Romantic
-                                    </Checkbox>
+                                    {this.createTagCheckboxes()}
 
-                                    <Checkbox
-                                        inline
-                                        type="checkbox"
-                                        name="2"
-                                        value={this.state.form.tags}
-                                        onChange={this.handleChange.bind(this)}
-                                    > Outdoors
-                                    </Checkbox>
+                                    {/*}
+                                    {this.errorsFor('tags') &&
+                                    <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>
+                                    }
+                                    */}
 
-                                    <Checkbox
-                                        inline
-                                        type="checkbox"
-                                        name="3"
-                                        value={this.state.form.tags}
-                                        onChange={this.handleChange.bind(this)}
-                                    > Thrilling
-                                    </Checkbox>
-
-                                    <Checkbox
-                                        inline
-                                        type="checkbox"
-                                        name="4"
-                                        value={this.state.form.tags}
-                                        onChange={this.handleChange.bind(this)}
-                                    > Morning
-                                    </Checkbox>
-
-                                    <Checkbox
-                                        inline
-                                        type="checkbox"
-                                        name="5"
-                                        value={this.state.form.tags}
-                                        onChange={this.handleChange.bind(this)}
-                                    > Afternoon
-                                    </Checkbox>
-
-                                    <Checkbox
-                                        inline
-                                        type="checkbox"
-                                        name="6"
-                                        value={this.state.form.tags}
-                                        onChange={this.handleChange.bind(this)}
-                                    > Evening
-                                    </Checkbox>
-
-                                    {this.errorsFor('cost') &&
-                                    <HelpBlock id="cost-help-block">{this.errorFor('tags')}</HelpBlock>
-                                }
                                 </FormGroup>
                                 </Col>
                             </Row>
 
+                        {/*Image*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
                                     id = "image-form-group"
-                                    validationState = {this.errorsFor('cost') && 'error'}>
+                                    validationState = {this.errorsFor('image') && 'error'}>
                                     <ControlLabel id="image">Image</ControlLabel>
-                                    <FormControl
-                                        type="file"
-                                        name="images"
-                                        value={this.state.form.images}
-                                        onChange={this.handleChange.bind(this)}
-                                    />
-                                    {this.errorsFor('cost') &&
-                                    <HelpBlock id="cost-help-block">{this.errorFor('images')}</HelpBlock>
-                                }
+
+                                    <div className="image-upload-div">
+                                        <Dropzone
+                                            accept='image/*'
+                                            onDrop={(files) => {
+                                                this.onDrop(files)
+                                            }}
+                                        >
+                                            <div>
+                                            <p>Try dropping some files here, or click me to select files to upload.</p>
+                                            <p>(Only image files will be accepted.)</p>
+                                             </div>
+                                        </Dropzone>
+                                    </div>
+
+                                    <div>
+                                        File Preview:
+
+                                        {this.state.filesToBeSent.map((image, index) => {
+                                            return (
+                                                <div
+                                                    key={index}
+                                                >
+                                                    <img src={image[0].preview} className="image-preview"/>
+                                                    <p> {image[0].name} </p>
+                                                    <br/>
+                                                    <Button onClick={(event) =>
+                                                    this.handleClear(event)}>
+                                                        Clear
+                                                    </Button>
+                                                </div>
+                                            )
+                                        })}
+
+                                    </div>
+
+
+                                    {/*
+                                    {this.errorsFor('image') &&
+                                    <HelpBlock id="image-help-block">{this.errorFor('images')}</HelpBlock>
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
 
+
                             <Row>
                                 <Col xs={10} xsOffset={1}>
+                                    <br/>
                                     <Button
                                         id="submit"
                                         onClick={this.handleSubmit.bind(this)}
-                                        >Make Activity</Button>
+                                        >Submit</Button>
                                 </Col>
                             </Row>
-
 
                         </div>
 

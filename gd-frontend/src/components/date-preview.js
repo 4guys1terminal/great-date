@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import ActivitiesList from '../store/ActivitiesList.js';
 import { Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button } from 'reactstrap';
+  CardTitle, Button } from 'reactstrap';
 
 class DatePreview extends Component {
     render() {
@@ -11,8 +10,16 @@ class DatePreview extends Component {
 
                 <li className="datePreview cell" key={this.props.id}>
                     <Link to={`/activities/${this.props.id}`}>
-                        <img className="thumbnails responsive-image" src={this.props.image} />
-                        <p>{this.props.title}</p>
+
+                        <Card className="previewCard">
+                            <CardImg top width='100%' src={this.props.image} alt="Date Image" className="thumbnails responsive-image" />
+
+                            <CardBody>
+                                <CardTitle className='cardTitle'>{this.props.title}</CardTitle>
+                                <Link to={`/activities/${this.props.id}`}><Button color="info">The Details</Button></Link>
+                            </CardBody>
+                        </Card>
+
                     </Link>
                 </li>
 
