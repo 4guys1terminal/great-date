@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
-import ActivitiesList from '../store/ActivitiesList.js';
+import ActivitiesList from '../store/ActivitiesList';
 import {Link} from 'react-router-dom';
-import DatePreview from '../components/date-preview.js';
+import DatePreview from '../components/date-preview';
 import { Button } from 'react-bootstrap';
-import NavBar from '../components/navbar.js';
+import NavBar from '../components/navbar';
+import LoggedInNav from '../components/logged-in-navbar';
 
 class AllDatesPage extends Component {
     componentWillMount(){
-        this.setState({activities: ActivitiesList})
+        this.setState({activities: ActivitiesList});
 
+    }
+
+    isUserLoggedIn() {
+        if (typeof localStorage.name === 'undefined') {
+            return < NavBar />;
+        } else {
+            return <LoggedInNav />;
+        }
     }
 
     render() {
@@ -19,13 +28,13 @@ class AllDatesPage extends Component {
                 image={activity.image}
                 title={activity.title}
                 />
-            )
-        })
+            );
+        });
 
     return (
         <div className="all-dates-page">
 
-            <NavBar />
+            {this.isUserLoggedIn()}
             
             <h2>Browse All Dates</h2>
 

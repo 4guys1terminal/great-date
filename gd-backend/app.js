@@ -65,26 +65,30 @@ app.get('/users',(req, res) => {
 })
 
 app.post('/users', (req, res) => {
-    User.create(
-        {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            age: req.body.age,
-            email: req.body.email,
-            location: req.body.location,
-            password: req.body.password
-            
-        }).then((user) => {
-            res.json({
-                message: 'success',
-                user: user
-            })
-        }).catch((error) => {
-            res.status(400)
-            res.json({
-                message: "Unable to create User",
-                errors: error
-            })
+    req.checkBody('firstName', 'Is required').notEmpty()
+    req.checkBody('password', 'Is required').notEmpty()
+
+    req.getValidationResult()
+        .then(valErrors => {
+            if (valErrors.isEmpty()) {
+                User.create(
+                    {
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
+                        email: req.body.email,
+                        password: req.body.password
+                    }
+                ).then(user => {
+                    res.json({
+                        message: 'success',
+                        user: user
+                    })
+                })
+            } else {
+                // console.log(validationErrors.array())
+                res.status(400)
+                res.json({ errors: { validations: valErrors.array() } })
+            }
         })
 })
 

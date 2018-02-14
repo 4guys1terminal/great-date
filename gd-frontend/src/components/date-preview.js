@@ -5,9 +5,9 @@ import ActivitiesList from '../store/ActivitiesList.js';
 
 class DatePreview extends Component {
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
-        }
+        };
     }
 
     render() {

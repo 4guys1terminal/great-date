@@ -21,9 +21,16 @@ class SignUp extends Component {
         this.setState({ form: formState });
     }
 
-    handleSubmit() {
+    handleSubmit(e) {
+        e.preventDefault();
 
-        this.props.onSubmit(this.state.form);
+        const { onSubmit } = this.props;
+        const { form } = this.state;
+        if (onSubmit) {
+            onSubmit(form);
+        } else {
+            console.log("no onSubmit props passed");
+        }
     }
 
     errorsFor(attribute) {
@@ -70,7 +77,7 @@ class SignUp extends Component {
                             type="email"
                             value={this.state.form.email}
                             onChange={this.handleChange.bind(this)}
-                            />
+                        />
                         <input 
                             className="lname"
                             placeholder="Password"
@@ -78,12 +85,17 @@ class SignUp extends Component {
                             type="password"
                             value={this.state.form.password}
                             onChange={this.handleChange.bind(this)}
-                            />
+                        />
+                        {/* {
+                            this.errorsFor('password') &&
+                            <div id="help-block">{this.errorsFor('password')}</div>
+                        } */}
                         <button 
                             className="login-btn"
-                            onClick={this.handleChange.bind(this)}
-                            >
+                            onClick={this.handleSubmit.bind(this)}
+                        >
                             Sign up
+                            {localStorage.setItem('name', 'this.state.form.email')}
                         </button>
                         <a className="forgot" href="#">
                             <p className="agree">By signing up, you agree to our <br /> <span className="terms">Terms & Privacy Policy.</span></p>
@@ -98,7 +110,6 @@ class SignUp extends Component {
                                 id='login-link'
                                 > Log In </Link>
                         </p>
-
                     </div>
                 </div>
 

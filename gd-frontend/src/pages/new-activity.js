@@ -14,7 +14,7 @@ import {
 
 class NewActivity extends Component {
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             form: {
                 title: '',
@@ -22,30 +22,30 @@ class NewActivity extends Component {
                 location: '',
                 cost: ''
             }
-        }
+        };
     }
 
     handleChange(event){
-        const formState = Object.assign({}, this.state.form)
-        formState[event.target.name] = event.target.value
-        this.setState({form: formState})
+        const formState = Object.assign({}, this.state.form);
+        formState[event.target.name] = event.target.value;
+        this.setState({form: formState});
     }
 
     // need to attach this new activity component somewhere
     handleSubmit(){
-        this.props.onSubmit(this.state.form)
+        this.props.onSubmit(this.state.form);
         console.log(this.state.form);
     }
 
     errorsFor(attribute){
-        var errorString = ''
+        var errorString = '';
         if(this.props.errors){
-            const errors = this.props.errors.filter(error => error.param === attribute)
+            const errors = this.props.errors.filter(error => error.param === attribute);
             if(errors){
-                errorString = errors.map(error => error.msg ).join(", ")
+                errorString = errors.map(error => error.msg ).join(", ");
             }
         }
-        return errorString === "" ? null : errorString
+        return errorString === "" ? null : errorString;
     }
 
     render() {

@@ -22,7 +22,8 @@ class Login extends Component {
         e.preventDefault()
         const { email, password } = this.state.form
 
-        fetch(`${API}/sessions/new` , {
+        fetch(`${API}/sessions/new` ,
+        {
             method: "post",
             headers: {
                 'content-type': 'application/json'
@@ -81,7 +82,8 @@ class Login extends Component {
                 </a>
             </form>
             <div className="sign-up">
-                <p className="sign-up-text"> Dont have an account? <Link
+                <p 
+                    className="sign-up-text"> Dont have an account? <Link
                     to='/sign-up-page'
                     id='sign-up-link'
                     className='sign-up-link'
@@ -93,7 +95,8 @@ class Login extends Component {
         return (
             <div>
                 <div id="authorization">
-                    {authorized ? <Redirect to={"/"} /> : login}
+                    {authorized ? <Redirect to={"/logged-in-page"} /> : login}
+                    {authorized ? localStorage.setItem('name', this.state.form.email) : null}
                 </div>
             </div>
         );
