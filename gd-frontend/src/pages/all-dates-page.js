@@ -25,12 +25,8 @@ class AllDatesPage extends Component {
     render() {
         return (
             <div>
-
                 {this.isUserLoggedIn()}
-
-
-                <NavBar />
-
+                
                 <div className="all-dates-page">
 
                     <h2>Browse All Dates</h2>
