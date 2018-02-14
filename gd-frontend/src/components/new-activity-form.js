@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { HashRouter, Route, Switch} from 'react-router-dom';
 import {
     Col,
     ControlLabel,
     FormGroup,
     FormControl,
     Button,
+    ButtonGroup,
     Row,
     HelpBlock,
     Alert,
+    Radio,
     Checkbox
 } from 'react-bootstrap';
-import NavBar from '../components/navbar.js';
+import RadioGroup from './radio-group.js';
+import Dropzone from 'react-dropzone';
+
 
 
 class NewActivityForm extends Component {
@@ -25,14 +28,12 @@ class NewActivityForm extends Component {
                 location: '',
                 cost: '',
                 tags: {},
-                image: ''
+                imageFile: []
             },
             filesToBeSent:[],
-            filesPreview:[],
-            printcount: 1,
-            test: '',
+            imagesAllowed: 1,
             locationExamples: [
-                {id: 1, value: 'pacific beach', title: 'Pacific Beach'},
+                {id: 1, value: 'pacific_beach', title: 'Pacific Beach'},
                 {id: 2, value: 'downtown', title: 'Downtown'},
                 {id: 3, value: 'point_loma', title: 'Point Loma'},
                 {id: 4, value: 'north_park', title: 'North Park'},
@@ -49,10 +50,14 @@ class NewActivityForm extends Component {
         }
     }
 
-    handleChange(event) {
-        const formState = Object.assign({}, this.state.form)
-        formState[event.target.name] = event.target.value
-        this.setState({form: formState})
+    handleChange(e) {
+        const { form } = this.state
+
+        form[e.target.name] = e.target.value
+
+        this.setState({
+            form: form
+        })
     }
 
 
@@ -126,6 +131,47 @@ class NewActivityForm extends Component {
             form: form
         })
     }
+
+
+    handleClear(event,index){
+        var filesToBeSent=this.state.filesToBeSent;
+        filesToBeSent.splice(index,1);
+
+        var imageFile=this.state.form.imageFile;
+        imageFile.splice(index,1)
+
+        this.setState({filesToBeSent,imageFile});
+    }
+
+
+    onDrop = (acceptedFiles,rejectedFiles) => {
+        var filesToBeSent = this.state.filesToBeSent
+
+        // sending all accepted files to state as filesToBeSent
+        if(filesToBeSent.length < this.state.imagesAllowed) {
+            filesToBeSent.push(acceptedFiles);
+            this.setState({filesToBeSent});
+        } else {
+            alert("Please, only one image per date.")
+        }
+
+        //converting the filesToBeSent into base64
+        const form = this.state.form
+        var imageBase64 = form.imageFile
+
+        filesToBeSent.forEach(image => {
+            const reader = new FileReader();
+            reader.readAsDataURL(image[0])
+            reader.onload = () => {
+                imageBase64.push(reader.result)
+            };
+            reader.onabort = () => console.log('image reading was aborted');
+            reader.onerror = () => console.log('image reading has failed');
+        })
+        this.setState({imageFile: imageBase64})
+    }
+
+
     render() {
         return (
             <div className="createDateDiv">
@@ -142,6 +188,10 @@ class NewActivityForm extends Component {
                         </Row>
 
                         <div className='forms'>
+
+                        {/* All form inputs labeled and minimized because DAMN that's a lot of code. Highly consider componentizing each of these form inputs out in the future.*/}
+
+                        {/*Title*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -166,7 +216,7 @@ class NewActivityForm extends Component {
                                 </Col>
                             </Row>
 
-
+                        {/*Description*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -192,7 +242,7 @@ class NewActivityForm extends Component {
                                 </Col>
                             </Row>
 
-
+                        {/*Location*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -224,35 +274,42 @@ class NewActivityForm extends Component {
                                 </Col>
                             </Row>
 
+                        {/*Cost*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
                                     id = "cost-form-group"
                                     validationState = {this.errorsFor('cost') && 'error'}>
-                                    <ControlLabel id="cost">Cost</ControlLabel>
-                                    <FormControl
-                                        componentClass="select"
-                                        placeholder="Average Cost"
-                                        name="cost"
-                                        value={this.state.form.cost}
-                                        onChange={this.handleChange.bind(this)}
-                                    >
+                                    <ControlLabel id="cost">Average Cost</ControlLabel>
 
-                                    <option value="avg_cost">Average Cost</option>
-                                    <option value="free">Free</option>
-                                    <option value="$">$</option>
-                                    <option value="$$">$$</option>
-                                    <option value="$$$">$$$</option>
+                                    <br/>
 
-                                    </FormControl>
+                                    <RadioGroup
+                                      name="cost"
+                                      onChange={this.handleChange.bind(this)}
+                                      options={[
+                                        ['free', 'Free'],
+                                        ['$', '$'],
+                                        ['$$', '$$'],
+                                        ['$$$', '$$$']
+                                      ]}
+
+                                      value={this.state.form.cost}
+                                    />
+
+
+                                    {/*
 
                                     {this.errorsFor('cost') &&
-                                    <HelpBlock id="cost-help-block">{this.errorsFor('cost')}</HelpBlock>
-                                }
+                                    <HelpBlock id="cost-help-block">{this.errorFor('cost')}</HelpBlock>
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
 
+                        {/*Tags*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
@@ -273,34 +330,70 @@ class NewActivityForm extends Component {
                                 </Col>
                             </Row>
 
+                        {/*Image*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                 <FormGroup
                                     id = "image-form-group"
-                                    validationState = {this.errorsFor('cost') && 'error'}>
+                                    validationState = {this.errorsFor('image') && 'error'}>
                                     <ControlLabel id="image">Image</ControlLabel>
-                                    <FormControl
-                                        type="file"
-                                        name="images"
-                                        value={this.state.form.images}
-                                        onChange={this.handleChange.bind(this)}
-                                    />
-                                    {this.errorsFor('cost') &&
-                                    <HelpBlock id="cost-help-block">{this.errorsFor('images')}</HelpBlock>
-                                }
+
+                                    <div className="image-upload-div">
+                                        <Dropzone
+                                            accept='image/*'
+                                            onDrop={(files) => {
+                                                this.onDrop(files)
+                                            }}
+                                        >
+                                            <div>
+                                            <p>Try dropping some files here, or click me to select files to upload.</p>
+                                            <p>(Only image files will be accepted.)</p>
+                                             </div>
+                                        </Dropzone>
+                                    </div>
+
+                                    <div>
+                                        File Preview:
+
+                                        {this.state.filesToBeSent.map((image, index) => {
+                                            return (
+                                                <div
+                                                    key={index}
+                                                >
+                                                    <img src={image[0].preview} className="image-preview"/>
+                                                    <p> {image[0].name} </p>
+                                                    <br/>
+                                                    <Button onClick={(event) =>
+                                                    this.handleClear(event)}>
+                                                        Clear
+                                                    </Button>
+                                                </div>
+                                            )
+                                        })}
+
+                                    </div>
+
+
+                                    {/*
+                                    {this.errorsFor('image') &&
+                                    <HelpBlock id="image-help-block">{this.errorFor('images')}</HelpBlock>
+                                    }
+                                    */}
+
                                 </FormGroup>
                                 </Col>
                             </Row>
 
+
                             <Row>
                                 <Col xs={10} xsOffset={1}>
+                                    <br/>
                                     <Button
                                         id="submit"
                                         onClick={this.handleSubmit.bind(this)}
-                                        >Make Activity</Button>
+                                        >Submit</Button>
                                 </Col>
                             </Row>
-
 
                         </div>
 

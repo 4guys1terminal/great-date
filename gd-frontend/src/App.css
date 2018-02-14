@@ -58,7 +58,7 @@ li {
 
 .createDateForm {
     margin: auto;
-    width: 100%;
+    width: 800px;
 }
 
 #image-form-group {
@@ -66,15 +66,30 @@ li {
 }
 
 .createDateDiv {
-    /* text-align:center; */
     width:100%;
-    /* margin-left: auto;
-    margin-right: auto; */
-
 }
 
 .createDateDiv form {
     display:inline-block;
+}
+
+.previewCard {
+    border: 1px solid rgba(64, 153, 180, 0.25);
+    padding: 10px;
+}
+
+input[type=file] {
+    margin: 0 auto;
+}
+
+.image-upload-div {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.image-preview {
+    width: 300px;
 }
 
 /**************** Navbar ****************/
@@ -502,8 +517,8 @@ a {
 }
 .hvr-grow-shadow:hover, .hvr-grow-shadow:focus, .hvr-grow-shadow:active {
   box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0);
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 /* GLOW */

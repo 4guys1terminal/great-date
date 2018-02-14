@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ActivitiesList from '../store/ActivitiesList.js';
 import {Link} from 'react-router-dom';
-import DatePreview from '../components/date-preview.js';
 import { Button } from 'react-bootstrap';
 import NavBar from '../components/navbar.js';
 import Grid from '../components/grid.js';

@@ -1,27 +1,46 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import '../App.css';
-import Navigation from '../components/navbar.js';
-import Title from '../components/title.js';
-import TitleButton from '../components/title-button.js';
-import BrowseDate from '../components/browse-dates.js';
+import NavBar from '../components/navbar.js';
+import TitleBlock from '../components/title-block.js';
 import Grid from '../components/grid.js';
-import SeeMoreBtn from '../components/see-more-btn.js';
 import ReactDOM from "react-dom";
-import { Button } from 'reactstrap';
+import {Button} from 'reactstrap';
+import {Link} from 'react-router-dom'
 
 class Home extends Component {
     render() {
-        return (
-            <div className='home'>
-                < Navigation />
-                < Title />
-                < TitleButton />
-                < BrowseDate />
-                < Grid />
-                < SeeMoreBtn />
-                < Button />
+        return (<div className='home'>
+
+            < NavBar/>
+
+            < TitleBlock/>
+
+
+            <div className="line-contain">
+                <div className="line"></div>
             </div>
-        );
+
+            <div className="browse-title">
+                <Link
+                    to='/all-dates-page'
+                    id='all-dates-link'
+                    className='browse-title'
+                    >Browse Dates</Link>
+            </div>
+
+
+            < Grid/>
+
+            <div className="see-more-contain">
+                <Link
+                    to='/all-dates-page'
+                    id='all-dates-nav'
+                    className='nav-btn1'>
+                    <button className="see-more-btn" id="pg2">See More</button>
+                </Link>
+            </div>
+
+        </div>);
     }
 }
 
