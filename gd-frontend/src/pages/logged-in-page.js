@@ -10,6 +10,7 @@ class LoggedIn extends Component {
         return (
             <div>
                 <LoggedInNav />
+                
             </div>
         );
     }

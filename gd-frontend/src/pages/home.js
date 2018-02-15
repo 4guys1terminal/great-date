@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import '../App.css';
 import NavBar from '../components/navbar.js';
 import TitleBlock from '../components/title-block.js';
 import ReactDOM from "react-dom";
-import {Button} from 'reactstrap';
-import {Link} from 'react-router-dom';
+import { Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import Navigation from '../components/navbar';
 import Title from '../components/title';
 import TitleButton from '../components/title-button';
@@ -17,9 +17,9 @@ class Home extends Component {
 
     isUserLoggedIn() {
         if (typeof localStorage.name === 'undefined') {
-        return < Navigation />;
+            return < Navigation />;
         } else {
-        return < LoggedInNav />;
+            return < LoggedInNav />;
         }
     }
 
@@ -28,7 +28,7 @@ class Home extends Component {
 
             {this.isUserLoggedIn()}
 
-            < TitleBlock/>
+            < TitleBlock />
 
 
             <div className="line-contain">
@@ -40,11 +40,11 @@ class Home extends Component {
                     to='/all-dates-page'
                     id='all-dates-link'
                     className='browse-title'
-                    >Browse Dates</Link>
+                >Browse Dates</Link>
             </div>
 
 
-            < Grid/>
+            < Grid />
 
             <div className="see-more-contain">
                 <Link
@@ -54,7 +54,6 @@ class Home extends Component {
                     <button className="see-more-btn" id="pg2">See More</button>
                 </Link>
             </div>
-
         </div>);
     }
 }
