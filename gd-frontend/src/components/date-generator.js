@@ -9,7 +9,7 @@ class DateGenerator extends Component {
                 Date Generator
             </h1>
 
-            <div className='cost-chooser'>
+            {/* <div className='cost-chooser'>
 
                 <div className='individual-costs'>
                     <i class="cost-icons fa-3x fas fa-dollar-sign"></i>
@@ -26,8 +26,9 @@ class DateGenerator extends Component {
                     <i class="cost-icons fa-3x fas fa-dollar-sign"></i>
                     <i class="cost-icons fa-3x fas fa-dollar-sign"></i>
                 </div>
-                
-            </div>
+
+            </div> */}
+            <br/>
 
             <Button bsSize="large">Shuffle</Button>
         </div>);

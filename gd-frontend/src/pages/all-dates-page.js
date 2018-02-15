@@ -40,14 +40,16 @@ class AllDatesPage extends Component {
     }
 
     render() {
-        return (<div style={bgImage}>
-            {this.isUserLoggedIn()}
+        return (<div>
+            <div style={bgImage}>
 
-            <div className="all-dates-page">
+                {this.isUserLoggedIn()}
 
-                <h1>Browse All Dates</h1>
+                <div className="all-dates-page">
 
-                <ToggleButtonGroup type="checkbox" bsSize='large' className="search-tags">
+                    <h1>Browse All Dates</h1>
+
+                    {/* <ToggleButtonGroup type="checkbox" bsSize='large' className="search-tags">
                     <ToggleButton value={1}>Romantic</ToggleButton>
                     <ToggleButton value={2}>Thrilling</ToggleButton>
                     <ToggleButton value={3}>Outdoors</ToggleButton>
@@ -55,15 +57,17 @@ class AllDatesPage extends Component {
                     <ToggleButton value={5}>Morning</ToggleButton>
                     <ToggleButton value={6}>Afternoon</ToggleButton>
                     <ToggleButton value={7}>Evening</ToggleButton>
-                </ToggleButtonGroup>
+                </ToggleButtonGroup> */
+                    }
 
-                <div style={backgroundTexture}>
+                    <div style={backgroundTexture}>
 
-                    <Grid gridLimit='null'/>
+                        <Grid gridLimit='null'/>
 
-                    <Link to='/new-activity'>
-                        <Button className="newActivityButton" bsStyle="primary" bsSize="large">Create New Date</Button>
-                    </Link>
+                        <Link to='/new-activity'>
+                            <Button className="newActivityButton" bsStyle="primary" bsSize="large">Create New Date</Button>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>);

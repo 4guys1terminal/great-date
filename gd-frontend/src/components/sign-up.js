@@ -50,35 +50,38 @@ class SignUp extends Component {
                 <div className="signup-wrapper">
                     <form className="signup-form" validationState={this.errorsFor('firstName') && 'error'}>
                         <p className="signup-form-title">Great Date</p>
-                        <p className="signup-form-blurb">Sign up to see photos and <br /> videos from your friends.</p>
-                        <button className="use-fb">Log in with Facebook</button><div className="center">
-                        <p className="or"><span className="hyphen1">_____________</span>OR<span className="hyphen1">_______________</span></p></div>
+                    <br/>
+                    <p className="signup-form-blurb">Sign up to share your awesome date ideas with San Diego!</p>
+                        {/* <button className="use-fb">Log in with Facebook</button> */}
 
-                        <input 
-                            className="lname" 
-                            placeholder="First Name" 
-                            name="firstName" 
-                            type="text" 
+                <div className="center">
+                        {/* <p className="or"><span className="hyphen1">_____________</span>OR<span className="hyphen1">_______________</span></p></div> */}
+
+                        <input
+                            className="lname"
+                            placeholder="First Name"
+                            name="firstName"
+                            type="text"
                             value={this.state.form.firstName}
                             onChange={this.handleChange.bind(this)}
                             />
-                        <input 
-                            className="lname" 
-                            placeholder="Last Name" 
+                        <input
+                            className="lname"
+                            placeholder="Last Name"
                             type="text"
-                            name="lastName" 
+                            name="lastName"
                             value={this.state.form.lastName}
                             onChange={this.handleChange.bind(this)}
                             />
-                        <input 
-                            className="lname" 
-                            placeholder="Email" 
-                            name="email" 
+                        <input
+                            className="lname"
+                            placeholder="Email"
+                            name="email"
                             type="email"
                             value={this.state.form.email}
                             onChange={this.handleChange.bind(this)}
                         />
-                        <input 
+                        <input
                             className="lname"
                             placeholder="Password"
                             name="password"
@@ -90,16 +93,17 @@ class SignUp extends Component {
                             this.errorsFor('password') &&
                             <div id="help-block">{this.errorsFor('password')}</div>
                         } */}
-                        <button 
+                        <button
                             className="login-btn"
                             onClick={this.handleSubmit.bind(this)}
                         >
                             Sign up
                             {localStorage.setItem('name', 'this.state.form.email')}
                         </button>
-                        <a className="forgot" href="#">
+                        {/* <a className="forgot" href="#">
                             <p className="agree">By signing up, you agree to our <br /> <span className="terms">Terms & Privacy Policy.</span></p>
-                        </a>
+                        </a> */}
+                    </div>
                     </form>
 
                     <div className="login">

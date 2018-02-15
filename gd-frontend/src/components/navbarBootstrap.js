@@ -9,13 +9,13 @@ class Navigation extends Component {
             <Navbar staticTop className='bootStrapNav'>
 
                 <Navbar.Header>
-                    <Navbar.Brand>
+                    <Navbar.Brand componentClass="bsNavLeft">
                         <Link to='/' id='home-nav' className='nav-btn1'>Great Date</Link>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
 
-                <Navbar.Collapse>
+                <Navbar.Collapse componentClass="bsNavRight">
                     <Nav pullRight>
                         <NavItem eventKey={1}>
                             <Link to='/' id='home-nav' className='nav-btn1'>Home</Link>
