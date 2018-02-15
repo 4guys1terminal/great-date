@@ -1,105 +1,147 @@
 import React, { Component } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
+import { Row, Col, FormGroup, ControlLabel, HelpBlock, FormControl, Button } from 'react-bootstrap';
+import RegistrationStore from './RegistrationStore';
 
 class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            form: {
-                firstName: '',
-                lastName: '',
-                password: '',
-                email: ''
-            }
+            registration: RegistrationStore.getFields(),
+            errors: {}
         };
     }
 
-    handleChange(e) {
-        const formState = Object.assign({}, this.state.form);
-        formState[e.target.name] = e.target.value;
-        this.setState({ form: formState });
+    handleChange(event) {
+        const target = event.target
+        const registration = this.state.registration
+        registration[target.name] = target.value
+        this.setState({
+            registration: registration
+        })
     }
 
     handleSubmit(e) {
         e.preventDefault();
 
         const { onSubmit } = this.props;
-        const { form } = this.state;
+        const { registration } = this.state;
+        this.validate()
         if (onSubmit) {
-            onSubmit(form);
+            onSubmit(this.state.registration)
         } else {
             console.log("no onSubmit props passed");
         }
     }
 
-    errorsFor(attribute) {
-        var errorString = "";
-        if (this.props.errors) {
-            const errors = this.props.errors.filter(error => error.param === attribute);
-            if (errors) {
-                errorString = errors.map(error => error.msg).join(", ");
-            }
-        }
-        return errorString === "" ? null : errorString;
+    isValid() {
+        return Object.keys(this.state.errors).length === 0
+    }
+
+    validate() {
+        RegistrationStore.validate()
+        this.setState({ errors: RegistrationStore.getErrors() })
+    }
+
+    validatePresence(fieldName) {
+        if (this.fields[fieldName] === '') {
+            this.addError(fieldName, 'is Required')
+        } 
+    }
+
+    addError(fieldName, message) {
+        this.errors[fieldName] = message
     }
 
     render() {
         return (
             <div>
-                <div className="signup-wrapper">
-                    <form className="signup-form" validationState={this.errorsFor('firstName') && 'error'}>
+                <div className="signup-wrapper" >
+                    <form className="signup-form" onSubmit={this.handleSubmit.bind(this)}>
                         <p className="signup-form-title">Great Date</p>
-                        <p className="signup-form-blurb">Sign up to see photos and <br /> videos from your friends.</p>
-                        <button className="use-fb">Log in with Facebook</button><div className="center">
-                        <p className="or"><span className="hyphen1">_____________</span>OR<span className="hyphen1">_______________</span></p></div>
+                        <p className="signup-form-blurb">Sign up and share unique date ideas</p>
+                        <div className="alert-holder">
+                            <span className="center">
+                                {!this.isValid() &&
+                                    <div className="alert alert-danger">Please verify that all fields are correctly filled</div>
+                                }
+                            </span>
+                        </div>
+                       
+                    <Row className="row row1">
+                        <Col xs={10}>
+                            <FormGroup >
+                                <FormControl
+                                    name="firstName"
+                                    type="text"
+                                    placeholder="First Name"
+                                    onChange={this.handleChange.bind(this)}
+                                    value={this.state.registration.firstName}
+                                    errors={this.state.errors.firstName}
+                                />
+                            </FormGroup>
+                        </Col>
+                    </Row>
 
-                        <input 
-                            className="lname" 
-                            placeholder="First Name" 
-                            name="firstName" 
-                            type="text" 
-                            value={this.state.form.firstName}
-                            onChange={this.handleChange.bind(this)}
-                            />
-                        <input 
-                            className="lname" 
-                            placeholder="Last Name" 
-                            type="text"
-                            name="lastName" 
-                            value={this.state.form.lastName}
-                            onChange={this.handleChange.bind(this)}
-                            />
-                        <input 
-                            className="lname" 
-                            placeholder="Email" 
-                            name="email" 
-                            type="email"
-                            value={this.state.form.email}
-                            onChange={this.handleChange.bind(this)}
-                        />
-                        <input 
-                            className="lname"
-                            placeholder="Password"
-                            name="password"
-                            type="password"
-                            value={this.state.form.password}
-                            onChange={this.handleChange.bind(this)}
-                        />
-                        {/* {
-                            this.errorsFor('password') &&
-                            <div id="help-block">{this.errorsFor('password')}</div>
-                        } */}
-                        <button 
-                            className="login-btn"
-                            onClick={this.handleSubmit.bind(this)}
-                        >
-                            Sign up
-                            {localStorage.setItem('name', 'this.state.form.email')}
-                        </button>
+                    <Row className="row">
+                        <Col xs={10}>
+                            <FormGroup>
+                                <FormControl
+                                    name="lastName"
+                                    type="text"
+                                    placeholder="Last Name"
+                                    onChange={this.handleChange.bind(this)}
+                                    value={this.state.registration.lastName}
+                                    errors={this.state.errors.lastName}
+                                />
+                            </FormGroup>
+                        </Col>
+                    </Row>
+
+                    <Row className="row">
+                        <Col xs={10}>
+                            <FormGroup>
+                                <FormControl
+                                    name="email"
+                                    type="email"
+                                    placeholder="Email"
+                                    onChange={this.handleChange.bind(this)}
+                                    value={this.state.registration.email}
+                                    errors={this.state.errors.email}
+                                />
+                            </FormGroup>
+                        </Col>
+                    </Row>
+
+                    <Row className="row">
+                        <Col xs={10}>
+                            <FormGroup>
+                                <FormControl
+                                    name="password"
+                                    type="password"
+                                    placeholder="Password"
+                                    onChange={this.handleChange.bind(this)}
+                                    value={this.state.registration.password}
+                                    errors={this.state.errors.password}
+                                />
+                            </FormGroup>
+                        </Col>
+                    </Row>
+
+                        <Col xs={10} className="row">
+                            <button
+                                onSubmit={this.handleSubmit.bind(this)}
+                                id="submit"
+                                type="submit"
+                                className="create-account"
+                                >Create Account</button>
+                                
+                        </Col>
                         <a className="forgot" href="#">
                             <p className="agree">By signing up, you agree to our <br /> <span className="terms">Terms & Privacy Policy.</span></p>
                         </a>
+
                     </form>
 
                     <div className="login">

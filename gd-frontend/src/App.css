@@ -125,6 +125,14 @@ a {
   margin-right: 6%;
 }
 
+/* .nav-btn1 {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  align-self: center;
+  margin-right: 6%;
+} */
+
 
 /**************** Title ****************/
 
@@ -205,19 +213,33 @@ a {
 
 
 .login-wrapper {
-  height: 50vh;
+  height: 60vh;
   display: flex;
-  margin-top: 10%;
+  margin-top: 5%;
   /* background-color: rgb(244, 244, 244); */
   flex-direction: column;
   justify-content: center;
+}
+
+#email-form-group {
+  margin-top: -5%;
+  margin-bottom: -2%;
+}
+
+.alert-holder {
+  height: 60px;
+  align-self: center;
+}
+
+.login-alert {
+  align-self: center;
 }
 
 .login-form {
   align-self: center;
   background-color: white;
   width: 350px;
-  height: 300px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   border: 1px solid lightgray;
@@ -229,8 +251,12 @@ a {
   font-weight: bold;
   font-style: italic;
   margin-top: 10%;
-  margin-bottom: 10%;
   align-self: center;
+}
+
+.row {
+ align-self: center;
+ width: 100%;
 }
 
 .lname {
@@ -250,9 +276,9 @@ a {
   margin-top: 4%;
   margin-bottom: 10px;
   align-self: center;
-  height: 30px;
+  height: 35px;
   border-radius: 4px;
-  width: 70%;
+  width: 75%;
   background-color: rgb(52, 133, 220);
   color: white;
   font-size: 13px;
@@ -332,7 +358,7 @@ a {
   align-self: center;
   background-color: white;
   width: 350px;
-  height: 530px;
+  height: 510px;
   display: flex;
   flex-direction: column;
   border: 1px solid lightgray;
@@ -348,18 +374,37 @@ a {
   margin-top: 10%;
 }
 
+.row {
+  display: flex;
+  justify-content: center;
+}
+
 .signup-form-blurb {
   font-size: 12px;
   font-family: Tahoma, sans-serif;
   align-self: center;
+  margin-bottom: 15px;
 }
 
 .use-fb {
   margin-top: 4%;
   align-self: center;
-  height: 30px;
+  height: 35px;
   border-radius: 4px;
-  width: 70%;
+  width: 75%;
+  background-color: rgb(52, 133, 220);
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.create-account {
+  margin-top: 4%;
+  margin-bottom: 10%;
+  align-self: center;
+  height: 35px;
+  border-radius: 4px;
+  width: 82%;
   background-color: rgb(52, 133, 220);
   color: white;
   font-size: 13px;
@@ -382,6 +427,14 @@ a {
 .hyphen1 {
   width: 100%;
   align-self: center;
+}
+
+#help-block { 
+  display: block; 
+}
+
+.form-group.has-error .help-block { 
+  display: block;
 }
 
 .center {
@@ -431,6 +484,7 @@ a {
   font-weight: bold;
   color: rgb(160, 153, 153);
 }
+
 
 /* Date image gallery flexbox */
 
