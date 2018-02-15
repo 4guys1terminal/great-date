@@ -15,6 +15,7 @@ class NewActivity extends Component {
         this.state = {
             activities: [],
             tags: [],
+            locations: [],
             newActivitySuccess: false,
             errors: null
         }
@@ -34,6 +35,13 @@ class NewActivity extends Component {
           return resp.json()
         })
         .then((resp) => { this.setState({tags: resp.tags}) })
+
+        fetch(`${API}/locations`)
+        .then((resp) => {
+          return resp.json()
+        })
+        .then((resp) => { this.setState({locations: resp.tags}) })
+
     }
 
     handleNewActivity(params){
@@ -55,10 +63,12 @@ class NewActivity extends Component {
             }else{
                 const activities = Object.assign([], this.state.activities)
                 const tags = Object.assign([], this.state.tags)
+                const locations = Object.assign([], this.state.locations)
                 activities.push(resp.activity) //add new activity to list of activities
                 this.setState({
                     activities: activities, // update activities in state
                     tags: tags,
+                    locations: locations,
                     errors: null, // clear out any errors if they exist
                     newActivitySuccess: true
                 })
