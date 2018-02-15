@@ -28,7 +28,8 @@ class NewActivityForm extends Component {
                 location: '',
                 cost: '',
                 tags: {},
-                imageFile: []
+                imageFiles: [],
+                imageNames: []
             },
             filesToBeSent:[],
             imagesAllowed: 1,
@@ -137,48 +138,54 @@ class NewActivityForm extends Component {
         })
     }
 
-// borderline positive that this function and the onDrop() function below it
+// Borderline positive that the function below and the onDrop() function below
 // can be cut down a bit by merging this filesToBeSent step with the encoding
-// step. will take a look at down the line (as it works fine for now)
+// step. will take a look at down the line (it works fine for now)
 // - JD 2/14/2018
 
+
+// Clearing state when the clear button is pressed. Will have to be adjusted if more than one image for dates is allowed.
     handleClear(event,index){
         var filesToBeSent=this.state.filesToBeSent;
         filesToBeSent.splice(index,1);
 
-        var imageFile=this.state.form.imageFile;
-        imageFile.splice(index,1)
+        var imageFiles=this.state.form.imageFiles;
+        imageFiles.splice(index,1)
 
-        this.setState({filesToBeSent,imageFile});
+        var imageNames=this.state.form.imageNames;
+        imageNames.splice(index,1)
+
+        this.setState({filesToBeSent,imageFiles});
     }
 
 
     onDrop = (acceptedFiles,rejectedFiles) => {
         let { filesToBeSent, imagesAllowed, form } = this.state
+        console.log("acceptedFiles",acceptedFiles);
 
         // sending all accepted files to state as filesToBeSent
         if(filesToBeSent.length < imagesAllowed) {
             filesToBeSent.push(acceptedFiles);
+            filesToBeSent.forEach(image => {
+                const reader = new FileReader()
+                console.log(image[0].name);
+                form.imageNames.push(image[0].name)
+                // register the handlers
+                reader.onload = () => {
+                    form.imageFiles.push(reader.result)
+                }
+                reader.onabort = () => console.log('image reading was aborted')
+                reader.onerror = () => console.log('image reading has failed')
+                // end register
+
+                reader.readAsDataURL(image[0])
+            })
         } else {
             alert("Please, only one image per date.")
         }
 
-        filesToBeSent.forEach(image => {
-            const reader = new FileReader()
 
-            // register the handlers
-            reader.onload = () => {
-                form.imageFile.push(reader.result)
-            }
-            reader.onabort = () => console.log('image reading was aborted')
-            reader.onerror = () => console.log('image reading has failed')
-            // end register
-
-            reader.readAsDataURL(image[0])
-        })
-
-        console.log(form)
-
+        console.log(form);
         this.setState({
             form: form,
             filesToBeSent: filesToBeSent
@@ -364,7 +371,6 @@ class NewActivityForm extends Component {
                                         >
                                             <div>
                                             <p>Try dropping some files here, or click me to select files to upload.</p>
-                                            <p>(Only image files will be accepted.)</p>
                                              </div>
                                         </Dropzone>
                                     </div>
@@ -406,6 +412,8 @@ class NewActivityForm extends Component {
                                 <Col xs={10} xsOffset={1}>
                                     <br/>
                                     <Button
+                                        bsSize='large'
+                                        bsStyle='primary'
                                         id="submit"
                                         onClick={this.handleSubmit.bind(this)}
                                         >Submit</Button>

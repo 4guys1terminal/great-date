@@ -178,6 +178,7 @@ a {
     height: 45px;
     border-radius: 8px;
     margin-bottom: 5%;
+    background-color: white;
     color: rgb(80, 80, 80);
     /* box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25); */
 }
@@ -648,4 +649,8 @@ ul li {
 .cost-chooser {
     margin-left: auto;
     margin-right: auto;
+}
+
+#submit {
+    margin-bottom: 40px;
 }

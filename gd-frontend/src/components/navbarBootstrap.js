@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../App.css';
 import {Link} from 'react-router-dom';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
+import {LinkContainer} from 'react-router-bootstrap'
 
 class Navigation extends Component {
     render() {
@@ -9,45 +10,38 @@ class Navigation extends Component {
             <Navbar staticTop className='bootStrapNav'>
 
                 <Navbar.Header>
-                    <Navbar.Brand componentClass="bsNavLeft">
-                        <Link to='/' id='home-nav' className='nav-btn1'>Great Date</Link>
-                    </Navbar.Brand>
-                    <Navbar.Toggle />
+                    <LinkContainer to='/' id='home-nav' className='nav-btn1'>
+                        <Navbar.Brand componentclass="bsNavLeft">
+
+                            Great Date
+                        </Navbar.Brand>
+                    </LinkContainer>
+
+                    <Navbar.Toggle/>
                 </Navbar.Header>
 
-                <Navbar.Collapse componentClass="bsNavRight">
+                <Navbar.Collapse componentclass="bsNavRight">
                     <Nav pullRight>
-                        <NavItem eventKey={1}>
-                            <Link to='/' id='home-nav' className='nav-btn1'>Home</Link>
-                        </NavItem>
+                        <LinkContainer to='/' className='nav-btn2' id='all-dates-nav'>
+                            <NavItem eventKey={1}>
+                                Home
+                            </NavItem>
+                        </LinkContainer>
 
-                        <NavItem eventKey={2}>
-                            <Link to='/all-dates-page' id='all-dates-nav' className='nav-btn1'>Browse Dates</Link>
-                        </NavItem>
+                        <LinkContainer to='/all-dates-page' id='all-dates-nav' className='nav-btn2'>
+                            <NavItem eventKey={2}>
+                                Browse Dates
+                            </NavItem>
+                        </LinkContainer>
 
-                        <NavItem eventKey={3}>
-                            <Link to='/login-page' className='nav-btn2' id='login-link'>
-                                Log In / Sign Up</Link>
-                        </NavItem>
+                        <LinkContainer to='/login-page' className='nav-btn2' id='login-link'>
+                            <NavItem eventKey={3}>
+                                Log In / Sign Up
+                            </NavItem>
+                        </LinkContainer>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-
-            {/* <nav className="navbar">
-                <div className="logo">
-                    <Link to='/' id='home-nav' className='nav-btn1'>[Logo] Great Date</Link>
-                </div>
-
-                <div className="nav-buttons">
-                    <Link to='/' id='home-nav' className='nav-btn1'>Home</Link>
-
-                    <Link to='/all-dates-page' id='all-dates-nav' className='nav-btn1'>Browse Dates</Link>
-
-                    <Link to='/login-page' className='nav-btn2' id='login-link'>
-                        Log In / Sign Up</Link>
-                </div>
-            </nav> */
-            }
         </div>);
     }
 }

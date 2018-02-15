@@ -8,7 +8,7 @@ import SignUpPage from './pages/sign-up-page.js';
 import LoggedInPage from './pages/logged-in-page.js';
 import AllDatesPage from './pages/all-dates-page.js';
 import DatePage from './pages/date-page.js';
-import NewDatePage from './pages/new-activity-page.js';
+import NewActivityPage from './pages/new-activity-page.js';
 import NewActivitySuccess from './pages/new-activity-success.js';
 import ScrollToTop from './components/scroll-to-top.js';
 
@@ -37,7 +37,7 @@ class App extends Component {
                     <Route path='/activities/:id' component={DatePage}/>
                     <Route path='/login-page' component={LogInPage}/>
                     <Route path='/all-dates-page' component={AllDatesPage}/>
-                    <Route path='/new-activity' component={NewDatePage}/>
+                <Route path='/new-activity' component={NewActivityPage}/>
                     <Route path='/success' component={NewActivitySuccess}/>
 
                     <Route path='/logged-in-page'

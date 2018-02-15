@@ -13,7 +13,7 @@ class Title extends Component {
 
             <div className='icons-front'>
                 <i className="fa-5x front-icons fas fa-utensils"></i>
-                <i class="fa-5x front-icons fas fa-coffee"></i>
+                <i className="fa-5x front-icons fas fa-coffee"></i>
                 <i className="fa-5x front-icons fas fa-glass-martini"></i>
             </div>
 

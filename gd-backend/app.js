@@ -145,20 +145,20 @@ app.post('/activities', (req, res) => {
 
             })
 
-
+            let fileName = req.body.imageNames[0]
+            console.log(fileName);
             //converting base64 string back into an image in the database
-            let images = req.body.imageFile.map((image) => {
+            let images = req.body.imageFiles.map((image) => {
 
                 const base64ToImage = require('base64-to-image');
 
-
                 var path = './public/user-uploads/'
-                var optionalObj = {'fileName': 'testing.png'};
+                var optionalObj = {'fileName': fileName};
 
                 var imageInfo = base64ToImage(image,path,optionalObj)
             })
 
-            // TODO: fix my weird atom package issues
+            // TODO:
             // save specific file name with images
             // figure out how to integrate with FE
             // figure out how to add it to database area for pulling w/ the activity id
