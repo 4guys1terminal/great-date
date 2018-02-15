@@ -6,6 +6,9 @@ import AllDatesPage from './all-dates-page.js';
 import NavBar from '../components/navbar.js';
 import NewActivityForm from '../components/new-activity-form.js';
 
+var backgroundTexture = {
+    backgroundImage: 'url(/images/grid_noise.png)'
+};
 
 const API = "http://localhost:3000"
 
@@ -68,7 +71,7 @@ class NewActivity extends Component {
 
     render() {
         return (
-            <div>
+            <div style='backgroundTexture'>
 
                 <NavBar />
 

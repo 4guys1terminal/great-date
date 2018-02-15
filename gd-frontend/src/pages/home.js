@@ -13,46 +13,62 @@ import Grid from '../components/grid';
 import LoggedIn from '../pages/logged-in-page';
 import LoggedInNav from '../components/logged-in-navbar';
 
+import NavbarBootstrap from '../components/navbarBootstrap.js';
+
+var backgroundTexture = {
+    backgroundImage: 'url(/images/grid_noise.png)'
+};
+// backgroundImage: 'url(/images/date-cover.jpg)',
+var bgImage = {
+    backgroundImage: 'linear-gradient(to bottom, rgb(13,194,181) 0%, rgb(13,186,237) 100%)',
+    backgroundSize: 'cover',
+    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
+};
+
 class Home extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            gridLimit: 9
+        }
+    }
 
     isUserLoggedIn() {
         if (typeof localStorage.name === 'undefined') {
-        return < Navigation />;
+            return < NavbarBootstrap />;
         } else {
-        return < LoggedInNav />;
+            return < LoggedInNav />;
         }
     }
 
     render() {
         return (<div className='home'>
+            <div className="shadow">
+                <div style={bgImage} className='titleBlock'>
+                    {this.isUserLoggedIn()}
 
-            {this.isUserLoggedIn()}
+                    <TitleBlock/>
 
-            < TitleBlock/>
-
-
-            <div className="line-contain">
-                <div className="line"></div>
+                </div>
             </div>
 
-            <div className="browse-title">
-                <Link
-                    to='/all-dates-page'
-                    id='all-dates-link'
-                    className='browse-title'
-                    >Browse Dates</Link>
-            </div>
+            <div className='home-background' style={backgroundTexture}>
 
+                <div className="browse-title">
+                    <Link to='/all-dates-page' id='all-dates-link' className='browse-title'>Browse Dates</Link>
+                </div>
 
-            < Grid/>
+                <div className="line-contain">
+                    <div className="line"></div>
+                </div>
 
-            <div className="see-more-contain">
-                <Link
-                    to='/all-dates-page'
-                    id='all-dates-nav'
-                    className='nav-btn1'>
-                    <button className="see-more-btn" id="pg2">See More</button>
-                </Link>
+                <Grid gridLimit={this.state.gridLimit}/>
+
+                <div className="see-more-contain">
+                    <Link to='/all-dates-page' id='all-dates-nav' className='nav-btn1'>
+                        <button className="see-more-btn" id="pg2">See More</button>
+                    </Link>
+                </div>
             </div>
 
         </div>);

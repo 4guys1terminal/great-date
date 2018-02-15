@@ -5,6 +5,16 @@ import '../App.css';
 import ActivitiesList from '../store/ActivitiesList.js';
 import DateInfo from '../components/date-info.js';
 import NavBar from '../components/navbar.js';
+import NavbarBootstrap from '../components/navbarBootstrap.js'
+
+var backgroundTexture = {
+    backgroundImage: 'url(/images/grid_noise.png)'
+};
+
+var bgImage = {
+    backgroundImage: 'linear-gradient(to bottom, rgb(13,194,181) 0%, rgb(13,186,237) 100%)',
+    backgroundSize: 'cover'
+};
 
 class DatePage extends Component {
     constructor(props) {
@@ -26,25 +36,36 @@ class DatePage extends Component {
     }
 
     render() {
-        return (<div>
+        return (<div style={bgImage}>
+            <div className='datePageTest'>
+                <NavbarBootstrap/>
 
-            <NavBar/>
+                <div className="date-page">
 
-            <div className="date-page">
+                    <div className='activityPicDiv'>
+                        <img className="activityPic" src={`${this.state.activity.image}`} alt="date"/>
+                    </div>
 
-                <h1>{this.state.activity.title}</h1>
+                    <h3>{this.state.activity.title}</h3>
 
-                <img className="activityPic" src={`${this.state.activity.image}`} alt="date"/>
+                    <div className="date-information">
+                        <h4>
+                            <strong>Date Information</strong>
+                        </h4>
+                        <p>{this.state.activity.description}</p>
+                    <p>Location: {this.state.activity.location}</p>
+                <p>Cost: {this.state.activity.cost}</p>
+                    </div>
 
-                <h3>{this.state.activity.title}</h3>
-
-                <DateInfo description={this.state.activity.description} location={this.state.activity.location} cost={this.state.activity.cost}/>
-
-                <Link to='/all-dates-page' id='all-dates-back' className='back-button'>
-                    <Button className='back-button' bsStyle='primary' bsSize='large'>Back</Button>
-                </Link>
+                    <Link to='/all-dates-page' id='all-dates-back' className='back-button'>
+                        <Button className='back-button' bsStyle='primary' bsSize='large'>Back</Button>
+                    </Link>
+                </div>
 
             </div>
+
+
+
         </div>);
     }
 }

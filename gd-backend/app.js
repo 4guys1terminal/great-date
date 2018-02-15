@@ -158,6 +158,11 @@ app.post('/activities', (req, res) => {
                 var imageInfo = base64ToImage(image,path,optionalObj)
             })
 
+            // TODO: fix my weird atom package issues
+            // save specific file name with images
+            // figure out how to integrate with FE
+            // figure out how to add it to database area for pulling w/ the activity id
+
 
         } else {
             res.status(400)

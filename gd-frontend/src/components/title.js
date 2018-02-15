@@ -5,9 +5,17 @@ import TitleButton from './title-button.js';
 class Title extends Component {
     render() {
         return (<div>
-            <h1 className="title">
-                Date Night Made Easy
-            </h1>
+            <div>
+                <h1 className="title">
+                    Date Night Made Easy
+                </h1>
+            </div>
+
+            <div className='icons-front'>
+                <i className="fa-5x front-icons fas fa-utensils"></i>
+                <i class="fa-5x front-icons fas fa-coffee"></i>
+                <i className="fa-5x front-icons fas fa-glass-martini"></i>
+            </div>
 
             <div className="date-btn-contain">
                 <button className="date-btn" onClick={this.props.onClick}>
