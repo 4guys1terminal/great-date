@@ -145,48 +145,18 @@ app.post('/activities', (req, res) => {
 
             })
 
-            // decoding the image URI and saving to file in database
 
-            // stripping off header
-            //
+            //converting base64 string back into an image in the database
             let images = req.body.imageFile.map((image) => {
-                let buf = new Buffer(image, 'base64')
-                console.log(buf);
 
-                fs.writeFile('./image.png', buf, (err) => {
-                    console.log(err)
-                })
+                const base64ToImage = require('base64-to-image');
+
+
+                var path = './public/user-uploads/'
+                var optionalObj = {'fileName': 'testing.png'};
+
+                var imageInfo = base64ToImage(image,path,optionalObj)
             })
-
-
-            // let base64Image = base64String.split(';base64').pop();
-            // console.log("Testing Images");
-            // console.log(base64Image);
-            //
-            // // saving to file
-            // fs.writeFile('image.png', base64Image, {
-            // 	encoding: 'base64',
-            // 	function(err) {
-            // 		console.log('File created');
-            // 	}
-            // })
-            //
-            //
-            // //
-            // // attempt 1
-            // var fs = require("fs");
-            //
-            // fs.writeFile("arghhhh.jpg", new Buffer(request.body.photo, "base64"), function(err) {});
-            //
-            // // attempt 2
-            // var fs = require('fs');
-            // fs.writeFile('image.png', base64Image, {
-            // 	encoding: 'base64',
-            // 	function(err) {
-            // 		console.log('File created');
-            // 	}
-            // })
-
 
 
         } else {
