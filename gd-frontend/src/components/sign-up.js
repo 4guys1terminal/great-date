@@ -2,27 +2,14 @@ import React, { Component } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 import { Row, Col, FormGroup, ControlLabel, HelpBlock, FormControl, Button } from 'react-bootstrap';
-import {
-    validatePresence,
-    validateLength,
-    validateEmail,
-    validateNumeric,
-    validatePassword,
-    addError,
- } from './RegistrationStore';
+import RegistrationStore from './RegistrationStore';
 
 class SignUp extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            registration: {
-                firstName: '',
-                lastName: '',
-                email: '', 
-                password: '',
-            },
-            errors: props.errors || []
+            registration: RegistrationStore.getFields(),
+            errors: {}
         };
     }
 
@@ -40,37 +27,34 @@ class SignUp extends Component {
 
         const { onSubmit } = this.props;
         const { registration } = this.state;
-
-        let errors = this.validate()
-        if(errors.length > 0) {
-            // do something to show they can't submit
-            this.setState({
-                errors: errors
-            })
-
-            return
-        }
-
+        this.validate()
         if (onSubmit) {
-            onSubmit(registration)
+            onSubmit(this.state.registration)
+        } else {
+            console.log("no onSubmit props passed");
         }
+    }
+
+    isValid() {
+        return Object.keys(this.state.errors).length === 0
     }
 
     validate() {
-        let { registration, errors } = this.state
+        RegistrationStore.validate()
+        this.setState({ errors: RegistrationStore.getErrors() })
+    }
 
-        errors = validatePresence(errors, registration, 'firstName')
-        errors = validatePresence(errors, registration, 'lastName')
-        errors = validatePresence(errors, registration, 'email')
-        errors = validatePresence(errors, registration, 'password')
+    validatePresence(fieldName) {
+        if (this.fields[fieldName] === '') {
+            this.addError(fieldName, 'is Required')
+        }
+    }
 
-        return errors
+    addError(fieldName, message) {
+        this.errors[fieldName] = message
     }
 
     render() {
-        const { registration, errors } = this.state
-        const { firstName, lastName, email, password } = registration
-
         return (
             <div>
                 <div className="signup-wrapper" >
@@ -79,7 +63,7 @@ class SignUp extends Component {
                         <p className="signup-form-blurb">Sign up and share unique date ideas</p>
                         <div className="alert-holder">
                             <span className="center">
-                                {errors.length > 0 &&
+                                {!this.isValid() &&
                                     <div className="alert alert-danger">Please verify that all fields are correctly filled</div>
                                 }
                             </span>
@@ -87,14 +71,14 @@ class SignUp extends Component {
 
                     <Row className="row row1">
                         <Col xs={10}>
-                            <FormGroup>
+                            <FormGroup >
                                 <FormControl
                                     name="firstName"
                                     type="text"
                                     placeholder="First Name"
                                     onChange={this.handleChange.bind(this)}
-                                    value={firstName}
-                                    errors={errors.firstName}
+                                    value={this.state.registration.firstName}
+                                    errors={this.state.errors.firstName}
                                 />
                             </FormGroup>
                         </Col>
@@ -108,8 +92,8 @@ class SignUp extends Component {
                                     type="text"
                                     placeholder="Last Name"
                                     onChange={this.handleChange.bind(this)}
-                                    value={lastName}
-                                    errors={errors.lastName}
+                                    value={this.state.registration.lastName}
+                                    errors={this.state.errors.lastName}
                                 />
                             </FormGroup>
                         </Col>
@@ -123,8 +107,8 @@ class SignUp extends Component {
                                     type="email"
                                     placeholder="Email"
                                     onChange={this.handleChange.bind(this)}
-                                    value={email}
-                                    errors={errors.email}
+                                    value={this.state.registration.email}
+                                    errors={this.state.errors.email}
                                 />
                             </FormGroup>
                         </Col>
@@ -138,8 +122,8 @@ class SignUp extends Component {
                                     type="password"
                                     placeholder="Password"
                                     onChange={this.handleChange.bind(this)}
-                                    value={password}
-                                    errors={errors.password}
+                                    value={this.state.registration.password}
+                                    errors={this.state.errors.password}
                                 />
                             </FormGroup>
                         </Col>
@@ -147,12 +131,11 @@ class SignUp extends Component {
 
                         <Col xs={10} className="row">
                             <button
-                                id="submit"
-                                className="create-account"
                                 onSubmit={this.handleSubmit.bind(this)}
-                            >
-                                Create Account
-                            </button>
+                                id="submit"
+                                type="submit"
+                                className="create-account"
+                                >Create Account</button>
 
                         </Col>
                         <a className="forgot" href="#">
