@@ -17,6 +17,7 @@ import RadioGroup from './radio-group.js';
 import Dropzone from 'react-dropzone';
 import MapContainer from '../components/google-map';
 
+const API = "http://localhost:3000"
 
 class NewActivityForm extends Component {
     constructor(props) {
@@ -25,30 +26,33 @@ class NewActivityForm extends Component {
             form: {
                 title: '',
                 description: '',
-                location: '',
+                locations: {},
                 cost: '',
                 tags: {},
-                imageFiles: [],
-                imageNames: []
+                imageFile: []
             },
             filesToBeSent:[],
             imagesAllowed: 1,
-            locationExamples: [
-                {id: 1, value: 'pacific_beach', title: 'Pacific Beach'},
-                {id: 2, value: 'downtown', title: 'Downtown'},
-                {id: 3, value: 'point_loma', title: 'Point Loma'},
-                {id: 4, value: 'north_park', title: 'North Park'},
-                {id: 5, value: 'la_jolla', title: 'La Jolla'}
-            ],
-            tagExamples: [
-                {id: 1, title: 'Romantic'},
-                {id: 2, title: 'Thrilling'},
-                {id: 3, title: 'Morning'},
-                {id: 4, title: 'Afternoon'},
-                {id: 5, title: 'Evening'},
-                {id: 6, title: 'Outdoors'},
-            ]
+            locations: [],
+            tags: []
         }
+    }
+      //Gets our tag and location database
+    componentWillMount(){
+      fetch(`${API}/tags`)
+      .then((resp) => {
+        return resp.json()
+      })
+      .then((resp) => { this.setState({tags: resp.tags}) })
+
+      fetch(`${API}/locations`)
+      .then((resp) => {
+        return resp.json()
+      })
+      .then((resp) => { this.setState({locations: resp.locations}) })
+
+
+
     }
 
     handleChange(e) {
@@ -63,13 +67,8 @@ class NewActivityForm extends Component {
 
 
     handleSubmit() {
-        let { form } = this.state
-
-        form.cost = parseFloat(form.cost)
-
-        console.log(form)
-
-        this.props.onSubmit(form)
+        console.log(this.state.form);
+        this.props.onSubmit(this.state.form);
     }
 
 
@@ -87,17 +86,15 @@ class NewActivityForm extends Component {
 
     createLocation = (location) => {
         return(
-            <option
-                value={location.value}
-                key={location.id}>
-            {location.title}
+            <option>
+            {location.name}
             </option>
         )
     }
 
 
     createLocations = () => {
-        return this.state.locationExamples.map((location) => {
+        return this.state.locations.map((location) => {
             return this.createLocation(location)
         })
     }
@@ -119,7 +116,7 @@ class NewActivityForm extends Component {
 
 
     createTagCheckboxes = () => {
-        return this.state.tagExamples.map((tag) => {
+        return this.state.tags.map((tag) => {
             return this.createTagCheckbox(tag)
         })
     }
@@ -138,58 +135,43 @@ class NewActivityForm extends Component {
         })
     }
 
-// Borderline positive that the function below and the onDrop() function below
-// can be cut down a bit by merging this filesToBeSent step with the encoding
-// step. will take a look at down the line (it works fine for now)
-// - JD 2/14/2018
-
-
-// Clearing state when the clear button is pressed. Will have to be adjusted if more than one image for dates is allowed.
+    //Image shit (Jordan Needs To Comment)
     handleClear(event,index){
         var filesToBeSent=this.state.filesToBeSent;
         filesToBeSent.splice(index,1);
 
-        var imageFiles=this.state.form.imageFiles;
-        imageFiles.splice(index,1)
+        var imageFile=this.state.form.imageFile;
+        imageFile.splice(index,1)
 
-        var imageNames=this.state.form.imageNames;
-        imageNames.splice(index,1)
-
-        this.setState({filesToBeSent,imageFiles});
+        this.setState({filesToBeSent,imageFile});
     }
 
 
     onDrop = (acceptedFiles,rejectedFiles) => {
-        let { filesToBeSent, imagesAllowed, form } = this.state
-        // console.log("acceptedFiles",acceptedFiles);
+        var filesToBeSent = this.state.filesToBeSent
 
         // sending all accepted files to state as filesToBeSent
-        if(filesToBeSent.length < imagesAllowed) {
+        if(filesToBeSent.length < this.state.imagesAllowed) {
             filesToBeSent.push(acceptedFiles);
-            filesToBeSent.forEach(image => {
-                const reader = new FileReader()
-                // console.log(image[0].name);
-                form.imageNames.push(image[0].name)
-                // register the handlers
-                reader.onload = () => {
-                    form.imageFiles.push(reader.result)
-                }
-                reader.onabort = () => console.log('image reading was aborted')
-                reader.onerror = () => console.log('image reading has failed')
-                // end register
-
-                reader.readAsDataURL(image[0])
-            })
+            this.setState({filesToBeSent});
         } else {
             alert("Please, only one image per date.")
         }
 
+        //converting the filesToBeSent into base64
+        const form = this.state.form
+        var imageBase64 = form.imageFile
 
-        // console.log(form);
-        this.setState({
-            form: form,
-            filesToBeSent: filesToBeSent
+        filesToBeSent.forEach(image => {
+            const reader = new FileReader();
+            reader.readAsDataURL(image[0])
+            reader.onload = () => {
+                imageBase64.push(reader.result)
+            };
+            reader.onabort = () => console.log('image reading was aborted');
+            reader.onerror = () => console.log('image reading has failed');
         })
+        this.setState({imageFile: imageBase64})
     }
 
 
@@ -210,10 +192,7 @@ class NewActivityForm extends Component {
 
                         <div className='forms'>
 
-                        {/*
-                         Highly consider componentizing each of these form inputs out in the future.
-                        - JD 2/12/2018
-                        */}
+                        {/* All form inputs labeled and minimized because DAMN that's a lot of code. Highly consider componentizing each of these form inputs out in the future.*/}
 
                         {/*Title*/}
                             <Row>
@@ -278,15 +257,14 @@ class NewActivityForm extends Component {
                                         placeholder="select"
                                         type="select"
                                         name="location"
-                                        value={this.state.form.location}
                                         onChange={this.handleChange.bind(this)}
                                     >
 
-                                    <option value="location">Location</option>
-
+                                    // <option value="location">Location</option>
                                     {this.createLocations()}
-
                                     </FormControl>
+
+
 
                                     {/*}
                                     {this.errorsFor('location') &&
@@ -312,10 +290,10 @@ class NewActivityForm extends Component {
                                       name="cost"
                                       onChange={this.handleChange.bind(this)}
                                       options={[
-                                        ['0', 'Free'],
-                                        ['0.33', '$'],
-                                        ['0.66', '$$'],
-                                        ['1', '$$$']
+                                        ['free', 'Free'],
+                                        ['$', '$'],
+                                        ['$$', '$$'],
+                                        ['$$$', '$$$']
                                       ]}
 
                                       value={this.state.form.cost}
@@ -323,7 +301,6 @@ class NewActivityForm extends Component {
 
 
                                     {/*
-
                                     {this.errorsFor('cost') &&
                                     <HelpBlock id="cost-help-block">{this.errorFor('cost')}</HelpBlock>
                                     }
@@ -371,6 +348,7 @@ class NewActivityForm extends Component {
                                         >
                                             <div>
                                             <p>Try dropping some files here, or click me to select files to upload.</p>
+                                            <p>(Only image files will be accepted.)</p>
                                              </div>
                                         </Dropzone>
                                     </div>
@@ -397,11 +375,11 @@ class NewActivityForm extends Component {
                                     </div>
 
 
-
+                                    {/*
                                     {this.errorsFor('image') &&
                                     <HelpBlock id="image-help-block">{this.errorFor('images')}</HelpBlock>
                                     }
-
+                                    */}
 
                                 </FormGroup>
                                 </Col>
@@ -412,20 +390,18 @@ class NewActivityForm extends Component {
                                 <Col xs={10} xsOffset={1}>
                                     <br/>
                                     <Button
-                                        bsSize='large'
-                                        bsStyle='primary'
                                         id="submit"
                                         onClick={this.handleSubmit.bind(this)}
                                         >Submit</Button>
                                 </Col>
                             </Row>
 
+
                                 <Col xs={10} xsOffset={1}>
                                     <div className='map'>
                                         <MapContainer />
                                     </div>
                                 </Col>
-
 
                         </div>
 
