@@ -22,6 +22,22 @@ class AllDatesPage extends Component {
         }
     }
 
+    renderCreateButton() {
+        if (typeof localStorage.name === 'undefined') {
+            return <div>
+                {
+                    <Link to='/sign-up-page'> <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button> </Link>
+                }
+            </div>
+        } else {
+            return <div>
+                {
+                    <Link to='/new-activity'> <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button> </Link>
+                }
+                </div>
+        }
+    }
+
     render() {
         return (
             <div>
@@ -45,7 +61,7 @@ class AllDatesPage extends Component {
 
                     <Grid />
 
-                    <Link to='/new-activity'> <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button> </Link>
+                    {this.renderCreateButton()}
                 </div>
 
             </div>

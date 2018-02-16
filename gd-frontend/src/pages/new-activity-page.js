@@ -4,6 +4,7 @@ import {Redirect} from 'react-router-dom';
 
 import AllDatesPage from './all-dates-page.js';
 import NavBar from '../components/navbar.js';
+import LoggedInNav from '../components/logged-in-navbar.js';
 import NewActivityForm from '../components/new-activity-form.js';
 
 
@@ -34,6 +35,14 @@ class NewActivity extends Component {
           return resp.json()
         })
         .then((resp) => { this.setState({tags: resp.tags}) })
+    }
+
+    isUserLoggedIn() {
+        if (typeof localStorage.name === 'undefined') {
+            return < NavBar />;
+        } else {
+            return <LoggedInNav />;
+        }
     }
 
     handleNewActivity(params){
@@ -70,7 +79,7 @@ class NewActivity extends Component {
         return (
             <div>
 
-                <NavBar />
+                {this.isUserLoggedIn()}
 
                 <h1> Create a Date </h1>
 
