@@ -1,8 +1,16 @@
 import React, {Component} from 'react';
 import '../App.css';
-import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import { Row, Col, FormGroup, ControlLabel, HelpBlock, FormControl, Button } from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import {
+    Row,
+    Col,
+    FormGroup,
+    ControlLabel,
+    HelpBlock,
+    FormControl,
+    Button
+} from 'react-bootstrap';
 import FormInput from './FormInput.js';
 
 const API = "http://127.0.0.1:3000";
@@ -35,7 +43,7 @@ class Login extends Component {
             console.log("resp:", data);
 
             if (data.message === "login success") {
-                this.setState({ authorized: true })
+                this.setState({authorized: true})
             } else {
                 this.setState({valid: false})
             }
@@ -49,49 +57,30 @@ class Login extends Component {
     }
 
     render() {
-        const {authorized, form} = this.state
-        const {email, password} = form
-        const login = (<div className="login-wrapper">
-            <form
-                className="login-form"
-                onSubmit={this.authorize}
-                onChange={this.handleChange.bind(this)}>
-                <div
-                    className="login-title">Great Date</div>
+        const {authorized, form,} = this.state
+        const {email, password,} = form
+        const login = (
+        <div className="login-wrapper">
+            <form className="login-form" onSubmit={this.authorize} onChange={this.handleChange.bind(this)}>
+                <div className="login-title">Great Date</div>
                 <div className="alert-holder">
                     <span className="center">
-                        {!this.state.valid &&
-                            <div className="alert alert-danger">Invalid username or password. Please try again</div>
-                        }
+                        {!this.state.valid && <div className="alert alert-danger">Invalid username or password. Please try again</div>}
                     </span>
                 </div>
                 <Row className="row">
                     <Col xs={10}>
-                        <FormGroup
-                            id="email-form-group">
+                        <FormGroup id="email-form-group">
                             <ControlLabel id="email"></ControlLabel>
-                            <FormControl
-                                placeholder="Email"
-                                type="text"
-                                name="email"
-                                value={this.state.form.email}
-                                onChange={this.handleChange.bind(this)}
-                            />
+                            <FormControl placeholder="Email" type="text" name="email" value={this.state.form.email} onChange={this.handleChange.bind(this)}/>
                         </FormGroup>
                     </Col>
                 </Row>
                 <Row className="row">
                     <Col xs={10}>
-                        <FormGroup
-                            id="password-form-group">
+                        <FormGroup id="password-form-group">
                             <ControlLabel id="password"></ControlLabel>
-                            <FormControl
-                                placeholder="Password"
-                                type="text"
-                                name="password"
-                                value={this.state.form.password}
-                                onChange={this.handleChange.bind(this)}
-                            />
+                            <FormControl placeholder="Password" type="text" name="password" value={this.state.form.password} onChange={this.handleChange.bind(this)}/>
                         </FormGroup>
                     </Col>
                 </Row>
@@ -108,18 +97,29 @@ class Login extends Component {
             <div className="sign-up">
                 <p className="sign-up-text">
                     Dont have an account?
-                    <Link to='/sign-up-page' id='sign-up-link' className='sign-up-link'> Sign Up</Link>
+                    <Link to='/sign-up-page' id='sign-up-link' className='sign-up-link'>
+                        Sign Up</Link>
                 </p>
             </div>
 
-        return (
+        </div>
+)
+            return (
             <div>
                 <div id="authorization">
-                    {authorized ? <Redirect to={"/"} /> : login}
-                    {authorized ? localStorage.setItem('name', this.state.form.email) : null}
+                    {
+                        authorized
+                            ? <Redirect to={"/"}/>
+                            : login
+                    }
+                    {
+                        authorized
+                            ? localStorage.setItem('name', this.state.form.email)
+                            : null
+                    }
                 </div>
             </div>
-        </div>);
+        );
     }
 }
 
