@@ -2,63 +2,80 @@ import React, {Component} from 'react';
 import '../App.css';
 import DatePreview from './date-preview';
 import {Link} from 'react-router-dom';
+import imageFactory from './imgSrc.js'
 
 const host = "http://localhost:3000"
 const path = "/user-uploads/"
 
+const imgSrc = imageFactory(host, path)
+
 class Grid extends Component {
-    componentWillMount() {
-        fetch(`${host}/activities`).then((resp) => {
-            return resp.json()
-        }).then((resp) => {
-            this.setState({activities: resp.activities})
-            console.log(this.state);
-        })
+    constructor(props) {
+        super(props)
 
-        fetch(`${host}/tags`).then((resp) => {
-            return resp.json()
-        }).then((resp) => {
-            this.setState({tags: resp.tags})
-        })
-
+        this.state = {}
     }
 
-    // imageHost(host, path){
-    //     return function(image) {
-    //         return host+path+image
-    //     }
-    // }
-    //
-
-    // "http://localhost:3000" + "/user-uploads/" + "282535.jpg"
-
-    // makeGrid() {
-    //     let i = 0;
-    //     while (i < this.props.gridLimit) {
-    //         this.state.activities.map(function(activity) {
-    //             return (<DatePreview key={activity.id} id={activity.id} image={activity.image} title={activity.title} description={activity.description}/>)
-    //         })
-    //         i++
-    //     }
-    // }
-
-    render() {
-        // const imgSrc = imageHost(host,path);
-
-
-        let list = this.state.activities.map(function(activity) {
-            // let imageHERE = imgSrc(activity.imageName)
-            return (
-                <DatePreview key={activity.id} id={activity.id} image={activity.image} title={activity.title} description={activity.description}/>
-            )
+    componentWillMount() {
+        fetchTags()
+        .then((res) => {
+            this.setState({
+                tags: res.tags
+            })
         })
 
-        return (<div className="container">
-            <div className="grid">
-                {list}
+        fetchActivities()
+        .then((res) => {
+            this.setState({
+                activities: res.activities
+            })
+        })
+    }
+
+    render() {
+        const { activities } = this.state
+
+        if(!activities) {
+            return (
+                <div className="container">
+                    <div className="grid">
+                        <h1>Loading...</h1>
+                    </div>
+                </div>
+            )
+        }
+
+        return (
+            <div className="container">
+                <div className="grid">
+                    {activities.map((a) => {
+                        return (
+                            <DatePreview
+                                key={a.id}
+                                id={a.id}
+                                image={imgSrc(a.imageName)}
+                                title={a.title}
+                                description={a.description}
+                            />
+                        )
+                    })}
+                </div>
             </div>
-        </div>);
+        )
     }
 }
 
 export default Grid;
+
+function fetchTags() {
+    return fetch(`${host}/tags`).then((res) => {
+        return res.json()
+    })
+}
+
+function fetchActivities() {
+    return fetch(`${host}/activities`).then((res) => {
+        console.log(res);
+        return res.json()
+    })
+}

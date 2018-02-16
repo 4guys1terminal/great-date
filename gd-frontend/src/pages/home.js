@@ -29,7 +29,7 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            gridLimit: 9
+            acitvities: []
         }
     }
 
@@ -42,36 +42,39 @@ class Home extends Component {
     }
 
     render() {
-        return (<div className='home'>
-            <div className="shadow">
-                <div style={bgImage} className='titleBlock'>
-                    {this.isUserLoggedIn()}
+        const { activities } = this.state
+        
+        return (
+            <div className='home'>
+                <div className="shadow">
+                    <div style={bgImage} className='titleBlock'>
+                        {this.isUserLoggedIn()}
 
-                    <TitleBlock/>
+                        <TitleBlock/>
 
+                    </div>
+                </div>
+
+                <div className='home-background' style={backgroundTexture}>
+
+                    <div className="browse-title">
+                        <Link to='/all-dates-page' id='all-dates-link' className='browse-title'>Browse Dates</Link>
+                    </div>
+
+                    <div className="line-contain">
+                        <div className="line"></div>
+                    </div>
+
+                    <Grid activities={activities} />
+
+                    <div className="see-more-contain">
+                        <Link to='/all-dates-page' id='all-dates-nav' className='nav-btn1'>
+                            <button className="see-more-btn" id="pg2">See More</button>
+                        </Link>
+                    </div>
                 </div>
             </div>
-
-            <div className='home-background' style={backgroundTexture}>
-
-                <div className="browse-title">
-                    <Link to='/all-dates-page' id='all-dates-link' className='browse-title'>Browse Dates</Link>
-                </div>
-
-                <div className="line-contain">
-                    <div className="line"></div>
-                </div>
-
-                <Grid gridLimit={this.state.gridLimit}/>
-
-                <div className="see-more-contain">
-                    <Link to='/all-dates-page' id='all-dates-nav' className='nav-btn1'>
-                        <button className="see-more-btn" id="pg2">See More</button>
-                    </Link>
-                </div>
-            </div>
-
-        </div>);
+        )
     }
 }
 

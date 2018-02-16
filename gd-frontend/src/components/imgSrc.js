@@ -1,7 +1,5 @@
-function imageHost(host, path){
+export default function imageFactory(host, path){
     return function(image) {
         return host+path+image
     }
 }
-
-exports.imgSrc = imageHost(host,path);
