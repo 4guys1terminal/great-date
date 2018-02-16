@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom';
 import AllDatesPage from './all-dates-page.js';
 import NavBar from '../components/navbar.js';
 import NewActivityForm from '../components/new-activity-form.js';
-import MapContainer from '../components/google-map';
+
 
 const API = "http://localhost:3000"
 
@@ -74,7 +74,6 @@ class NewActivity extends Component {
 
               <h1> Create a Date </h1>
 
-              
               <NewActivityForm
                 onSubmit={this.handleNewActivity.bind(this)}
                 errors={this.state.errors && this.state.errors.validations}

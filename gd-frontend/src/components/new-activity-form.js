@@ -273,7 +273,6 @@ class NewActivityForm extends Component {
                       </FormGroup>
                     </Col>
                   </Row>
-                  <MapContainer />
 
                   {/*Cost*/}
                   <Row>
@@ -396,9 +395,10 @@ class NewActivityForm extends Component {
                     </Col>
                   </Row>
 
-                        </div>
+                </div>
 
-                </form>
+              </form>
+              <MapContainer />
             </div>
         );
     }
