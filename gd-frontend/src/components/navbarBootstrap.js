@@ -4,10 +4,11 @@ import {Link} from 'react-router-dom';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap'
 
+
 class Navigation extends Component {
     render() {
         return (<div>
-            <Navbar staticTop className='bootStrapNav'>
+            <Navbar   className='bootStrapNav'>
 
                 <Navbar.Header>
                     <LinkContainer to='/home'>
@@ -22,19 +23,19 @@ class Navigation extends Component {
                 <Navbar.Collapse>
                     <Nav pullRight>
                         <LinkContainer to='/home' >
-                            <NavItem >
+                            <NavItem eventKey={1} active='false'>
                                 Home
                             </NavItem>
                         </LinkContainer>
 
                         <LinkContainer to='/all-dates-page'>
-                            <NavItem >
+                            <NavItem eventKey={2} active='false'>
                                 Browse Dates
                             </NavItem>
                         </LinkContainer>
 
                         <LinkContainer to='/login-page'>
-                            <NavItem >
+                            <NavItem eventKey={3} active='false'>
                                 Log In / Sign Up
                             </NavItem>
                         </LinkContainer>

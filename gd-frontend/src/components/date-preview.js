@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { Card, CardImg, CardText, CardBody,
   CardTitle, Button } from 'reactstrap';
+import '../App.css';
 
 class DatePreview extends Component {
     render() {
@@ -21,7 +22,7 @@ class DatePreview extends Component {
                       <Button color="info">The Details</Button>
                     </CardBody>
                   </Card>
-                  
+
                 </Link>
               </li>
 
