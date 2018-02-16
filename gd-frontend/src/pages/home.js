@@ -46,20 +46,20 @@ class Home extends Component {
 
         return (
             <div className='home'>
-                <div className="shadow">
-                    <div style={bgImage} className='titleBlock'>
-                        {this.isUserLoggedIn()}
+              <div className="shadow">
+                <div style={bgImage} className='titleBlock'>
+                  {this.isUserLoggedIn()}
 
-                        <TitleBlock/>
+                  <TitleBlock/>
 
-                    </div>
                 </div>
+              </div>
 
-                <div className='home-background' style={backgroundTexture}>
+              <div className='home-background' style={backgroundTexture}>
 
-                    <div className="browse-title">
-                        <Link to='/all-dates-page' id='all-dates-link' className='browse-title'>Browse Dates</Link>
-                    </div>
+                <div className="browse-title">
+                  <Link to='/all-dates-page' id='all-dates-link' className='browse-title'>Browse Dates</Link>
+                </div>
 
                     <div className="line-contain">
                         <div className="line"></div>
