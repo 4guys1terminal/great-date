@@ -10,9 +10,8 @@ class Navigation extends Component {
             <Navbar staticTop className='bootStrapNav'>
 
                 <Navbar.Header>
-                    <LinkContainer to='/' id='home-nav' className='nav-btn1'>
-                        <Navbar.Brand componentclass="bsNavLeft">
-
+                    <LinkContainer to='/home'>
+                        <Navbar.Brand>
                             Great Date
                         </Navbar.Brand>
                     </LinkContainer>
@@ -20,22 +19,22 @@ class Navigation extends Component {
                     <Navbar.Toggle/>
                 </Navbar.Header>
 
-                <Navbar.Collapse componentclass="bsNavRight">
+                <Navbar.Collapse>
                     <Nav pullRight>
-                        <LinkContainer to='/' className='nav-btn2' id='all-dates-nav'>
-                            <NavItem eventKey={1}>
+                        <LinkContainer to='/home' >
+                            <NavItem >
                                 Home
                             </NavItem>
                         </LinkContainer>
 
-                        <LinkContainer to='/all-dates-page' id='all-dates-nav' className='nav-btn2'>
-                            <NavItem eventKey={2}>
+                        <LinkContainer to='/all-dates-page'>
+                            <NavItem >
                                 Browse Dates
                             </NavItem>
                         </LinkContainer>
 
-                        <LinkContainer to='/login-page' className='nav-btn2' id='login-link'>
-                            <NavItem eventKey={3}>
+                        <LinkContainer to='/login-page'>
+                            <NavItem >
                                 Log In / Sign Up
                             </NavItem>
                         </LinkContainer>

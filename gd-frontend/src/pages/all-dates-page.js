@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ActivitiesList from '../store/ActivitiesList';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Grid from '../components/grid.js';
 
 import DatePreview from '../components/date-preview';
@@ -43,28 +43,32 @@ class AllDatesPage extends Component {
         if (typeof localStorage.name === 'undefined') {
             return <div>
                 {
-                    <Link to='/sign-up-page'> <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button> </Link>
+                    <Link to='/sign-up-page'>
+                            <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button>
+                        </Link>
                 }
             </div>
         } else {
             return <div>
                 {
-                    <Link to='/new-activity'> <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button> </Link>
+                    <Link to='/new-activity'>
+                            <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button>
+                        </Link>
                 }
-                </div>
+            </div>
         }
     }
 
     render() {
         return (<div>
-          <div style={bgImage}>
+            <div style={bgImage}>
 
-            {this.isUserLoggedIn()}
+                {this.isUserLoggedIn()}
 
-            <div className="all-dates-page">
+                <div>
 
-              <h1>Browse All Dates</h1>
-              
+                    <h1>Browse All Dates</h1>
+
                     {/* <ToggleButtonGroup type="checkbox" bsSize='large' className="search-tags">
                     <ToggleButton value={1}>Romantic</ToggleButton>
                     <ToggleButton value={2}>Thrilling</ToggleButton>
@@ -76,12 +80,15 @@ class AllDatesPage extends Component {
                 </ToggleButtonGroup> */
                     }
 
-                    <div style={backgroundTexture}>
+                    <div style={backgroundTexture} className='all-dates-page'>
 
-                        <Grid gridLimit='null'/>
+                        <Grid/>
 
                         <Link to='/new-activity'>
-                            <Button className="newActivityButton" bsStyle="primary" bsSize="large">Create New Date</Button>
+                            <Button
+                                bsStyle="primary" bsSize="large"
+                                className="create-date-btn"
+                                >Create New Date</Button>
                         </Link>
                     </div>
                 </div>
