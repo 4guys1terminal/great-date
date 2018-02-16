@@ -2,21 +2,36 @@ import React, { Component } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 import { Row, Col, FormGroup, ControlLabel, HelpBlock, FormControl, Button } from 'react-bootstrap';
-import RegistrationStore from './RegistrationStore';
+import {
+    validatePresence,
+    validateLength,
+    validateEmail,
+    validateNumeric,
+    validatePassword,
+    addError,
+ } from './RegistrationStore';
 
 class SignUp extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            registration: RegistrationStore.getFields(),
-            errors: {}
+            registration: {
+                firstName: '',
+                lastName: '',
+                email: '', 
+                password: '',
+            },
+            errors: props.errors || []
         };
     }
 
-    handleChange(event) {
-        const target = event.target
-        const registration = this.state.registration
-        registration[target.name] = target.value
+    handleChange(e) {
+        const { registration } = this.state
+        const { name, value } = e.target
+
+        registration[name] = value
+        
         this.setState({
             registration: registration
         })
@@ -27,34 +42,37 @@ class SignUp extends Component {
 
         const { onSubmit } = this.props;
         const { registration } = this.state;
-        this.validate()
-        if (onSubmit) {
-            onSubmit(this.state.registration)
-        } else {
-            console.log("no onSubmit props passed");
-        }
-    }
 
-    isValid() {
-        return Object.keys(this.state.errors).length === 0
+        let errors = this.validate()
+        if(errors.length > 0) {
+            // do something to show they can't submit
+            this.setState({
+                errors: errors
+            })
+
+            return
+        }
+
+        if (onSubmit) {
+            onSubmit(registration)
+        }
     }
 
     validate() {
-        RegistrationStore.validate()
-        this.setState({ errors: RegistrationStore.getErrors() })
-    }
+        let { registration, errors } = this.state
 
-    validatePresence(fieldName) {
-        if (this.fields[fieldName] === '') {
-            this.addError(fieldName, 'is Required')
-        }
-    }
+        errors = validatePresence(errors, registration, 'firstName')
+        errors = validatePresence(errors, registration, 'lastName')
+        errors = validatePresence(errors, registration, 'email')
+        errors = validatePresence(errors, registration, 'password')
 
-    addError(fieldName, message) {
-        this.errors[fieldName] = message
+        return errors
     }
 
     render() {
+        const { registration, errors } = this.state
+        const { firstName, lastName, email, password } = registration
+
         return (
             <div>
                 <div className="signup-wrapper" >
@@ -63,7 +81,7 @@ class SignUp extends Component {
                         <p className="signup-form-blurb">Sign up and share unique date ideas</p>
                         <div className="alert-holder">
                             <span className="center">
-                                {!this.isValid() &&
+                                {errors.length > 0 &&
                                     <div className="alert alert-danger">Please verify that all fields are correctly filled</div>
                                 }
                             </span>
@@ -71,14 +89,14 @@ class SignUp extends Component {
 
                     <Row className="row row1">
                         <Col xs={10}>
-                            <FormGroup >
+                            <FormGroup>
                                 <FormControl
                                     name="firstName"
                                     type="text"
                                     placeholder="First Name"
                                     onChange={this.handleChange.bind(this)}
-                                    value={this.state.registration.firstName}
-                                    errors={this.state.errors.firstName}
+                                    value={firstName}
+                                    errors={errors.firstName}
                                 />
                             </FormGroup>
                         </Col>
@@ -92,8 +110,8 @@ class SignUp extends Component {
                                     type="text"
                                     placeholder="Last Name"
                                     onChange={this.handleChange.bind(this)}
-                                    value={this.state.registration.lastName}
-                                    errors={this.state.errors.lastName}
+                                    value={lastName}
+                                    errors={errors.lastName}
                                 />
                             </FormGroup>
                         </Col>
@@ -107,8 +125,8 @@ class SignUp extends Component {
                                     type="email"
                                     placeholder="Email"
                                     onChange={this.handleChange.bind(this)}
-                                    value={this.state.registration.email}
-                                    errors={this.state.errors.email}
+                                    value={email}
+                                    errors={errors.email}
                                 />
                             </FormGroup>
                         </Col>
@@ -122,8 +140,8 @@ class SignUp extends Component {
                                     type="password"
                                     placeholder="Password"
                                     onChange={this.handleChange.bind(this)}
-                                    value={this.state.registration.password}
-                                    errors={this.state.errors.password}
+                                    value={password}
+                                    errors={errors.password}
                                 />
                             </FormGroup>
                         </Col>
@@ -131,11 +149,12 @@ class SignUp extends Component {
 
                         <Col xs={10} className="row">
                             <button
-                                onSubmit={this.handleSubmit.bind(this)}
                                 id="submit"
-                                type="submit"
                                 className="create-account"
-                                >Create Account</button>
+                                onSubmit={this.handleSubmit.bind(this)}
+                            >
+                                Create Account
+                            </button>
 
                         </Col>
                         <a className="forgot" href="#">

@@ -38,35 +38,38 @@ class Login extends Component {
     */
     authorize = (e) => {
         e.preventDefault()
-        const {email, password,} = this.state.form
+        const { email, password } = this.state.form
 
-        fetch(`${API}/sessions/new`, {
+        fetch(`${API}/sessions/new` ,
+        {
             method: "post",
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify({email: email, password: password,}),
-        }).then((resp) => resp.json()).then((data) => {
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        }).then((resp) => resp.json())
+        .then((data) => {
             console.log("resp:", data);
+
             if (data.message === "login success") {
-                this.setState({authorized: true})
+                this.setState({ authorized: true })
             } else {
                 this.setState({valid: false})
             }
-        }).catch((e) => console.log("error:", e))
+        }).catch( (e) => console.log("error:", e))
     }
 
     handleChange = (e) => {
-        const {form} = this.state
+        const { form } = this.state
         form[e.target.name] = e.target.value.trim() // trims white space (spacebar)
         // console.log(e.target.value)  un-comment to understand .trim
-        this.setState({form: form})
+        this.setState({ form: form })
     }
 
     render() {
-
-
-
         const {authorized, form,} = this.state
         const {email, password,} = form
         const login =
@@ -99,17 +102,14 @@ class Login extends Component {
                 <button className="login-btn" type="submit">
                     Log in
                 </button>
-                {/* <a className="forgot" href="#">
-              <p>Forgot password?</p>
-                </a> */
-                }
+
             </form>
 
             <div className="sign-up">
                 <p className="sign-up-text">
-                  Dont have an account? 
-                    <Link to='/sign-up-page' id='sign-up-link' className='sign-up-link'>
-                      Sign Up</Link>
+                  Dont have an account?
+                    <span > <Link to='/sign-up-page' id='sign-up-link' className='sign-up-link'>
+                      Sign Up</Link></span>
                 </p>
 
             </div>
