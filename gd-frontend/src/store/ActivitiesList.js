@@ -5,7 +5,7 @@ const activities = [
       description:"Rent bikes from ____ in Pacific Beach and explore the eclectic and exciting beach scene of San Diego's Pacific Beach. Grab a bite to eat, enjoy some ice cream, or stop off for a drink at one of PB's exciting beach beach bars.",
       location:"Pacific Beach",
       cost:0.33,
-      image:'/images/pacific_beach.jpg',
+      image:'pacific_beach.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -15,7 +15,7 @@ const activities = [
       description:"Head to San Diego's hip up and coming North Park neighborhood to hang with the hipsters and Dan. If you're a fan of whiskey, check out the bar 7 Grand and see the hidden speakeasy in the back. Afterwards, walk up the street to CoinOp, a popular gaming bar where you can play your favorite retro games and enjoy a great selection of craft beers and cocktails.",
       location:"North Park",
       cost: .66,
-      image:'/images/north_park.jpg',
+      image:'north_park.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -25,7 +25,7 @@ const activities = [
       description:"Grab your favorite date, a bottle of your preference, and some nice cheeses/crackers, then head to beautiful Sunset Cliffs to see the sights, watch the sunset, and maybe see some cliff divers in action.",
       location:"Sunset Cliffs",
       cost:0,
-      image:'/images/sunset_cliffs.jpg',
+      image:'sunset_cliffs.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -35,7 +35,7 @@ const activities = [
       description:"Turn on Netflix. Chill.",
       location:"Your Home",
       cost:0,
-      image:'/images/netflix.jpg',
+      image:'netflix.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     }

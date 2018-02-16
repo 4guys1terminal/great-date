@@ -2,7 +2,7 @@ var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var validator = require('express-validator');
-const fs = require('fs');
+const crypto = require('crypto')
 
 var app = express();
 
@@ -103,22 +103,41 @@ app.post('/activities', (req, res) => {
     req.checkBody('description', 'is required').notEmpty()
     req.checkBody('location', 'is required').notEmpty()
     req.checkBody('cost', 'is required').notEmpty()
+
     // req.checkBody('tag','is required').notEmpty()
-    // req.checkBody('imageFile', 'is required').notEmpty()
+    req.checkBody('imageFiles', 'is required').notEmpty()
 
     // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult().then((validationErrors) => {
         if (validationErrors.isEmpty()) {
+            let fileContent = req.body.imageFiles[0]
+
+            // hashing the image name to store with the activity (to avoid duplicate name problem)
+            let hashedImageContent = crypto.createHash('md5').update(fileContent).digest('hex');
+            console.log(hashedImageContent);
+            //converting base64 string back into an image and saving to /user-uploads/ folder
+            let images = req.body.imageFiles.map((image) => {
+
+
+                const base64ToImage = require('base64-to-image');
+
+                var path = './public/user-uploads/'
+                var optionalObj = {'fileName': hashedImageContent};
+
+                base64ToImage(image,path,optionalObj)
+            })
+
 
             Activity.create({
                 title: req.body.title,
                 description: req.body.description,
                 location: req.body.location,
-                cost: req.body.cost
+                cost: req.body.cost,
+                imageName: hashedImageContent
             }).then((activity) => {
                     res.status(201)
                     res.json({activity: activity})
-                    // console.log(activity)
+                    console.log(activity)
             })
 
             Activity.max('id').then(max => {
@@ -144,24 +163,6 @@ app.post('/activities', (req, res) => {
                 // console.log('final tagArr',tagArr);
 
             })
-
-            let fileName = req.body.imageNames[0]
-            console.log(fileName);
-            //converting base64 string back into an image in the database
-            let images = req.body.imageFiles.map((image) => {
-
-                const base64ToImage = require('base64-to-image');
-
-                var path = './public/user-uploads/'
-                var optionalObj = {'fileName': fileName};
-
-                var imageInfo = base64ToImage(image,path,optionalObj)
-            })
-
-            // TODO:
-            // save specific file name with images
-            // figure out how to integrate with FE
-            // figure out how to add it to database area for pulling w/ the activity id
 
 
         } else {
@@ -209,6 +210,8 @@ app.post('/sessions/new', (req, res) => {
 })
 
 // put route for editing activities
+
+// has this been worked on at all really? -JD 2/15/2018
 app.put('/activities/edit/:id', (req, res) => {
     const {name, content} = req.params;
     let id = parseInt(req.params.id);

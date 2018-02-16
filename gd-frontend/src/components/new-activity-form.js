@@ -161,14 +161,14 @@ class NewActivityForm extends Component {
 
     onDrop = (acceptedFiles,rejectedFiles) => {
         let { filesToBeSent, imagesAllowed, form } = this.state
-        console.log("acceptedFiles",acceptedFiles);
+        // console.log("acceptedFiles",acceptedFiles);
 
         // sending all accepted files to state as filesToBeSent
         if(filesToBeSent.length < imagesAllowed) {
             filesToBeSent.push(acceptedFiles);
             filesToBeSent.forEach(image => {
                 const reader = new FileReader()
-                console.log(image[0].name);
+                // console.log(image[0].name);
                 form.imageNames.push(image[0].name)
                 // register the handlers
                 reader.onload = () => {
@@ -185,7 +185,7 @@ class NewActivityForm extends Component {
         }
 
 
-        console.log(form);
+        // console.log(form);
         this.setState({
             form: form,
             filesToBeSent: filesToBeSent
@@ -397,11 +397,11 @@ class NewActivityForm extends Component {
                                     </div>
 
 
-                                    {/*
+
                                     {this.errorsFor('image') &&
                                     <HelpBlock id="image-help-block">{this.errorFor('images')}</HelpBlock>
                                     }
-                                    */}
+
 
                                 </FormGroup>
                                 </Col>

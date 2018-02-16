@@ -5,17 +5,19 @@ import { Card, CardImg, CardText, CardBody,
 
 class DatePreview extends Component {
     render() {
+        const { id, title, image } = this.props
+
         return (
             <div className="date-preview hvr-grow-shadow">
 
-                <li className="datePreview cell" key={this.props.id}>
-                    <Link to={`/activities/${this.props.id}`}>
+                <li className="datePreview cell" key={id}>
+                    <Link to={`/activities/${id}`}>
 
                         <Card className="previewCard">
-                            <CardImg top width='100%' src={this.props.image} alt="Date Image" className="thumbnails responsive-image" />
+                            <CardImg top width='100%' src={image} alt="Date Image" className="thumbnails responsive-image" />
 
                             <CardBody>
-                                <CardTitle className='cardTitle'>{this.props.title}</CardTitle>
+                                <CardTitle className='cardTitle'>{title}</CardTitle>
                                 <Button color="info">The Details</Button>
                             </CardBody>
                         </Card>
