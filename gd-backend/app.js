@@ -2,6 +2,7 @@ var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var validator = require('express-validator');
+const crypto = require('crypto')
 var sequelize = require('sequelize');
 const fs = require('fs');
 
@@ -13,6 +14,7 @@ var Activity = require('./models').Activity;
 var Tags = require('./models').Tag;
 var ActivityTag = require('./models').ActivityTag;
 var Location = require('./models').Location;
+
 
 app.use(express.static('public'));
 app.use(bodyParser.json({limit: '50mb'}));
@@ -114,6 +116,7 @@ app.post('/users', (req, res) => {
                 res.json({message: 'success', user: user})
             })
         } else {
+            // console.log(validationErrors.array())
             res.status(400)
             res.json({
                 errors: {
@@ -133,17 +136,35 @@ app.post('/activities', (req, res) => {
     req.checkBody('location', 'is required').notEmpty()
     req.checkBody('cost', 'is required').notEmpty()
     // req.checkBody('tag','is required').notEmpty() --------               Need to
-    // req.checkBody('imageFile', 'is required').notEmpty() ---------   Figure these out
+    // req.checkBody('imageFiles', 'is required').notEmpty() ---------   Figure these out
 
     // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult().then((validationErrors) => {
         if (validationErrors.isEmpty()) {
-          //Takes form inputs and creates a new activity in our database
+            let fileContent = req.body.imageFiles[0]
+
+            // hashing the image name to store with the activity (to avoid duplicate name problem)
+            let hashedImageContent = crypto.createHash('md5').update(fileContent).digest('hex');
+            console.log(hashedImageContent);
+            //converting base64 string back into an image and saving to /user-uploads/ folder
+            let images = req.body.imageFiles.map((image) => {
+
+
+                const base64ToImage = require('base64-to-image');
+
+                var path = './public/user-uploads/'
+                var optionalObj = {'fileName': hashedImageContent};
+
+                base64ToImage(image,path,optionalObj)
+            })
+
+
             Activity.create({
                 title: req.body.title,
                 description: req.body.description,
                 location: req.body.location,
-                cost: req.body.cost
+                cost: req.body.cost,
+                imageName: hashedImageContent
             }).then((activity) => {
                     res.status(201)
                     res.json({activity: activity})
@@ -166,18 +187,13 @@ app.post('/activities', (req, res) => {
                     })
             })
 
-            // decoding the image URI and saving to file in database
 
-            // stripping off header
-            //
-            let images = req.body.imageFile.map((image) => {
-                console.log(image);
-                let buf = new Buffer(image, 'base64')
-                console.log(buf);
 
                 fs.writeFile('./image.png', buf, (err) => {
                     console.log(err)
                 })
+                // console.log('final tagArr',tagArr);
+
             })
         } else {
             res.status(400)
@@ -224,6 +240,8 @@ app.post('/sessions/new', (req, res) => {
 })
 
 // put route for editing activities
+
+// has this been worked on at all really? -JD 2/15/2018
 app.put('/activities/edit/:id', (req, res) => {
     const {name, content} = req.params;
     let id = parseInt(req.params.id);
@@ -251,6 +269,5 @@ app.put('/activities/edit/:id', (req, res) => {
 app.get('/login', authorization, function(req, res) {
     res.json({user: request.currentUser})
 })
-
 
 module.exports = app

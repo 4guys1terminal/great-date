@@ -47,7 +47,7 @@ class SignUp extends Component {
     validatePresence(fieldName) {
         if (this.fields[fieldName] === '') {
             this.addError(fieldName, 'is Required')
-        } 
+        }
     }
 
     addError(fieldName, message) {
@@ -68,7 +68,7 @@ class SignUp extends Component {
                                 }
                             </span>
                         </div>
-                       
+
                     <Row className="row row1">
                         <Col xs={10}>
                             <FormGroup >
@@ -136,7 +136,7 @@ class SignUp extends Component {
                                 type="submit"
                                 className="create-account"
                                 >Create Account</button>
-                                
+
                         </Col>
                         <a className="forgot" href="#">
                             <p className="agree">By signing up, you agree to our <br /> <span className="terms">Terms & Privacy Policy.</span></p>

@@ -1,34 +1,83 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import '../App.css';
 import DatePreview from './date-preview';
-import ActivitiesList from '../store/ActivitiesList.js';
 import {Link} from 'react-router-dom';
+import imageFactory from './imgSrc.js';
+// import { fetchTags, fetchActivities } from './fetch.js';
+
+
+const host = "http://localhost:3000"
+const path = "/user-uploads/"
+
+const imgSrc = imageFactory(host, path)
+
 
 class Grid extends Component {
-    componentWillMount(){
-        this.setState({activities: ActivitiesList})
+    constructor(props) {
+        super(props)
+        this.state = {}
+    }
+
+    componentWillMount() {
+        fetchTags()
+        .then((res) => {
+            this.setState({
+                tags: res.tags
+            })
+        })
+
+        fetchActivities()
+        .then((res) => {
+            this.setState({
+                activities: res.activities
+            })
+        })
     }
 
     render() {
-        let list = this.state.activities.map(function(activity){
-            return(
-                < DatePreview
-                id={activity.id}
-                image={activity.image}
-                title={activity.title}
-                description={activity.description}
-                />
+        const { activities } = this.state
+
+        if(!activities) {
+            return (
+                <div className="container">
+                    <div className="grid">
+                        <h1>Loading...</h1>
+                    </div>
+                </div>
             )
-        })
+        }
 
         return (
             <div className="container">
                 <div className="grid">
-                    {list}
+                    {activities.map((a) => {
+                        return (
+                            <DatePreview
+                                key={a.id}
+                                id={a.id}
+                                image={imgSrc(a.imageName)}
+                                title={a.title}
+                                description={a.description}
+                            />
+                        )
+                    })}
                 </div>
             </div>
-        );
+        )
     }
 }
 
 export default Grid;
+
+
+function fetchTags() {
+    return fetch(`${host}/tags`).then((res) => {
+        return res.json()
+    })
+}
+
+function fetchActivities() {
+    return fetch(`${host}/activities`).then((res) => {
+        return res.json()
+    })
+}

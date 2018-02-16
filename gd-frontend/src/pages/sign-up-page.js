@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import '../App.css';
-import NavBar from '../components/navbar.js';
+import NavbarBootstrap from '../components/navbarBootstrap.js';
 import SignUp from '../components/sign-up.js';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 const API = "http://127.0.0.1:3000";
+
+var backgroundTexture = {
+    backgroundImage: 'url(/images/grid_noise.png)'
+};
+
+var bgImage = {
+    backgroundImage: 'linear-gradient(to bottom, rgb(13,194,181) 0%, rgb(13,186,237) 100%)',
+    backgroundSize: 'cover'
+};
+
 
 class SignUpPage extends Component {
     constructor(props) {
@@ -56,8 +66,8 @@ handleNewUser(params) {
 
     render() {
         return (
-            <div>
-                <NavBar />
+            <div style={bgImage}>
+                <NavbarBootstrap />
                 <SignUp onSubmit = { this.handleNewUser.bind(this) } />
                     {this.state.newUserSuccess ? <Redirect to={"/"} /> : null}
                     {this.state.newUserSuccess ? localStorage.setItem('name', this.state.email) : null}

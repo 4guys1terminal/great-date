@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
@@ -23,20 +23,15 @@ class Login extends Component {
 
     authorize = (e) => {
         e.preventDefault()
-        const { email, password } = this.state.form
+        const {email, password} = this.state.form
 
-        fetch(`${API}/sessions/new` ,
-        {
+        fetch(`${API}/sessions/new`, {
             method: "post",
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
-        }).then((resp) => resp.json())
-        .then((data) => {
+            body: JSON.stringify({email: email, password: password})
+        }).then((resp) => resp.json()).then((data) => {
             console.log("resp:", data);
 
             if (data.message === "login success") {
@@ -44,26 +39,24 @@ class Login extends Component {
             } else {
                 this.setState({valid: false})
             }
-        }).catch( (e) => console.log("error:", e))
+        }).catch((e) => console.log("error:", e))
     }
 
     handleChange = (e) => {
-        const { form } = this.state 
+        const {form} = this.state
         form[e.target.name] = e.target.value.trim()
-        this.setState({
-            form: form
-        })
+        this.setState({form: form})
     }
-    
+
     render() {
-        const { authorized, form } = this.state
-        const { email, password } = form 
+        const {authorized, form} = this.state
+        const {email, password} = form
         const login = (<div className="login-wrapper">
-            <form 
-                className="login-form" 
-                onSubmit={this.authorize} 
+            <form
+                className="login-form"
+                onSubmit={this.authorize}
                 onChange={this.handleChange.bind(this)}>
-                <div 
+                <div
                     className="login-title">Great Date</div>
                 <div className="alert-holder">
                     <span className="center">
@@ -103,25 +96,21 @@ class Login extends Component {
                     </Col>
                 </Row>
 
-                <button 
-                    className="login-btn" 
-                    type="submit">
+                <button className="login-btn" type="submit">
                     Log in
                 </button>
-                <a className="forgot" href="#">
+                {/* <a className="forgot" href="#">
                     <p>Forgot password?</p>
-                </a>
+                </a> */
+                }
             </form>
+
             <div className="sign-up">
-                <p 
-                    className="sign-up-text"> Dont have an account? <Link
-                    to='/sign-up-page'
-                    id='sign-up-link'
-                    className='sign-up-link'
-                >Sign Up</Link></p>
+                <p className="sign-up-text">
+                    Dont have an account?
+                    <Link to='/sign-up-page' id='sign-up-link' className='sign-up-link'> Sign Up</Link>
+                </p>
             </div>
-        </div>
-        )
 
         return (
             <div>
@@ -130,7 +119,7 @@ class Login extends Component {
                     {authorized ? localStorage.setItem('name', this.state.form.email) : null}
                 </div>
             </div>
-        );
+        </div>);
     }
 }
 
