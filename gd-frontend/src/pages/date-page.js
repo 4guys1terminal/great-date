@@ -7,7 +7,7 @@ import NavBar from '../components/navbar.js';
 import NavbarBootstrap from '../components/navbarBootstrap.js';
 import imageFactory from '../components/imgSrc.js';
 import ActivitiesList from '../store/ActivitiesList.js';
-
+import DateComponent from '../components/date-component.js';
 
 const host = "http://localhost:3000"
 const path = "/user-uploads/"
@@ -33,12 +33,12 @@ class DatePage extends Component {
 
     componentWillMount() {
         // fetchTags().then((res) => {
-        //     // console.log(res);
+        //      console.log(res);
         //     this.setState({tags: res.tags})
         // })
         //
         // fetchActivities().then((res) => {
-        //     // console.log(res);
+        //      console.log(res);
         //     this.setState({activities: res.activities})
         // }).then((activities) => {
         //     let activity = this.state.activities.find(function(activity) {
@@ -63,7 +63,8 @@ class DatePage extends Component {
     render() {
 
         console.log('render', this.state);
-        const { activities, activity } = this.state
+        const {activities, activity} = this.state
+        const {image, title, description, location, cost} = activity
 
         if (!activities) {
             return (<div className="container">
@@ -73,33 +74,17 @@ class DatePage extends Component {
             </div>)
         }
 
-        return (
-            <div style={bgImage}>
-                <div className='datePageTest'>
-                    <NavbarBootstrap/>
-                    <div className="date-page">
+        return (<div style={bgImage}>
+            <div className='datePageTest'>
+                <NavbarBootstrap/>
 
-                        <div className='activityPicDiv'>
-                            <img className="activityPic" src={`${this.state.activity.image}`} alt="date"/>
-                        </div>
-
-                        <h3>{this.state.activity.title}</h3>
-
-                        <div className="date-information">
-                            <h4>
-                                <strong>Date Information</strong>
-                            </h4>
-                            <p>{this.state.activity.description}</p>
-                            <p>Location: {this.state.activity.location}</p>
-                            <p>Cost: {this.state.activity.cost}</p>
-                        </div>
-
-                        <Link to='/all-dates-page' id='all-dates-back' className='back-button'>
-                            <Button className='back-button' bsStyle='primary' bsSize='large'>Back</Button>
-                        </Link>
-                    </div>
-
-                </div>
+                <DateComponent
+                    image={image}
+                    title={title}
+                    description={description}
+                    location={location}
+                    cost={cost}/>
+            </div>
 
         </div>);
     }

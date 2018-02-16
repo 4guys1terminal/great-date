@@ -56,7 +56,7 @@ class Home extends Component {
                 </div>
               </div>
 
-              <div className='home-background' style={backgroundTexture}>
+              <div style={backgroundTexture}>
 
                 <div className="browse-title">
                   <Link to='/all-dates-page' id='all-dates-link' className='browse-title'>Browse Dates</Link>
@@ -69,8 +69,8 @@ class Home extends Component {
                     <Grid activities={activities} />
 
                     <div className="see-more-contain">
-                        <Link to='/all-dates-page' id='all-dates-nav' className='nav-btn1'>
-                            <button className="see-more-btn" id="pg2">See More</button>
+                        <Link to='/all-dates-page'>
+                            <button className="see-more-btn">See More</button>
                         </Link>
                     </div>
                 </div>

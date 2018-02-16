@@ -73,6 +73,7 @@ class DateGenerator extends Component {
 
       tags[tagID] = e.target.checked
 
+
       form.tags = tags
 
       this.setState({
@@ -120,7 +121,9 @@ class DateGenerator extends Component {
                     </Row>
                     </form>
                 </div>
-          </div>);
+          <Button className='date-btn' bsSize="large">Shuffle</Button>
+      </div>);
+
     }
 }
 
