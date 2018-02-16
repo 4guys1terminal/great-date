@@ -27,11 +27,9 @@ class SignUp extends Component {
     }
 
     handleChange(e) {
-        const { registration } = this.state
-        const { name, value } = e.target
-
-        registration[name] = value
-        
+        const target = e.target
+        const registration = this.state.registration
+        registration[target.name] = target.value
         this.setState({
             registration: registration
         })
