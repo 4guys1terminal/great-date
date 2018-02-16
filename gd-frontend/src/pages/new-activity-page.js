@@ -5,16 +5,12 @@ import {Redirect} from 'react-router-dom';
 import AllDatesPage from './all-dates-page.js';
 import LoggedInNav from '../components/logged-in-navbar.js';
 import NavbarBootstrap from '../components/navbarBootstrap.js';
+import bgImage from '../functions/bgImage'
 
 import NewActivityForm from '../components/new-activity-form.js';
 
 var backgroundTexture = {
     backgroundImage: 'url(/images/grid_noise.png)'
-};
-
-var bgImage = {
-    backgroundImage: 'linear-gradient(to bottom, rgb(13,194,181) 0%, rgb(13,186,237) 100%)',
-    backgroundSize: 'cover'
 };
 
 const API = "http://localhost:3000"
@@ -99,22 +95,13 @@ class NewActivity extends Component {
                         Create a Date
                     </h1>
 
-                    <NewActivityForm onSubmit={this.handleNewActivity.bind(this)} errors={this.state.errors && this.state.errors.validations}/> {/* {this.state.newActivitySuccess &&
+                    <NewActivityForm onSubmit={this.handleNewActivity.bind(this)} errors={this.state.errors && this.state.errors.validations}/>  {this.state.newActivitySuccess &&
                         <Redirect to="/success" />
-                    } */
                     }
+
                 </div>
             </div>);
     }
 }
 
 export default NewActivity;
-
-//
-// function getTags() {
-//
-// }
-//
-// function getActivities() {
-//
-// }

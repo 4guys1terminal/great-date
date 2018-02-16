@@ -40,16 +40,7 @@ class MapContainer extends Component {
 
 
 
-  // When you click on the MAP, execute func
-  onMapClicked(props) {
-    // console.log(props);
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null,
-      })
-    }
-  }
+
 
   render() {
     const { lat, lng } = this.state.currentLocation

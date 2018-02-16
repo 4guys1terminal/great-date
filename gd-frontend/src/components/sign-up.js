@@ -57,35 +57,35 @@ class SignUp extends Component {
     render() {
         return (
             <div>
-              <div className="signup-wrapper" >
-                <form className="signup-form" onSubmit={this.handleSubmit.bind(this)}>
-                  <p className="signup-form-title">Great Date</p>
-                  <p className="signup-form-blurb">Sign up and share unique date ideas</p>
-                  <div className="alert-holder">
-                    <span className="center">
-                      {!this.isValid() &&
-                        <div className="alert alert-danger">Please verify that all fields are correctly filled</div>
-                      }
-                    </span>
-                  </div>
+                <div className="signup-wrapper" >
+                    <form className="signup-form" onSubmit={this.handleSubmit.bind(this)}>
+                        <p className="signup-form-title">Great Date</p>
+                        <p className="signup-form-blurb">Sign up and share unique date ideas</p>
+                        <div className="alert-holder">
+                            <span className="center">
+                                {!this.isValid() &&
+                                    <div className="alert alert-danger">Please verify that all fields are correctly filled</div>
+                                }
+                            </span>
+                        </div>
 
-                  <Row className="row row1">
-                    <Col xs={10}>
-                      <FormGroup >
-                        <FormControl
-                          name="firstName"
-                          type="text"
-                          placeholder="First Name"
-                          onChange={this.handleChange.bind(this)}
-                          value={this.state.registration.firstName}
-                          errors={this.state.errors.firstName}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
+                    <Row className="row row1">
+                        <Col xs={10}>
+                            <FormGroup >
+                                <FormControl
+                                    name="firstName"
+                                    type="text"
+                                    placeholder="First Name"
+                                    onChange={this.handleChange.bind(this)}
+                                    value={this.state.registration.firstName}
+                                    errors={this.state.errors.firstName}
+                                />
+                            </FormGroup>
+                        </Col>
+                    </Row>
 
-                  <Row className="row">
-                    <Col xs={10}>
+                    <Row className="row">
+                        <Col xs={10}>
                             <FormGroup>
                                 <FormControl
                                     name="lastName"
