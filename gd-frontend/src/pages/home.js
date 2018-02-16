@@ -4,7 +4,7 @@ import NavBar from '../components/navbar.js';
 import TitleBlock from '../components/title-block.js';
 import ReactDOM from "react-dom";
 import { Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Navigation from '../components/navbar';
 import Title from '../components/title';
 import TitleButton from '../components/title-button';
@@ -69,6 +69,7 @@ class Home extends Component {
                         </Link>
                     </div>
                 </div>
+
             </div>
         )
     }

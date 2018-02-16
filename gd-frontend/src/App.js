@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import {HashRouter, Route, Switch,} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch,} from 'react-router-dom';
 
 import Home from './pages/home.js';
 import LogInPage from './pages/log-in-page.js';
@@ -26,7 +26,7 @@ class App extends Component {
     }
 
     render() {
-        return (<HashRouter>
+        return (<Router>
             <Switch>
                 <ScrollToTop>
 
@@ -44,7 +44,7 @@ class App extends Component {
 
                 </ScrollToTop>
             </Switch>
-        </HashRouter>);
+        </Router>);
     }
 }
 

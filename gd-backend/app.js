@@ -87,107 +87,54 @@ app.get('/activities/:id', (req, res) => {
 
 
 // logic for browse page generation ALL ACTIVITY IDs BY TAG
-app.post('/', (req, res) => {
-  tags = req.body.tags
-  let tagArr = []
-  for (var property in tags) {
-
-      tags[property] === true
-          ? tagArr.push(parseInt(property))
-          : ''
-  }
-  // console.log('tagArr',tagArr);
-
-
-  Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
-  .then(shuffle => {
-    let browseTags = []
-    for (var i = 0; i < shuffle.length; i++) {
-      browseTags.push(shuffle[i].id)
-    }
-    // console.log(browseTags);
-    res.json({browseTags: browseTags})
-  })
-  // .then(activity => {
-  //   console.log("activity",activity);
-  // })
-});
+// app.post('/', (req, res) => {
+//   tags = req.body.tags
+//   let tagArr = []
+//   for (var property in tags) {
+//
+//       tags[property] === true
+//           ? tagArr.push(parseInt(property))
+//           : ''
+//   }
+//   // console.log('tagArr',tagArr);
+//
+//
+//   Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
+//   .then(shuffle => {
+//     let browseTags = []
+//     for (var i = 0; i < shuffle.length; i++) {
+//       browseTags.push(shuffle[i].id)
+//     }
+//     // console.log(browseTags);
+//     res.json({browseTags: browseTags})
+//   })
+//   // .then(activity => {
+//   //   console.log("activity",activity);
+//   // })
+// });
 
 // logic for random generator
 app.post('/', (req, res) => {
-  tags = req.body.tags
-  let tagArr = []
-  for (var property in tags) {
+    tags = req.body.tags
+    console.log('tags',tags);
+    let tagArr = []
+    for (var property in tags) {
+        tags[property] === true
+            ? tagArr.push(parseInt(property))
+            : ''
+    }
+    console.log('tagArr',tagArr);
 
-      tags[property] === true
-          ? tagArr.push(parseInt(property))
-          : ''
-  }
 
-
-  Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
-  .then(shuffle => {
-    // console.log(shuffle[0]);
-    // console.log('id',shuffle[0].id);
-    let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].id
-    // console.log('random',randomTag);
-    res.status(201)
-    res.json({randomTag: randomTag})
-  })
+    Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
+      .then(shuffle => {
+        console.log("shuffle.id",shuffle.id);
+        let randomTag = shuffle[Math.floor(Math.random() *shuffle.length)].ActivityId
+        console.log('random', randomTag);
+        res.status(201)
+        res.json({randomTag: randomTag})
+    })
 });
-
-
-//
-
-
-
-
-
-
-
-//})
-//
-// Random App Generator
-// app.post('/shuffle', (req, res) => {
-//   Tags.findAll().then(tags => {
-//     res.json({tags:tags})
-//   }).then((tags)=> {
-//     console.log(tags);
-//   })
-// })
-//
-//   //
-//   // console.log(tags);
-//   //
-//   for (var property in tags) {
-//       let val = {
-//           property
-//       }
-//       // Checks if a tag is checked or not
-//       tags[property] === true
-//           ? tagArr.push(val)
-//           : ''
-//   }
-//   Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId"= 1;`, {type: sequelize.QueryTypes.SELECT})
-//
-//   .then(activityTags => {
-//       res.status(201);
-//       //Returns ONE random activity that has the tags selected
-      // random = Math.floor(Math.random() * activityTags.length)
-      // console.log(random);
-      // res.json({activityTags: activityTags[random]})
-//   })
-// })
-//
-//     TAG CHECK BOX LOGIC
-//
-//
-//
-//     Run loop that runs query for each tag selected which will be ${} in the query
-//
-//     console.log(tags);
-//
-//     SQL Logic for finding all tags that have selected tags
 
 
 //Creating New User   (Need Kevin and Dan to comment)
