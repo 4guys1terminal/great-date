@@ -197,7 +197,12 @@ app.post('/users', (req, res) => {
 
     req.getValidationResult().then(valErrors => {
         if (valErrors.isEmpty()) {
-            User.create({firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email, password: req.body.password}).then(user => {
+            User.create({
+                firstName: req.body.firstName, 
+                lastName: req.body.lastName,
+                email: req.body.email, 
+                password: req.body.password})
+                .then(user => {
                 res.json({message: 'success', user: user})
             })
         } else {
