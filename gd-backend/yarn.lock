@@ -434,6 +434,10 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
+base64-to-image@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/base64-to-image/-/base64-to-image-1.0.2.tgz#a6f30606e52174d2499fcee21eebb74b7a731c69"
+
 base@^0.11.1:
   version "0.11.2"
   resolved "https://registry.yarnpkg.com/base/-/base-0.11.2.tgz#7bde5ced145b6d551a90db87f83c558b4eb48a8f"
@@ -3820,6 +3824,10 @@ split@^1.0.0:
 sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
+
+squel@^5.12.0:
+  version "5.12.0"
+  resolved "https://registry.yarnpkg.com/squel/-/squel-5.12.0.tgz#f8d0310db8d2ca63b5c36c11defc0f7993fcf78e"
 
 sshpk@^1.7.0:
   version "1.13.1"

@@ -4,9 +4,9 @@ import Title from './title.js';
 import DateGenerator from './date-generator.js';
 
 class TitleBlock extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state ={
+        this.state = {
             showComponent: false
         }
     }
@@ -19,9 +19,7 @@ class TitleBlock extends Component {
         return (
             this.state && this.state.showComponent
             ? <DateGenerator/>
-            : <Title
-            onClick={this.handleClick.bind(this)}
-            />);
+            : <Title onClick={this.handleClick.bind(this)}/>);
     }
 }
 

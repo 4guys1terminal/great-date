@@ -28,7 +28,8 @@ class NewActivityForm extends Component {
                 location: '',
                 cost: '',
                 tags: {},
-                imageFile: []
+                imageFiles: [],
+                imageNames: []
             },
             filesToBeSent:[],
             imagesAllowed: 1,
@@ -62,8 +63,13 @@ class NewActivityForm extends Component {
 
 
     handleSubmit() {
-        console.log(this.state.form);
-        this.props.onSubmit(this.state.form);
+        let { form } = this.state
+
+        form.cost = parseFloat(form.cost)
+
+        console.log(form)
+
+        this.props.onSubmit(form)
     }
 
 
@@ -132,43 +138,58 @@ class NewActivityForm extends Component {
         })
     }
 
+// Borderline positive that the function below and the onDrop() function below
+// can be cut down a bit by merging this filesToBeSent step with the encoding
+// step. will take a look at down the line (it works fine for now)
+// - JD 2/14/2018
 
+
+// Clearing state when the clear button is pressed. Will have to be adjusted if more than one image for dates is allowed.
     handleClear(event,index){
         var filesToBeSent=this.state.filesToBeSent;
         filesToBeSent.splice(index,1);
 
-        var imageFile=this.state.form.imageFile;
-        imageFile.splice(index,1)
+        var imageFiles=this.state.form.imageFiles;
+        imageFiles.splice(index,1)
 
-        this.setState({filesToBeSent,imageFile});
+        var imageNames=this.state.form.imageNames;
+        imageNames.splice(index,1)
+
+        this.setState({filesToBeSent,imageFiles});
     }
 
 
     onDrop = (acceptedFiles,rejectedFiles) => {
-        var filesToBeSent = this.state.filesToBeSent
+        let { filesToBeSent, imagesAllowed, form } = this.state
+        // console.log("acceptedFiles",acceptedFiles);
 
         // sending all accepted files to state as filesToBeSent
-        if(filesToBeSent.length < this.state.imagesAllowed) {
+        if(filesToBeSent.length < imagesAllowed) {
             filesToBeSent.push(acceptedFiles);
-            this.setState({filesToBeSent});
+            filesToBeSent.forEach(image => {
+                const reader = new FileReader()
+                // console.log(image[0].name);
+                form.imageNames.push(image[0].name)
+                // register the handlers
+                reader.onload = () => {
+                    form.imageFiles.push(reader.result)
+                }
+                reader.onabort = () => console.log('image reading was aborted')
+                reader.onerror = () => console.log('image reading has failed')
+                // end register
+
+                reader.readAsDataURL(image[0])
+            })
         } else {
             alert("Please, only one image per date.")
         }
 
-        //converting the filesToBeSent into base64
-        const form = this.state.form
-        var imageBase64 = form.imageFile
 
-        filesToBeSent.forEach(image => {
-            const reader = new FileReader();
-            reader.readAsDataURL(image[0])
-            reader.onload = () => {
-                imageBase64.push(reader.result)
-            };
-            reader.onabort = () => console.log('image reading was aborted');
-            reader.onerror = () => console.log('image reading has failed');
+        // console.log(form);
+        this.setState({
+            form: form,
+            filesToBeSent: filesToBeSent
         })
-        this.setState({imageFile: imageBase64})
     }
 
 
@@ -189,7 +210,10 @@ class NewActivityForm extends Component {
 
                 <div className='forms'>
 
-                  {/* All form inputs labeled and minimized because DAMN that's a lot of code. Highly consider componentizing each of these form inputs out in the future.*/}
+                  {/*
+                    Highly consider componentizing each of these form inputs out in the future.
+                    - JD 2/12/2018
+                  */}
 
                   {/*Title*/}
                   <Row>
@@ -274,6 +298,8 @@ class NewActivityForm extends Component {
                     </Col>
                   </Row>
 
+
+
                   {/*Cost*/}
                   <Row>
                     <Col xs={10} xsOffset={1}>
@@ -288,10 +314,10 @@ class NewActivityForm extends Component {
                           name="cost"
                           onChange={this.handleChange.bind(this)}
                           options={[
-                            ['free', 'Free'],
-                            ['$', '$'],
-                            ['$$', '$$'],
-                            ['$$$', '$$$']
+                            ['0', 'Free'],
+                            ['0.33', '$'],
+                            ['0.66', '$$'],
+                            ['1', '$$$']
                           ]}
 
                           value={this.state.form.cost}
@@ -347,7 +373,6 @@ class NewActivityForm extends Component {
                           >
                             <div>
                               <p>Try dropping some files here, or click me to select files to upload.</p>
-                              <p>(Only image files will be accepted.)</p>
                             </div>
                           </Dropzone>
                         </div>
@@ -369,7 +394,35 @@ class NewActivityForm extends Component {
                                 </Button>
                               </div>
                             )
-                          })}
+                                        })}
+
+                                    </div>
+
+
+
+                                    {this.errorsFor('image') &&
+                                    <HelpBlock id="image-help-block">{this.errorFor('images')}</HelpBlock>
+                                    }
+
+
+                                </FormGroup>
+                                </Col>
+                            </Row>
+
+
+                            <Row>
+                                <Col xs={10} xsOffset={1}>
+                                    <br/>
+                                    <Button
+                                        bsSize='large'
+                                        bsStyle='primary'
+                                        id="submit"
+                                        onClick={this.handleSubmit.bind(this)}
+                                        >Submit</Button>
+                                </Col>
+                            </Row>
+
+
 
                         </div>
 

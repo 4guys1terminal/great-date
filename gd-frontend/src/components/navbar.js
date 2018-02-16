@@ -12,33 +12,29 @@ class Navigation extends Component {
                     to='/'
                     id='home-nav'
                     className='nav-btn1'
-                  >[Logo] Great Date
-                  </Link>
-                </div>
+                        >[Logo] Great Date</Link>
+                    </div>
 
-                <div className="nav-buttons">
-                  <Link
-                    to='/'
-                    id='home-nav'
-                    className='nav-btn1'
-                  >Home
-                  </Link>
+                    <div className="nav-buttons">
+                        <Link
+                            to='/'
+                            id='home-nav'
+                            className='nav-btn1'
+                        >Home</Link>
 
-                  <Link
-                    to='/all-dates-page'
-                    id='all-dates-nav'
-                    className='nav-btn1'
-                  >Browse Dates
-                  </Link>
+                        <Link
+                            to='/all-dates-page'
+                            id='all-dates-nav'
+                            className='nav-btn1'
+                        >Browse Dates</Link>
 
-                  <Link
-                    to='/login-page'
-                    className='nav-btn2'
-                    id='login-link'
-                  > Log In / Sign Up
-                  </Link>
-                </div>
-              </nav>
+                        <Link
+                            to='/login-page'
+                            className='nav-btn2'
+                            id='login-link'
+                        > Log In / Sign Up</Link>
+                    </div>
+                </nav>
             </div>
         );
     }

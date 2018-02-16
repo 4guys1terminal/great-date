@@ -29,7 +29,7 @@ class Navigation extends Component {
                   </Link>
 
                   <Link
-                    to='/logged-in-page'
+                    to='/'
                     className='nav-btn2'
                   id='login-link'>
                     {localStorage.name}

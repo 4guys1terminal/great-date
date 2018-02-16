@@ -4,13 +4,21 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     location: DataTypes.STRING,
     title: DataTypes.STRING,
-    cost: DataTypes.STRING
+    cost: DataTypes.FLOAT,
+    imageName: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
+<<<<<<< HEAD
         Activity.belongsToMany(models.Tag, {
           through: models.ActivityTag,
         })
+=======
+        // Activity.belongsToMany(models.Tag, {
+        //   through: models.ActivityTag,
+        //   foreignKey:'ActivityId'
+        //  })
+>>>>>>> master
       }
     }
   });
