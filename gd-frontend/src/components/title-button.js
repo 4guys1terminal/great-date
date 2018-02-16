@@ -5,11 +5,11 @@ class TitleButton extends Component {
     render() {
         return (
             <div>
-                <div className="date-btn-contain">
-                    <button className="date-btn">
-                            Let's Date
-                    </button>
-                </div>
+              <div className="date-btn-contain">
+                <button className="date-btn">
+                  Let's Date
+                </button>
+              </div>
             </div>
         );
     }

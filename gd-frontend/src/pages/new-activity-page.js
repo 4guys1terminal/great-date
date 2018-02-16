@@ -70,18 +70,18 @@ class NewActivity extends Component {
         return (
             <div>
 
-              <NavBar />
+                <NavBar />
 
-              <h1> Create a Date </h1>
+                <h1> Create a Date </h1>
 
-              <NewActivityForm
-                onSubmit={this.handleNewActivity.bind(this)}
-                errors={this.state.errors && this.state.errors.validations}
-              />
+                <NewActivityForm
+                    onSubmit={this.handleNewActivity.bind(this)}
+                    errors={this.state.errors && this.state.errors.validations}
+                />
 
-              {this.state.newActivitySuccess &&
-                <Redirect to="/success" />
-              }
+                {this.state.newActivitySuccess &&
+                    <Redirect to="/success" />
+                }
 
             </div>
         );

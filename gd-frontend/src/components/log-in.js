@@ -100,8 +100,8 @@ class Login extends Component {
 
         return (
             <div>
-                <div id="authorization">
-                    {authorized ? <Redirect to={"/logged-in-page"} /> : login}
+              <div id="authorization">
+                {authorized ? <Redirect to={"/"} /> : login}
                     {authorized ? localStorage.setItem('name', this.state.form.email) : null}
                 </div>
             </div>

@@ -33,6 +33,9 @@ class SignUp extends Component {
     }
   }
 
+  /**
+  Component recieves a prop named error, if it isn't empty it
+  */
   errorsFor(attribute) {
     var errorString = "";
     if (this.props.errors) {

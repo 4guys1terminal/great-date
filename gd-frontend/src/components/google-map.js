@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-/**
-API setup, key and style
-*/
+
 const KEY = "AIzaSyDhtvMPgk9g80v-1kIR2FN9_8Yq8MNVpbk"
 // React styles do not need 'px' after an integer, automatically knows.
 // If it is a % instead add quotes. Must be an object.
@@ -49,10 +47,11 @@ class MapContainer extends Component {
 
   render() {
     return(
-      <Map google={this.props.google} onClick={this.onMapClicked} zoom={14} style={STYLE}>
-        <Marker onClick={this.onMarkerClick}
-          name={'Current location'} />
-
+      <Map google={this.props.google} onClick={this.onMapClicked} zoom={5} style={STYLE}>
+        <Marker
+          name={'San Diego'}
+          position={{lat: 32.7157, lng: -117.1611}} />
+        <Marker />
 
         <InfoWindow
           onOpen={this.windowHasOpened}
