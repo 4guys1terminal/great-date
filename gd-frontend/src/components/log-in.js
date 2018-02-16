@@ -107,9 +107,9 @@ class Login extends Component {
 
             <div className="sign-up">
                 <p className="sign-up-text">
-                    Dont have an account?
+                  Dont have an account? 
                     <Link to='/sign-up-page' id='sign-up-link' className='sign-up-link'>
-                        Sign Up</Link>
+                      Sign Up</Link>
                 </p>
 
             </div>

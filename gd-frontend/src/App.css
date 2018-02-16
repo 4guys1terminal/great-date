@@ -251,7 +251,7 @@ input[type=file] {
     align-self: center;
     background-color: white;
     width: 350px;
-    height: 300px;
+    height: 340px;
     display: flex;
     flex-direction: column;
     border: 1px solid lightgray;
@@ -291,7 +291,7 @@ input[type=file] {
     align-self: center;
     height: 30px;
     border-radius: 4px;
-    width: 70%;
+    width: 75%;
     background-color: rgb(52, 133, 220);
     color: white;
     font-size: 13px;
@@ -690,6 +690,19 @@ ul li {
 
 .create-date-btn {
     margin: 55px;
+}
+
+.create-account {
+  margin-top: 4%;
+  margin-bottom: 10%;
+  align-self: center;
+  height: 35px;
+  border-radius: 4px;
+  width: 82%;
+  background-color: rgb(52, 133, 220);
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 /* .google-map {

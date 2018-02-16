@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import '../App.css';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import {Navbar, Nav, NavItem} from 'react-bootstrap';
+import {LinkContainer} from 'react-router-bootstrap'
+
 
 class Navigation extends Component {
     signOut() {
@@ -8,44 +11,49 @@ class Navigation extends Component {
     }
 
     render() {
-        return (
-            <div>
-              <nav className="navbar">
-                <div className="logo"><a href="#">Great Date</a></div>
+        return (<div>
+            <Navbar   className='bootStrapNav'>
 
-                <div className="nav-buttons">
-                  <Link
-                    to='/'
-                    id='home-nav'
-                  className='nav-btn1'>
-                    Home
-                  </Link>
+                <Navbar.Header>
+                    <LinkContainer to='/home'>
+                        <Navbar.Brand>
+                            Great Date
+                        </Navbar.Brand>
+                    </LinkContainer>
 
-                  <Link
-                    to='/all-dates-page'
-                    id='all-dates-nav'
-                  className='nav-btn1'>
-                    Browse Dates
-                  </Link>
+                    <Navbar.Toggle/>
+                </Navbar.Header>
 
-                  <Link
-                    to='/'
-                    className='nav-btn2'
-                  id='login-link'>
-                    {localStorage.name}
-                  </Link>
+                <Navbar.Collapse>
+                    <Nav pullRight>
+                        <LinkContainer to='/home' >
+                            <NavItem eventKey={1} active='false'>
+                                Home
+                            </NavItem>
+                        </LinkContainer>
 
-                  <Link
-                    to='/'
-                    id='all-dates-nav'
-                    className='nav-btn1'
-                    onClick={this.signOut}>
-                    Sign Out
-                  </Link>
-                </div>
-              </nav>
-            </div>
-        );
+                        <LinkContainer to='/all-dates-page'>
+                            <NavItem eventKey={2} active='false'>
+                                Browse Dates
+                            </NavItem>
+                        </LinkContainer>
+
+                        <LinkContainer to='/home'>
+                            <NavItem active='false'>
+                                {localStorage.name}
+                            </NavItem>
+                        </LinkContainer>
+
+                        <LinkContainer to='/login-page'
+                            onClick={this.signOut}>
+                            <NavItem eventKey={3} active='false'>
+                                Sign Out
+                            </NavItem>
+                        </LinkContainer>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+        </div>);
     }
 }
 

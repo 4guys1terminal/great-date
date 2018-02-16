@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
 import { Row, Col, FormGroup, ControlLabel, HelpBlock, FormControl, Button } from 'react-bootstrap';
@@ -22,22 +22,18 @@ class SignUp extends Component {
         })
     }
 
-  handleChange(e) {
-    const formState = Object.assign({}, this.state.form);
-    formState[e.target.name] = e.target.value;
-    this.setState({ form: formState });
-  }
+    handleSubmit(e) {
+        e.preventDefault();
 
-  handleSubmit(e) {
-    e.preventDefault();
-    const { onSubmit } = this.props;
-    const { form } = this.state;
-    if (onSubmit) {
-      onSubmit(form);
-    } else {
-      // console.log("no onSubmit props passed");
+        const { onSubmit } = this.props;
+        const { registration } = this.state;
+        this.validate()
+        if (onSubmit) {
+            onSubmit(this.state.registration)
+        } else {
+            console.log("no onSubmit props passed");
+        }
     }
-  }
 
     isValid() {
         return Object.keys(this.state.errors).length === 0
@@ -54,44 +50,42 @@ class SignUp extends Component {
         }
     }
 
-// KEVIN PLZ LOOK AT THIS THANK YOU
     addError(fieldName, message) {
         this.errors[fieldName] = message
-        // return errorString === "" ? null : errorString;
     }
 
     render() {
         return (
             <div>
-              <div className="signup-wrapper" >
-                <form className="signup-form" onSubmit={this.handleSubmit.bind(this)}>
-                  <p className="signup-form-title">Great Date</p>
-                  <p className="signup-form-blurb">Sign up and share unique date ideas</p>
-                  <div className="alert-holder">
-                    <span className="center">
-                      {!this.isValid() &&
-                        <div className="alert alert-danger">Please verify that all fields are correctly filled</div>
-                      }
-                    </span>
-                  </div>
+                <div className="signup-wrapper" >
+                    <form className="signup-form" onSubmit={this.handleSubmit.bind(this)}>
+                        <p className="signup-form-title">Great Date</p>
+                        <p className="signup-form-blurb">Sign up and share unique date ideas</p>
+                        <div className="alert-holder">
+                            <span className="center">
+                                {!this.isValid() &&
+                                    <div className="alert alert-danger">Please verify that all fields are correctly filled</div>
+                                }
+                            </span>
+                        </div>
 
-                  <Row className="row row1">
-                    <Col xs={10}>
-                      <FormGroup >
-                        <FormControl
-                          name="firstName"
-                          type="text"
-                          placeholder="First Name"
-                          onChange={this.handleChange.bind(this)}
-                          value={this.state.registration.firstName}
-                          errors={this.state.errors.firstName}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
+                    <Row className="row row1">
+                        <Col xs={10}>
+                            <FormGroup >
+                                <FormControl
+                                    name="firstName"
+                                    type="text"
+                                    placeholder="First Name"
+                                    onChange={this.handleChange.bind(this)}
+                                    value={this.state.registration.firstName}
+                                    errors={this.state.errors.firstName}
+                                />
+                            </FormGroup>
+                        </Col>
+                    </Row>
 
-                  <Row className="row">
-                    <Col xs={10}>
+                    <Row className="row">
+                        <Col xs={10}>
                             <FormGroup>
                                 <FormControl
                                     name="lastName"
@@ -150,17 +144,20 @@ class SignUp extends Component {
 
                     </form>
 
-        <div className="login">
-          <p className="login-text">Have an account?
-            <Link to='/login-page' className='login-link' id='login-link'>
-              Log In
-            </Link>
-          </p>
-        </div>
-      </div>
+                    <div className="login">
+                        <p className="login-text">Have an account?
+                            <Link
+                                to='/login-page'
+                                className='login-link'
+                                id='login-link'
+                                > Log In </Link>
+                        </p>
+                    </div>
+                </div>
 
-    </div>);
-  }
+            </div>
+        );
+    }
 }
 
 export default SignUp;
