@@ -24,7 +24,7 @@ class MapContainer extends Component {
      this.onMapClicked = this.onMapClicked.bind(this);
    }
 
-   // When you cick on a MARKER on the map, execute func
+   // When you click on a MARKER on the map, execute func
   onMarkerClick(props, marker, e) {
     // console.log('props:', props)
     // console.log('marker:', marker)
@@ -68,5 +68,5 @@ class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: (`${KEY}`)
+  apiKey: (KEY)
 })(MapContainer)
