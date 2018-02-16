@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import '../App.css';
-import NavbarBootstrap from '../components/navbarBootstrap.js';
+import NavBar from '../components/navbar.js';
 import SignUp from '../components/sign-up.js';
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import bgImage from '../functions/bgImage'
@@ -23,17 +23,17 @@ class SignUpPage extends Component {
         };
     }
 
-  // Sets state to an array of current users and then
-  // pushes the new user into the array and re-assign state
-  handleNewUser(params) {
-    fetch(`${API}/users`, {
-      body: JSON.stringify(params),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: "POST"
-    }).then((rawResponse) => {
-      return rawResponse.json();
+handleNewUser(params) {
+    fetch(`${API}/users`,
+    {
+        body: JSON.stringify(params),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: "POST"
+    }
+    ).then((rawResponse) => {
+        return rawResponse.json();
     }).then((parsedResponse) => {
     if (parsedResponse.errors) {
         this.setState({ errors: parsedResponse.errors });
@@ -48,21 +48,22 @@ class SignUpPage extends Component {
         });
     }
     });
-  }
+}
 
-  // Before rendering, set state to current users in DB
-  componentWillMount() {
-    fetch(`${API}/users`).then((rawResponse) => {
-      return rawResponse.json();
-    }).then((parsedResponse) => {
-      this.setState({users: parsedResponse.users});
-    });
-  }
+    componentWillMount() {
+        fetch(`${API}/users`)
+            .then((rawResponse) => {
+                return rawResponse.json();
+            })
+            .then((parsedResponse) => {
+                this.setState({ users: parsedResponse.users });
+            });
+    }
 
     render() {
         return (
-            <div style={bgImage}>
-                <NavbarBootstrap />
+            <div style="bgImage">
+                <NavBar />
                 <SignUp onSubmit = { this.handleNewUser.bind(this) } />
                     {this.state.newUserSuccess ? <Redirect to={"/"} /> : null}
                     {this.state.newUserSuccess ? localStorage.setItem('name', this.state.email) : null}
