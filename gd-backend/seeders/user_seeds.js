@@ -9,7 +9,6 @@ module.exports = {
         lastName: 'Dominguez',
         age: 24,
         email: 'jordanjdominguez@gmail.com',
-        location: 'Pacific Beach',
         createdAt: new Date(), // we need to add the manually for seeds
         updatedAt: new Date()
       },
@@ -18,7 +17,6 @@ module.exports = {
         lastName: 'Parolin',
         age: 23,
         email: 'jakeparolin@gmail.com',
-        location: 'Bankers Hill',
         createdAt: new Date(), // we need to add the manually for seeds
         updatedAt: new Date()
       },
@@ -27,7 +25,6 @@ module.exports = {
         lastName: 'Truong',
         age: 30,
         email: 'ktruong@gmail.com',
-        location: 'Rancho Penasquitos',
         createdAt: new Date(), // we need to add the manually for seeds
         updatedAt: new Date()
       },
@@ -36,7 +33,6 @@ module.exports = {
         lastName: 'Hook',
         age: 21,
         email: 'danhook@gmail.com',
-        location: 'North Park',
         createdAt: new Date(), // we need to add the manually for seeds
         updatedAt: new Date()
       }

@@ -8,9 +8,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: function(models) {
-        Activity.belongsToMany(models.Tag, {
-          through: models.ActivityTag,
-         })
+        // Activity.belongsToMany(models.Tag, {
+        //   through: models.ActivityTag,
+        //   foreignKey:'ActivityId'
+        //  })
       }
     }
   });
