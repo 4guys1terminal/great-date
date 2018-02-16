@@ -90,7 +90,7 @@ class NewActivity extends Component {
 
     render() {
         return (<div style={bgImage}>
-            <NavbarBootstrap/> {this.isUserLoggedIn()}
+            {this.isUserLoggedIn()}
 
             <h1>
                 Create a Date

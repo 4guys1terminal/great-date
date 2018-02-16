@@ -196,204 +196,202 @@ class NewActivityForm extends Component {
     render() {
         return (
             <div className="createDateDiv">
-              <form className="createDateForm">
+                <form className="createDateForm">
 
-                <Row>
-                  <Col xs={10} xsOffset={1}>
-                    {this.props.errors &&
-                      <Alert bsStyle="danger">
-                        Please check the form and try again.
-                      </Alert>
-                    }
-                  </Col>
-                </Row>
+                        <Row>
+                            <Col xs={10} xsOffset={1}>
+                                {this.props.errors &&
+                                    <Alert bsStyle="danger">
+                                        Please check the form and try again.
+                                    </Alert>
+                                }
+                            </Col>
+                        </Row>
 
-                <div className='forms'>
-
-                  {/*
-                    Highly consider componentizing each of these form inputs out in the future.
-                    - JD 2/12/2018
-                  */}
-
-                  {/*Title*/}
-                  <Row>
-                    <Col xs={10} xsOffset={1}>
-                      <FormGroup
-                        id = "title-form-group"
-                        validationState = {this.errorsFor('title') && 'error'}>
-                        <ControlLabel id="title">Title</ControlLabel>
-                        <FormControl
-                          placeholder="Date Title"
-                          type="text"
-                          name="title"
-                          value={this.state.form.title}
-                          onChange={this.handleChange.bind(this)}
-                        />
-                        {/*
-                          {this.errorsFor('title') &&
-                          <HelpBlock
-                          id="title-help-block">{this.errorFor('title')}</HelpBlock>
-                          }
-                        */}
-
-                      </FormGroup>
-                    </Col>
-                  </Row>
-
-                  {/*Description*/}
-                  <Row>
-                    <Col xs={10} xsOffset={1}>
-                      <FormGroup
-                        id = "description-form-group"
-                        validationState = {this.errorsFor('description') && 'error'}>
-                        <ControlLabel id="description">Description</ControlLabel>
-                        <FormControl
-                          componentClass="textarea"
-                          placeholder="Description"
-                          type="text"
-                          name="description"
-                          value={this.state.form.description}
-                          onChange={this.handleChange.bind(this)}
-                        />
+                        <div className='forms'>
 
                         {/*
-                          {this.errorsFor('description') &&
-                          <HelpBlock id="description-help-block">{this.errorFor('description')}</HelpBlock>
-                          }
+                         Highly consider componentizing each of these form inputs out in the future.
+                        - JD 2/12/2018
                         */}
 
-                      </FormGroup>
-                    </Col>
-                  </Row>
+                        {/*Title*/}
+                            <Row>
+                                <Col xs={10} xsOffset={1}>
+                                <FormGroup
+                                    id = "title-form-group"
+                                    validationState = {this.errorsFor('title') && 'error'}>
+                                    <ControlLabel id="title">Title</ControlLabel>
+                                    <FormControl
+                                        placeholder="Date Title"
+                                        type="text"
+                                        name="title"
+                                        value={this.state.form.title}
+                                        onChange={this.handleChange.bind(this)}
+                                    />
+                                    {/*
+                                    {this.errorsFor('title') &&
+                                    <HelpBlock
+                                    id="title-help-block">{this.errorFor('title')}</HelpBlock>
+                                    }
+                                    */}
 
-                  {/*Location*/}
-                  <Row>
-                    <Col xs={10} xsOffset={1}>
-                      <FormGroup
-                        id = "location-form-group"
-                        validationState = {this.errorsFor('location') && 'error'}>
-                        <ControlLabel id="location">Location</ControlLabel>
-                        <FormControl
-                          componentClass="select"
-                          placeholder="select"
-                          type="select"
-                          name="location"
-                          value={this.state.form.location}
-                          onChange={this.handleChange.bind(this)}
-                        >
+                                </FormGroup>
+                                </Col>
+                            </Row>
 
-                          <option value="location">Location</option>
+                        {/*Description*/}
+                            <Row>
+                                <Col xs={10} xsOffset={1}>
+                                <FormGroup
+                                    id = "description-form-group"
+                                    validationState = {this.errorsFor('description') && 'error'}>
+                                    <ControlLabel id="description">Description</ControlLabel>
+                                    <FormControl
+                                        componentClass="textarea"
+                                        placeholder="Description"
+                                        type="text"
+                                        name="description"
+                                        value={this.state.form.description}
+                                        onChange={this.handleChange.bind(this)}
+                                    />
 
-                          {this.createLocations()}
+                                    {/*
+                                    {this.errorsFor('description') &&
+                                    <HelpBlock id="description-help-block">{this.errorFor('description')}</HelpBlock>
+                                    }
+                                    */}
 
-                        </FormControl>
+                                </FormGroup>
+                                </Col>
+                            </Row>
 
-                        {/*}
-                          {this.errorsFor('location') &&
-                          <HelpBlock id="location-help-block">{this.errorFor('location')}</HelpBlock>
-                          }
-                        */}
+                        {/*Location*/}
+                            <Row>
+                                <Col xs={10} xsOffset={1}>
+                                <FormGroup
+                                    id = "location-form-group"
+                                    validationState = {this.errorsFor('location') && 'error'}>
+                                    <ControlLabel id="location">Location</ControlLabel>
+                                    <FormControl
+                                        componentClass="select"
+                                        placeholder="select"
+                                        type="select"
+                                        name="location"
+                                        value={this.state.form.location}
+                                        onChange={this.handleChange.bind(this)}
+                                    >
 
-                      </FormGroup>
-                    </Col>
-                  </Row>
+                                    <option value="location">Location</option>
+
+                                    {this.createLocations()}
+
+                                    </FormControl>
+
+                                    {/*}
+                                    {this.errorsFor('location') &&
+                                    <HelpBlock id="location-help-block">{this.errorFor('location')}</HelpBlock>
+                                    }
+                                    */}
+
+                                </FormGroup>
+                                </Col>
+                            </Row>
+
+                        {/*Cost*/}
+                            <Row>
+                                <Col xs={10} xsOffset={1}>
+                                <FormGroup
+                                    id = "cost-form-group"
+                                    validationState = {this.errorsFor('cost') && 'error'}>
+                                    <ControlLabel id="cost">Average Cost</ControlLabel>
+
+                                    <br/>
+
+                                    <RadioGroup
+                                      name="cost"
+                                      onChange={this.handleChange.bind(this)}
+                                      options={[
+                                        ['0', 'Free'],
+                                        ['0.33', '$'],
+                                        ['0.66', '$$'],
+                                        ['1', '$$$']
+                                      ]}
+
+                                      value={this.state.form.cost}
+                                    />
 
 
+                                    {/*
 
-                  {/*Cost*/}
-                  <Row>
-                    <Col xs={10} xsOffset={1}>
-                      <FormGroup
-                        id = "cost-form-group"
-                        validationState = {this.errorsFor('cost') && 'error'}>
-                        <ControlLabel id="cost">Average Cost</ControlLabel>
+                                    {this.errorsFor('cost') &&
+                                    <HelpBlock id="cost-help-block">{this.errorFor('cost')}</HelpBlock>
+                                    }
+                                    */}
 
-                        <br/>
+                                </FormGroup>
+                                </Col>
+                            </Row>
 
-                        <RadioGroup
-                          name="cost"
-                          onChange={this.handleChange.bind(this)}
-                          options={[
-                            ['0', 'Free'],
-                            ['0.33', '$'],
-                            ['0.66', '$$'],
-                            ['1', '$$$']
-                          ]}
+                        {/*Tags*/}
+                            <Row>
+                                <Col xs={10} xsOffset={1}>
+                                <FormGroup
+                                    id = "tags-form-group"
+                                    validationState = {this.errorsFor('tags') && 'error'}>
+                                    <ControlLabel id="tag">Tags</ControlLabel>
+                                    <br/>
 
-                          value={this.state.form.cost}
-                        />
+                                    {this.createTagCheckboxes()}
 
+                                    {/*}
+                                    {this.errorsFor('tags') &&
+                                    <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>
+                                    }
+                                    */}
 
-                        {/*
+                                </FormGroup>
+                                </Col>
+                            </Row>
 
-                          {this.errorsFor('cost') &&
-                          <HelpBlock id="cost-help-block">{this.errorFor('cost')}</HelpBlock>
-                          }
-                        */}
+                        {/*Image*/}
+                            <Row>
+                                <Col xs={10} xsOffset={1}>
+                                <FormGroup
+                                    id = "image-form-group"
+                                    validationState = {this.errorsFor('image') && 'error'}>
+                                    <ControlLabel id="image">Image</ControlLabel>
 
-                      </FormGroup>
-                    </Col>
-                  </Row>
+                                    <div className="image-upload-div">
+                                        <Dropzone
+                                            accept='image/*'
+                                            onDrop={(files) => {
+                                                this.onDrop(files)
+                                            }}
+                                        >
+                                            <div>
+                                            <p>Try dropping some files here, or click me to select files to upload.</p>
+                                             </div>
+                                        </Dropzone>
+                                    </div>
 
-                  {/*Tags*/}
-                  <Row>
-                    <Col xs={10} xsOffset={1}>
-                      <FormGroup
-                        id = "tags-form-group"
-                        validationState = {this.errorsFor('tags') && 'error'}>
-                        <ControlLabel id="tag">Tags</ControlLabel>
-                        <br/>
+                                    <div>
+                                        File Preview:
 
-                        {this.createTagCheckboxes()}
-
-                        {/*}
-                          {this.errorsFor('tags') &&
-                          <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>
-                          }
-                        */}
-
-                      </FormGroup>
-                    </Col>
-                  </Row>
-
-                  {/*Image*/}
-                  <Row>
-                    <Col xs={10} xsOffset={1}>
-                      <FormGroup
-                        id = "image-form-group"
-                        validationState = {this.errorsFor('image') && 'error'}>
-                        <ControlLabel id="image">Image</ControlLabel>
-
-                        <div className="image-upload-div">
-                          <Dropzone
-                            accept='image/*'
-                            onDrop={(files) => {
-                              this.onDrop(files)
-                            }}
-                          >
-                            <div>
-                              <p>Try dropping some files here, or click me to select files to upload.</p>
-                            </div>
-                          </Dropzone>
-                        </div>
-
-                        <div>
-                          File Preview:
-
-                          {this.state.filesToBeSent.map((image, index) => {
-                            return (
-                              <div
-                                key={index}
-                              >
-                                <img src={image[0].preview} className="image-preview"/>
-                                <p> {image[0].name} </p>
-                                <br/>
-                                <Button onClick={(event) =>
-                                  this.handleClear(event)}>
-                                  Clear
-                                </Button>
-                              </div>
-                            )
+                                        {this.state.filesToBeSent.map((image, index) => {
+                                            return (
+                                                <div
+                                                    key={index}
+                                                >
+                                                    <img src={image[0].preview} className="image-preview"/>
+                                                    <p> {image[0].name} </p>
+                                                    <br/>
+                                                    <Button onClick={(event) =>
+                                                    this.handleClear(event)}>
+                                                        Clear
+                                                    </Button>
+                                                </div>
+                                            )
                                         })}
 
                                     </div>
@@ -422,36 +420,11 @@ class NewActivityForm extends Component {
                                 </Col>
                             </Row>
 
-
+                            <MapContainer />
 
                         </div>
 
-
-                        {/*
-                          {this.errorsFor('image') &&
-                          <HelpBlock id="image-help-block">{this.errorFor('images')}</HelpBlock>
-                          }
-                        */}
-
-                      </FormGroup>
-                    </Col>
-                  </Row>
-
-
-                  <Row>
-                    <Col xs={10} xsOffset={1}>
-                      <br/>
-                      <Button
-                        id="submit"
-                        onClick={this.handleSubmit.bind(this)}
-                      >Submit</Button>
-                    </Col>
-                  </Row>
-
-                </div>
-
-              </form>
-              <MapContainer />
+                </form>
             </div>
         );
     }

@@ -45,18 +45,14 @@ const authorization = (req, res, next) => {
 }
 // homepage
 app.get('/', (req, res) => {
-  res.json({
-    message: 'API example app'
-  });
+    res.json({message: 'API example app'});
 });
 
 // displays respective route  w/ raw json from database onto page
 app.get('/activities', (req, res) => {
-  Activity.findAll().then(activities => {
-    res.json({
-      activities: activities
+    Activity.findAll().then(activities => {
+        res.json({activities: activities});
     });
-  });
 });
 
 app.get('/tags', (req, res) => {
@@ -79,13 +75,11 @@ app.get('/locations', (req, res) => {
 
 // displays specific activity by ID
 app.get('/activities/:id', (req, res) => {
-  let id = parseInt(req.params.id);
+    let id = parseInt(req.params.id);
 
-  Activity.findById(id).then(activity => {
-    res.json({
-      activity: activity
+    Activity.findById(id).then(activity => {
+        res.json({activity: activity});
     });
-  });
 });
 
 //Random App Generator
@@ -110,32 +104,23 @@ app.get('/shuffle', (req, res) => {
 
 app.post('/users', (req, res) => {
 
-  req.checkBody('firstName', 'Is required').notEmpty()
-  req.checkBody('password', 'Is required').notEmpty()
+    req.checkBody('firstName', 'Is required').notEmpty()
+    req.checkBody('password', 'Is required').notEmpty()
 
-  req.getValidationResult()
-    .then(valErrors => {
-      if (valErrors.isEmpty()) {
-        User.create({
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          email: req.body.email,
-          password: req.body.password
-        }).then(user => {
-          res.json({
-            message: 'success',
-            user: user
-          })
-        })
-      } else {
-        // console.log(validationErrors.array())
-        res.status(400)
-        res.json({
-          errors: {
-            validations: valErrors.array()
-          }
-        })
-      }
+    req.getValidationResult().then(valErrors => {
+        if (valErrors.isEmpty()) {
+            User.create({firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email, password: req.body.password}).then(user => {
+                res.json({message: 'success', user: user})
+            })
+        } else {
+            // console.log(validationErrors.array())
+            res.status(400)
+            res.json({
+                errors: {
+                    validations: valErrors.array()
+                }
+            })
+        }
     })
 })
 
@@ -197,7 +182,7 @@ app.post('/activities', (req, res) => {
                 // Takes the array with new ActivityId and selected TagId and pushes them to our join table (ActivityTag)
                 ActivityTag.bulkCreate(tagArr).then(() => {
                     return ActivityTag.findAll();
-                }).then(activityTags => {})
+                })
             })
         } else {
             res.status(400)
@@ -207,35 +192,17 @@ app.post('/activities', (req, res) => {
                 }
             })
         }
-
-        ActivityTag.bulkCreate(tagArr).then(() => {
-          return ActivityTag.findAll();
-        }).then(activityTags => {
-          // console.log(activityTags);
-        })
-        // console.log(tagArr);
-
-      })
-
-
-    } else {
-      res.status(400)
-      res.json({
-        errors: {
-          validations: validationErrors.array()
-        }
-      })
-    }
-  })
-
+    })
 })
+
+
 
 // login form
 app.post('/sessions/new', (req, res) => {
-  const email = req.body.email
-  const password = req.body.password
+    const email = req.body.email
+    const password = req.body.password
 
-  // console.log(req.body)
+    // console.log(req.body)
 
     if (email && password) {
         User.findOne({
@@ -262,7 +229,6 @@ app.post('/sessions/new', (req, res) => {
     }
 })
 
-
 // app.get('/activitysearch', (req, res) => {
 //   let term = req.query.term
 //   let location = req.query.location
@@ -279,31 +245,25 @@ app.post('/sessions/new', (req, res) => {
 // has this been worked on at all really? -JD 2/15/2018
 app.put('/activities/edit/:id', (req, res) => {
 
-  const {
-    name,
-    content
-  } = req.params;
-  let id = parseInt(req.params.id);
+    const {name, content} = req.params;
+    let id = parseInt(req.params.id);
 
-
-  Activity.findById(id).then(page => {
-    Activity.update({
-      title: title,
-      description: description,
-      location: location,
-      cost: cost,
-      tags: tags
-    }, {
-      where: {
-        id: id
-      }
-    }).then(activity => {
-      res.status(201);
-      res.json({
-        activity: activity
-      });
+    Activity.findById(id).then(page => {
+        Activity.update({
+            title: title,
+            description: description,
+            location: location,
+            cost: cost,
+            tags: tags
+        }, {
+            where: {
+                id: id
+            }
+        }).then(activity => {
+            res.status(201);
+            res.json({activity: activity});
+        });
     });
-  });
 });
 
 // runs authorization check, responds with JSON to current user

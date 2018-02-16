@@ -54,11 +54,11 @@ class SignUp extends Component {
         }
     }
 
+// KEVIN PLZ LOOK AT THIS THANK YOU
     addError(fieldName, message) {
         this.errors[fieldName] = message
+        // return errorString === "" ? null : errorString;
     }
-    return errorString === "" ? null : errorString;
-  }
 
     render() {
         return (

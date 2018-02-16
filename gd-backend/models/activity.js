@@ -8,17 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     imageName: DataTypes.STRING
   }, {
     classMethods: {
-      associate: function(models) {
-<<<<<<< HEAD
-        Activity.belongsToMany(models.Tag, {
-          through: models.ActivityTag,
-        })
-=======
-        // Activity.belongsToMany(models.Tag, {
-        //   through: models.ActivityTag,
-        //   foreignKey:'ActivityId'
-        //  })
->>>>>>> master
+      associate: function() {
+
       }
     }
   });
