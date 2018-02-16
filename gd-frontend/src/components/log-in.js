@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import '../App.css';
-import {Link} from 'react-router-dom';
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { Row, Col, FormGroup, ControlLabel, HelpBlock, FormControl, Button } from 'react-bootstrap';
+import FormInput from './FormInput.js';
 
 const API = "http://127.0.0.1:3000";
 
@@ -14,7 +16,8 @@ class Login extends Component {
                 password: ''
             },
             errors: null,
-            authorized: false
+            authorized: false,
+            valid: true
         };
     }
 
@@ -32,7 +35,9 @@ class Login extends Component {
             console.log("resp:", data);
 
             if (data.message === "login success") {
-                this.setState({authorized: true})
+                this.setState({ authorized: true })
+            } else {
+                this.setState({valid: false})
             }
         }).catch((e) => console.log("error:", e))
     }
@@ -42,14 +47,54 @@ class Login extends Component {
         form[e.target.name] = e.target.value.trim()
         this.setState({form: form})
     }
+
     render() {
         const {authorized, form} = this.state
         const {email, password} = form
         const login = (<div className="login-wrapper">
-            <form className="login-form" onSubmit={this.authorize} onChange={this.handleChange.bind(this)}>
-                <div className="login-title">Great Date</div>
-                <input className="lname" name="email" type="text" placeholder="Email"/>
-                <input className="lname" name="password" placeholder="Password" type="password"/>
+            <form
+                className="login-form"
+                onSubmit={this.authorize}
+                onChange={this.handleChange.bind(this)}>
+                <div
+                    className="login-title">Great Date</div>
+                <div className="alert-holder">
+                    <span className="center">
+                        {!this.state.valid &&
+                            <div className="alert alert-danger">Invalid username or password. Please try again</div>
+                        }
+                    </span>
+                </div>
+                <Row className="row">
+                    <Col xs={10}>
+                        <FormGroup
+                            id="email-form-group">
+                            <ControlLabel id="email"></ControlLabel>
+                            <FormControl
+                                placeholder="Email"
+                                type="text"
+                                name="email"
+                                value={this.state.form.email}
+                                onChange={this.handleChange.bind(this)}
+                            />
+                        </FormGroup>
+                    </Col>
+                </Row>
+                <Row className="row">
+                    <Col xs={10}>
+                        <FormGroup
+                            id="password-form-group">
+                            <ControlLabel id="password"></ControlLabel>
+                            <FormControl
+                                placeholder="Password"
+                                type="text"
+                                name="password"
+                                value={this.state.form.password}
+                                onChange={this.handleChange.bind(this)}
+                            />
+                        </FormGroup>
+                    </Col>
+                </Row>
 
                 <button className="login-btn" type="submit">
                     Log in
@@ -67,20 +112,12 @@ class Login extends Component {
                 </p>
             </div>
 
-        </div>)
-
-        return (<div>
-            <div id="authorization">
-                {
-                    authorized
-                        ? <Redirect to={"/logged-in-page"}/>
-                        : login
-                }
-                {
-                    authorized
-                        ? localStorage.setItem('name', this.state.form.email)
-                        : null
-                }
+        return (
+            <div>
+                <div id="authorization">
+                    {authorized ? <Redirect to={"/"} /> : login}
+                    {authorized ? localStorage.setItem('name', this.state.form.email) : null}
+                </div>
             </div>
         </div>);
     }

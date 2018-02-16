@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ActivitiesList from '../store/ActivitiesList';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Grid from '../components/grid.js';
 
 import DatePreview from '../components/date-preview';
@@ -36,6 +36,22 @@ class AllDatesPage extends Component {
             return <NavbarBootstrap/>;
         } else {
             return <LoggedInNav/>;
+        }
+    }
+
+    renderCreateButton() {
+        if (typeof localStorage.name === 'undefined') {
+            return <div>
+                {
+                    <Link to='/sign-up-page'> <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button> </Link>
+                }
+            </div>
+        } else {
+            return <div>
+                {
+                    <Link to='/new-activity'> <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button> </Link>
+                }
+                </div>
         }
     }
 

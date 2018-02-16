@@ -14,7 +14,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        title:"Get your hipster gamer on in North Park",
+        title:"Get your hipster game on in North Park",
         description:"Head to San Diego's hip up and coming North Park neighborhood to hang with the hipsters and Dan. If you're a fan of whiskey",
         location:"North Park",
         cost: .66,

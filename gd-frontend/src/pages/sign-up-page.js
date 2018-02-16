@@ -22,7 +22,8 @@ class SignUpPage extends Component {
         this.state = {
             users: [],
             errors: null,
-            newUserSuccess: false
+            newUserSuccess: false,
+            email: ''
         };
     }
 
@@ -39,16 +40,15 @@ handleNewUser(params) {
         return rawResponse.json();
     }).then((parsedResponse) => {
     if (parsedResponse.errors) {
-        console.log(parsedResponse.errors);
         this.setState({ errors: parsedResponse.errors });
     } else {
         const users = Object.assign([], this.state.users);
         users.push(parsedResponse.user);
-
         this.setState({
             users: users,
             errors: null,
-            newUserSuccess: true
+            newUserSuccess: true,
+            email: parsedResponse.user.email
         });
     }
     });
@@ -69,8 +69,8 @@ handleNewUser(params) {
             <div style={bgImage}>
                 <NavbarBootstrap />
                 <SignUp onSubmit = { this.handleNewUser.bind(this) } />
-                    {this.state.newUserSuccess ? <Redirect to={"/logged-in-page"} /> : null}
-                    {this.state.newUserSuccess ? localStorage.setItem('name', this.state.form.email) : null}
+                    {this.state.newUserSuccess ? <Redirect to={"/"} /> : null}
+                    {this.state.newUserSuccess ? localStorage.setItem('name', this.state.email) : null}
             </div>
         );
     }

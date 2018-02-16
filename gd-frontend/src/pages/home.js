@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import '../App.css';
 import NavBar from '../components/navbar.js';
 import TitleBlock from '../components/title-block.js';
 import ReactDOM from "react-dom";
-import {Button} from 'reactstrap';
-import {Link} from 'react-router-dom';
+import { Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import Navigation from '../components/navbar';
 import Title from '../components/title';
 import TitleButton from '../components/title-button';
@@ -43,7 +43,7 @@ class Home extends Component {
 
     render() {
         const { activities } = this.state
-        
+
         return (
             <div className='home'>
                 <div className="shadow">

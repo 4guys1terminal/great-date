@@ -3,6 +3,8 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 var validator = require('express-validator');
 const crypto = require('crypto')
+var sequelize = require('sequelize');
+const fs = require('fs');
 
 var app = express();
 
@@ -11,6 +13,7 @@ var User = require('./models').User;
 var Activity = require('./models').Activity;
 var Tags = require('./models').Tag;
 var ActivityTag = require('./models').ActivityTag;
+var Location = require('./models').Location;
 
 
 app.use(express.static('public'));
@@ -41,24 +44,15 @@ const authorization = (req, res, next) => {
         res.json({message: 'Authorization Token Required'})
     }
 }
-
+// homepage
 app.get('/', (req, res) => {
     res.json({message: 'API example app'});
 });
 
-// displays activities w/ raw json activities page
+// displays respective route  w/ raw json from database onto page
 app.get('/activities', (req, res) => {
     Activity.findAll().then(activities => {
         res.json({activities: activities});
-    });
-});
-
-// displays specific activity by ID
-app.get('/activities/:id', (req, res) => {
-    let id = parseInt(req.params.id);
-
-    Activity.findById(id).then(activity => {
-        res.json({activity: activity});
     });
 });
 
@@ -73,6 +67,44 @@ app.get('/users', (req, res) => {
         res.json({users: users})
     })
 })
+
+app.get('/locations', (req, res) => {
+    Location.findAll().then(locations =>{
+        res.json({locations: locations})
+    })
+})
+
+// displays specific activity by ID
+app.get('/activities/:id', (req, res) => {
+    let id = parseInt(req.params.id);
+
+    Activity.findById(id).then(activity => {
+        res.json({activity: activity});
+    });
+});
+
+//Random App Generator
+app.get('/shuffle', (req, res) => {
+
+// TAG CHECK BOX LOGIC
+// Run loop that runs query for each tag selected which will be ${} in the query
+
+
+  // console.log(tags);
+
+//SQL Logic for finding all tags that have selected tags
+  Tags.sequelize.query('SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE"TagId"=20;',{ type: sequelize.QueryTypes.SELECT})
+  .then(activityTags => {
+    res.status(201);
+//Returns ONE random activity that has the tags selected
+    random = Math.floor(Math.random() * activityTags.length)
+    console.log(random);
+    res.json({activityTags: activityTags[random]})
+  })
+})
+
+
+//Creating New User   (Need Kevin and Dan to comment)
 
 app.post('/users', (req, res) => {
     req.checkBody('firstName', 'Is required').notEmpty()
@@ -103,9 +135,8 @@ app.post('/activities', (req, res) => {
     req.checkBody('description', 'is required').notEmpty()
     req.checkBody('location', 'is required').notEmpty()
     req.checkBody('cost', 'is required').notEmpty()
-
-    // req.checkBody('tag','is required').notEmpty()
-    req.checkBody('imageFiles', 'is required').notEmpty()
+    // req.checkBody('tag','is required').notEmpty() --------               Need to
+    // req.checkBody('imageFiles', 'is required').notEmpty() ---------   Figure these out
 
     // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult().then((validationErrors) => {
@@ -137,34 +168,33 @@ app.post('/activities', (req, res) => {
             }).then((activity) => {
                     res.status(201)
                     res.json({activity: activity})
-                    console.log(activity)
+                  //Takes the tag checkbox from our form
+                    tags = req.body.tags
+                    let tagArr = []
+                  //Pushes Id of newly made activity and any tag selected to an array to use for our ActivityTag Table
+                    for (var property in tags) {
+                        let val = {
+                            ActivityId: activity.id,
+                            TagId: property
+                        }
+                      // Checks if a tag is checked or not
+                        tags[property] === true ? tagArr.push(val) : ''
+                    }
+                    // Takes the array with new ActivityId and selected TagId and pushes them to our join table (ActivityTag)
+                    ActivityTag.bulkCreate(tagArr).then(() => {
+                        return ActivityTag.findAll();
+                    }).then(activityTags => {
+                    })
             })
 
-            Activity.max('id').then(max => {
-                tags = req.body.tags
-                let tagsLength = Object.keys(req.body.tags).length
-                let tagArr = []
 
-                for (var property in tags) {
 
-                    let val = {
-                        ActivityId: max + 1,
-                        TagId: property
-                    }
-
-                    tags[property] === true ? tagArr.push(val) : ''
-                }
-
-                ActivityTag.bulkCreate(tagArr).then(() => {
-                    return ActivityTag.findAll();
-                }).then(activityTags => {
-                    // console.log(activityTags);
+                fs.writeFile('./image.png', buf, (err) => {
+                    console.log(err)
                 })
                 // console.log('final tagArr',tagArr);
 
             })
-
-
         } else {
             res.status(400)
             res.json({

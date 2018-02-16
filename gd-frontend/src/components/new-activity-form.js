@@ -298,6 +298,8 @@ class NewActivityForm extends Component {
                                 </Col>
                             </Row>
 
+
+
                         {/*Cost*/}
                             <Row>
                                 <Col xs={10} xsOffset={1}>
@@ -419,6 +421,8 @@ class NewActivityForm extends Component {
                                         >Submit</Button>
                                 </Col>
                             </Row>
+
+
 
                         </div>
 
