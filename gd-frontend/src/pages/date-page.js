@@ -5,9 +5,12 @@ import '../App.css';
 import DateInfo from '../components/date-info.js';
 import NavBar from '../components/navbar.js';
 import NavbarBootstrap from '../components/navbarBootstrap.js';
-import imageFactory from '../components/imgSrc.js';
+
 import DateComponent from '../components/date-component.js';
-import api from '../components/fetch'
+import api from '../functions/fetch.js';
+import imageFactory from '../functions/imgSrc.js';
+import bgImage from '../functions/bgImage'
+
 
 const host = "http://localhost:3000"
 const path = "/user-uploads/"
@@ -20,10 +23,6 @@ var backgroundTexture = {
     backgroundImage: 'url(/images/grid_noise.png)'
 };
 
-var bgImage = {
-    backgroundImage: 'linear-gradient(to bottom, rgb(13,194,181) 0%, rgb(13,186,237) 100%)',
-    backgroundSize: 'cover'
-};
 
 
 

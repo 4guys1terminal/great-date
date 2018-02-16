@@ -13,16 +13,11 @@ import Grid from '../components/grid';
 import LoggedIn from '../pages/logged-in-page';
 import LoggedInNav from '../components/logged-in-navbar';
 
+import bgImage from '../functions/bgImage'
 import NavbarBootstrap from '../components/navbarBootstrap.js';
 
 var backgroundTexture = {
     backgroundImage: 'url(/images/grid_noise.png)'
-};
-// backgroundImage: 'url(/images/date-cover.jpg)',
-var bgImage = {
-    backgroundImage: 'linear-gradient(to bottom, rgb(13,194,181) 0%, rgb(13,186,237) 100%)',
-    backgroundSize: 'cover',
-    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
 };
 
 class Home extends Component {
