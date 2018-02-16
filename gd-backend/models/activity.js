@@ -10,8 +10,9 @@ module.exports = (sequelize, DataTypes) => {
       associate: function(models) {
         Activity.belongsToMany(models.Tag, {
           through: models.ActivityTag,
-         })
+        })
       }
-    });
-  return Activity;
+    }
+  });
+    return Activity;
 };

@@ -15,7 +15,7 @@ import {
 } from 'react-bootstrap';
 import RadioGroup from './radio-group.js';
 import Dropzone from 'react-dropzone';
-
+import MapContainer from '../components/google-map';
 
 
 class NewActivityForm extends Component {
@@ -175,225 +175,226 @@ class NewActivityForm extends Component {
     render() {
         return (
             <div className="createDateDiv">
-                <form className="createDateForm">
+              <form className="createDateForm">
 
-                        <Row>
-                            <Col xs={10} xsOffset={1}>
-                                {this.props.errors &&
-                                    <Alert bsStyle="danger">
-                                        Please check the form and try again.
-                                    </Alert>
-                                }
-                            </Col>
-                        </Row>
+                <Row>
+                  <Col xs={10} xsOffset={1}>
+                    {this.props.errors &&
+                      <Alert bsStyle="danger">
+                        Please check the form and try again.
+                      </Alert>
+                    }
+                  </Col>
+                </Row>
 
-                        <div className='forms'>
+                <div className='forms'>
 
-                        {/* All form inputs labeled and minimized because DAMN that's a lot of code. Highly consider componentizing each of these form inputs out in the future.*/}
+                  {/* All form inputs labeled and minimized because DAMN that's a lot of code. Highly consider componentizing each of these form inputs out in the future.*/}
 
-                        {/*Title*/}
-                            <Row>
-                                <Col xs={10} xsOffset={1}>
-                                <FormGroup
-                                    id = "title-form-group"
-                                    validationState = {this.errorsFor('title') && 'error'}>
-                                    <ControlLabel id="title">Title</ControlLabel>
-                                    <FormControl
-                                        placeholder="Date Title"
-                                        type="text"
-                                        name="title"
-                                        value={this.state.form.title}
-                                        onChange={this.handleChange.bind(this)}
-                                    />
-                                    {/*
-                                    {this.errorsFor('title') &&
-                                    <HelpBlock
-                                    id="title-help-block">{this.errorFor('title')}</HelpBlock>
-                                    }
-                                    */}
+                  {/*Title*/}
+                  <Row>
+                    <Col xs={10} xsOffset={1}>
+                      <FormGroup
+                        id = "title-form-group"
+                        validationState = {this.errorsFor('title') && 'error'}>
+                        <ControlLabel id="title">Title</ControlLabel>
+                        <FormControl
+                          placeholder="Date Title"
+                          type="text"
+                          name="title"
+                          value={this.state.form.title}
+                          onChange={this.handleChange.bind(this)}
+                        />
+                        {/*
+                          {this.errorsFor('title') &&
+                          <HelpBlock
+                          id="title-help-block">{this.errorFor('title')}</HelpBlock>
+                          }
+                        */}
 
-                                </FormGroup>
-                                </Col>
-                            </Row>
+                      </FormGroup>
+                    </Col>
+                  </Row>
 
-                        {/*Description*/}
-                            <Row>
-                                <Col xs={10} xsOffset={1}>
-                                <FormGroup
-                                    id = "description-form-group"
-                                    validationState = {this.errorsFor('description') && 'error'}>
-                                    <ControlLabel id="description">Description</ControlLabel>
-                                    <FormControl
-                                        componentClass="textarea"
-                                        placeholder="Description"
-                                        type="text"
-                                        name="description"
-                                        value={this.state.form.description}
-                                        onChange={this.handleChange.bind(this)}
-                                    />
+                  {/*Description*/}
+                  <Row>
+                    <Col xs={10} xsOffset={1}>
+                      <FormGroup
+                        id = "description-form-group"
+                        validationState = {this.errorsFor('description') && 'error'}>
+                        <ControlLabel id="description">Description</ControlLabel>
+                        <FormControl
+                          componentClass="textarea"
+                          placeholder="Description"
+                          type="text"
+                          name="description"
+                          value={this.state.form.description}
+                          onChange={this.handleChange.bind(this)}
+                        />
 
-                                    {/*
-                                    {this.errorsFor('description') &&
-                                    <HelpBlock id="description-help-block">{this.errorFor('description')}</HelpBlock>
-                                    }
-                                    */}
+                        {/*
+                          {this.errorsFor('description') &&
+                          <HelpBlock id="description-help-block">{this.errorFor('description')}</HelpBlock>
+                          }
+                        */}
 
-                                </FormGroup>
-                                </Col>
-                            </Row>
+                      </FormGroup>
+                    </Col>
+                  </Row>
 
-                        {/*Location*/}
-                            <Row>
-                                <Col xs={10} xsOffset={1}>
-                                <FormGroup
-                                    id = "location-form-group"
-                                    validationState = {this.errorsFor('location') && 'error'}>
-                                    <ControlLabel id="location">Location</ControlLabel>
-                                    <FormControl
-                                        componentClass="select"
-                                        placeholder="select"
-                                        type="select"
-                                        name="location"
-                                        value={this.state.form.location}
-                                        onChange={this.handleChange.bind(this)}
-                                    >
+                  {/*Location*/}
+                  <Row>
+                    <Col xs={10} xsOffset={1}>
+                      <FormGroup
+                        id = "location-form-group"
+                        validationState = {this.errorsFor('location') && 'error'}>
+                        <ControlLabel id="location">Location</ControlLabel>
+                        <FormControl
+                          componentClass="select"
+                          placeholder="select"
+                          type="select"
+                          name="location"
+                          value={this.state.form.location}
+                          onChange={this.handleChange.bind(this)}
+                        >
 
-                                    <option value="location">Location</option>
+                          <option value="location">Location</option>
 
-                                    {this.createLocations()}
+                          {this.createLocations()}
 
-                                    </FormControl>
+                        </FormControl>
 
-                                    {/*}
-                                    {this.errorsFor('location') &&
-                                    <HelpBlock id="location-help-block">{this.errorFor('location')}</HelpBlock>
-                                    }
-                                    */}
+                        {/*}
+                          {this.errorsFor('location') &&
+                          <HelpBlock id="location-help-block">{this.errorFor('location')}</HelpBlock>
+                          }
+                        */}
 
-                                </FormGroup>
-                                </Col>
-                            </Row>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <MapContainer />
 
-                        {/*Cost*/}
-                            <Row>
-                                <Col xs={10} xsOffset={1}>
-                                <FormGroup
-                                    id = "cost-form-group"
-                                    validationState = {this.errorsFor('cost') && 'error'}>
-                                    <ControlLabel id="cost">Average Cost</ControlLabel>
+                  {/*Cost*/}
+                  <Row>
+                    <Col xs={10} xsOffset={1}>
+                      <FormGroup
+                        id = "cost-form-group"
+                        validationState = {this.errorsFor('cost') && 'error'}>
+                        <ControlLabel id="cost">Average Cost</ControlLabel>
 
-                                    <br/>
+                        <br/>
 
-                                    <RadioGroup
-                                      name="cost"
-                                      onChange={this.handleChange.bind(this)}
-                                      options={[
-                                        ['free', 'Free'],
-                                        ['$', '$'],
-                                        ['$$', '$$'],
-                                        ['$$$', '$$$']
-                                      ]}
+                        <RadioGroup
+                          name="cost"
+                          onChange={this.handleChange.bind(this)}
+                          options={[
+                            ['free', 'Free'],
+                            ['$', '$'],
+                            ['$$', '$$'],
+                            ['$$$', '$$$']
+                          ]}
 
-                                      value={this.state.form.cost}
-                                    />
-
-
-                                    {/*
-
-                                    {this.errorsFor('cost') &&
-                                    <HelpBlock id="cost-help-block">{this.errorFor('cost')}</HelpBlock>
-                                    }
-                                    */}
-
-                                </FormGroup>
-                                </Col>
-                            </Row>
-
-                        {/*Tags*/}
-                            <Row>
-                                <Col xs={10} xsOffset={1}>
-                                <FormGroup
-                                    id = "tags-form-group"
-                                    validationState = {this.errorsFor('tags') && 'error'}>
-                                    <ControlLabel id="tag">Tags</ControlLabel>
-                                    <br/>
-
-                                    {this.createTagCheckboxes()}
-
-                                    {/*}
-                                    {this.errorsFor('tags') &&
-                                    <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>
-                                    }
-                                    */}
-
-                                </FormGroup>
-                                </Col>
-                            </Row>
-
-                        {/*Image*/}
-                            <Row>
-                                <Col xs={10} xsOffset={1}>
-                                <FormGroup
-                                    id = "image-form-group"
-                                    validationState = {this.errorsFor('image') && 'error'}>
-                                    <ControlLabel id="image">Image</ControlLabel>
-
-                                    <div className="image-upload-div">
-                                        <Dropzone
-                                            accept='image/*'
-                                            onDrop={(files) => {
-                                                this.onDrop(files)
-                                            }}
-                                        >
-                                            <div>
-                                            <p>Try dropping some files here, or click me to select files to upload.</p>
-                                            <p>(Only image files will be accepted.)</p>
-                                             </div>
-                                        </Dropzone>
-                                    </div>
-
-                                    <div>
-                                        File Preview:
-
-                                        {this.state.filesToBeSent.map((image, index) => {
-                                            return (
-                                                <div
-                                                    key={index}
-                                                >
-                                                    <img src={image[0].preview} className="image-preview"/>
-                                                    <p> {image[0].name} </p>
-                                                    <br/>
-                                                    <Button onClick={(event) =>
-                                                    this.handleClear(event)}>
-                                                        Clear
-                                                    </Button>
-                                                </div>
-                                            )
-                                        })}
-
-                                    </div>
+                          value={this.state.form.cost}
+                        />
 
 
-                                    {/*
-                                    {this.errorsFor('image') &&
-                                    <HelpBlock id="image-help-block">{this.errorFor('images')}</HelpBlock>
-                                    }
-                                    */}
+                        {/*
 
-                                </FormGroup>
-                                </Col>
-                            </Row>
+                          {this.errorsFor('cost') &&
+                          <HelpBlock id="cost-help-block">{this.errorFor('cost')}</HelpBlock>
+                          }
+                        */}
+
+                      </FormGroup>
+                    </Col>
+                  </Row>
+
+                  {/*Tags*/}
+                  <Row>
+                    <Col xs={10} xsOffset={1}>
+                      <FormGroup
+                        id = "tags-form-group"
+                        validationState = {this.errorsFor('tags') && 'error'}>
+                        <ControlLabel id="tag">Tags</ControlLabel>
+                        <br/>
+
+                        {this.createTagCheckboxes()}
+
+                        {/*}
+                          {this.errorsFor('tags') &&
+                          <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>
+                          }
+                        */}
+
+                      </FormGroup>
+                    </Col>
+                  </Row>
+
+                  {/*Image*/}
+                  <Row>
+                    <Col xs={10} xsOffset={1}>
+                      <FormGroup
+                        id = "image-form-group"
+                        validationState = {this.errorsFor('image') && 'error'}>
+                        <ControlLabel id="image">Image</ControlLabel>
+
+                        <div className="image-upload-div">
+                          <Dropzone
+                            accept='image/*'
+                            onDrop={(files) => {
+                              this.onDrop(files)
+                            }}
+                          >
+                            <div>
+                              <p>Try dropping some files here, or click me to select files to upload.</p>
+                              <p>(Only image files will be accepted.)</p>
+                            </div>
+                          </Dropzone>
+                        </div>
+
+                        <div>
+                          File Preview:
+
+                          {this.state.filesToBeSent.map((image, index) => {
+                            return (
+                              <div
+                                key={index}
+                              >
+                                <img src={image[0].preview} className="image-preview"/>
+                                <p> {image[0].name} </p>
+                                <br/>
+                                <Button onClick={(event) =>
+                                  this.handleClear(event)}>
+                                  Clear
+                                </Button>
+                              </div>
+                            )
+                          })}
+
+                        </div>
 
 
-                            <Row>
-                                <Col xs={10} xsOffset={1}>
-                                    <br/>
-                                    <Button
-                                        id="submit"
-                                        onClick={this.handleSubmit.bind(this)}
-                                        >Submit</Button>
-                                </Col>
-                            </Row>
+                        {/*
+                          {this.errorsFor('image') &&
+                          <HelpBlock id="image-help-block">{this.errorFor('images')}</HelpBlock>
+                          }
+                        */}
+
+                      </FormGroup>
+                    </Col>
+                  </Row>
+
+
+                  <Row>
+                    <Col xs={10} xsOffset={1}>
+                      <br/>
+                      <Button
+                        id="submit"
+                        onClick={this.handleSubmit.bind(this)}
+                      >Submit</Button>
+                    </Col>
+                  </Row>
 
                         </div>
 
