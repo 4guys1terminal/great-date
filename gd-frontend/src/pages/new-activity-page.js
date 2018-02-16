@@ -95,7 +95,9 @@ class NewActivity extends Component {
                         Create a Date
                     </h1>
 
-                    <NewActivityForm onSubmit={this.handleNewActivity.bind(this)} errors={this.state.errors && this.state.errors.validations}/>  {this.state.newActivitySuccess &&
+                    <NewActivityForm onSubmit={this.handleNewActivity.bind(this)} errors={this.state.errors && this.state.errors.validations}/>
+
+                {this.state.newActivitySuccess &&
                         <Redirect to="/success" />
                     }
 

@@ -170,18 +170,22 @@ app.post('/activities', (req, res) => {
     req.checkBody('location', 'is required').notEmpty()
     req.checkBody('cost', 'is required').notEmpty()
     // req.checkBody('tag','is required').notEmpty() --------               Need to
-    // req.checkBody('imageFiles', 'is required').notEmpty() ---------   Figure these out
+    // req.checkBody('imageFile', 'is required').notEmpty() ---------   Figure these out
 
     // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult().then((validationErrors) => {
         if (validationErrors.isEmpty()) {
-            let fileContent = req.body.imageFiles[0]
+            let fileContent = req.body.imageFile[0]
+            let fileType = req.body.imageType[0]
+
+            let ext = fileType.split('/')
+            let extension = '.' + ext[(ext.length-1)]
 
             // hashing the image name to store with the activity (to avoid duplicate name problem)
             let hashedImageContent = crypto.createHash('md5').update(fileContent).digest('hex');
             console.log(hashedImageContent);
             //converting base64 string back into an image and saving to /user-uploads/ folder
-            let images = req.body.imageFiles.map((image) => {
+            let images = req.body.imageFile.map((image) => {
 
                 const base64ToImage = require('base64-to-image');
 
@@ -198,7 +202,7 @@ app.post('/activities', (req, res) => {
                 description: req.body.description,
                 location: req.body.location,
                 cost: req.body.cost,
-                imageName: hashedImageContent,
+                imageName: hashedImageContent+extension,
             }).then((activity) => {
                 res.status(201)
                 res.json({activity: activity})

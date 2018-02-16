@@ -12,9 +12,6 @@ import NewActivityPage from './pages/new-activity-page.js';
 import NewActivitySuccess from './pages/new-activity-success.js';
 import ScrollToTop from './components/scroll-to-top.js';
 
-// will need to update this to the actual API once we change things up
-const API = "http://localhost:3000";
-
 class App extends Component {
     constructor(props) {
         super(props);
@@ -26,11 +23,12 @@ class App extends Component {
     }
 
     render() {
-        return (<Router>
+        return (
+        <Router>
             <Switch>
                 <ScrollToTop>
 
-                    <Route exact="exact" path='/' component={Home}/>
+                    <Route exact path='/' component={Home}/>
                     <Route path='/home' component={Home}/>
                     <Route path='/activities/:id' component={DatePage}/>
                     <Route path='/login-page' component={LogInPage}/>
@@ -38,7 +36,7 @@ class App extends Component {
                     <Route path='/new-activity' component={NewActivityPage}/>
                     <Route path='/success' component={NewActivitySuccess}/>
                     <Route path='/logged-in-page' component={LoggedInPage}/>
-                    <Route exact="exact" path="/sign-up-page" render={props => (<div>
+                    <Route exact path="/sign-up-page" render={props => (<div>
                             <SignUpPage errors={this.state.errors && this.state.errors.validations}/>
                         </div>)}/>
 

@@ -29,7 +29,8 @@ class NewActivityForm extends Component {
                 locations: {},
                 cost: '',
                 tags: {},
-                imageFile: []
+                imageFile: [],
+                imageType: [],
             },
             filesToBeSent:[],
             imagesAllowed: 1,
@@ -38,28 +39,23 @@ class NewActivityForm extends Component {
         }
     }
       //Gets our tag and location database
-    componentWillMount(){
-      fetch(`${API}/tags`)
-      .then((resp) => {
-        return resp.json()
-      })
-      .then((resp) => { this.setState({tags: resp.tags}) })
+    componentWillMount() {
+        fetch(`${API}/tags`).then((resp) => {
+            return resp.json()
+        }).then((resp) => {
+            this.setState({tags: resp.tags})
+        })
 
-      fetch(`${API}/locations`)
-      .then((resp) => {
-        return resp.json()
-      })
-      .then((resp) => { this.setState({locations: resp.locations}) })
-
-
-
+        fetch(`${API}/locations`).then((resp) => {
+            return resp.json()
+        }).then((resp) => {
+            this.setState({locations: resp.locations})
+        })
     }
 
     handleChange(e) {
         const { form } = this.state
-
         form[e.target.name] = e.target.value
-
         this.setState({
             form: form
         })
@@ -148,7 +144,7 @@ class NewActivityForm extends Component {
 
 
     onDrop = (acceptedFiles,rejectedFiles) => {
-        var filesToBeSent = this.state.filesToBeSent
+        let filesToBeSent = this.state.filesToBeSent
 
         // sending all accepted files to state as filesToBeSent
         if(filesToBeSent.length < this.state.imagesAllowed) {
@@ -158,11 +154,16 @@ class NewActivityForm extends Component {
             alert("Please, only one image per date.")
         }
 
+
         //converting the filesToBeSent into base64
         const form = this.state.form
-        var imageBase64 = form.imageFile
+        let imageBase64 = form.imageFile
+        let imageType = form.imageType
 
         filesToBeSent.forEach(image => {
+            console.log(image[0]);
+            console.log(image[0].type);
+            imageType.push(image[0].type)
             const reader = new FileReader();
             reader.readAsDataURL(image[0])
             reader.onload = () => {
@@ -171,7 +172,10 @@ class NewActivityForm extends Component {
             reader.onabort = () => console.log('image reading was aborted');
             reader.onerror = () => console.log('image reading has failed');
         })
-        this.setState({imageFile: imageBase64})
+        this.setState({
+            imageFile: imageBase64,
+            imageType: imageType,
+        })
     }
 
 
