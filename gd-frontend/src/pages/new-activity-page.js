@@ -14,7 +14,7 @@ var backgroundTexture = {
 
 var bgImage = {
     backgroundImage: 'linear-gradient(to bottom, rgb(13,194,181) 0%, rgb(13,186,237) 100%)',
-    backgroundSize: 'cover',
+    backgroundSize: 'cover'
 };
 
 const API = "http://localhost:3000"
@@ -27,7 +27,7 @@ class NewActivity extends Component {
             tags: [],
             locations: [],
             newActivitySuccess: false,
-            errors: null,
+            errors: null
         }
     }
 
@@ -66,7 +66,7 @@ class NewActivity extends Component {
             headers: { //specifying that we're sending JSON, and want JSON back
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(params)
+            body: JSON.stringify(params),
         }).then((resp) => { //stringifying json for the fetch
             return resp.json()
         }).then((resp) => {
@@ -82,26 +82,29 @@ class NewActivity extends Component {
                     tags: tags,
                     locations: locations,
                     errors: null, // clear out any errors if they exist
-                    newActivitySuccess: true,
+                    newActivitySuccess: true
                 })
             }
         })
     }
 
     render() {
-        return (<div style={bgImage}>
-            {this.isUserLoggedIn()}
+        return (
+            <div className='create-div' style={bgImage}>
+                <div>
 
-            <h1>
-                Create a Date
-            </h1>
+                    {this.isUserLoggedIn()}
 
-            <NewActivityForm onSubmit={this.handleNewActivity.bind(this)} errors={this.state.errors && this.state.errors.validations}/> {/* {this.state.newActivitySuccess &&
-                    <Redirect to="/success" />
-                } */
-            }
+                    <h1>
+                        Create a Date
+                    </h1>
 
-        </div>);
+                    <NewActivityForm onSubmit={this.handleNewActivity.bind(this)} errors={this.state.errors && this.state.errors.validations}/> {/* {this.state.newActivitySuccess &&
+                        <Redirect to="/success" />
+                    } */
+                    }
+                </div>
+            </div>);
     }
 }
 
