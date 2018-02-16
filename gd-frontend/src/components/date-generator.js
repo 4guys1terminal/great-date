@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import '../App.css';
 import {
     Col,
@@ -11,118 +11,93 @@ import {
     HelpBlock,
     Alert,
     Radio,
-    Checkbox
+    Checkbox,
 } from 'react-bootstrap';
 
 const API = "http://localhost:3000"
 
 class DateGenerator extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      form: {
-        tags: {}
-      },
-      tags: []
+    constructor(props) {
+        super(props)
+        this.state = {
+            form: {
+                tags: {}
+            },
+            tags: [],
+        }
     }
-  }
 
-  componentWillMount(){
-    fetch(`${API}/tags`)
-    .then((resp) => {
-      return resp.json()
-    })
-    .then((resp) => { this.setState({tags: resp.tags}) })
-  }
+    componentWillMount() {
+        fetch(`${API}/tags`).then((resp) => {
+            return resp.json()
+        }).then((resp) => {
+            this.setState({tags: resp.tags})
+        })
+    }
 
-  handleChange(e) {
-      const { form } = this.state
+    handleChange(e) {
+        const {form} = this.state
 
-      form[e.target.name] = e.target.value
+        form[e.target.name] = e.target.value
 
-      this.setState({
-          form: form
-      })
-  }
+        this.setState({form: form})
+    }
 
-  createTagCheckbox = (tag) => {
-      return (
-          <Checkbox
-              inline
-              type="checkbox"
-              key={tag.id}
-              name={tag.title}
-              value={tag.id}
-              onChange={this.toggleCheckbox.bind(this, tag.id)}>
-                  {tag.title}
-          </Checkbox>
-      )
-  }
+    createTagCheckbox = (tag) => {
+        return (<Checkbox inline="inline" type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
+            {tag.title}
+        </Checkbox>)
+    }
 
+    createTagCheckboxes = () => {
+        return this.state.tags.map((tag) => {
+            return this.createTagCheckbox(tag)
+        })
+    }
 
-  createTagCheckboxes = () => {
-      return this.state.tags.map((tag) => {
-          return this.createTagCheckbox(tag)
-      })
-  }
+    toggleCheckbox = (tagID, e) => {
+        const {form} = this.state
+        const {tags} = form
 
+        tags[tagID] = e.target.checked
 
-  toggleCheckbox = (tagID, e) => {
-      const { form } = this.state
-      const { tags } = form
+        form.tags = tags
 
-      tags[tagID] = e.target.checked
+        this.setState({form: form})
+    }
 
-
-      form.tags = tags
-
-      this.setState({
-          form: form
-      })
-  }
-
-  handleSubmit() {
-      console.log('test2',this.state.form);
-      this.props.onSubmit(this.state.form);
-  }
+    handleSubmit() {
+        console.log('test2', this.state.form);
+        this.props.onSubmit(this.state.form);
+    }
 
     render() {
-        return (
-          <div className='date-generator'>
-                <h1>
-                    Date Generator
-                </h1>
+        return (<div className='date-generator'>
+            <h1>
+                Date Generator
+            </h1>
 
-                <Button
-                bsSize="large"
-                id="submit"
-                onClick={this.handleSubmit.bind(this)}
-                >Shuffle</Button>
-                <br/>
-                <br/>
-                <div className="createDateDiv">
-                    <form className="createDateForm">
+            <br/>
+            <br/>
+            <div className='createDateDiv'>
+                <form className='createDateForm'>
                     <Row>
                         <Col xs={10} xsOffset={1}>
-                        <FormGroup
-                            id = "tags-form-group">
-                            <br/>
+                            <FormGroup id='tags-form-group'>
+                                <br/> {this.createTagCheckboxes()}
 
-                            {this.createTagCheckboxes()}
+                                {/*
+                                {this.errorsFor('tags') && <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>}
+                                */}
 
-                            {/*}
-                            {this.errorsFor('tags') &&
-                            <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>
-                            }
-                            */}
-
-                        </FormGroup>
+                            </FormGroup>
                         </Col>
                     </Row>
-                    </form>
-                </div>
-          <Button className='date-btn' bsSize="large">Shuffle</Button>
-      </div>);
+                </form>
+
+            </div>
+            <Button bsSize='large' id='submit' className='date-btn' onClick={this.handleSubmit.bind(this)}>Shuffle</Button>
+        </div>);
 
     }
 }

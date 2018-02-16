@@ -87,53 +87,51 @@ app.get('/activities/:id', (req, res) => {
 
 
 // logic for browse page generation ALL ACTIVITY IDs BY TAG
-app.post('/', (req, res) => {
-  tags = req.body.tags
-  let tagArr = []
-  for (var property in tags) {
-
-      tags[property] === true
-          ? tagArr.push(parseInt(property))
-          : ''
-  }
-  // console.log('tagArr',tagArr);
-
-
-  Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
-  .then(shuffle => {
-    let browseTags = []
-    for (var i = 0; i < shuffle.length; i++) {
-      browseTags.push(shuffle[i].id)
-    }
-    // console.log(browseTags);
-    res.json({browseTags: browseTags})
-  })
-  // .then(activity => {
-  //   console.log("activity",activity);
-  // })
-});
+// app.post('/', (req, res) => {
+//   tags = req.body.tags
+//   let tagArr = []
+//   for (var property in tags) {
+//
+//       tags[property] === true
+//           ? tagArr.push(parseInt(property))
+//           : ''
+//   }
+//   // console.log('tagArr',tagArr);
+//
+//
+//   Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
+//   .then(shuffle => {
+//     let browseTags = []
+//     for (var i = 0; i < shuffle.length; i++) {
+//       browseTags.push(shuffle[i].id)
+//     }
+//     // console.log(browseTags);
+//     res.json({browseTags: browseTags})
+//   })
+//   // .then(activity => {
+//   //   console.log("activity",activity);
+//   // })
+// });
 
 // logic for random generator
 app.post('/', (req, res) => {
-  tags = req.body.tags
-  let tagArr = []
-  for (var property in tags) {
+    tags = req.body.tags
+    let tagArr = []
+    for (var property in tags) {
 
-      tags[property] === true
-          ? tagArr.push(parseInt(property))
-          : ''
-  }
+        tags[property] === true
+            ? tagArr.push(parseInt(property))
+            : ''
+    }
 
-
-  Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
-  .then(shuffle => {
-    // console.log(shuffle[0]);
-    // console.log('id',shuffle[0].id);
-    let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].id
-    // console.log('random',randomTag);
-    res.status(201)
-    res.json({randomTag: randomTag})
-  })
+    Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT}).then(shuffle => {
+        // console.log(shuffle[0]);
+        console.log('id', shuffle[0].id);
+        let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].id
+        console.log('random', randomTag);
+        res.status(201)
+        res.json({randomTag: randomTag})
+    })
 });
 
 

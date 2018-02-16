@@ -27,12 +27,11 @@ class TitleBlock extends Component {
           },
           body: JSON.stringify(params)
       }).then((resp) => { //stringifying json for the fetch
-          console.log('test',this.state.form);
-
           return resp.json()
       }).then((resp) => {
               const tags = Object.assign([], this.state.tags)
               tags.push(resp.tag)
+              console.log(tags);
               this.setState({
                   tags: tags,
               })
