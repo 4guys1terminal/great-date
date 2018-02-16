@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-
+/**
+API setup, key and style
+*/
 const KEY = "AIzaSyDhtvMPgk9g80v-1kIR2FN9_8Yq8MNVpbk"
+// React styles do not need 'px' after an integer, automatically knows.
+// If it is a % instead add quotes. Must be an object.
 const STYLE = {
   width: 300,
   height: 300,
@@ -20,6 +24,7 @@ class MapContainer extends Component {
      this.onMapClicked = this.onMapClicked.bind(this);
    }
 
+   // When you cick on a MARKER on the map, execute func
   onMarkerClick(props, marker, e) {
     // console.log('props:', props)
     // console.log('marker:', marker)
@@ -31,8 +36,9 @@ class MapContainer extends Component {
     });
   }
 
+  // When you click on the MAP, execute func
   onMapClicked(props) {
-    console.log(props);
+    // console.log(props);
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,

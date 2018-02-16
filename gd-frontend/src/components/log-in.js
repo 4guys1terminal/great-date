@@ -18,6 +18,12 @@ class Login extends Component {
         };
     }
 
+    /**
+    authorize will fire on form submit. State will be set to
+    the form values email and password and it will find a user
+    WHERE email === form email and encrypt the password(backend), and check if
+    it matches. If it does, set auth state === true.
+    */
     authorize = (e) => {
         e.preventDefault()
         const { email, password } = this.state.form
@@ -35,7 +41,6 @@ class Login extends Component {
         }).then((resp) => resp.json())
         .then((data) => {
             console.log("resp:", data);
-
             if (data.message === "login success") {
                 this.setState({ authorized: true })
             }
@@ -43,37 +48,38 @@ class Login extends Component {
     }
 
     handleChange = (e) => {
-        const { form } = this.state 
-        form[e.target.name] = e.target.value.trim()
+        const { form } = this.state
+        form[e.target.name] = e.target.value.trim() // trims white space (spacebar)
+        // console.log(e.target.value) // un-comment to understand .trim
         this.setState({
             form: form
         })
     }
     render() {
         const { authorized, form } = this.state
-        const { email, password } = form 
+        const { email, password } = form
         const login = (<div className="login-wrapper">
-            <form 
-                className="login-form" 
-                onSubmit={this.authorize} 
+            <form
+                className="login-form"
+                onSubmit={this.authorize}
                 onChange={this.handleChange.bind(this)}>
-                <div 
+                <div
                     className="login-title">Great Date</div>
-                <input 
-                    className="lname" 
-                    name="email" 
-                    type="text" 
+                <input
+                    className="lname"
+                    name="email"
+                    type="text"
                     placeholder="Email"
                 />
-                <input 
-                    className="lname" 
-                    name="password" 
-                    placeholder="Password" 
+                <input
+                    className="lname"
+                    name="password"
+                    placeholder="Password"
                     type="password"
                 />
 
-                <button 
-                    className="login-btn" 
+                <button
+                    className="login-btn"
                     type="submit">
                     Log in
                 </button>
@@ -82,7 +88,7 @@ class Login extends Component {
                 </a>
             </form>
             <div className="sign-up">
-                <p 
+                <p
                     className="sign-up-text"> Dont have an account? <Link
                     to='/sign-up-page'
                     id='sign-up-link'

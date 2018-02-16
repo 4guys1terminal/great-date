@@ -16,6 +16,8 @@ class SignUpPage extends Component {
     };
   }
 
+  // Sets state to an array of current users and then
+  // pushes the new user into the array and re-assign state
   handleNewUser(params) {
     fetch(`${API}/users`, {
       body: JSON.stringify(params),
@@ -38,6 +40,7 @@ class SignUpPage extends Component {
     });
   }
 
+  // Before rendering, set state to current users in DB
   componentWillMount() {
     fetch(`${API}/users`).then((rawResponse) => {
       return rawResponse.json();

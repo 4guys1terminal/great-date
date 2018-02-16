@@ -39,7 +39,6 @@ class App extends Component {
             <Route path='/all-dates-page' component={AllDatesPage}/>
             <Route path='/new-activity' component={NewDatePage}/>
             <Route path='/success' component={NewActivitySuccess}/>
-            
 
             <Route path='/logged-in-page'
               component={LoggedInPage} />

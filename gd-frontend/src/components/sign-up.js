@@ -15,17 +15,17 @@ class SignUp extends Component {
     };
   }
 
+
   handleChange(e) {
     const formState = Object.assign({}, this.state.form);
     formState[e.target.name] = e.target.value;
-    this.setState({form: formState});
+    this.setState({ form: formState });
   }
 
   handleSubmit(e) {
     e.preventDefault();
-
-    const {onSubmit} = this.props;
-    const {form} = this.state;
+    const { onSubmit } = this.props;
+    const { form } = this.state;
     if (onSubmit) {
       onSubmit(form);
     } else {
@@ -41,9 +41,7 @@ class SignUp extends Component {
         errorString = errors.map(error => error.msg).join(", ");
       }
     }
-    return errorString === ""
-      ? null
-      : errorString;
+    return errorString === "" ? null : errorString;
   }
 
   render() {

@@ -8,20 +8,20 @@ class DatePreview extends Component {
         return (
             <div className="date-preview hvr-grow-shadow">
 
-                <li className="datePreview cell" key={this.props.id}>
-                    <Link to={`/activities/${this.props.id}`}>
+              <li className="datePreview cell" key={this.props.id}>
+                <Link to={`/activities/${this.props.id}`}>
 
-                        <Card className="previewCard">
-                            <CardImg top width='100%' src={this.props.image} alt="Date Image" className="thumbnails responsive-image" />
+                  <Card className="previewCard">
+                    <CardImg top width='100%' src={this.props.image} alt="Date Image" className="thumbnails responsive-image" />
 
-                            <CardBody>
-                                <CardTitle className='cardTitle'>{this.props.title}</CardTitle>
-                                <Link to={`/activities/${this.props.id}`}><Button color="info">The Details</Button></Link>
-                            </CardBody>
-                        </Card>
+                    <CardBody>
+                      <CardTitle className='cardTitle'>{this.props.title}</CardTitle>
+                      <Link to={`/activities/${this.props.id}`}><Button color="info">The Details</Button></Link>
+                    </CardBody>
+                  </Card>
 
-                    </Link>
-                </li>
+                </Link>
+              </li>
 
             </div>
         );
