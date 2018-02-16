@@ -36,7 +36,7 @@ class NewActivityForm extends Component {
             tags: []
         }
     }
-
+      //Gets our tag and location database
     componentWillMount(){
       fetch(`${API}/tags`)
       .then((resp) => {
@@ -134,7 +134,7 @@ class NewActivityForm extends Component {
         })
     }
 
-
+    //Image shit (Jordan Needs To Comment)
     handleClear(event,index){
         var filesToBeSent=this.state.filesToBeSent;
         filesToBeSent.splice(index,1);
