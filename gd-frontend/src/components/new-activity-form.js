@@ -420,11 +420,10 @@ class NewActivityForm extends Component {
                                 </Col>
                             </Row>
 
-                                <Col xs={10} xsOffset={1}>
                                     <div className='map'>
                                         <MapContainer />
                                     </div>
-                                </Col>
+
 
 
                         </div>

@@ -1,14 +1,20 @@
-module.exports = {
-    fetchTags(host) {
-        return fetch(`${host}/tags`).then((res) => {
-            return res.json()
-        })
-    },
+const DEFAULT_HOST = "http://localhost:3000"
 
-    fetchActivities(host) {
-        return fetch(`${host}/activities`).then((res) => {
-            console.log(res);
-            return res.json()
-        })
+export default function(host) {
+    return {
+        fetchTags: function() {
+            return fetch(`${host}/tags`)
+            .then(res => res.json)
+        },
+
+        fetchActivities: function() {
+            return fetch(`${host}/activities`)
+            .then(res => res.json())
+        },
+
+        fetchActivity: function(id) {
+            return fetch(`${host}/activities/${id}`)
+            .then(res => res.json())
+        },
     }
 }

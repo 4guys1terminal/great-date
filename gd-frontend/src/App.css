@@ -730,3 +730,24 @@ ul li {
     left: 0;
     width: 100%;
 }
+
+.navitem {
+    a {
+        font-size: 12px;
+        color: #000;
+        background-color: #e7e7e7;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-bottom-color: #357ebd;
+        border-bottom-style: solid;
+        border-radius: 0px !important;
+        display: inline-block;
+        border-bottom-width: 2px;
+    }
+    flex: 1;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    background-color: transparent;
+    text-decoration: underline;
+}
