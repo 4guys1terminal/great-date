@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import '../App.css';
 import NavBar from '../components/navbar.js';
 import SignUp from '../components/sign-up.js';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import bgImage from '../functions/bgImage'
 
 const API = "http://127.0.0.1:3000";
 
-var bgImage = {
-    backgroundImage: 'linear-gradient(to bottom, rgb(13,194,181) 0%, rgb(13,186,237) 100%)',
-    backgroundSize: 'cover'
+var backgroundTexture = {
+    backgroundImage: 'url(/images/grid_noise.png)'
 };
+
 
 class SignUpPage extends Component {
     constructor(props) {

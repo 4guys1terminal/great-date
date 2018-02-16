@@ -23,19 +23,19 @@ class Navigation extends Component {
                 <Navbar.Collapse>
                     <Nav pullRight>
                         <LinkContainer to='/home' >
-                            <NavItem eventKey={1} active='false'>
+                            <NavItem>
                                 Home
                             </NavItem>
                         </LinkContainer>
 
                         <LinkContainer to='/all-dates-page'>
-                            <NavItem eventKey={2} active='false'>
+                            <NavItem>
                                 Browse Dates
                             </NavItem>
                         </LinkContainer>
 
                         <LinkContainer to='/login-page'>
-                            <NavItem eventKey={3} active='false'>
+                            <NavItem>
                                 Log In / Sign Up
                             </NavItem>
                         </LinkContainer>
