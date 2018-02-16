@@ -10,20 +10,20 @@ class DatePreview extends Component {
         return (
             <div className="date-preview hvr-grow-shadow">
 
-                <li className="datePreview cell" key={id}>
-                    <Link to={`/activities/${id}`}>
+              <li className="datePreview cell" key={id}>
+                <Link to={`/activities/${id}`}>
 
-                        <Card className="previewCard">
-                            <CardImg top width='100%' src={image} alt="Date Image" className="thumbnails responsive-image" />
+                  <Card className="previewCard">
+                    <CardImg top width='100%' src={image} alt="Date Image" className="thumbnails responsive-image" />
 
-                            <CardBody>
-                                <CardTitle className='cardTitle'>{title}</CardTitle>
-                                <Button color="info">The Details</Button>
-                            </CardBody>
-                        </Card>
-
-                    </Link>
-                </li>
+                    <CardBody>
+                      <CardTitle className='cardTitle'>{title}</CardTitle>
+                      <Button color="info">The Details</Button>
+                    </CardBody>
+                  </Card>
+                  
+                </Link>
+              </li>
 
             </div>
         );

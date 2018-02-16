@@ -57,14 +57,14 @@ class AllDatesPage extends Component {
 
     render() {
         return (<div>
-            <div style={bgImage}>
+          <div style={bgImage}>
 
-                {this.isUserLoggedIn()}
+            {this.isUserLoggedIn()}
 
-                <div className="all-dates-page">
+            <div className="all-dates-page">
 
-                    <h1>Browse All Dates</h1>
-
+              <h1>Browse All Dates</h1>
+              
                     {/* <ToggleButtonGroup type="checkbox" bsSize='large' className="search-tags">
                     <ToggleButton value={1}>Romantic</ToggleButton>
                     <ToggleButton value={2}>Thrilling</ToggleButton>

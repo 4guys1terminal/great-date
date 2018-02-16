@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import '../App.css';
 import NavbarBootstrap from '../components/navbarBootstrap.js';
 import SignUp from '../components/sign-up.js';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 
 const API = "http://127.0.0.1:3000";
 
@@ -27,17 +27,17 @@ class SignUpPage extends Component {
         };
     }
 
-handleNewUser(params) {
-    fetch(`${API}/users`,
-    {
-        body: JSON.stringify(params),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: "POST"
-    }
-    ).then((rawResponse) => {
-        return rawResponse.json();
+  // Sets state to an array of current users and then
+  // pushes the new user into the array and re-assign state
+  handleNewUser(params) {
+    fetch(`${API}/users`, {
+      body: JSON.stringify(params),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: "POST"
+    }).then((rawResponse) => {
+      return rawResponse.json();
     }).then((parsedResponse) => {
     if (parsedResponse.errors) {
         this.setState({ errors: parsedResponse.errors });
@@ -52,17 +52,16 @@ handleNewUser(params) {
         });
     }
     });
-}
+  }
 
-    componentWillMount() {
-        fetch(`${API}/users`)
-            .then((rawResponse) => {
-                return rawResponse.json();
-            })
-            .then((parsedResponse) => {
-                this.setState({ users: parsedResponse.users });
-            });
-    }
+  // Before rendering, set state to current users in DB
+  componentWillMount() {
+    fetch(`${API}/users`).then((rawResponse) => {
+      return rawResponse.json();
+    }).then((parsedResponse) => {
+      this.setState({users: parsedResponse.users});
+    });
+  }
 
     render() {
         return (
