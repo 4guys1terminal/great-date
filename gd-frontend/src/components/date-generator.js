@@ -30,7 +30,7 @@ class DateGenerator extends Component {
             </div> */}
             <br/>
 
-        <Button className='date-btn' bsSize="large">Shuffle</Button>
+        <Button onClick={this.props.onClick} className='date-btn' bsSize="large">Shuffle</Button>
         </div>);
     }
 }

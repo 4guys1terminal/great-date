@@ -15,10 +15,13 @@ class TitleBlock extends Component {
         showComponent: !this.state.showComponent
     })
 
+    // handleShuffle = () =>
+
     render() {
         return (
             this.state && this.state.showComponent
-            ? <DateGenerator/>
+            // ? <DateGenerator onClick={this.handleShuffle.bind(this)}/>
+            ? <DateGenerator />
             : <Title onClick={this.handleClick.bind(this)}/>);
     }
 }
