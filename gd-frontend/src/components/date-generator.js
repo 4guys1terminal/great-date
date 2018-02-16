@@ -63,6 +63,7 @@ class DateGenerator extends Component {
 
         form.tags = tags
 
+
         this.setState({form: form})
     }
 
@@ -98,6 +99,7 @@ class DateGenerator extends Component {
             </div>
             <Button bsSize='large' id='submit' className='date-btn' onClick={this.handleSubmit.bind(this)}>Shuffle</Button>
         </div>);
+
 
     }
 }

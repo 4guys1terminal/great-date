@@ -693,16 +693,16 @@ ul li {
 }
 
 .create-account {
-  margin-top: 4%;
-  margin-bottom: 10%;
-  align-self: center;
-  height: 35px;
-  border-radius: 4px;
-  width: 82%;
-  background-color: rgb(52, 133, 220);
-  color: white;
-  font-size: 13px;
-  font-weight: bold;
+    margin-top: 4%;
+    margin-bottom: 10%;
+    align-self: center;
+    height: 35px;
+    border-radius: 4px;
+    width: 82%;
+    background-color: rgb(52, 133, 220);
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
 }
 
 /* .google-map {
@@ -742,4 +742,23 @@ ul li {
     bottom: 0;
     left: 0;
     width: 100%;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    background-color: transparent;
+    color: transparent;
+    text-decoration: underline;
+}
+
+.success-page {
+    padding: 50px;
+    height: 100vh;
+}
+
+.success-stuff {
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }

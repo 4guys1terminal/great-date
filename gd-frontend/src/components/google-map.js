@@ -46,6 +46,8 @@ class MapContainer extends Component {
                     lng: -117.1611
                 }}>
 
+
+
                 <InfoWindow onOpen={this.windowHasOpened} onClose={this.windowHasClosed} visible={this.state.showingInfoWindow}>
                     <div>
                         <h1>{this.state.selectedPlace.name}</h1>
