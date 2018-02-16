@@ -16,7 +16,7 @@ import {
 import RadioGroup from './radio-group.js';
 import Dropzone from 'react-dropzone';
 
-
+const API = "http://localhost:3000"
 
 class NewActivityForm extends Component {
     constructor(props) {
@@ -25,29 +25,33 @@ class NewActivityForm extends Component {
             form: {
                 title: '',
                 description: '',
-                location: '',
+                locations: {},
                 cost: '',
                 tags: {},
                 imageFile: []
             },
             filesToBeSent:[],
             imagesAllowed: 1,
-            locationExamples: [
-                {id: 1, value: 'pacific_beach', title: 'Pacific Beach'},
-                {id: 2, value: 'downtown', title: 'Downtown'},
-                {id: 3, value: 'point_loma', title: 'Point Loma'},
-                {id: 4, value: 'north_park', title: 'North Park'},
-                {id: 5, value: 'la_jolla', title: 'La Jolla'}
-            ],
-            tagExamples: [
-                {id: 1, title: 'Romantic'},
-                {id: 2, title: 'Thrilling'},
-                {id: 3, title: 'Morning'},
-                {id: 4, title: 'Afternoon'},
-                {id: 5, title: 'Evening'},
-                {id: 6, title: 'Outdoors'},
-            ]
+            locations: [],
+            tags: []
         }
+    }
+      //Gets our tag and location database
+    componentWillMount(){
+      fetch(`${API}/tags`)
+      .then((resp) => {
+        return resp.json()
+      })
+      .then((resp) => { this.setState({tags: resp.tags}) })
+
+      fetch(`${API}/locations`)
+      .then((resp) => {
+        return resp.json()
+      })
+      .then((resp) => { this.setState({locations: resp.locations}) })
+
+
+
     }
 
     handleChange(e) {
@@ -81,17 +85,15 @@ class NewActivityForm extends Component {
 
     createLocation = (location) => {
         return(
-            <option
-                value={location.value}
-                key={location.id}>
-            {location.title}
+            <option>
+            {location.name}
             </option>
         )
     }
 
 
     createLocations = () => {
-        return this.state.locationExamples.map((location) => {
+        return this.state.locations.map((location) => {
             return this.createLocation(location)
         })
     }
@@ -113,7 +115,7 @@ class NewActivityForm extends Component {
 
 
     createTagCheckboxes = () => {
-        return this.state.tagExamples.map((tag) => {
+        return this.state.tags.map((tag) => {
             return this.createTagCheckbox(tag)
         })
     }
@@ -132,7 +134,7 @@ class NewActivityForm extends Component {
         })
     }
 
-
+    //Image shit (Jordan Needs To Comment)
     handleClear(event,index){
         var filesToBeSent=this.state.filesToBeSent;
         filesToBeSent.splice(index,1);
@@ -254,15 +256,14 @@ class NewActivityForm extends Component {
                                         placeholder="select"
                                         type="select"
                                         name="location"
-                                        value={this.state.form.location}
                                         onChange={this.handleChange.bind(this)}
                                     >
 
-                                    <option value="location">Location</option>
-
+                                    // <option value="location">Location</option>
                                     {this.createLocations()}
-
                                     </FormControl>
+
+
 
                                     {/*}
                                     {this.errorsFor('location') &&

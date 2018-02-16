@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ActivitiesList from '../store/ActivitiesList';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Grid from '../components/grid.js';
 
 import DatePreview from '../components/date-preview';
@@ -9,8 +9,8 @@ import NavBar from '../components/navbar';
 import LoggedInNav from '../components/logged-in-navbar';
 
 class AllDatesPage extends Component {
-    componentWillMount(){
-        this.setState({activities: ActivitiesList});
+    componentWillMount() {
+        this.setState({ activities: ActivitiesList });
 
     }
 
@@ -22,30 +22,46 @@ class AllDatesPage extends Component {
         }
     }
 
+    renderCreateButton() {
+        if (typeof localStorage.name === 'undefined') {
+            return <div>
+                {
+                    <Link to='/sign-up-page'> <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button> </Link>
+                }
+            </div>
+        } else {
+            return <div>
+                {
+                    <Link to='/new-activity'> <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button> </Link>
+                }
+                </div>
+        }
+    }
+
     render() {
         return (
             <div>
                 {this.isUserLoggedIn()}
-                
+
                 <div className="all-dates-page">
 
                     <h2>Browse All Dates</h2>
 
-                    <br/>
+                    <br />
 
                     <ul>
                         <li>tag options</li>
-                        <br/>
+                        <br />
                         <li>tag options</li>
-                        <br/>
+                        <br />
                         <li>tag options</li>
                     </ul>
 
-                    <br/>
+                    <br />
 
                     <Grid />
 
-                    <Link to='/new-activity'> <Button className="newActivityButton" bsStyle="primary large">Create New Date</Button> </Link>
+                    {this.renderCreateButton()}
                 </div>
 
             </div>
