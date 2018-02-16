@@ -66,8 +66,8 @@ class NewActivity extends Component {
             headers: { //specifying that we're sending JSON, and want JSON back
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(params),,
-        } //stringifying json for the fetch).then((resp) => {
+            body: JSON.stringify(params)
+        }).then((resp) => { //stringifying json for the fetch
             return resp.json()
         }).then((resp) => {
             if (resp.errors) { //checking for any server side errors

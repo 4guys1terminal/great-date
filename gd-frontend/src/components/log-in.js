@@ -1,8 +1,16 @@
 import React, {Component} from 'react';
 import '../App.css';
-import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import { Row, Col, FormGroup, ControlLabel, HelpBlock, FormControl, Button } from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import {
+    Row,
+    Col,
+    FormGroup,
+    ControlLabel,
+    HelpBlock,
+    FormControl,
+    Button
+} from 'react-bootstrap';
 import FormInput from './FormInput.js';
 
 const API = "http://127.0.0.1:3000";
@@ -40,7 +48,7 @@ class Login extends Component {
         }).then((resp) => resp.json()).then((data) => {
             console.log("resp:", data);
             if (data.message === "login success") {
-                this.setState({ authorized: true })
+                this.setState({authorized: true})
             } else {
                 this.setState({valid: false})
             }
