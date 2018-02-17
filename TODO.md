@@ -5,11 +5,11 @@
 
 ### Before Demo Night
 - Add ratings [ ]
-- Advanced search [ ]
+- [ ] Advanced search 
 - Make tags look cleaner/organized [ ]
 - Profile page [ ]
 
 |    In Que     |  In Progress  |  Completed  |
-| ------------- | ------------- | ----------- |
-|    Ratings    | Content Cell  |   
-|  Adv. Search  | Content Cell  |
+| :-----------: | :-----------: | :---------: |
+|    Ratings    |               |   
+|  Adv. Search  |               |
