@@ -18,7 +18,7 @@ var Location = require('./models').Location;
 
 app.use(express.static('public'));
 app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true,}));
 app.use(validator());
 app.use(cors());
 
@@ -84,41 +84,34 @@ app.get('/activities/:id', (req, res) => {
     });
 });
 
-
-
-// TODO: browse page lets user pick a number of certain tags
-// tags are sent to back end on req.body.tags
+// TODO: FE browse page lets user pick a number of certain tags
+// tags are sent to BE on req.body.tags
 // sequelize queries the database for all activities that match those tags
-// returns all activityId's that match the chosen tags to the front end via:
+// returns all activityId's that match the chosen tags to FE via:
 // res.json({browseActivities: browseActivities}
-
-
-
 
 //route for browse page generation ALL ACTIVITY IDs BY TAG
 app.post('/browse', (req, res) => {
-  tags = req.body.tags
-  let tagArr = []
-  for (var property in tags) {
-      tags[property] === true
-          ? tagArr.push(parseInt(property))
-          : ''
-  }
-
-  Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
-  .then(shuffle => {
-    let browseTags = []
-    for (var i = 0; i < shuffle.length; i++) {
-      browseTags.push(shuffle[i].id)
+    tags = req.body.tags
+    let tagArr = []
+    for (var property in tags) {
+        tags[property] === true
+            ? tagArr.push(parseInt(property))
+            : ''
     }
-     console.log(browseTags);
-    res.json({browseTags: browseTags})
-  })
-   .then(activity => {
-     console.log("activity",activity);
-   })
-});
 
+    Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT}).then(allBrowseActivities => {
+        let browseActivityIds = []
+
+        for (var i = 0; i < allBrowseActivities.length; i++) {
+            console.log(allBrowseActivities[i].id);
+            browseActivityIds.push(allBrowseActivities[i].ActivityId)
+
+        }
+        console.log(browseActivityIds);
+        res.json({browseActivityIds: browseActivityIds})
+    })
+});
 
 // route for random date generator
 app.post('/', (req, res) => {
@@ -131,13 +124,12 @@ app.post('/', (req, res) => {
             : ''
     }
 
-    Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
-        .then(shuffle => {
-            // console.log(shuffle[0]);
-            let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId
-            res.status(201)
-            res.json({randomTag: randomTag})
-        })
+    Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT}).then(shuffle => {
+        // console.log(shuffle[0]);
+        let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId
+        res.status(201)
+        res.json({randomTag: randomTag})
+    })
 });
 
 //Creating New User   (Need Kevin and Dan to comment)
@@ -149,8 +141,8 @@ app.post('/users', (req, res) => {
 
     req.getValidationResult().then(valErrors => {
         if (valErrors.isEmpty()) {
-            User.create({firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email, password: req.body.password,}).then(user => {
-                res.json({message: 'success', user: user,})
+            User.create({firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email, password: req.body.password}).then(user => {
+                res.json({message: 'success', user: user})
             })
         } else {
             // console.log(validationErrors.array())
@@ -205,7 +197,7 @@ app.post('/activities', (req, res) => {
                 description: req.body.description,
                 location: req.body.location,
                 cost: req.body.cost,
-                imageName: hashedImageContent + extension
+                imageName: hashedImageContent + extension,
             }).then((activity) => {
                 res.status(201)
                 res.json({activity: activity})
@@ -216,7 +208,7 @@ app.post('/activities', (req, res) => {
                 for (var property in tags) {
                     let val = {
                         ActivityId: activity.id,
-                        TagId: property
+                        TagId: property,
                     }
                     // Checks if a tag is checked or not
                     tags[property] === true
@@ -287,7 +279,7 @@ app.post('/sessions/new', (req, res) => {
 // has this been worked on at all really? -JD 2/15/2018
 app.put('/activities/edit/:id', (req, res) => {
 
-    const {name, content,} = req.params;
+    const {name, content} = req.params;
     let id = parseInt(req.params.id);
 
     Activity.findById(id).then(page => {
@@ -296,7 +288,7 @@ app.put('/activities/edit/:id', (req, res) => {
             description: description,
             location: location,
             cost: cost,
-            tags: tags,
+            tags: tags
         }, {
             where: {
                 id: id
