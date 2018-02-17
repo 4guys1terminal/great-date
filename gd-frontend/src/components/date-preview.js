@@ -21,7 +21,7 @@ class DatePreview extends Component {
 
                     <Card className="previewCard">
                         <div className="dateCard">
-                            <CardImg top="top" width='100%' src={image} alt="Date Image" className="thumbnails responsive-image"/>
+                            <CardImg top width='100%' src={image} alt="Date Image" className="thumbnails responsive-image"/>
                         </div>
 
                         <CardBody>

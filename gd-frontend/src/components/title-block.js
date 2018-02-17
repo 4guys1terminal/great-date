@@ -2,16 +2,18 @@ import React, {Component} from 'react';
 import '../App.css';
 import Title from './title.js';
 import DateGenerator from './date-generator.js';
+import api from '../functions/fetch.js';
+import {Redirect} from 'react-router-dom';
 
 const API = "http://localhost:3000"
+const {fetchActivity} = api(API)
 
 class TitleBlock extends Component {
     constructor(props) {
         super(props)
         this.state = {
-          activities: [],
-          tags: [],
-          showComponent: false
+            showComponent: false,
+            randomSuccess: false,
         }
     }
 
@@ -19,32 +21,25 @@ class TitleBlock extends Component {
         showComponent: !this.state.showComponent
     })
 
-    handleDateGenerator(params) {
-      fetch(`${API}/`, {
-          method: "POST", //specifying our correct endpoint in the server
-          headers: { //specifying that we're sending JSON, and want JSON back
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(params)
-      }).then((resp) => { //stringifying json for the fetch
-          return resp.json()
-      }).then((resp) => {
-              const tags = Object.assign([], this.state.tags)
-              tags.push(resp.tag)
-              console.log(tags);
-              this.setState({
-                  tags: tags,
-              })
-      })
-  }
-
-
     render() {
         return (
             this.state && this.state.showComponent
-            ? <DateGenerator onSubmit={this.handleDateGenerator.bind(this)}/>
-            : <Title onClick={this.handleClick.bind(this)}/>);
+            ? <DateGenerator onSubmit={handleDateGenerator}/>
+            : <Title onClick={this.handleClick.bind(this)}/>
+        )
     }
 }
 
 export default TitleBlock;
+
+function handleDateGenerator(params) {
+    return fetch(`${API}/`, {
+        method: "POST", //specifying our correct endpoint in the server
+        headers: { //specifying that we're sending JSON, and want JSON back
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+    }).then((resp) => { //stringifying json for the fetch
+        return resp.json()
+    })
+}

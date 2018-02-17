@@ -158,34 +158,50 @@ app.post('/', (req, res) => {
 //   // console.log(tags);
 //   //
 //   for (var property in tags) {
-//       let val = {
-//           property
-//       }
-//       // Checks if a tag is checked or not
+//
 //       tags[property] === true
-//           ? tagArr.push(val)
+//           ? tagArr.push(parseInt(property))
 //           : ''
 //   }
-//   Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId"= 1;`, {type: sequelize.QueryTypes.SELECT})
+//   // console.log('tagArr',tagArr);
 //
-//   .then(activityTags => {
-//       res.status(201);
-//       //Returns ONE random activity that has the tags selected
-      // random = Math.floor(Math.random() * activityTags.length)
-      // console.log(random);
-      // res.json({activityTags: activityTags[random]})
+//
+//   Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
+//   .then(shuffle => {
+//     let browseTags = []
+//     for (var i = 0; i < shuffle.length; i++) {
+//       browseTags.push(shuffle[i].id)
+//     }
+//     // console.log(browseTags);
+//     res.json({browseTags: browseTags})
 //   })
-// })
-//
-//     TAG CHECK BOX LOGIC
-//
-//
-//
-//     Run loop that runs query for each tag selected which will be ${} in the query
-//
-//     console.log(tags);
-//
-//     SQL Logic for finding all tags that have selected tags
+//   // .then(activity => {
+//   //   console.log("activity",activity);
+//   // })
+// });
+
+// logic for random generator
+app.post('/', (req, res) => {
+    tags = req.body.tags
+    console.log('tags',tags);
+    let tagArr = []
+    for (var property in tags) {
+        tags[property] === true
+            ? tagArr.push(parseInt(property))
+            : ''
+    }
+    console.log('tagArr',tagArr);
+
+
+    Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
+      .then(shuffle => {
+        console.log("shuffle.id",shuffle.id);
+        let randomTag = shuffle[Math.floor(Math.random() *shuffle.length)].ActivityId
+        console.log('random', randomTag);
+        res.status(201)
+        res.json({randomTag: randomTag})
+    })
+});
 
 
 //Creating New User   (Need Kevin and Dan to comment)
@@ -226,18 +242,22 @@ app.post('/activities', (req, res) => {
     req.checkBody('location', 'is required').notEmpty()
     req.checkBody('cost', 'is required').notEmpty()
     // req.checkBody('tag','is required').notEmpty() --------               Need to
-    // req.checkBody('imageFiles', 'is required').notEmpty() ---------   Figure these out
+    // req.checkBody('imageFile', 'is required').notEmpty() ---------   Figure these out
 
     // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult().then((validationErrors) => {
         if (validationErrors.isEmpty()) {
-            let fileContent = req.body.imageFiles[0]
+            let fileContent = req.body.imageFile[0]
+            let fileType = req.body.imageType[0]
+
+            let ext = fileType.split('/')
+            let extension = '.' + ext[(ext.length-1)]
 
             // hashing the image name to store with the activity (to avoid duplicate name problem)
             let hashedImageContent = crypto.createHash('md5').update(fileContent).digest('hex');
             console.log(hashedImageContent);
             //converting base64 string back into an image and saving to /user-uploads/ folder
-            let images = req.body.imageFiles.map((image) => {
+            let images = req.body.imageFile.map((image) => {
 
                 const base64ToImage = require('base64-to-image');
 
@@ -254,7 +274,7 @@ app.post('/activities', (req, res) => {
                 description: req.body.description,
                 location: req.body.location,
                 cost: req.body.cost,
-                imageName: hashedImageContent,
+                imageName: hashedImageContent+extension,
             }).then((activity) => {
                 res.status(201)
                 res.json({activity: activity})
