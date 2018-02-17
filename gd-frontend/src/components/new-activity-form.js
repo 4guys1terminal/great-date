@@ -30,7 +30,7 @@ class NewActivityForm extends Component {
                 cost: '',
                 tags: {},
                 imageFile: [],
-                imageType: [],
+                imageType: []
             },
             filesToBeSent:[],
             imagesAllowed: 1,

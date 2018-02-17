@@ -20,6 +20,16 @@ h2 {
     font-family: 'Lobster', Georgia, Times, serif;
 }
 
+span.active.navbar-brand {
+    font-family: 'Lobster', Georgia, Times, serif;
+    font-size: 30px;
+}
+
+span.navbar-brand {
+    font-family: 'Lobster', Georgia, Times, serif;
+    font-size: 30px;
+}
+
 p, h3, h4, button {
     font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
     font-size: 20 px;
