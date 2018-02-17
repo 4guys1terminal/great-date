@@ -114,26 +114,6 @@ app.get('/activities/:id', (req, res) => {
 // });
 
 // logic for random generator
-app.post('/', (req, res) => {
-    tags = req.body.tags
-    let tagArr = []
-    for (var property in tags) {
-
-        tags[property] === true
-            ? tagArr.push(parseInt(property))
-            : ''
-    }
-
-    Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT}).then(shuffle => {
-        // console.log(shuffle[0]);
-        console.log('id', shuffle[0].id);
-        let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].id
-        console.log('random', randomTag);
-        res.status(201)
-        res.json({randomTag: randomTag})
-    })
-});
-
 
 //
 
@@ -142,66 +122,49 @@ app.post('/', (req, res) => {
 
 
 
-
-//})
-//
-// Random App Generator
-// app.post('/shuffle', (req, res) => {
-//   Tags.findAll().then(tags => {
-//     res.json({tags:tags})
-//   }).then((tags)=> {
-//     console.log(tags);
-//   })
-// })
-//
-//   //
-//   // console.log(tags);
-//   //
-//   for (var property in tags) {
-//
-//       tags[property] === true
-//           ? tagArr.push(parseInt(property))
-//           : ''
-//   }
-//   // console.log('tagArr',tagArr);
-//
-//
-//   Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
-//   .then(shuffle => {
-//     let browseTags = []
-//     for (var i = 0; i < shuffle.length; i++) {
-//       browseTags.push(shuffle[i].id)
-//     }
-//     // console.log(browseTags);
-//     res.json({browseTags: browseTags})
-//   })
-//   // .then(activity => {
-//   //   console.log("activity",activity);
-//   // })
-// });
 
 // logic for random generator
+// app.post('/', (req, res) => {
+//     tags = req.body.tags
+//     console.log('tags',tags);
+//     let tagArr = []
+//     for (var property in tags) {
+//         tags[property] === true
+//             ? tagArr.push(parseInt(property))
+//             : ''
+//     }
+//     console.log('tagArr',tagArr);
+//
+//
+//     Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
+//       .then(shuffle => {
+//         console.log("shuffle.id",shuffle.id);
+//         let randomTag = shuffle[Math.floor(Math.random() *shuffle.length)].ActivityId
+//         console.log('random', randomTag);
+//         res.status(201)
+//         res.json({randomTag: randomTag})
+//     })
+// });
+
 app.post('/', (req, res) => {
     tags = req.body.tags
-    console.log('tags',tags);
     let tagArr = []
     for (var property in tags) {
+
         tags[property] === true
             ? tagArr.push(parseInt(property))
             : ''
     }
-    console.log('tagArr',tagArr);
-
 
     Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
-      .then(shuffle => {
-        console.log("shuffle.id",shuffle.id);
-        let randomTag = shuffle[Math.floor(Math.random() *shuffle.length)].ActivityId
-        console.log('random', randomTag);
+    .then(shuffle => {
+        // console.log(shuffle[0]);
+        let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId
         res.status(201)
         res.json({randomTag: randomTag})
     })
 });
+
 
 
 //Creating New User   (Need Kevin and Dan to comment)
@@ -214,9 +177,9 @@ app.post('/users', (req, res) => {
     req.getValidationResult().then(valErrors => {
         if (valErrors.isEmpty()) {
             User.create({
-                firstName: req.body.firstName, 
+                firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                email: req.body.email, 
+                email: req.body.email,
                 password: req.body.password})
                 .then(user => {
                 res.json({message: 'success', user: user})

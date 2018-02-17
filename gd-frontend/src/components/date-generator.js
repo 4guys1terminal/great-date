@@ -127,16 +127,22 @@ class DateGenerator extends Component {
             onSubmit(form)
             .then((resp) => {
                 fetchActivity(resp.randomTag).then((resp) => {
+                    console.log(resp);
+                    console.log(resp.randomTag);
+                    console.log(resp.activity);
                     this.setState({
-                        activity: resp,
+                        randomTag: resp.activity.id,
+                        activity: resp.activity,
                         randomSuccess: true,
                     })
+                    console.log(this.state);
                 })
             })
         } else {
             console.log("no onSubmit passed to date-generator");
         }
     }
+
 
     render() {
         const { randomSuccess } = this.state

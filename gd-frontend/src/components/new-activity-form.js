@@ -294,10 +294,10 @@ class NewActivityForm extends Component {
                           name="cost"
                           onChange={this.handleChange.bind(this)}
                           options={[
-                            ['free', 'Free'],
-                            ['$', '$'],
-                            ['$$', '$$'],
-                            ['$$$', '$$$']
+                            ['0', 'Free'],
+                            ['0.33', '$'],
+                            ['0.66', '$$'],
+                            ['1', '$$$']
                           ]}
 
                           value={this.state.form.cost}
@@ -400,12 +400,11 @@ class NewActivityForm extends Component {
                     </Col>
                   </Row>
 
-
+{/*
                   <Col xs={10} xsOffset={1}>
                     <div className='map'>
-
                                     </div>
-                                </Col>
+                                </Col> */}
 
                         </div>
 
