@@ -76,7 +76,7 @@ class DateGenerator extends Component {
         console.log('test2', this.state.form);
         this.props.onSubmit(this.state.form);
     }
-  }
+
 
     componentWillMount() {
         fetch(`${API}/tags`).then((resp) => {
@@ -127,14 +127,10 @@ class DateGenerator extends Component {
             onSubmit(form)
             .then((resp) => {
                 fetchActivity(resp.randomTag).then((resp) => {
-                    console.log("this.state after send", this.state);
-                    console.log('res',resp.activity.id);
                     this.setState({
-                        randomTag: resp.activity.id,
-                        activity: resp.activity,
+                        activity: resp,
                         randomSuccess: true,
                     })
-                    console.log(this.state);
                 })
             })
         } else {
@@ -176,17 +172,6 @@ class DateGenerator extends Component {
             </div>
             <Button bsSize='large' id='submit' className='date-btn' onClick={this.handleSubmit.bind(this)}>Shuffle</Button>
         </div>);
-
-                <Button
-                bsSize = "large"
-                id = "submit"
-                className = 'date-btn'
-                onClick = {
-                    this.handleSubmit.bind(this)
-                } > Shuffle</Button>
-
-
-      </div>);
 
 
     }
