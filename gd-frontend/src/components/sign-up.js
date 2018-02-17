@@ -13,8 +13,8 @@ class SignUp extends Component {
         };
     }
 
-    handleChange(event) {
-        const target = event.target
+    handleChange(e) {
+        const target = e.target
         const registration = this.state.registration
         registration[target.name] = target.value
         this.setState({

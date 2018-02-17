@@ -34,7 +34,7 @@ class RegistrationStore {
         const { password } = this.fields
         if (this.fields[fieldName] === '') {
             this.addError(fieldName, 'is required')
-        } 
+        }
     }
 
     validateEmail(fieldName) {
