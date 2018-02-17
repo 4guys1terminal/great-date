@@ -7,8 +7,6 @@ var sequelize = require('sequelize');
 const Op = sequelize.Op
 const fs = require('fs');
 
-
-
 var app = express();
 
 var Tag = require('./models').Tag
@@ -20,7 +18,7 @@ var Location = require('./models').Location;
 
 app.use(express.static('public'));
 app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true,}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(validator());
 app.use(cors());
 
@@ -46,9 +44,10 @@ const authorization = (req, res, next) => {
         res.json({message: 'Authorization Token Required'})
     }
 }
+
 // homepage
 app.get('/', (req, res) => {
-    res.json({message: 'API example app'});
+    res.json({message: 'Backend is running, we gucci'});
 });
 
 // displays respective route  w/ raw json from database onto page
@@ -86,86 +85,60 @@ app.get('/activities/:id', (req, res) => {
 });
 
 
-// logic for browse page generation ALL ACTIVITY IDs BY TAG
-// app.post('/', (req, res) => {
-//   tags = req.body.tags
-//   let tagArr = []
-//   for (var property in tags) {
-//
-//       tags[property] === true
-//           ? tagArr.push(parseInt(property))
-//           : ''
-//   }
-//   // console.log('tagArr',tagArr);
-//
-//
-//   Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
-//   .then(shuffle => {
-//     let browseTags = []
-//     for (var i = 0; i < shuffle.length; i++) {
-//       browseTags.push(shuffle[i].id)
-//     }
-//     // console.log(browseTags);
-//     res.json({browseTags: browseTags})
-//   })
-//   // .then(activity => {
-//   //   console.log("activity",activity);
-//   // })
-// });
 
-// logic for random generator
-
-//
+// TODO: browse page lets user pick a number of certain tags
+// tags are sent to back end on req.body.tags
+// sequelize queries the database for all activities that match those tags
+// returns all activityId's that match the chosen tags to the front end via:
+// res.json({browseActivities: browseActivities}
 
 
 
 
+//route for browse page generation ALL ACTIVITY IDs BY TAG
+app.post('/browse', (req, res) => {
+  tags = req.body.tags
+  let tagArr = []
+  for (var property in tags) {
+      tags[property] === true
+          ? tagArr.push(parseInt(property))
+          : ''
+  }
+
+  Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
+  .then(shuffle => {
+    let browseTags = []
+    for (var i = 0; i < shuffle.length; i++) {
+      browseTags.push(shuffle[i].id)
+    }
+     console.log(browseTags);
+    res.json({browseTags: browseTags})
+  })
+   .then(activity => {
+     console.log("activity",activity);
+   })
+});
 
 
-
-// logic for random generator
-// app.post('/', (req, res) => {
-//     tags = req.body.tags
-//     console.log('tags',tags);
-//     let tagArr = []
-//     for (var property in tags) {
-//         tags[property] === true
-//             ? tagArr.push(parseInt(property))
-//             : ''
-//     }
-//     console.log('tagArr',tagArr);
-//
-//
-//     Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
-//       .then(shuffle => {
-//         console.log("shuffle.id",shuffle.id);
-//         let randomTag = shuffle[Math.floor(Math.random() *shuffle.length)].ActivityId
-//         console.log('random', randomTag);
-//         res.status(201)
-//         res.json({randomTag: randomTag})
-//     })
-// });
-
+// route for random date generator
 app.post('/', (req, res) => {
     tags = req.body.tags
     let tagArr = []
-    for (var property in tags) {
 
+    for (var property in tags) {
         tags[property] === true
             ? tagArr.push(parseInt(property))
             : ''
     }
 
     Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
-    .then(shuffle => {
-        // console.log(shuffle[0]);
-        let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId
-        res.status(201)
-        res.json({randomTag: randomTag})
-    })
+        .then(shuffle => {
+            // console.log(shuffle[0]);
+            let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId
+            res.status(201)
+            res.json({randomTag: randomTag})
+        })
 });
-
-
 
 //Creating New User   (Need Kevin and Dan to comment)
 
@@ -176,13 +149,8 @@ app.post('/users', (req, res) => {
 
     req.getValidationResult().then(valErrors => {
         if (valErrors.isEmpty()) {
-            User.create({
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email,
-                password: req.body.password})
-                .then(user => {
-                res.json({message: 'success', user: user})
+            User.create({firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email, password: req.body.password,}).then(user => {
+                res.json({message: 'success', user: user,})
             })
         } else {
             // console.log(validationErrors.array())
@@ -214,7 +182,7 @@ app.post('/activities', (req, res) => {
             let fileType = req.body.imageType[0]
 
             let ext = fileType.split('/')
-            let extension = '.' + ext[(ext.length-1)]
+            let extension = '.' + ext[(ext.length - 1)]
 
             // hashing the image name to store with the activity (to avoid duplicate name problem)
             let hashedImageContent = crypto.createHash('md5').update(fileContent).digest('hex');
@@ -237,7 +205,7 @@ app.post('/activities', (req, res) => {
                 description: req.body.description,
                 location: req.body.location,
                 cost: req.body.cost,
-                imageName: hashedImageContent+extension,
+                imageName: hashedImageContent + extension
             }).then((activity) => {
                 res.status(201)
                 res.json({activity: activity})
@@ -248,7 +216,7 @@ app.post('/activities', (req, res) => {
                 for (var property in tags) {
                     let val = {
                         ActivityId: activity.id,
-                        TagId: property,
+                        TagId: property
                     }
                     // Checks if a tag is checked or not
                     tags[property] === true
@@ -270,8 +238,6 @@ app.post('/activities', (req, res) => {
         }
     })
 })
-
-
 
 // login form
 app.post('/sessions/new', (req, res) => {
@@ -321,7 +287,7 @@ app.post('/sessions/new', (req, res) => {
 // has this been worked on at all really? -JD 2/15/2018
 app.put('/activities/edit/:id', (req, res) => {
 
-    const {name, content} = req.params;
+    const {name, content,} = req.params;
     let id = parseInt(req.params.id);
 
     Activity.findById(id).then(page => {
@@ -330,7 +296,7 @@ app.put('/activities/edit/:id', (req, res) => {
             description: description,
             location: location,
             cost: cost,
-            tags: tags
+            tags: tags,
         }, {
             where: {
                 id: id
@@ -346,6 +312,5 @@ app.put('/activities/edit/:id', (req, res) => {
 app.get('/login', authorization, function(req, res) {
     res.json({user: request.currentUser})
 })
-
 
 module.exports = app
