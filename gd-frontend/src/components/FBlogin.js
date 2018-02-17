@@ -1,29 +1,53 @@
 import React, {Component} from 'react';
 import FacebookAuth from 'react-facebook-auth';
+import {BrowserRouter as Router, Route, Redirect,} from 'react-router-dom';
+import {
+    Button
+} from 'react-bootstrap';
 
-const authenticate = (response) => {
-  console.log(response);
-  localStorage.setItem('name', response.email)
-  // Api call to server so we can validate the token
-};
 const MyFacebookButton = ({ onClick }) => (
-  <button onClick={onClick}>
+  <button className='login-btn' id='FBlogin' onClick={onClick}>
     Login with facebook
   </button>
 );
 
-
 class FBlogin extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            authorized: false
+        }
+    }
+
   render(){
+      const authenticate = (response) => {
+        // console.log(response);
+            if (response) {
+            this.setState({ authorized: true, username: response.name })
+          }
+      };
+      const { authorized, username } = this.state
+      // const check = username.length
+      // console.log('authorized?', check)
+
     return(
     <div>
-      <h1>Facebook Auth</h1>
       <FacebookAuth
         appId="1761739337205998"
         callback={authenticate}
         component={MyFacebookButton}
-        redirectUri='/aosijdfioajfoe'
       />
+      {
+          authorized
+              ? <Redirect to={"/"}/>
+              : null
+      }
+      {
+          authorized
+              ? localStorage.setItem('name', this.state.username)
+              : null
+      }
     </div>
     )
   }
