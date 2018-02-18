@@ -7,7 +7,7 @@ import {
 
 const MyFacebookButton = ({ onClick }) => (
   <button className='login-btn' id='FBlogin' onClick={onClick}>
-    Login with facebook
+    Log in with facebook
   </button>
 );
 
