@@ -1,6 +1,7 @@
 ### Known Bugs
 - [ ] Activity cost shows a decimal
 - [ ] Create Activity button gets covered up by activity popout thingy ma bob
+- [ ] No terms of service on sign up page
 
 ### Before Demo Night
 - [ ] Add ratings
