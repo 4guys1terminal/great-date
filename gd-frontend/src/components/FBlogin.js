@@ -21,10 +21,10 @@ class FBlogin extends Component {
     }
 
   render(){
-      const authenticate = (response) => {
-        // console.log(response);
-            if (response) {
-            this.setState({ authorized: true, username: response.name })
+      const authenticate = (res) => {
+        // console.log(res);
+            if (res) {
+            this.setState({ authorized: true, username: res.name })
           }
       };
       const { authorized, username } = this.state
@@ -45,7 +45,7 @@ class FBlogin extends Component {
       }
       {
           authorized
-              ? localStorage.setItem('name', this.state.username)
+              ? localStorage.setItem('name', username)
               : null
       }
     </div>
