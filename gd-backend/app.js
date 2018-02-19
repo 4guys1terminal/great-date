@@ -132,8 +132,8 @@ app.post('/', (req, res) => {
     })
 });
 
-//Creating New User   (Need Kevin and Dan to comment)
 
+//Creating New User   (Need Kevin and Dan to comment)
 app.post('/users', (req, res) => {
 
     req.checkBody('firstName', 'Is required').notEmpty()
@@ -141,11 +141,16 @@ app.post('/users', (req, res) => {
 
     req.getValidationResult().then(valErrors => {
         if (valErrors.isEmpty()) {
-            User.create({firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email, password: req.body.password}).then(user => {
+            User.create({
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                password: req.body.password})
+                .then(user => {
                 res.json({message: 'success', user: user})
             })
         } else {
-            // console.log(validationErrors.array())
+            // console.log(valErrors.array())
             res.status(400)
             res.json({
                 errors: {
@@ -164,8 +169,12 @@ app.post('/activities', (req, res) => {
     req.checkBody('description', 'is required').notEmpty()
     req.checkBody('location', 'is required').notEmpty()
     req.checkBody('cost', 'is required').notEmpty()
-    // req.checkBody('tag','is required').notEmpty() --------               Need to
-    // req.checkBody('imageFile', 'is required').notEmpty() ---------   Figure these out
+
+
+    // TODO: Get these validations working
+
+    // req.checkBody('tag','is required').notEmpty()
+    // req.checkBody('imageFile', 'is required').notEmpty()
 
     // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult().then((validationErrors) => {
@@ -176,20 +185,20 @@ app.post('/activities', (req, res) => {
             let ext = fileType.split('/')
             let extension = '.' + ext[(ext.length - 1)]
 
-            // hashing the image name to store with the activity (to avoid duplicate name problem)
+            // hashing the image content to store as the name, with the activity (to avoid duplicate name problem)
             let hashedImageContent = crypto.createHash('md5').update(fileContent).digest('hex');
-            console.log(hashedImageContent);
+            // console.log(hashedImageContent);
             //converting base64 string back into an image and saving to /user-uploads/ folder
             let images = req.body.imageFile.map((image) => {
 
                 const base64ToImage = require('base64-to-image');
 
-                var path = './public/user-uploads/'
-                var optionalObj = {
+                let path = './public/user-uploads/'
+                let details = {
                     'fileName': hashedImageContent
                 };
 
-                base64ToImage(image, path, optionalObj)
+                base64ToImage(image, path, details)
             })
 
             Activity.create({
@@ -274,9 +283,8 @@ app.post('/sessions/new', (req, res) => {
 //     })
 // })
 
-// put route for editing activities
-
-// has this been worked on at all really? -JD 2/15/2018
+//TODO: put route for editing activities
+// 
 app.put('/activities/edit/:id', (req, res) => {
 
     const {name, content} = req.params;
