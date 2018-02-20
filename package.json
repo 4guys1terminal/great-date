@@ -11,6 +11,6 @@
      "build": "concurrently \"cd gd-frontend && yarn build\" \"cd gd-backend && yarn build\"",
      "install": "(cd gd-frontend && yarn) && (cd gd-backend && yarn)",
      "start": "concurrently \"cd gd-backend && PORT=3000 node index.js\" \"cd gd-frontend && PORT=3001 yarn start\"",
-     "start:prod": "cd server && yarn start:prod"
+     "start:prod": "cd gd-backend && yarn start:prod"
    }
 }
