@@ -3,9 +3,8 @@ import {Link} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 import '../App.css';
 import DateInfo from '../components/date-info.js';
-import NavBar from '../components/navbar.js';
+import LoggedInNav from '../components/logged-in-navbar';
 import NavbarBootstrap from '../components/navbarBootstrap.js';
-
 import DateComponent from '../components/date-component.js';
 import api from '../functions/fetch.js';
 import imageFactory from '../functions/imgSrc.js';
@@ -24,8 +23,6 @@ var backgroundTexture = {
 };
 
 
-
-
 class DatePage extends Component {
     constructor(props) {
         super(props)
@@ -39,6 +36,14 @@ class DatePage extends Component {
             this.setState({activity: resp.activity})
             console.log(this.state);
         })
+    }
+
+    isUserLoggedIn() {
+        if (typeof localStorage.name === 'undefined') {
+            return < NavbarBootstrap />;
+        } else {
+            return < LoggedInNav />;
+        }
     }
 
     render() {
@@ -59,7 +64,7 @@ class DatePage extends Component {
 
         return (<div style={bgImage}>
             <div className='datePageTest'>
-                <NavbarBootstrap/>
+                {this.isUserLoggedIn()}
 
                 <DateComponent
                     image={imgSrc(imageName)}
