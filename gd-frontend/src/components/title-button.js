@@ -6,7 +6,7 @@ class TitleButton extends Component {
         return (
             <div>
               <div className="date-btn-contain">
-                <button className="date-btn">
+                <button className="bttn-jelly bttn-lg bttn-primary">
                   Let's Date
                 </button>
               </div>

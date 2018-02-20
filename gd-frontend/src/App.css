@@ -738,10 +738,6 @@ ul li {
     display: block;
 }
 
-.create-div {
-    height: 105vh;
-}
-
 .date-preview {
     margin: 14px;
 }
@@ -777,4 +773,63 @@ ul li {
     top: 45%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+}
+
+.newActivityButton {
+    margin: 40px;
+    background: linear-gradient(to bottom, rgb(13, 194, 181) 0%, rgb(6, 144, 185) 100%);
+    width: 200px;
+    height: 45px;
+    border-radius: 15px;
+    -webkit-transition-duration: 0.5s;
+    /* Safari */
+    transition-duration: 0.5s;
+}
+
+.newActivityButton:hover {
+    margin: 40px;
+    background: white;
+    border: teal 2px solid;
+    color: teal;
+}
+
+#submit {
+    margin-bottom: 50px;
+}
+
+#submit {
+    border-radius: 4px;
+    background-color: rgb(13, 194, 181);
+    border: rgba(256, 256, 256, 0.1) 1px solid;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 20px;
+    padding: 20px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+#submit span {
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+#submit span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+#submit:hover span {
+    padding-right: 25px;
+}
+
+#submit:hover span:after {
+    opacity: 1;
+    right: 0;
 }
