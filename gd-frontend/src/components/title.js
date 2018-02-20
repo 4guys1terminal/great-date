@@ -17,9 +17,11 @@ class Title extends Component {
                 <i className="fa-5x front-icons fas fa-glass-martini"></i>
             </div>
 
-            <div className="">
-                <button className="bttn-jelly bttn-lg bttn-primary" onClick={this.props.onClick}>
+            <div>
+                <button className="success-btns" onClick={this.props.onClick}>
+                    <span>
                     Let's Date
+                    </span>
                 </button>
             </div>
 

@@ -93,6 +93,7 @@ li {
     color: rgb(56, 55, 56);
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
 }
 
 .date-page h1, h2, h3, h4, p, a, nav {
@@ -121,7 +122,8 @@ li {
 }
 
 .previewCard {
-    padding: 10px;
+    margin: 0;
+    padding: 0;
 }
 
 input[type=file] {
@@ -633,7 +635,7 @@ input[type=file] {
     border: 3px;
 }
 
-.nav.navbar-nav.navbar-right li a {
+.nav.navbar-nav.navbar-right a {
     color: white;
 }
 
@@ -738,29 +740,28 @@ ul li {
     display: block;
 }
 
-.date-preview {
-    margin: 14px;
-}
-
 .datePreview {
     height: 100%;
     /* border: 3px solid rgba(64, 153, 180, 0.35); */
     box-shadow: 3px 4px 4px 2px rgba(0, 0, 0, 0.2);
     background-color: white;
+    /* margin: 40px; */
+    /* padding: 40px; */
+    /* border-radius: 5px; */
 }
 
 .details-btn {
-    position: absolute;
+    position: relative;
     bottom: 0;
     left: 0;
     width: 100%;
 }
 
-.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+/* .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
     background-color: transparent;
     color: transparent;
     text-decoration: underline;
-}
+} */
 
 .success-page {
     padding: 50px;
@@ -832,4 +833,52 @@ ul li {
 #submit:hover span:after {
     opacity: 1;
     right: 0;
+}
+
+.success-btns {
+    border-radius: 4px;
+    background-color: rgb(13, 194, 181);
+    border: rgba(256, 256, 256, 0.1) 1px solid;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    padding: 20px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin-bottom: 50px;
+    margin: 10px;
+}
+
+.success-btns span {
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.success-btns span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.success-btns:hover span {
+    padding-right: 25px;
+}
+
+.success-btns:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.generatorTags {
+    color: white;
+    margin: 7px;
+}
+
+.cardTitle {
+    text-decoration: none;
 }
