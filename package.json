@@ -10,7 +10,7 @@
   "scripts": {
      "build": "concurrently \"cd gd-frontend && yarn build\" \"cd gd-backend && yarn build\"",
      "install": "(cd gd-frontend && yarn) && (cd gd-backend && yarn)",
-     "start": "concurrently \"cd gd-backend && PORT=3000 yarn start\" \"cd gd-frontend && PORT=3001 yarn start\"",
+     "start": "concurrently \"cd gd-frontend && PORT=3000 yarn start\" \"cd gd-backend && PORT=3001 yarn start\"",
      "start:prod": "cd gd-backend && yarn start:prod"
    }
 }

@@ -26,5 +26,10 @@
     "jest": "^22.1.4",
     "sequelize-mock": "^0.10.2",
     "supertest": "^3.0.0"
-  }
+  },
+  "scripts": {
+  "build": "babel . --ignore node_modules,build --out-dir build",
+  "start": "nodemon -r babel-register server.js",
+  "start:prod": "node build/server.js"
+}
 }
