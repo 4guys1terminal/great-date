@@ -17,8 +17,8 @@ class Title extends Component {
                 <i className="fa-5x front-icons fas fa-glass-martini"></i>
             </div>
 
-            <div className="date-btn-contain">
-                <button className="date-btn" onClick={this.props.onClick}>
+            <div className="">
+                <button className="bttn-jelly bttn-lg bttn-primary" onClick={this.props.onClick}>
                     Let's Date
                 </button>
             </div>
