@@ -12,7 +12,7 @@ class Navigation extends Component {
 
                 <Navbar.Header>
                     <LinkContainer to='/home'>
-                        <Navbar.Brand>
+                        <Navbar.Brand id="logo">
                             Great Date
                         </Navbar.Brand>
                     </LinkContainer>

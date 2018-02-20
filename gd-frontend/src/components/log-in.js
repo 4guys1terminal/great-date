@@ -99,7 +99,7 @@ class Login extends Component {
                     <Col xs={10}>
                         <FormGroup id="password-form-group">
                             <ControlLabel id="password"></ControlLabel>
-                            <FormControl placeholder="Password" type="text" name="password" value={this.state.form.password} onChange={this.handleChange.bind(this)}/>
+                            <FormControl placeholder="Password" type="password" name="password" value={this.state.form.password} onChange={this.handleChange.bind(this)}/>
                         </FormGroup>
                     </Col>
                 </Row>

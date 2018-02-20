@@ -106,10 +106,10 @@ class SignUp extends Component {
                         </Row>
 
                         <Col xs={10} className="row">
-                            <button onSubmit={this.handleSubmit.bind(this)} id="submit" type="submit" className="create-account">Create Account</button>
+                            <button onSubmit={this.handleSubmit.bind(this)} id="" type="submit" className="create-account">Create Account</button>
 
                         </Col>
-                        
+
                         <a className="forgot" href="#">
                             <p className="agree">By signing up, you agree to our
                                 <br/>
@@ -122,7 +122,7 @@ class SignUp extends Component {
                     <div className="login">
                         <p className="login-text">Have an account?
                             <Link to='/login-page' className='login-link' id='login-link'>
-                                Log In
+                              <span> Log In</span>
                             </Link>
                         </p>
                     </div>
