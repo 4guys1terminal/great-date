@@ -6,6 +6,7 @@ const crypto = require('crypto')
 var sequelize = require('sequelize');
 const Op = sequelize.Op
 const fs = require('fs');
+var path = require('path');
 
 var app = express();
 
@@ -21,6 +22,9 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true,}));
 app.use(validator());
 app.use(cors());
+
+const staticFiles = express.static(path.join(__dirname, '../../gd-frontend/build'))
+app.use(staticFiles)
 
 // authorization token
 const authorization = (req, res, next) => {
@@ -284,7 +288,7 @@ app.post('/sessions/new', (req, res) => {
 // })
 
 //TODO: put route for editing activities
-// 
+//
 app.put('/activities/edit/:id', (req, res) => {
 
     const {name, content} = req.params;
@@ -312,5 +316,7 @@ app.put('/activities/edit/:id', (req, res) => {
 app.get('/login', authorization, function(req, res) {
     res.json({user: request.currentUser})
 })
+
+app.use('/*', staticFiles)
 
 module.exports = app
