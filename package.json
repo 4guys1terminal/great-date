@@ -1,0 +1,10 @@
+{
+  "name": "great-date",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/4guys1terminal/great-date.git",
+  "license": "MIT",
+  "engines": {
+    "node": "9.2.1"
+  }
+},
