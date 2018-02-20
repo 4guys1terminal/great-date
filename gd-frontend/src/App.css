@@ -61,14 +61,15 @@ li {
     width: 100%;
     height: 300px;
     object-fit: cover;
-    border: 2px solid white;
+    border-radius: 10px 10px 0px 0px;
 }
 
 .datePreview {
     width: 300px;
     height: 300px;
     object-fit: cover;
-    border: 2px solid white;
+    border-radius: 10px;
+    /* border-radius: 0px 0px 0px 0px; */
 }
 
 .activityPicDiv {
@@ -757,6 +758,11 @@ ul li {
     width: 100%;
 }
 
+.date-preview {
+    margin: 5px;
+    margin-bottom: 25px;
+}
+
 /* .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
     background-color: transparent;
     color: transparent;
@@ -881,4 +887,10 @@ ul li {
 
 .cardTitle {
     text-decoration: none;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    background-color: rgba(256, 256, 256, 0) !important;
 }
