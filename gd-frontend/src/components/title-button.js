@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import '../App.css';
 
 class TitleButton extends Component {
     render() {
-        return (
+        return (<div>
             <div>
-              <div className="date-btn-contain">
-                <button className="date-btn">
-                  Let's Date
+                <button className="succes-btns">
+                    <span>
+                        Let's Date
+                    </span>
                 </button>
-              </div>
             </div>
-        );
+        </div>);
     }
 }
 

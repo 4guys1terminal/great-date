@@ -13,7 +13,6 @@ class TitleBlock extends Component {
         super(props)
         this.state = {
             showComponent: false,
-            randomSuccess: false,
         }
     }
 

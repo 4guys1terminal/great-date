@@ -50,7 +50,7 @@ class NewActivity extends Component {
 
     isUserLoggedIn() {
         if (typeof localStorage.name === 'undefined') {
-            return < NavbarBootstrap />;
+            return <NavbarBootstrap />;
         } else {
             return <LoggedInNav/>;
         }
@@ -86,8 +86,9 @@ class NewActivity extends Component {
 
     render() {
         return (
-            <div className='create-div' style={bgImage}>
-                <div>
+            <div className='create-div' >
+
+                <div style={bgImage}>
 
                     {this.isUserLoggedIn()}
 

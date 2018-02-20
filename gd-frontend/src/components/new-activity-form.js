@@ -393,10 +393,11 @@ class NewActivityForm extends Component {
                   <Row>
                     <Col xs={10} xsOffset={1}>
                       <br/>
-                      <Button
+
+                  <button
                         id="submit"
                         onClick={this.handleSubmit.bind(this)}
-                      >Submit</Button>
+                      ><span>Submit</span></button>
                     </Col>
                   </Row>
 
