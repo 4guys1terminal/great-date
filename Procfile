@@ -1,2 +1,2 @@
-web: yarn start ./gd-frontend
-server: node ./gd-backend/index.js 
+web: npm start ./gd-frontend
+server: node ./gd-backend/index.js
