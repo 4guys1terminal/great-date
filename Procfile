@@ -1,2 +1,2 @@
 web: cd gd-frontend && yarn start
-server: node ./gd-backend/index.js
+server: cd gd-backend && node index.js
