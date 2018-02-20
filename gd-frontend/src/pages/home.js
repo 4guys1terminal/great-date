@@ -65,7 +65,7 @@ class Home extends Component {
 
                     <div className="see-more-contain">
                         <Link to='/all-dates-page'>
-                            <button className="see-more-btn">See More</button>
+                            <button className="success-btns"><span>See More</span></button>
                         </Link>
                     </div>
                 </div>

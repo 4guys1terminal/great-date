@@ -10,7 +10,7 @@ import AllDatesPage from './pages/all-dates-page.js';
 import DatePage from './pages/date-page.js';
 import NewActivityPage from './pages/new-activity-page.js';
 import NewActivitySuccess from './pages/new-activity-success.js';
-import ScrollToTop from './components/scroll-to-top.js';
+import ScrollToTop from './functions/scroll-to-top.js';
 
 class App extends Component {
     constructor(props) {

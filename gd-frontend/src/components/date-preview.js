@@ -27,7 +27,7 @@ class DatePreview extends Component {
                         <CardBody>
                             <CardTitle className='cardTitle'>{title}</CardTitle>
 
-                            <Button color="info">The Details</Button>
+                        <Button color="info">The Details</Button>
 
                         </CardBody>
                     </Card>
