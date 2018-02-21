@@ -11,7 +11,7 @@ const STYLE = {
 
 const MyFacebookButton = ({ onClick }) => (
   <button className='login-btn' id='FBlogin' onClick={onClick}>
-     Log in with Facebook <i className="fab fa-facebook-square fa-2x" style={STYLE}></i>
+    <i className="fab fa-facebook-square fa-2x" style={STYLE}></i> <span id="fb-text">Log in with Facebook </span>
   </button>
 );
 
