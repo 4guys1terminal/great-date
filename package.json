@@ -8,7 +8,7 @@
     "node": "9.2.1"
   },
   "scripts": {
-     "heroku-postbuild": "cd gd-backend && /usr/local/bin/sequelize db:migrate && /usr/local/bin/sequelize db:seed:all && cd .. && cd gd-frontend/ && yarn install && yarn build",
+     "heroku-postbuild": "cd gd-backend && cd /usr/local/bin/sequelize db:migrate && cd /usr/local/bin/sequelize db:seed:all && cd .. && cd gd-frontend/ && yarn install && yarn build",
      "start": "node gd-backend/index.js"
    }
 }
