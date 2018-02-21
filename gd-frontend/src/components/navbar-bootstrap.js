@@ -5,7 +5,7 @@ import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap'
 
 
-class Navigation extends Component {
+class NavBarBootstrap extends Component {
     render() {
         return (<div>
             <Navbar   className='bootStrapNav'>
@@ -46,4 +46,4 @@ class Navigation extends Component {
     }
 }
 
-export default Navigation;
+export default NavBarBootstrap;

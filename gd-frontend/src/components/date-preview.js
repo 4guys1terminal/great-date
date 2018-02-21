@@ -12,7 +12,7 @@ import '../App.css';
 
 class DatePreview extends Component {
     render() {
-        const {id, title, image,} = this.props
+        const {id, title, image} = this.props
 
         return (<div className="date-preview hvr-grow-shadow">
 

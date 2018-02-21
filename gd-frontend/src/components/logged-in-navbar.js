@@ -38,7 +38,7 @@ class Navigation extends Component {
                             </NavItem>
                         </LinkContainer>
 
-                        <LinkContainer to='/home'>
+                        <LinkContainer to='/new-activity'>
                             <NavItem active='false'>
                                 {localStorage.name}
                             </NavItem>

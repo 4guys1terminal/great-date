@@ -4,7 +4,7 @@ import {Button} from 'react-bootstrap';
 import '../App.css';
 import DateInfo from '../components/date-info.js';
 import LoggedInNav from '../components/logged-in-navbar';
-import NavbarBootstrap from '../components/navbarBootstrap.js';
+import NavbarBootstrap from '../components/navbar-bootstrap.js';
 import DateComponent from '../components/date-component.js';
 import api from '../functions/fetch.js';
 import imageFactory from '../functions/imgSrc.js';

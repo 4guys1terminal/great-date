@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom';
 
 import AllDatesPage from './all-dates-page.js';
 import LoggedInNav from '../components/logged-in-navbar.js';
-import NavbarBootstrap from '../components/navbarBootstrap.js';
+import NavbarBootstrap from '../components/navbar-bootstrap.js';
 import bgImage from '../functions/bgImage'
 
 import NewActivityForm from '../components/new-activity-form.js';

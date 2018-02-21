@@ -23,7 +23,10 @@ class FBlogin extends Component {
             authorized: false
         }
     }
-
+ /**
+ * If there is a response, set the state to authorized and set
+ * name to facebook name in local storage
+ */
   render(){
       const authenticate = (res) => {
         // console.log(res);

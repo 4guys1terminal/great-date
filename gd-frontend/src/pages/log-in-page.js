@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import LogIn from '../components/log-in.js';
-import NavbarBootstrap from '../components/navbarBootstrap.js';
+import NavbarBootstrap from '../components/navbar-bootstrap.js';
 import bgImage from '../functions/bgImage'
 
 

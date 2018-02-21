@@ -10,7 +10,7 @@ import {
     FormControl,
     Button,
 } from 'react-bootstrap';
-import RegistrationStore from './RegistrationStore';
+import RegistrationStore from './registration-store';
 
 class SignUp extends Component {
     constructor(props) {
@@ -69,7 +69,7 @@ class SignUp extends Component {
                         <p className="signup-form-blurb">Sign up and share unique date ideas</p>
                         <div className="alert-holder">
                             <span className="center">
-                                {!this.isValid() && <div className="alert alert-danger">Please verify that all fields are correctly filled</div>}
+                                {!this.isValid() && <div className="alert alert-danger">Please verify that all fields are correctly filled out</div>}
                             </span>
                         </div>
 
