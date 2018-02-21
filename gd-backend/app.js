@@ -132,6 +132,22 @@ app.post('/browse', (req, res) => {
 //     GROUP BY "ActivityId"
 // ) m ON a.id = m."ActivityId";
 // `
+//
+// Code for exclusive tag search:
+    //`
+    //SELECT "ActivityId"
+    //FROM "ActivityTags"
+    //WHERE "TagId" in (${tagArr})
+    //GROUP BY "ActivityId"
+    //HAVING COUNT (distinct "TagId") = (${tagArr.length});
+    //`
+
+// Code for inclusive tag search:
+    // `SELECT *
+    // FROM "Activities"
+    // JOIN "ActivityTags"
+    // ON "Activities".id="ActivityId"
+    // WHERE "TagId" IN (${tagArr});`
 
 
 // route for random date generator
