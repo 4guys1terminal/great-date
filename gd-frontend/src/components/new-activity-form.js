@@ -345,18 +345,20 @@ class NewActivityForm extends Component {
 
                         <div className="image-upload-div">
                           <Dropzone
+                              className='dropzone'
                             accept='image/*'
                             onDrop={(files) => {
                               this.onDrop(files)
                             }}
                           >
-                            <div>
-                              <p>Try dropping some files here, or click me to select files to upload.</p>
-                              <p>(Only image files will be accepted.)</p>
+                            <div className='dropzone-text'>
+                              <p>Try dropping some image files here, or click me to select files to upload.</p>
+                          <br/>
+                      <p>By uploading you are agreeing that you either own the image yourself, or are using an image with written permissions to share it.</p>
                             </div>
                           </Dropzone>
                         </div>
-
+                        <br/>
                         <div>
                           File Preview:
 
