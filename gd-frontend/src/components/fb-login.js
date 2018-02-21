@@ -5,9 +5,13 @@ import {
     Button
 } from 'react-bootstrap';
 
+const STYLE = {
+  marginLeft: 5
+}
+
 const MyFacebookButton = ({ onClick }) => (
   <button className='login-btn' id='FBlogin' onClick={onClick}>
-    Log in with facebook
+    <i className="fab fa-facebook-square fa-2x" style={STYLE}></i> <span id="fb-text">Log in with Facebook </span>
   </button>
 );
 
@@ -41,6 +45,7 @@ class FBlogin extends Component {
         callback={authenticate}
         component={MyFacebookButton}
       />
+
       {
           authorized
               ? <Redirect to={"/"}/>
