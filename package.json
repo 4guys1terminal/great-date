@@ -1,0 +1,16 @@
+{
+  "name": "great-date",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/4guys1terminal/great-date.git",
+  "license": "MIT",
+  "engines": {
+    "node": "9.2.1"
+  },
+  "scripts": {
+     "build": "concurrently \"cd gd-frontend && yarn build\" \"cd gd-backend && yarn build\"",
+     "install": "(cd gd-frontend && yarn) && (cd gd-backend && yarn)",
+     "start": "concurrently \"cd gd-frontend && PORT=3000 yarn start\" \"cd gd-backend && PORT=3001 yarn start\"",
+     "start:prod": "cd gd-backend && yarn start:prod"
+   }
+}
