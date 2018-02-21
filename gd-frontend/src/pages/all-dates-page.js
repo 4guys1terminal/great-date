@@ -16,10 +16,9 @@ import {
     Checkbox,
     ToggleButtonGroup,
     ToggleButton
-} from 'react-bootstrap';
-import NavBar from '../components/navbar';
+} from 'react-bootstrap'
 import LoggedInNav from '../components/logged-in-navbar';
-import NavbarBootstrap from '../components/navbarBootstrap.js';
+import NavbarBootstrap from '../components/navbar-bootstrap.js';
 import bgImage from '../functions/bgImage'
 import {Redirect, Link,} from 'react-router-dom';
 import fetches from '../functions/fetch.js';

@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 
 class DateComponent extends Component {
+    // Function to turn our Cost from database into a dollar sign. Adjust cost converter to scale the ratings
     createCostIcon = () => {
         const costConverter = Math.round(this.props.cost * 3)
         switch (costConverter) {
@@ -45,6 +46,7 @@ class DateComponent extends Component {
                 <Link to='/all-dates-page' id='all-dates-back' className='back-button'>
                     <Button className='back-button' bsStyle='primary' bsSize='large'>Back</Button>
                 </Link>
+
             </div>
         );
     }

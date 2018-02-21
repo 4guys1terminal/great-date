@@ -1,20 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import '../App.css';
-import NavBar from '../components/navbar.js';
 import TitleBlock from '../components/title-block.js';
 import ReactDOM from "react-dom";
-import { Button } from 'reactstrap';
-import { Link, Redirect } from 'react-router-dom';
-import Navigation from '../components/navbar';
+import {Button} from 'reactstrap';
+import {Link, Redirect} from 'react-router-dom';
 import Title from '../components/title';
 import TitleButton from '../components/title-button';
-import BrowseDate from '../components/browse-dates';
 import Grid from '../components/grid';
 import LoggedIn from '../pages/logged-in-page';
 import LoggedInNav from '../components/logged-in-navbar';
 
 import bgImage from '../functions/bgImage'
-import NavbarBootstrap from '../components/navbarBootstrap.js';
+import NavbarBootstrap from '../components/navbar-bootstrap.js';
 
 var backgroundTexture = {
     backgroundImage: 'url(/images/grid_noise.png)'
@@ -38,40 +35,41 @@ class Home extends Component {
     }
 
     render() {
-        const { activities } = this.state
+        const {activities} = this.state
 
         return (
             <div className='home'>
-              <div className="shadow">
+            <div className="shadow">
                 <div style={bgImage} className='titleBlock'>
-                  {this.isUserLoggedIn()}
+                    {this.isUserLoggedIn()}
 
-                  <TitleBlock/>
+                    <TitleBlock/>
 
                 </div>
-              </div>
+            </div>
 
-              <div style={backgroundTexture}>
+            <div style={backgroundTexture}>
 
                 <div className="browse-title">
-                  <Link to='/all-dates-page' id='all-dates-link' className='browse-title'>Browse Dates</Link>
+                    <Link to='/all-dates-page' id='all-dates-link' className='browse-title'>Browse Dates</Link>
                 </div>
 
-                    <div className="line-contain">
-                        <div className="line"></div>
-                    </div>
-
-                    <Grid activities={activities} />
-
-                    <div className="see-more-contain">
-                        <Link to='/all-dates-page'>
-                            <button className="success-btns"><span>See More</span></button>
-                        </Link>
-                    </div>
+                <div className="line-contain">
+                    <div className="line"></div>
                 </div>
 
+                <Grid activities={activities}/>
+
+                <div className="see-more-contain">
+                    <Link to='/all-dates-page'>
+                        <button className="success-btns">
+                            <span>See More</span>
+                        </button>
+                    </Link>
+                </div>
             </div>
-        )
+
+        </div>)
     }
 }
 

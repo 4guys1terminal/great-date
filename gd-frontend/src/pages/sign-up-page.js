@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import '../App.css';
-import NavBar from '../components/navbar.js';
 import SignUp from '../components/sign-up.js';
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import bgImage from '../functions/bgImage'
-import NavbarBootstrap from '../components/navbarBootstrap'
+import NavbarBootstrap from '../components/navbar-bootstrap.js'
 
 const API = "http://localhost:3000";
 

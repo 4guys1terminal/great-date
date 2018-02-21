@@ -6,19 +6,45 @@ module.exports = {
     [
       {
         name: 'Pacific Beach',
-        createdAt: new Date(), // we need to add the manually for seeds
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Mission Beach',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Ocean Beach',
+        createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         name: 'Downtown',
-        createdAt: new Date(), // we need to add the manually for seeds
+        createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         name: 'North Park',
-        createdAt: new Date(), // we need to add the manually for seeds
+        createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        name: 'La Jolla',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: 'Old Town',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+
+      {
+        name: 'North County',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
     ])
   },
 

@@ -10,7 +10,7 @@ import {
     FormControl,
     Button,
 } from 'react-bootstrap';
-import RegistrationStore from './RegistrationStore';
+import RegistrationStore from './registration-store';
 
 class SignUp extends Component {
     constructor(props) {

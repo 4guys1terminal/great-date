@@ -170,7 +170,7 @@ app.post('/', (req, res) => {
 
 
 
-//Creating New User   (Need Kevin and Dan to comment)
+//Creating New User   (Need Kevin and dan to comment)
 
 app.post('/users', (req, res) => {
 
@@ -244,10 +244,10 @@ app.post('/activities', (req, res) => {
             }).then((activity) => {
                 res.status(201)
                 res.json({activity: activity})
-                //Takes the tag checkbox from our form
+                // Takes the tag checkbox from our form
                 tags = req.body.tags
                 let tagArr = []
-                //Pushes Id of newly made activity and any tag selected to an array to use for our ActivityTag Table
+                // Pushes Id of newly made activity and any tag selected to an array to use for our ActivityTag Table
                 for (var property in tags) {
                     let val = {
                         ActivityId: activity.id,
@@ -307,17 +307,6 @@ app.post('/sessions/new', (req, res) => {
         res.json({message: 'Email/Password Required'})
     }
 })
-
-// app.get('/activitysearch', (req, res) => {
-//   let term = req.query.term
-//   let location = req.query.location
-//     client.search({
-//       term: term,
-//       location: location
-//     }).then(res => {
-//     res.jsonBody.businesses[0].name
-//     })
-// })
 
 //TODO: put route for editing activities
 //

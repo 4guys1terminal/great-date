@@ -11,7 +11,7 @@ import {
     HelpBlock,
     Alert,
     Radio,
-    Checkbox
+    Checkbox,
 } from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
 import fetches from '../functions/fetch.js';
@@ -26,7 +26,7 @@ class DateGenerator extends Component {
             form: {
                 tags: {}
             },
-            tags: []
+            tags: [],
         }
     }
 
@@ -40,10 +40,11 @@ class DateGenerator extends Component {
     }
 
     createTagCheckbox = (tag) => {
-        return (
-            <Checkbox inline type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
-                <span className="generatorTags"><i class="fas fa-tag"></i> {tag.title}</span>
-            </Checkbox>)
+        return (<Checkbox inline="inline" type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
+            <span className="generatorTags">
+                <i class="fas fa-tag"></i>
+                {tag.title}</span>
+        </Checkbox>)
     }
 
     createTagCheckboxes = () => {
@@ -76,7 +77,7 @@ class DateGenerator extends Component {
         if (onSubmit) {
             onSubmit(form).then((resp) => {
                 fetchActivity(resp.randomTag).then((resp) => {
-                    this.setState({randomTag: resp.activity.id, activity: resp.activity, randomSuccess: true})
+                    this.setState({randomTag: resp.activity.id, activity: resp.activity, randomSuccess: true,})
                 })
             })
         } else {
@@ -107,8 +108,8 @@ class DateGenerator extends Component {
                                     <br/> {this.createTagCheckboxes()}
 
                                     {/*
-                                    {this.errorsFor('tags') && <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>}
-                                    */
+                                        {this.errorsFor('tags') && <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>}
+                                        */
                                     }
 
                                 </FormGroup>
@@ -119,10 +120,11 @@ class DateGenerator extends Component {
                 </div>
                 <button bsSize='large' id='submit' className='success-btns' onClick={this.handleSubmit.bind(this)}>
                     <span>
-                    Shuffle
-                </span>
+                        Shuffle
+                    </span>
                 </button>
-            </div>);
+            </div>
+        );
     }
 }
 

@@ -19,14 +19,14 @@ class Grid extends Component {
 
     componentWillMount() {
         fetchTags()
-        .then((res) => {
+        .then(res => {
             this.setState({
                 tags: res.tags
             })
         })
 
         fetchActivities()
-        .then((res) => {
+        .then(res => {
             this.setState({
                 activities: res.activities
             })
