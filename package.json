@@ -5,10 +5,11 @@
   "repository": "https://github.com/4guys1terminal/great-date.git",
   "license": "MIT",
   "engines": {
-    "node": "9.2.1"
+    "node": "9.2.1",
+    "yarn": "1.3.2"
   },
   "scripts": {
-     "heroku-postbuild": "cd gd-backend && cd /usr/local/bin/sequelize db:migrate && cd /usr/local/bin/sequelize db:seed:all && cd .. && cd gd-frontend/ && yarn install && yarn build",
+     "heroku-postbuild": "cd gd-backend && sequelize db:migrate && sequelize db:seed:all && cd .. && cd gd-frontend/ && yarn install && yarn build",
      "start": "node gd-backend/index.js"
    }
 }
