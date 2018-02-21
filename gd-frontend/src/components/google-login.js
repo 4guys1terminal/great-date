@@ -13,7 +13,7 @@ const responseGoogle = (response) => {
 
 const MyGoogleButton = ({ onClick }) => (
   <button className='login-btn' id='google-login' onClick={onClick}>
-     <i class="fab fa-google fa-2x" style={STYLE}></i> Log in with Google 
+     <i class="fab fa-google fa-2x" style={STYLE}></i> Log in with Google
   </button>
 );
 
