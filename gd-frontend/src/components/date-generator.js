@@ -119,7 +119,6 @@ class DateGenerator extends Component {
                 </div>
                 <button bsSize='large' id='submit' className='success-btns' onClick={this.handleSubmit.bind(this)}>
                     <span>
-
                     Shuffle
                 </span>
                 </button>

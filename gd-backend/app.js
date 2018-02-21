@@ -90,7 +90,6 @@ app.get('/activities/:id', (req, res) => {
 // returns all activityId's that match the chosen tags to FE via:
 // res.json({browseActivities: browseActivities}
 
-//route for browse page generation ALL ACTIVITY IDs BY TAG
 app.post('/browse', (req, res) => {
     tags = req.body.tags
     let tagArr = []
@@ -99,19 +98,36 @@ app.post('/browse', (req, res) => {
             ? tagArr.push(parseInt(property))
             : ''
     }
+    console.log("tagArr",tagArr);
 
-    Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT}).then(allBrowseActivities => {
+    Tags.sequelize.query(
+        `
+        select *
+        from "Activities" a
+        join "ActivityTags" t on a.id = t."ActivityId"
+        join (
+            select "ActivityId"
+            from "ActivityTags"
+            where "TagId" in (${tagArr})
+            group by "ActivityId"
+        ) m on a.id = m."ActivityId";
+        `
+        , {type: sequelize.QueryTypes.SELECT}).then(allBrowseActivities => {
         let browseActivityIds = []
 
         for (var i = 0; i < allBrowseActivities.length; i++) {
-            console.log(allBrowseActivities[i].id);
             browseActivityIds.push(allBrowseActivities[i].ActivityId)
-
         }
-        console.log(browseActivityIds);
+
+        browseActivityIds = browseActivityIds.filter((elem, pos, arr) => {
+                return arr.indexOf(elem) == pos;
+        });
+
+        // console.log(browseActivityIds);
         res.json({browseActivityIds: browseActivityIds})
     })
 });
+
 
 // route for random date generator
 app.post('/', (req, res) => {
@@ -284,7 +300,7 @@ app.post('/sessions/new', (req, res) => {
 // })
 
 //TODO: put route for editing activities
-// 
+//
 app.put('/activities/edit/:id', (req, res) => {
 
     const {name, content} = req.params;

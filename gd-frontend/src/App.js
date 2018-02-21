@@ -40,6 +40,8 @@ class App extends Component {
                             <SignUpPage errors={this.state.errors && this.state.errors.validations}/>
                         </div>)}/>
 
+                    <Route path='/browse' />
+
                 </ScrollToTop>
             </Switch>
         </Router>);
