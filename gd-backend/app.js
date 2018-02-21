@@ -46,7 +46,7 @@ const authorization = (req, res, next) => {
     }
 }
 // homepage
-app.get('/api', (req, res) => {
+app.get('/api/home', (req, res) => {
     res.json({message: 'API example app'});
 });
 
@@ -145,7 +145,7 @@ app.post('/api/browse', (req, res) => {
 
 
 // route for random date generator
-app.post('/api', (req, res) => {
+app.post('/api/home', (req, res) => {
     tags = req.body.tags
     let tagArr = []
     for (var property in tags) {

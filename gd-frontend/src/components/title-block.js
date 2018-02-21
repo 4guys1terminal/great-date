@@ -34,7 +34,7 @@ class TitleBlock extends Component {
 export default TitleBlock;
 
 function handleDateGenerator(params) {
-    return fetch(`${API}/`, {
+    return fetch(`${API}api/`, {
         method: "POST", //specifying our correct endpoint in the server
         headers: { //specifying that we're sending JSON, and want JSON back
             'Content-Type': 'application/json'

@@ -16,8 +16,11 @@ import {
 import {Redirect} from 'react-router-dom';
 import fetches from '../functions/fetch.js';
 
-const API = "http://localhost:3000"
+var API
+ if(process.env.NODE_ENV === 'production'){ API = "/" } else { API = "http://localhost:3000/" }
+
 const {fetchActivity} = fetches(API)
+
 
 class DateGenerator extends Component {
     constructor(props) {

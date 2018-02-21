@@ -9,7 +9,7 @@ import api from '../functions/fetch.js';
 var host
  if(process.env.NODE_ENV === 'production'){ host = "/" } else { host = "http://localhost:3000/" }
 const { fetchTags, fetchActivities } = api(host)
-const path = "/user-uploads/"
+const path = "api/user-uploads/"
 const imgSrc = imageFactory(host, path)
 
 
