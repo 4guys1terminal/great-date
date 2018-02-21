@@ -139,6 +139,18 @@ input[type=file] {
     display: flex;
     width: 100%;
     justify-content: center;
+    height: 250px;
+}
+
+.dropzone {
+    width: 40%;
+    height: 100%;
+    border: 3px dashed white;
+}
+
+.dropzone-text p {
+    font-weight: 400;
+    margin: 15px;
 }
 
 .image-preview {

@@ -13,14 +13,15 @@
 - [ ] Overall user flow
 - [ ] FB Login / Auth
 - [ ] Google Login / Auth
-- [ ] Tag Icon Design/Checkbox Button
+- [ ] Tag Icon Design/Checkbox Button - Jake
 - [ ] Form & Content Scaling for smaller screen sizes
-- [ ] Image Upload Agreement
+- [X] Image Upload Agreement
 - [ ] Image handling/processing
-- [ ] FE Browse search display
+- [ ] FE Browse search display - JD
 - [ ] FE Home page grid limited to 9 dates
 - [ ] Tag generation componentization
 - [ ] Generator routing / added to nav bar
+- [ ] Footer w/ boilerplate legal info and such
 
 
 ### PHASE 2 : Feature Addition

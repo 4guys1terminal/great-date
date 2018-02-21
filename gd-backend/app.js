@@ -92,60 +92,54 @@ app.post('/browse', (req, res) => {
             : ''
     }
 
-    console.log("tagArr",tagArr);
-    Tags.sequelize.query(
-        `
+    Tags.sequelize.query(`
         SELECT "ActivityId"
         FROM "ActivityTags"
         WHERE "TagId" in (${tagArr})
         GROUP BY "ActivityId"
-        HAVING COUNT (distinct "TagId") = (${tagArr.length});
-        `
-        , {type: sequelize.QueryTypes.SELECT}).then(allBrowseActivities => {
-        let browseActivityIds = []
+        HAVING COUNT (distinct "TagId") = (${tagArr.length});`
+        , {type: sequelize.QueryTypes.SELECT})
+    .then(allExclusiveActivities => {
 
-        for (var i = 0; i < allBrowseActivities.length; i++) {
-            browseActivityIds.push(allBrowseActivities[i].ActivityId)
+        // Browse Activities Exclusive
+
+        let exclusiveIds = []
+
+        for (var i = 0; i < allExclusiveActivities.length; i++) {
+            exclusiveIds.push(allExclusiveActivities[i].ActivityId)
         }
 
-        browseActivityIds = browseActivityIds.filter((elem, pos, arr) => {
+        exclusiveIds = exclusiveIds.filter((elem, pos, arr) => {
                 return arr.indexOf(elem) == pos;
         });
 
-        console.log(browseActivityIds);
+        // Browse Activities Inclusive
 
-        res.json({browseActivityIds: browseActivityIds})
-    })
+        Tags.sequelize.query(`
+            SELECT *
+            FROM "Activities"
+            JOIN "ActivityTags"
+            ON "Activities".id="ActivityId"
+            WHERE "TagId" IN (${tagArr});`
+            , {type: sequelize.QueryTypes.SELECT})
+        .then(allInclusiveActivities => {
+                let inclusiveIds = []
+
+                for (var i = 0; i < allInclusiveActivities.length; i++) {
+                    inclusiveIds.push(allInclusiveActivities[i].ActivityId)
+                }
+
+                inclusiveIds = inclusiveIds.filter((elem, pos, arr) => {
+                        return arr.indexOf(elem) == pos;
+                });
+
+            console.log("exclusiveIds",exclusiveIds, "inclusiveIds",inclusiveIds);
+            res.status(201)
+            res.json({exclusiveIds: exclusiveIds,
+                    inclusiveIds: inclusiveIds})
+            })
+        })
 });
-
-
-// `
-// SELECT *
-// FROM "Activities" a
-// JOIN "ActivityTags" t ON a.id = t."ActivityId"
-// JOIN (
-//     SELECT "ActivityId"
-//     FROM "ActivityTags"
-//     WHERE "TagId" in (${tagArr})
-//     GROUP BY "ActivityId"
-// ) m ON a.id = m."ActivityId";
-// `
-//
-// Code for exclusive tag search:
-    //`
-    //SELECT "ActivityId"
-    //FROM "ActivityTags"
-    //WHERE "TagId" in (${tagArr})
-    //GROUP BY "ActivityId"
-    //HAVING COUNT (distinct "TagId") = (${tagArr.length});
-    //`
-
-// Code for inclusive tag search:
-    // `SELECT *
-    // FROM "Activities"
-    // JOIN "ActivityTags"
-    // ON "Activities".id="ActivityId"
-    // WHERE "TagId" IN (${tagArr});`
 
 
 // route for random date generator
