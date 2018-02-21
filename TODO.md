@@ -8,6 +8,7 @@
 
 ### Before Demo Night
 - [ ] Add ratings
+- [ ] Add comments
 - [ ] Advanced search
 - [ ] Make tags look cleaner/organized
 - [ ] Google/FB Sign Up and Login

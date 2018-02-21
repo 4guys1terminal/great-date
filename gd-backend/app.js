@@ -4,10 +4,7 @@ var bodyParser = require('body-parser');
 var validator = require('express-validator');
 const crypto = require('crypto')
 var sequelize = require('sequelize');
-const Op = sequelize.Op
 const fs = require('fs');
-
-
 
 var app = express();
 
