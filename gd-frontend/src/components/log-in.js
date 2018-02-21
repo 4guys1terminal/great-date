@@ -3,6 +3,7 @@ import '../App.css';
 import {Link} from 'react-router-dom';
 import {BrowserRouter as Router, Route, Redirect,} from 'react-router-dom';
 import FBlogin from '../components/FBlogin';
+import GoogleLog from './google-login';
 import {
     Row,
     Col,
@@ -107,6 +108,7 @@ class Login extends Component {
                 <button className="login-btn" type="submit">
                     Log in
                 </button>
+                <GoogleLog />
 
                 <FBlogin />
 

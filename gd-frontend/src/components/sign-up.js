@@ -110,7 +110,7 @@ class SignUp extends Component {
 
                         </Col>
 
-                        <a className="forgot" href="#">
+                        <a className="forgot" target="_blank" href="https://termsfeed.com/privacy-policy/fc335ac239bf69e28f95d5e7104179cc">
                             <p className="agree">By signing up, you agree to our
                                 <br/>
                                 <span className="terms">Terms & Privacy Policy.</span>

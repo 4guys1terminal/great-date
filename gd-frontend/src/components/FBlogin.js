@@ -42,6 +42,7 @@ class FBlogin extends Component {
         callback={authenticate}
         component={MyFacebookButton}
       />
+
       {
           authorized
               ? <Redirect to={"/"}/>

@@ -326,6 +326,12 @@ input[type=file] {
   left: 5px;
 }
 
+.fa-google {
+  position: relative;
+  top: 5px;
+  left: 5px;
+}
+
 .login-btn:hover {
     cursor: pointer;
     opacity: .7
@@ -334,6 +340,12 @@ input[type=file] {
 #FBlogin {
     margin-top: 0px;
     padding-top: 0px;
+}
+
+#google-login {
+  background-color: #db3236;
+  margin-top: 0px;
+  padding-top: 0px;
 }
 
 ::-webkit-input-placeholder {
