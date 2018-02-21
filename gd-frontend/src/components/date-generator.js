@@ -31,7 +31,7 @@ class DateGenerator extends Component {
     }
 
     componentWillMount() {
-        fetch(`${API}/tags`).then((resp) => {
+        fetch(`${API}api/tags`).then((resp) => {
             return resp.json()
         }).then((resp) => {
             this.setState({tags: resp.tags})

@@ -5,7 +5,8 @@ import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import bgImage from '../functions/bgImage'
 import NavbarBootstrap from '../components/navbar-bootstrap.js'
 
-const API = "http://localhost:3000";
+var API
+ if(process.env.NODE_ENV === 'production'){ API = "/" } else { API = "http://localhost:3000/" }
 
 var backgroundTexture = {
     backgroundImage: 'url(/images/grid_noise.png)'
@@ -23,7 +24,7 @@ class SignUpPage extends Component {
     }
 
     componentWillMount() {
-        fetch(`${API}/users`)
+        fetch(`${API}api/users`)
             .then((raw) => {
                 return raw.json();
             })
@@ -34,7 +35,7 @@ class SignUpPage extends Component {
     }
 
     handleNewUser(params) {
-        fetch(`${API}/users`, {
+        fetch(`${API}api/users`, {
             body: JSON.stringify(params),
             headers: {
                 'Content-Type': 'application/json'

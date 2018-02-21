@@ -5,7 +5,9 @@ import DateGenerator from './date-generator.js';
 import api from '../functions/fetch.js';
 import {Redirect} from 'react-router-dom';
 
-const API = "http://localhost:3000"
+var API
+ if(process.env.NODE_ENV === 'production'){ API = "/" } else { API = "http://localhost:3000/" }
+
 const {fetchActivity} = api(API)
 
 class TitleBlock extends Component {

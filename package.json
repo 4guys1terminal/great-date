@@ -8,9 +8,7 @@
     "node": "9.2.1"
   },
   "scripts": {
-     "build": "concurrently \"cd gd-frontend && yarn build\" \"cd gd-backend && yarn build\"",
-     "install": "(cd gd-frontend && yarn) && (cd gd-backend && yarn)",
-     "start": "concurrently \"cd gd-frontend && PORT=3000 yarn start\" \"cd gd-backend && PORT=3001 yarn start\"",
-     "start:prod": "cd gd-backend && yarn start:prod"
-   }
+     "start": ""
+   },
+   "heroku-postbuild": "cd gd-backend && sequelize db:migrate && sequelize db:seed:all && cd .. && cd gd-frontend/ && yarn install && yarn build"
 }

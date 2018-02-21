@@ -11,7 +11,8 @@ import imageFactory from '../functions/imgSrc.js';
 import bgImage from '../functions/bgImage'
 
 
-const host = "http://localhost:3000"
+var host
+ if(process.env.NODE_ENV === 'production'){ host = "/" } else { host = "http://localhost:3000/" }
 const path = "/user-uploads/"
 
 const imgSrc = imageFactory(host, path)

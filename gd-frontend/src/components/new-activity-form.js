@@ -17,7 +17,8 @@ import RadioGroup from './radio-group.js';
 import Dropzone from 'react-dropzone';
 
 
-const API = "http://localhost:3000"
+var API
+ if(process.env.NODE_ENV === 'production'){ API = "/" } else { API = "http://localhost:3000/" }
 
 class NewActivityForm extends Component {
     constructor(props) {
@@ -40,13 +41,13 @@ class NewActivityForm extends Component {
     }
       //Gets our tag and location database
     componentWillMount() {
-        fetch(`${API}/tags`).then((resp) => {
+        fetch(`${API}api/tags`).then((resp) => {
             return resp.json()
         }).then((resp) => {
             this.setState({tags: resp.tags})
         })
 
-        fetch(`${API}/locations`).then((resp) => {
+        fetch(`${API}api/locations`).then((resp) => {
             return resp.json()
         }).then((resp) => {
             this.setState({locations: resp.locations})

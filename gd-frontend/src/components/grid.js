@@ -5,7 +5,9 @@ import {Link} from 'react-router-dom';
 import imageFactory from '../functions/imgSrc.js';
 import api from '../functions/fetch.js';
 
-const host = "http://localhost:3000"
+
+var host
+ if(process.env.NODE_ENV === 'production'){ host = "/" } else { host = "http://localhost:3000/" }
 const { fetchTags, fetchActivities } = api(host)
 const path = "/user-uploads/"
 const imgSrc = imageFactory(host, path)

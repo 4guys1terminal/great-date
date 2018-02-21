@@ -5,6 +5,7 @@ var validator = require('express-validator');
 const crypto = require('crypto')
 var sequelize = require('sequelize');
 const fs = require('fs');
+var path = require('path');
 
 var app = express();
 
@@ -15,6 +16,7 @@ var Tags = require('./models').Tag;
 var ActivityTag = require('./models').ActivityTag;
 var Location = require('./models').Location;
 
+app.use(express.static(path.resolve(__dirname, '../gd-frontend/build')));
 app.use(express.static('public'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true,}));
@@ -44,37 +46,37 @@ const authorization = (req, res, next) => {
     }
 }
 // homepage
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.json({message: 'API example app'});
 });
 
 // displays respective route  w/ raw json from database onto page
-app.get('/activities', (req, res) => {
+app.get('/api/activities', (req, res) => {
     Activity.findAll().then(activities => {
         res.json({activities: activities});
     });
 });
 
-app.get('/tags', (req, res) => {
+app.get('/api/tags', (req, res) => {
     Tags.findAll().then((tags) => {
         res.json({tags: tags})
     })
 })
 
-app.get('/users', (req, res) => {
+app.get('/api/users', (req, res) => {
     User.findAll().then(users => {
         res.json({users: users})
     })
 })
 
-app.get('/locations', (req, res) => {
+app.get('/api/locations', (req, res) => {
     Location.findAll().then(locations => {
         res.json({locations: locations})
     })
 })
 
 // displays specific activity by ID
-app.get('/activities/:id', (req, res) => {
+app.get('/api/activities/:id', (req, res) => {
     let id = parseInt(req.params.id);
 
     Activity.findById(id).then(activity => {
@@ -83,7 +85,7 @@ app.get('/activities/:id', (req, res) => {
 });
 
 
-app.post('/browse', (req, res) => {
+app.post('/api/browse', (req, res) => {
     tags = req.body.tags
     let tagArr = []
     for (var property in tags) {
@@ -143,7 +145,7 @@ app.post('/browse', (req, res) => {
 
 
 // route for random date generator
-app.post('/', (req, res) => {
+app.post('/api', (req, res) => {
     tags = req.body.tags
     let tagArr = []
     for (var property in tags) {
@@ -166,7 +168,7 @@ app.post('/', (req, res) => {
 
 //Creating New User   (Need Kevin and dan to comment)
 
-app.post('/users', (req, res) => {
+app.post('/api/users', (req, res) => {
 
     req.checkBody('firstName', 'Is required').notEmpty()
     req.checkBody('password', 'Is required').notEmpty()
@@ -194,7 +196,7 @@ app.post('/users', (req, res) => {
 })
 
 // post route for creating activities
-app.post('/activities', (req, res) => {
+app.post('/api/activities', (req, res) => {
 
     //sets up validation checks on all submit fields
     req.checkBody('title', 'is required').notEmpty()
@@ -271,7 +273,7 @@ app.post('/activities', (req, res) => {
 
 
 // login form
-app.post('/sessions/new', (req, res) => {
+app.post('/api/sessions/new', (req, res) => {
     const email = req.body.email
     const password = req.body.password
 
@@ -304,7 +306,7 @@ app.post('/sessions/new', (req, res) => {
 
 //TODO: put route for editing activities
 //
-app.put('/activities/edit/:id', (req, res) => {
+app.put('/api/activities/edit/:id', (req, res) => {
 
     const {name, content} = req.params;
     let id = parseInt(req.params.id);
@@ -328,9 +330,11 @@ app.put('/activities/edit/:id', (req, res) => {
 });
 
 // runs authorization check, responds with JSON to current user
-app.get('/login', authorization, function(req, res) {
+app.get('/api/login', authorization, function(req, res) {
     res.json({user: request.currentUser})
 })
+
+app.get('*', function(req, res) { res.sendFile(path.resolve(__dirname, '../gd-frontend/build', 'index.html')); });
 
 
 module.exports = app

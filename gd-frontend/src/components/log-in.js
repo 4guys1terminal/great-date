@@ -43,7 +43,7 @@ class Login extends Component {
         e.preventDefault()
         const { email, password } = this.state.form
 
-        fetch(`${API}/sessions/new` ,
+        fetch(`${API}api/sessions/new` ,
         {
             method: "post",
             headers: {
