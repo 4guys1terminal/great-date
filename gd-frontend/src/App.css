@@ -272,7 +272,7 @@ input[type=file] {
     align-self: center;
     background-color: white;
     width: 350px;
-    height: 400px;
+    height: 450px;
     padding-bottom: 15px;
     display: flex;
     flex-direction: column;
@@ -311,13 +311,19 @@ input[type=file] {
     margin-top: 4%;
     margin-bottom: 5px;
     align-self: center;
-    height: 40px;
+    height: 45px;
     border-radius: 4px;
     width: 75%;
     background-color: rgb(52, 133, 220);
     color: white;
     font-size: 13px;
     font-weight: bold;
+}
+
+.fa-facebook-square {
+  position: relative;
+  top: 5px;
+  left: 5px;
 }
 
 .login-btn:hover {

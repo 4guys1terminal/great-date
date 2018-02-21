@@ -5,9 +5,13 @@ import {
     Button
 } from 'react-bootstrap';
 
+const STYLE = {
+  marginLeft: 5
+}
+
 const MyFacebookButton = ({ onClick }) => (
   <button className='login-btn' id='FBlogin' onClick={onClick}>
-    Log in with facebook
+     Log in with Facebook <i className="fab fa-facebook-square fa-2x" style={STYLE}></i>
   </button>
 );
 
