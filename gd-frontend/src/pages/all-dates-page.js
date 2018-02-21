@@ -100,14 +100,12 @@ class AllDatesPage extends Component {
         tags[tagID] = e.target.checked
 
         form.tags = tags
-        console.log(form);
         this.setState({form: form})
     }
 
     handleChange(e) {
         const {form} = this.state
         form[e.target.name] = e.target.value
-        console.log(this.state);
         this.setState({form: form})
     }
 

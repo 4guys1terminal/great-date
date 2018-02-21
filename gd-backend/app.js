@@ -84,11 +84,6 @@ app.get('/activities/:id', (req, res) => {
     });
 });
 
-// TODO: FE browse page lets user pick a number of certain tags
-// tags are sent to BE on req.body.tags
-// sequelize queries the database for all activities that match those tags
-// returns all activityId's that match the chosen tags to FE via:
-// res.json({browseActivities: browseActivities}
 
 app.post('/browse', (req, res) => {
     tags = req.body.tags
@@ -98,19 +93,15 @@ app.post('/browse', (req, res) => {
             ? tagArr.push(parseInt(property))
             : ''
     }
-    console.log("tagArr",tagArr);
 
+    console.log("tagArr",tagArr);
     Tags.sequelize.query(
         `
-        select *
-        from "Activities" a
-        join "ActivityTags" t on a.id = t."ActivityId"
-        join (
-            select "ActivityId"
-            from "ActivityTags"
-            where "TagId" in (${tagArr})
-            group by "ActivityId"
-        ) m on a.id = m."ActivityId";
+        SELECT "ActivityId"
+        FROM "ActivityTags"
+        WHERE "TagId" in (${tagArr})
+        GROUP BY "ActivityId"
+        HAVING COUNT (distinct "TagId") = (${tagArr.length});
         `
         , {type: sequelize.QueryTypes.SELECT}).then(allBrowseActivities => {
         let browseActivityIds = []
@@ -123,10 +114,24 @@ app.post('/browse', (req, res) => {
                 return arr.indexOf(elem) == pos;
         });
 
-        // console.log(browseActivityIds);
+        console.log(browseActivityIds);
+
         res.json({browseActivityIds: browseActivityIds})
     })
 });
+
+
+// `
+// SELECT *
+// FROM "Activities" a
+// JOIN "ActivityTags" t ON a.id = t."ActivityId"
+// JOIN (
+//     SELECT "ActivityId"
+//     FROM "ActivityTags"
+//     WHERE "TagId" in (${tagArr})
+//     GROUP BY "ActivityId"
+// ) m ON a.id = m."ActivityId";
+// `
 
 
 // route for random date generator
