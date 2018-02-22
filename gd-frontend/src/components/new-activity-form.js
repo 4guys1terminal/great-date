@@ -14,8 +14,12 @@ import RadioGroup from './radio-group.js';
 import Dropzone from 'react-dropzone';
 
 
-var API
- if(process.env.NODE_ENV === 'production'){ API = "/" } else { API = "http://localhost:3000" }
+var API;
+ if(process.env.NODE_ENV === 'production'){
+   API = "/"
+ } else {
+   API = "http://localhost:3000"
+ }
 
 class NewActivityForm extends Component {
     constructor(props) {
@@ -60,9 +64,15 @@ class NewActivityForm extends Component {
     }
 
 
-    handleSubmit() {
-        console.log(this.state.form);
-        this.props.onSubmit(this.state.form);
+    handleSubmit(e) {
+      e.preventDefault()
+console.log(this.state.form);
+      const { onSubmit } = this.props
+      const { form } = this.state
+
+      if(onSubmit) {
+        onSubmit(form)
+      }
     }
 
 
@@ -180,7 +190,7 @@ class NewActivityForm extends Component {
     render() {
         return (
             <div className="createDateDiv">
-              <form className="createDateForm">
+              <form className="createDateForm" onSubmit={this.handleSubmit.bind(this)}>
 
                 <Row>
                   <Col xs={10} xsOffset={1}>
@@ -392,7 +402,9 @@ class NewActivityForm extends Component {
                   <button
                         id="submit"
                         onClick={this.handleSubmit.bind(this)}
-                      ><span>Submit</span></button>
+                      >
+                        <span>Submit</span>
+                      </button>
                     </Col>
                   </Row>
 

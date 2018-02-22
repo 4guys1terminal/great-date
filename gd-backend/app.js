@@ -226,7 +226,7 @@ app.post('/api/activities', (req, res) => {
 
                 const base64ToImage = require('base64-to-image');
 
-                var path = './publicq/user-uploads/'
+                var path = './public/user-uploads/'
                 var optionalObj = {
                     'fileName': hashedImageContent
                 };
