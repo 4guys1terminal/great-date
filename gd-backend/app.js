@@ -224,6 +224,8 @@ app.post('/api/activities', (req, res) => {
             //converting base64 string back into an image and saving to /user-uploads/ folder
             let images = req.body.imageFile.map((image) => {
 
+              console.log("this is an image ", image);
+
                 const base64ToImage = require('base64-to-image');
 
                 var path = './public/user-uploads/'
