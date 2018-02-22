@@ -18,7 +18,6 @@ import fetches from '../functions/fetch.js';
 
 const {fetchActivity, fetchTags} = fetches()
 
-
 class DateGenerator extends Component {
     constructor(props) {
         super(props)
@@ -55,6 +54,7 @@ class DateGenerator extends Component {
 
     createTagCheckboxes = () => {
       const { tags } = this.state
+
       if(!tags) {
         return
       }
