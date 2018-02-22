@@ -19,6 +19,7 @@ class Grid extends Component {
     }
 
     componentWillMount() {
+        console.log("host:", host)
         fetchTags()
         .then(res => {
             this.setState({
