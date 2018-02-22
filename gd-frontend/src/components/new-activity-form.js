@@ -15,7 +15,7 @@ import Dropzone from 'react-dropzone';
 
 
 var API
- if(process.env.NODE_ENV === 'production'){ API = 'https://the-great-date-app.herokuapp.com' } else { API = "http://localhost:3000" }
+ if(process.env.NODE_ENV === 'production'){ API = "/" } else { API = "http://localhost:3000" }
 
 class NewActivityForm extends Component {
     constructor(props) {
@@ -37,7 +37,7 @@ class NewActivityForm extends Component {
         }
     }
       //Gets our tag and location database
-    componentWillMount() {
+    componentDidMount() {
         fetch(`${API}/api/tags`).then(resp => {
             return resp.json()
         }).then(resp => {
