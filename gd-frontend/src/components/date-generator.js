@@ -44,13 +44,15 @@ class DateGenerator extends Component {
         })
     }
 
-    createTagCheckbox = (tag) => (
-        <Checkbox inline="inline" type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
-            <span className="generatorTags">
-                <i class="fas fa-tag"></i>
-                {tag.title}</span>
-        </Checkbox>
-    )
+    createTagCheckbox = (tag) => {
+        return (
+          <Checkbox inline="inline" type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
+              <span className="generatorTags">
+                  <i class="fas fa-tag"></i>
+                  {tag.title}</span>
+          </Checkbox>
+        )
+    }
 
     createTagCheckboxes = () => {
       const { tags } = this.state
