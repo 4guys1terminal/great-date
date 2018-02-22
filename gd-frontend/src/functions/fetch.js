@@ -1,6 +1,6 @@
-const host = process.env.NODE_ENV === 'production' ? '//' : 'http://localhost:3000'
+const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
-export default function(host) {
+export default function() {
     return {
         fetchTags: function() {
             return fetch(`${host}/api/tags`)
