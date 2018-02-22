@@ -25,7 +25,7 @@
     "yelp-fusion": "^2.0.3"
   },
   "scripts": {
-     "heroku-postbuild": "cd gd-backend && sequelize db:migrate && sequelize db:seed:all && cd .. && cd gd-frontend/ && yarn install && yarn build",
+     "heroku-postbuild": "cd gd-backend && sequelize db:migrate && db:seed:undo:all && sequelize db:seed:all && cd .. && cd gd-frontend/ && yarn install && yarn build",
      "start": "node gd-backend/index.js"
    }
 }
