@@ -66,7 +66,6 @@ class NewActivityForm extends Component {
 
     handleSubmit(e) {
       e.preventDefault()
-console.log(this.state.form);
       const { onSubmit } = this.props
       const { form } = this.state
 
