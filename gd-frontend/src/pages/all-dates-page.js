@@ -1,29 +1,19 @@
 import React, {Component} from 'react';
 import Grid from '../components/grid.js';
 
-import DatePreview from '../components/date-preview';
 import {
     Col,
-    ControlLabel,
     FormGroup,
-    FormControl,
-    Button,
-    ButtonGroup,
-    Row,
-    HelpBlock,
-    Alert,
-    Radio,
     Checkbox,
-    ToggleButtonGroup,
-    ToggleButton
+    Row
 } from 'react-bootstrap'
 import LoggedInNav from '../components/logged-in-navbar';
 import NavbarBootstrap from '../components/navbar-bootstrap.js';
 import bgImage from '../functions/bgImage'
-import {Redirect, Link,} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import fetches from '../functions/fetch.js';
 
-const {fetchActivity, fetchTags} = fetches()
+const { fetchTags } = fetches
 
 const API = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000'
 
@@ -55,6 +45,7 @@ class AllDatesPage extends Component {
               tags: tags
             })
         })
+        .catch(e => console.log(e))
     }
 
     isUserLoggedIn() {
@@ -86,11 +77,13 @@ class AllDatesPage extends Component {
     }
 
     createTagCheckbox = (tag) => {
-        return (<Checkbox inline="inline" type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
+        return (
+          <Checkbox inline type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
             <span className="generatorTags">
-                <i class="fas fa-tag"></i>
+                <i className="fas fa-tag"></i>
                 {tag.title}</span>
-        </Checkbox>)
+        </Checkbox>
+      )
     }
 
     createTagCheckboxes = () => {
@@ -193,7 +186,7 @@ class AllDatesPage extends Component {
                         </form>
 
                     </div>
-                    <button bsSize='large' id='submit' className='success-btns' onClick={this.handleSubmit.bind(this)}>
+                    <button id='submit' className='success-btns' onClick={this.handleSubmit.bind(this)}>
                         <span>
                             Select Tags
                         </span>

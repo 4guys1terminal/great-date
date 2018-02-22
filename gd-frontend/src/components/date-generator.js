@@ -2,21 +2,14 @@ import React, {Component} from 'react';
 import '../App.css';
 import {
     Col,
-    ControlLabel,
     FormGroup,
-    FormControl,
-    Button,
-    ButtonGroup,
     Row,
-    HelpBlock,
-    Alert,
-    Radio,
     Checkbox,
 } from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
 import fetches from '../functions/fetch.js';
 
-const {fetchActivity, fetchTags} = fetches()
+const {fetchActivity, fetchTags} = fetches
 
 class DateGenerator extends Component {
     constructor(props) {
@@ -41,7 +34,7 @@ class DateGenerator extends Component {
             this.setState({
               tags: tags
             })
-        })
+        }).catch(e => console.log('mount catch:', e))
     }
 
     createTagCheckbox = (tag) => {

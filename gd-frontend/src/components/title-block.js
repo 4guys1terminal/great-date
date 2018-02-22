@@ -2,12 +2,8 @@ import React, {Component} from 'react';
 import '../App.css';
 import Title from './title.js';
 import DateGenerator from './date-generator.js';
-import api from '../functions/fetch.js';
-import {Redirect} from 'react-router-dom';
 
 const API = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000'
-
-const {fetchActivity} = api()
 
 class TitleBlock extends Component {
     constructor(props) {
@@ -33,7 +29,7 @@ class TitleBlock extends Component {
 export default TitleBlock;
 
 function handleDateGenerator(params) {
-    return fetch(`${API}api/home`, {
+    return fetch(`${API}/api/home`, {
         method: "POST", //specifying our correct endpoint in the server
         headers: { //specifying that we're sending JSON, and want JSON back
             'Content-Type': 'application/json'

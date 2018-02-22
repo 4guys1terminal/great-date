@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import FacebookAuth from 'react-facebook-auth';
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
-import {
-    Button
-} from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 
 const STYLE = {
   marginLeft: 5

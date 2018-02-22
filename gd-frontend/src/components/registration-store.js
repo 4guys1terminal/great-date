@@ -14,11 +14,7 @@ class RegistrationStore {
     }
 
     getErrors() {
-        // {}
-        // or
-        // {firstName: 'is requires'}
         return this.errors
-
     }
 
     validate() {
@@ -31,7 +27,6 @@ class RegistrationStore {
     }
 
     validatePresence(fieldName) {
-        const { password } = this.fields
         if (this.fields[fieldName] === '') {
             this.addError(fieldName, 'is required')
         }

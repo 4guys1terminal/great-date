@@ -8,16 +8,16 @@ class DateComponent extends Component {
         const costConverter = Math.round(this.props.cost * 3)
         switch (costConverter) {
             case 0:
-                return "Free"
+                return "Free";
                 break;
             case 1:
-                return "$"
+                return "$";
                 break;
             case 2:
-                return "$$"
+                return "$$";
                 break;
             case 3:
-                return "$$$"
+                return "$$$";
                 break;
             default:
                 break;

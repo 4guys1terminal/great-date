@@ -5,11 +5,6 @@ import NavbarBootstrap from '../components/navbar-bootstrap.js';
 import bgImage from '../functions/bgImage'
 
 
-var backgroundTexture = {
-    backgroundImage: 'url(/images/grid_noise.png)'
-};
-
-
 class LoginPage extends Component {
     render() {
         return (

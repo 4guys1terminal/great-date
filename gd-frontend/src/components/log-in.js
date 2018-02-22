@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../App.css';
 import {Link} from 'react-router-dom';
-import {BrowserRouter as Router, Route, Redirect,} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import FBlogin from '../components/fb-login';
 import GoogleLog from './google-login';
 import {
@@ -9,15 +9,12 @@ import {
     Col,
     FormGroup,
     ControlLabel,
-    HelpBlock,
-    FormControl,
-    Button,
+    FormControl
 } from 'react-bootstrap';
 
-import FormInput from './form-input.js';
 
 
-const API = "http://127.0.0.1:3000";
+const API = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000'
 
 class Login extends Component {
     constructor(props) {
@@ -43,7 +40,7 @@ class Login extends Component {
         e.preventDefault()
         const { email, password } = this.state.form
 
-        fetch(`${API}api/sessions/new` ,
+        fetch(`${API}/api/sessions/new` ,
         {
             method: "post",
             headers: {
@@ -77,7 +74,6 @@ class Login extends Component {
 
     render() {
         const { authorized, form } = this.state
-        const { email, password } = form
         const login =
         (<div className="login-wrapper">
             <form className="login-form" onSubmit={this.authorize} onChange={this.handleChange.bind(this)}>

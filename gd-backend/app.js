@@ -141,6 +141,7 @@ app.post('/api/browse', (req, res) => {
             res.json({exclusiveIds: exclusiveIds,
                     inclusiveIds: inclusiveIds})
             })
+            .catch(e => console.log(e))
         })
 });
 
@@ -163,6 +164,7 @@ app.post('/api/home', (req, res) => {
         res.status(201)
         res.json({randomTag: randomTag})
     })
+    .catch(e => console.log(e))
 });
 
 

@@ -6,11 +6,8 @@ import {
     FormGroup,
     FormControl,
     Button,
-    ButtonGroup,
     Row,
-    HelpBlock,
     Alert,
-    Radio,
     Checkbox
 } from 'react-bootstrap';
 import RadioGroup from './radio-group.js';
@@ -18,7 +15,7 @@ import Dropzone from 'react-dropzone';
 
 
 var API
- if(process.env.NODE_ENV === 'production'){ API = "/" } else { API = "http://localhost:3000/" }
+ if(process.env.NODE_ENV === 'production'){ API = "/" } else { API = "http://localhost:3000" }
 
 class NewActivityForm extends Component {
     constructor(props) {
@@ -41,15 +38,15 @@ class NewActivityForm extends Component {
     }
       //Gets our tag and location database
     componentWillMount() {
-        fetch(`${API}api/tags`).then((resp) => {
+        fetch(`${API}/api/tags`).then(resp => {
             return resp.json()
-        }).then((resp) => {
+        }).then(resp => {
             this.setState({tags: resp.tags})
         })
 
-        fetch(`${API}api/locations`).then((resp) => {
+        fetch(`${API}/api/locations`).then(resp => {
             return resp.json()
-        }).then((resp) => {
+        }).then(resp => {
             this.setState({locations: resp.locations})
         })
     }
@@ -250,7 +247,7 @@ class NewActivityForm extends Component {
                     </Col>
                   </Row>
 
-                  {/*Location*/}
+
                   <Row>
                     <Col xs={10} xsOffset={1}>
                       <FormGroup
@@ -265,17 +262,12 @@ class NewActivityForm extends Component {
                           onChange={this.handleChange.bind(this)}
                         >
 
-                          // <option value="location">Location</option>
+                           <option value="location">Location</option>
                           {this.createLocations()}
                         </FormControl>
 
 
 
-                        {/*}
-                          {this.errorsFor('location') &&
-                          <HelpBlock id="location-help-block">{this.errorFor('location')}</HelpBlock>
-                          }
-                        */}
 
                       </FormGroup>
                     </Col>
@@ -368,7 +360,7 @@ class NewActivityForm extends Component {
                               <div
                                 key={index}
                               >
-                                <img src={image[0].preview} className="image-preview"/>
+                                <img src={image[0].preview} className="image-preview" alt="preview"/>
                                 <p> {image[0].name} </p>
                                 <br/>
                                 <Button onClick={(event) =>

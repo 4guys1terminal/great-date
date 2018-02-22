@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import GoogleLogin from 'react-google-login';
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 const KEY = "525476460151-027bhu8spj34pr2gcm7o37vnd9r016ss.apps.googleusercontent.com"
 

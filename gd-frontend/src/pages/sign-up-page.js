@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import '../App.css';
 import SignUp from '../components/sign-up.js';
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import bgImage from '../functions/bgImage'
 import NavbarBootstrap from '../components/navbar-bootstrap.js'
 
 var API
  if(process.env.NODE_ENV === 'production'){ API = "/" } else { API = "http://localhost:3000/" }
 
-var backgroundTexture = {
-    backgroundImage: 'url(/images/grid_noise.png)'
-}
 
 class SignUpPage extends Component {
     constructor(props) {

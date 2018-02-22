@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import '../App.css';
 import DatePreview from './date-preview';
-import {Link} from 'react-router-dom';
 import imageFactory from '../functions/imgSrc.js';
 import api from '../functions/fetch.js';
 
-const { fetchTags, fetchActivities } = api()
+const { fetchTags, fetchActivities } = api
 
 const host = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000'
 

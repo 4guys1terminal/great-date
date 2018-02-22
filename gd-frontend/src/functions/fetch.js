@@ -1,20 +1,35 @@
-const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
+const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
-export default function() {
-    return {
-        fetchTags: function() {
-            return fetch(`${host}/api/tags`)
-            .then(res => res.json)
-        },
+const fetches = {
+  fetchTags() {
+      return fetch(`${API}/api/tags`)
+      .then(res => res.json())
+      .catch(e => {
+        console.log('fetchTags catch:', e)
 
-        fetchActivities: function() {
-            return fetch(`${host}/api/activities`)
-            .then(res => res.json())
-        },
+        return e
+      })
+  },
 
-        fetchActivity: function(id) {
-            return fetch(`${host}/api/activities/${id}`)
-            .then(res => res.json())
-        },
-    }
+  fetchActivities() {
+      return fetch(`${API}/api/activities`)
+      .then(res => res.json())
+      .catch(e => {
+        console.log('fetchActivities catch:', e)
+
+        return e
+      })
+  },
+
+  fetchActivity(id) {
+      return fetch(`${API}/api/activities/${id}`)
+      .then(res => res.json())
+      .catch(e => {
+        console.log('fetchActivity catch:', e)
+
+        return e
+      })
+  }
 }
+
+export default fetches

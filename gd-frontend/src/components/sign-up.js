@@ -5,10 +5,7 @@ import {
     Row,
     Col,
     FormGroup,
-    ControlLabel,
-    HelpBlock,
-    FormControl,
-    Button,
+    FormControl
 } from 'react-bootstrap';
 import RegistrationStore from './registration-store';
 
@@ -35,7 +32,7 @@ class SignUp extends Component {
         const {registration} = this.state;
         this.validate()
         if (onSubmit) {
-            onSubmit(this.state.registration)
+            onSubmit(registration)
         } else {
             console.log("no onSubmit props passed");
         }
@@ -110,7 +107,7 @@ class SignUp extends Component {
 
                         </Col>
 
-                        <a className="forgot" target="_blank" href="https://termsfeed.com/privacy-policy/fc335ac239bf69e28f95d5e7104179cc">
+                        <a className="forgot" target="_blank" rel="noopener noreferrer" href="https://termsfeed.com/privacy-policy/fc335ac239bf69e28f95d5e7104179cc">
                             <p className="agree">By signing up, you agree to our
                                 <br/>
                                 <span className="terms">Terms & Privacy Policy.</span>

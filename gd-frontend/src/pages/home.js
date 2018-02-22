@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
 import '../App.css';
 import TitleBlock from '../components/title-block.js';
-import ReactDOM from "react-dom";
-import {Button} from 'reactstrap';
-import {Link, Redirect} from 'react-router-dom';
-import Title from '../components/title';
-import TitleButton from '../components/title-button';
+import {Link} from 'react-router-dom';
 import Grid from '../components/grid';
-import LoggedIn from '../pages/logged-in-page';
 import LoggedInNav from '../components/logged-in-navbar';
 
 import bgImage from '../functions/bgImage'

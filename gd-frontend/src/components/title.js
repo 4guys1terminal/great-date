@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import '../App.css';
-import TitleButton from './title-button.js';
 
 class Title extends Component {
     render() {

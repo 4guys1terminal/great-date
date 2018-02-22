@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import {Button} from 'react-bootstrap';
 import '../App.css';
-import DateInfo from '../components/date-info.js';
 import LoggedInNav from '../components/logged-in-navbar';
 import NavbarBootstrap from '../components/navbar-bootstrap.js';
 import DateComponent from '../components/date-component.js';
@@ -15,11 +12,7 @@ const path = "/user-uploads/"
 
 const imgSrc = imageFactory(host, path)
 
-const { fetchActivity } = api(host)
-
-var backgroundTexture = {
-    backgroundImage: 'url(/images/grid_noise.png)'
-};
+const { fetchActivity } = api
 
 
 class DatePage extends Component {
