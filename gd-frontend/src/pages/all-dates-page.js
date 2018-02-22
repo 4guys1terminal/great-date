@@ -23,10 +23,7 @@ import bgImage from '../functions/bgImage'
 import {Redirect, Link,} from 'react-router-dom';
 import fetches from '../functions/fetch.js';
 
-var API
- if(process.env.NODE_ENV === 'production'){ API = "/" } else { API = "http://localhost:3000/" }
-
-const {fetchActivity} = fetches(API)
+const {fetchActivity, fetchTags} = fetches()
 
 var backgroundTexture = {
     backgroundImage: 'url(/images/grid_noise.png)'
@@ -44,9 +41,8 @@ class AllDatesPage extends Component {
     }
 
     componentWillMount() {
-        fetch(`${API}/tags`).then((resp) => {
-            return resp.json()
-        }).then((resp) => {
+        fetchTags()
+        .then((resp) => {
             this.setState({tags: resp.tags})
             console.log('tags imported', this.state.tags);
         })
@@ -127,7 +123,7 @@ class AllDatesPage extends Component {
 
     handleSubmit() {
         const {form} = this.state
-        return fetch(`${API}/browse`, {
+        return fetch(`${API}/api/browse`, {
             method: "POST", //specifying our correct endpoint in the server
             headers: { //specifying that we're sending JSON, and want JSON back
                 'Content-Type': 'application/json'

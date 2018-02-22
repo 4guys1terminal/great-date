@@ -16,10 +16,7 @@ import {
 import {Redirect} from 'react-router-dom';
 import fetches from '../functions/fetch.js';
 
-var API
- if(process.env.NODE_ENV === 'production'){ API = "/" } else { API = "http://localhost:3000/" }
-
-const {fetchActivity} = fetches(API)
+const {fetchActivity, fetchTags} = fetches()
 
 
 class DateGenerator extends Component {
@@ -34,9 +31,8 @@ class DateGenerator extends Component {
     }
 
     componentWillMount() {
-        fetch(`${API}api/tags`).then((resp) => {
-            return resp.json()
-        }).then((resp) => {
+        fetchTags()
+        .then((resp) => {
             this.setState({tags: resp.tags})
             console.log('tags imported', this.state.tags);
         })
