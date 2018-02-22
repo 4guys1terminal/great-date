@@ -6,6 +6,8 @@ import imageFactory from '../functions/imgSrc.js';
 import api from '../functions/fetch.js';
 
 const host = process.env.NODE_ENV === 'production' ? "/" : "http://localhost:3000/"
+console.log("host:", host)
+
 
 const { fetchTags, fetchActivities } = api(host)
 const path = "user-uploads/"
@@ -19,7 +21,6 @@ class Grid extends Component {
     }
 
     componentWillMount() {
-        console.log("host:", host)
         fetchTags()
         .then(res => {
             this.setState({

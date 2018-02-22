@@ -16,12 +16,12 @@ var Tags = require('./models').Tag;
 var ActivityTag = require('./models').ActivityTag;
 var Location = require('./models').Location;
 
-app.use(express.static('public'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true,}));
 app.use(validator());
 app.use(cors());
 
+app.use(express.static(path.resolve(__dirname, 'public')))
 app.use(express.static(path.resolve(__dirname, '../gd-frontend/build')));
 
 // authorization token
