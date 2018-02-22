@@ -20,7 +20,7 @@ class SignUpPage extends Component {
     }
 
     componentWillMount() {
-        fetch(`${API}api/users`)
+        fetch(`${API}/api/users`)
             .then((raw) => {
                 return raw.json();
             })
@@ -31,7 +31,7 @@ class SignUpPage extends Component {
     }
 
     handleNewUser(params) {
-        fetch(`${API}api/users`, {
+        fetch(`${API}/api/users`, {
             body: JSON.stringify(params),
             headers: {
                 'Content-Type': 'application/json'
