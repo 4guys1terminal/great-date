@@ -39,9 +39,9 @@ class DateGenerator extends Component {
 
     createTagCheckbox = (tag) => {
         return (
-          <Checkbox inline="inline" type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
+          <Checkbox inline type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
               <span className="generatorTags">
-                  <i class="fas fa-tag"></i>
+                  <i className="fas fa-tag"></i>
                   {tag.title}</span>
           </Checkbox>
         )
@@ -124,7 +124,7 @@ class DateGenerator extends Component {
                     </form>
 
                 </div>
-                <button bsSize='large' id='submit' className='success-btns' onClick={this.handleSubmit.bind(this)}>
+                <button id='submit' className='success-btns' onClick={this.handleSubmit.bind(this)}>
                     <span>
                         Shuffle
                     </span>

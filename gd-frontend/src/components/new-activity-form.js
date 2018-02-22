@@ -78,9 +78,9 @@ class NewActivityForm extends Component {
     }
 
 
-    createLocation = (location) => {
+    createLocation = (location, i) => {
         return(
-            <option>
+            <option key={i}>
             {location.name}
             </option>
         )
@@ -88,8 +88,8 @@ class NewActivityForm extends Component {
 
 
     createLocations = () => {
-        return this.state.locations.map((location) => {
-            return this.createLocation(location)
+        return this.state.locations.map((location, i) => {
+            return this.createLocation(location, i)
         })
     }
 
