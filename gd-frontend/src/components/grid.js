@@ -8,7 +8,7 @@ import api from '../functions/fetch.js';
 const host = process.env.NODE_ENV === 'production' ? "/" : "http://localhost:3000/"
 
 const { fetchTags, fetchActivities } = api(host)
-const path = "/user-uploads/"
+const path = "user-uploads/"
 const imgSrc = imageFactory(host, path)
 
 
