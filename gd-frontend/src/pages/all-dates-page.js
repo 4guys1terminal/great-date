@@ -87,9 +87,15 @@ class AllDatesPage extends Component {
     }
 
     createTagCheckboxes = () => {
-        return this.state.tags.map((tag) => {
-            return this.createTagCheckbox(tag)
-        })
+      const { tags } = this.state
+
+      if(!tags) {
+        return
+      }
+
+      return tags.map((tag) => {
+        return this.createTagCheckbox(tag)
+      })
     }
 
     toggleCheckbox = (tagID, e) => {
