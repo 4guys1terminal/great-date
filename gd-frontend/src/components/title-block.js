@@ -5,7 +5,7 @@ import DateGenerator from './date-generator.js';
 import api from '../functions/fetch.js';
 import {Redirect} from 'react-router-dom';
 
-const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
+const API = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000'
 
 const {fetchActivity} = api()
 
@@ -24,8 +24,8 @@ class TitleBlock extends Component {
     render() {
         return (
             this.state && this.state.showComponent
-            ? <DateGenerator onSubmit={handleDateGenerator}/>
-            : <Title onClick={this.handleClick.bind(this)}/>
+            ? <DateGenerator onSubmit={handleDateGenerator} />
+            : <Title onClick={this.handleClick.bind(this)} />
         )
     }
 }
@@ -33,7 +33,7 @@ class TitleBlock extends Component {
 export default TitleBlock;
 
 function handleDateGenerator(params) {
-    return fetch(`${API}/api/home`, {
+    return fetch(`${API}api/home`, {
         method: "POST", //specifying our correct endpoint in the server
         headers: { //specifying that we're sending JSON, and want JSON back
             'Content-Type': 'application/json'
