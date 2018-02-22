@@ -14,7 +14,7 @@ import {
 
 
 
-const API = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000'
+const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
 class Login extends Component {
     constructor(props) {

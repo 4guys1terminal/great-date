@@ -5,8 +5,7 @@ import { Redirect } from 'react-router-dom';
 import bgImage from '../functions/bgImage'
 import NavbarBootstrap from '../components/navbar-bootstrap.js'
 
-var API
- if(process.env.NODE_ENV === 'production'){ API = "/" } else { API = "http://localhost:3000/" }
+const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
 
 class SignUpPage extends Component {

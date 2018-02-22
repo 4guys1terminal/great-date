@@ -14,12 +14,7 @@ import RadioGroup from './radio-group.js';
 import Dropzone from 'react-dropzone';
 
 
-var API;
- if(process.env.NODE_ENV === 'production'){
-   API = "/"
- } else {
-   API = "http://localhost:3000"
- }
+const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
 class NewActivityForm extends Component {
     constructor(props) {

@@ -7,7 +7,7 @@ import bgImage from '../functions/bgImage'
 
 import NewActivityForm from '../components/new-activity-form.js';
 
-const API = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000'
+const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
 class NewActivity extends Component {
     constructor(props) {
