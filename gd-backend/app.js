@@ -16,12 +16,13 @@ var Tags = require('./models').Tag;
 var ActivityTag = require('./models').ActivityTag;
 var Location = require('./models').Location;
 
-app.use(express.static(path.resolve(__dirname, '../gd-frontend/build')));
 app.use(express.static('public'));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true,}));
 app.use(validator());
 app.use(cors());
+
+app.use(express.static(path.resolve(__dirname, '../gd-frontend/build')));
 
 // authorization token
 const authorization = (req, res, next) => {
@@ -330,11 +331,13 @@ app.put('/api/activities/edit/:id', (req, res) => {
 });
 
 // runs authorization check, responds with JSON to current user
-app.get('/api/login', authorization, function(req, res) {
+app.get('/api/login', authorization, (req, res) => {
     res.json({user: request.currentUser})
 })
 
-app.get('*', function(req, res) { res.sendFile(path.resolve(__dirname, '../gd-frontend/build', 'index.html')); });
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../gd-frontend/build', 'index.html'))
+});
 
 
 module.exports = app
