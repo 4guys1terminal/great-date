@@ -45,8 +45,15 @@ class AllDatesPage extends Component {
     componentWillMount() {
         fetchTags()
         .then((resp) => {
-            this.setState({tags: resp.tags})
-            console.log('tags imported', this.state.tags);
+          const { tags } = resp
+
+            if(!tags) {
+              return
+            }
+
+            this.setState({
+              tags: tags
+            })
         })
     }
 
