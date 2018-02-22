@@ -234,6 +234,7 @@ app.post('/api/activities', (req, res) => {
                 base64ToImage(image, path, optionalObj)
             })
 
+
             Activity.create({
                 title: req.body.title,
                 description: req.body.description,
@@ -336,7 +337,7 @@ app.put('/api/activities/edit/:id', (req, res) => {
 app.get('/api/login', authorization, (req, res) => {
     res.json({user: request.currentUser})
 })
-
+//
 app.get('/user-uploads/:name', (req,res) => {
   res.sendFile(path.resolve(__dirname, './public/user-uploads', req.params.name))
 })
