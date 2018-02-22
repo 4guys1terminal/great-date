@@ -159,7 +159,7 @@ app.post('/api/home', (req, res) => {
 
     Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
     .then(shuffle => {
-        // console.log(shuffle[0]);
+        console.log("yo sup", shuffle[0] );
         let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId
         res.status(201)
         res.json({randomTag: randomTag})

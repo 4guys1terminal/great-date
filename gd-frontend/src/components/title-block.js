@@ -37,5 +37,5 @@ function handleDateGenerator(params) {
         body: JSON.stringify(params)
     }).then((resp) => { //stringifying json for the fetch
         return resp.json()
-    })
+    }).catch(e => console.log("ERROR/api/home", e))
 }
