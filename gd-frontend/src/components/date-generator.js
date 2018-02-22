@@ -33,21 +33,33 @@ class DateGenerator extends Component {
     componentWillMount() {
         fetchTags()
         .then((resp) => {
-            this.setState({tags: resp.tags})
-            console.log('tags imported', this.state.tags);
+            const { tags } = resp
+
+            if(!tags) {
+              return
+            }
+
+            this.setState({
+              tags: tags
+            })
         })
     }
 
-    createTagCheckbox = (tag) => {
-        return (<Checkbox inline="inline" type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
+    createTagCheckbox = (tag) => (
+        <Checkbox inline="inline" type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
             <span className="generatorTags">
                 <i class="fas fa-tag"></i>
                 {tag.title}</span>
-        </Checkbox>)
-    }
+        </Checkbox>
+    )
 
     createTagCheckboxes = () => {
-        return this.state.tags.map((tag) => {
+      const { tags } = this.state
+      if(!tags) {
+        return
+      }
+
+        return tags.map((tag) => {
             return this.createTagCheckbox(tag)
         })
     }
