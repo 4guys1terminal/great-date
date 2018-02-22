@@ -337,9 +337,13 @@ app.get('/api/login', authorization, (req, res) => {
     res.json({user: request.currentUser})
 })
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../gd-frontend/build', 'index.html'))
-// });
+app.get('/user-uploads/:name', (req,res) => {
+  res.sendFile(path.resolve(__dirname, './public/user-uploads', req.params.name))
+})
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../gd-frontend/build', 'index.html'))
+});
 
 
 module.exports = app
