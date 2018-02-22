@@ -11,7 +11,7 @@ import imageFactory from '../functions/imgSrc.js';
 import bgImage from '../functions/bgImage'
 
 const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
-const path = "user-uploads/"
+const path = "/user-uploads/"
 
 const imgSrc = imageFactory(host, path)
 
