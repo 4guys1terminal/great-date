@@ -234,10 +234,11 @@ app.post('/api/activities', (req, res) => {
 
 
               const base64Data = new Buffer(image.replace(/^data:image\/\w+;image,/,""), 'base64')
+              console.log('base64Data= ', base64Data );
               const type = image.split(';')[0].split('/')[1]
-
-              const params = {
-                Bucket: BUCKETNAME,
+              console.log('type= ', type);
+              const s3params = {
+                Bucket: 'great-date',
                 Key: `${hashedImageContent+extension}`,
                 Body: base64Data,
                 ACL: 'public-read',
@@ -245,10 +246,14 @@ app.post('/api/activities', (req, res) => {
                 ContentType: `image/${type}`
               }
 
-              s3.upload(params, (err, data) => {
+              console.log('s3params= ', s3params);
+
+              s3.upload(s3params, (err, data) => {
                 if (err) {return console.log(err) }
                 console.log('Image successfully uploaded.');
               })
+
+              aws.config.logger = console.log
 
                 // const base64ToImage = require('base64-to-image');
                 //
