@@ -27,7 +27,7 @@ app.use(cors());
 
 aws.config.region = 'us-west-1';
 const s3 = new aws.S3();
-const S3_BUCKET = process.env.S3_BUCKET;
+const BUCKETNAME = process.env.S3_BUCKET;
 
 
 
@@ -237,7 +237,7 @@ app.post('/api/activities', (req, res) => {
               const type = image.split(';')[0].split('/')[1]
 
               const params = {
-                Bucket: process.env.S3_BUCKET,
+                Bucket: BUCKETNAME,
                 Key: `${hashedImageContent+extension}`,
                 Body: base64Data,
                 ACL: 'public-read',
