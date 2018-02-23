@@ -179,7 +179,7 @@ class NewActivityForm extends Component {
 
           reader.onabort = () => console.log('image reading was aborted')
           reader.onerror = () => console.log('image reading has failed')
-          reader.readImageAsDataURL(file)
+          reader.readAsDataURL(file)
         })
     }
 
