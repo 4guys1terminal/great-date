@@ -230,7 +230,7 @@ app.post('/api/activities', (req, res) => {
             let filename = `${fileprefix}.${extension}`
             //converting base64 string back into an image and saving to /user-uploads/ folder
 
-            const base64Data = new Buffer(base64)
+            const base64Data = new Buffer(base64.data)
 
             // console.log('base64Data= ', base64Data );
             // const type = image.split(';')[0].split('/')[1]
