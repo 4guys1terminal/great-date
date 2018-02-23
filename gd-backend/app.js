@@ -226,7 +226,7 @@ app.post('/api/activities', (req, res) => {
             let extension = ext[(ext.length-1)]
 
             // hashing the image name to store with the activity (to avoid duplicate name problem)
-            let hashedImageContent = crypto.createHash('md5').update(fileContent).digest('hex');
+            let hashedImageContent = crypto.createHash('md5').update(base64).digest('hex');
             //converting base64 string back into an image and saving to /user-uploads/ folder
 
             // const base64Data = new Buffer(base64.replace(/^data:base64\/\w+;base64,/,""), 'base64')
