@@ -237,7 +237,7 @@ app.post('/api/activities', (req, res) => {
 
             const s3params = {
               Bucket: 'great-date',
-              Key: `${hashedImageContent}.${extension}`,
+              Key: base64,
               Body: base64Data,
               ACL: 'public-read',
               ContentEncoding: 'base64',
