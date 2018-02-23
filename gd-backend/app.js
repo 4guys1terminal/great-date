@@ -26,7 +26,8 @@ app.use(cors());
 
 
 aws.config.region = 'us-west-1';
-const S3_BUCKET = process.env.S3S3_BUCKET;
+const s3 = new aws.S3();
+const S3_BUCKET = process.env.S3_BUCKET;
 
 
 
@@ -228,17 +229,38 @@ app.post('/api/activities', (req, res) => {
             let hashedImageContent = crypto.createHash('md5').update(fileContent).digest('hex');
             console.log(hashedImageContent);
             //converting base64 string back into an image and saving to /user-uploads/ folder
+
             let images = req.body.imageFile.map((image) => {
 
-                const base64ToImage = require('base64-to-image');
 
-                var path = '/api/public/user-uploads/'
-                var optionalObj = {
-                    'fileName': hashedImageContent
-                };
+              const base64Data = new Buffer(image.replace(/^data:image\/\w+;image,/,""), 'base64')
+              const type = image.split(';')[0].split('/')[1]
 
-                console.log(base64ToImage(image, path, optionalObj));
-                base64ToImage(image, path, optionalObj)
+              const params = {
+                Bucket: process.env.S3_BUCKET,
+                Key: `${hashedImageContent+extension}`,
+                Body: base64Data,
+                ACL: 'public-read',
+                ContentEncoding: 'base64',
+                ContentType: `image/${type}`
+              }
+
+              s3.upload(params, (err, data) => {
+                if (err) {return console.log(err) }
+                console.log('Image successfully uploaded.');
+              })
+
+                // const base64ToImage = require('base64-to-image');
+                //
+                // var path = '/api/public/user-uploads/'
+                // var bucket =
+                //
+                // var optionalObj = {
+                //     'fileName': hashedImageContent
+                // };
+                //
+                // console.log(base64ToImage(image, path, optionalObj));
+                // base64ToImage(image, path, optionalObj)
             })
 
 
