@@ -253,7 +253,7 @@ app.post('/api/activities', (req, res) => {
                 console.log('Image successfully uploaded.');
               })
 
-              aws.config.logger = console.log
+              
 
                 // const base64ToImage = require('base64-to-image');
                 //
