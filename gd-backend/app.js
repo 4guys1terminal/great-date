@@ -226,19 +226,19 @@ app.post('/api/activities', (req, res) => {
             let extension = ext[(ext.length-1)]
             // console.log("extension: ",extension);
             // hashing the image name to store with the activity (to avoid duplicate name problem)
-            let hashedImageContent = crypto.createHash('md5').update(base64).digest('hex');
+            let fileName = crypto.createHash('md5').update(base64).digest('hex');
             //converting base64 string back into an image and saving to /user-uploads/ folder
 
-            const base64Data = new Buffer(base64.replace(/^data:base64\/\w+;base64,/,""), 'base64')
-            //
+            // const base64Data = new Buffer(base64.replace(/^data:base64\/\w+;base64,/,""), 'base64')
+
             // console.log('base64Data= ', base64Data );
             // const type = image.split(';')[0].split('/')[1]
             // console.log('type= ', type);
 
             const s3params = {
               Bucket: 'great-date',
-              Key: base64,
-              Body: base64Data,
+              Key: `${fileName}.${extension}`,
+              Body: base64,
               ACL: 'public-read',
               ContentEncoding: 'base64',
               ContentType: `${fileType}`
@@ -247,8 +247,11 @@ app.post('/api/activities', (req, res) => {
             console.log('s3params= ', s3params);
 
             s3.upload(s3params, (err, data) => {
-              if (err) {return console.log(err) }
-              console.log('Image successfully uploaded.');
+              // if (err) {return console.log(err) }
+              // console.log('Image successfully uploaded.');
+
+              console.log("data:", data);
+              console.log("error:", err);
             })
 
 
