@@ -165,15 +165,15 @@ class NewActivityForm extends Component {
         filesToBeSent.forEach(image => {
             console.log(image[0]);
             console.log(image[0].type);
-            imageBase64.push(image[0].preview)
+            // imageBase64.push(image[0].preview) //blob instead of image encoding
             imageType.push(image[0].type)
-            // const reader = new FileReader();
-            // reader.readAsDataURL(image[0])
-            // reader.onload = () => {
-            //     imageBase64.push(reader.result)
-            // };
-            // reader.onabort = () => console.log('image reading was aborted');
-            // reader.onerror = () => console.log('image reading has failed');
+            const reader = new FileReader();
+            reader.readAsDataURL(image[0])
+            reader.onload = () => {
+                imageBase64.push(reader.result)
+            };
+            reader.onabort = () => console.log('image reading was aborted');
+            reader.onerror = () => console.log('image reading has failed');
         })
         this.setState({
             imageFile: imageBase64,
