@@ -163,8 +163,8 @@ class NewActivityForm extends Component {
         let imageBase64 = form.imageFile
         let mimeType = form.imageType
 
-        filesToBeSent.forEach(image => {
-          console.log(image)
+        filesToBeSent.forEach(images => {
+          let image = images[0] // images is an array -- we don't really need it to be
 
           // imageType.extension = image[0].type
 
