@@ -226,7 +226,8 @@ app.post('/api/activities', (req, res) => {
             let extension = ext[(ext.length-1)]
             // console.log("extension: ",extension);
             // hashing the image name to store with the activity (to avoid duplicate name problem)
-            let fileName = crypto.createHash('md5').update(base64).digest('hex');
+            let fileprefix = crypto.createHash('md5').update(base64).digest('hex')
+            let filename = `${fileprefix}.${extension}`
             //converting base64 string back into an image and saving to /user-uploads/ folder
 
             const base64Data = new Buffer(base64)
@@ -237,7 +238,7 @@ app.post('/api/activities', (req, res) => {
 
             const s3params = {
               Bucket: 'great-date',
-              Key: `${fileName}.${extension}`,
+              Key: filename,
               Body: base64Data,
               ACL: 'public-read',
               ContentEncoding: 'base64',
@@ -254,30 +255,14 @@ app.post('/api/activities', (req, res) => {
               console.log("error:", err);
             })
 
-
-
-
-            // let images = req.body.imageFile.map((image) => {
-                // const base64ToImage = require('base64-to-image');
-                //
-                // var path = '/api/public/user-uploads/'
-                // var bucket =
-                //
-                // var optionalObj = {
-                //     'fileName': hashedImageContent
-                // };
-                //
-                // console.log(base64ToImage(image, path, optionalObj));
-                // base64ToImage(image, path, optionalObj)
-            // })
-
+            const { title, description, location, cost } = req.body
 
             Activity.create({
-                title: req.body.title,
-                description: req.body.description,
-                location: req.body.location,
-                cost: req.body.cost,
-                imageName: hashedImageContent+extension,
+                title: title,
+                description: description,
+                location: location,
+                cost: cost,
+                imageName: filename,
             }).then((activity) => {
                 res.status(201)
                 res.json({activity: activity})
@@ -385,3 +370,19 @@ app.get('*', (req, res) => {
 
 
 module.exports = app
+
+
+
+// let images = req.body.imageFile.map((image) => {
+// const base64ToImage = require('base64-to-image');
+//
+// var path = '/api/public/user-uploads/'
+// var bucket =
+//
+// var optionalObj = {
+//     'fileName': hashedImageContent
+// };
+//
+// console.log(base64ToImage(image, path, optionalObj));
+// base64ToImage(image, path, optionalObj)
+// })
