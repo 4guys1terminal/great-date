@@ -153,29 +153,29 @@ class NewActivityForm extends Component {
         const { form } = this.state
         let { extension, data } = form.image
 
-        acceptedFiles.forEach(image => {
-          console.log(image);
+        acceptedFiles.forEach(file => {
+          console.log(file);
 
-          // const reader = new FileReader()
-          //
-          // reader.onload = () => {
-          //   console.log(reader.result)
-          //
-          //   this.setState({
-          //     form: Object.assign({}, form, {
-          //       image: {
-          //         name: 'filename...',
-          //         data: reader.result,
-          //         extension: '',
-          //       }
-          //     })
-          //   })
-          // }
-          //
-          // reader.onabort = () => console.log('image reading was aborted')
-          // reader.onerror = () => console.log('image reading has failed')
-          //
-          // reader.readImageAsDataURL(image)
+          let image = {
+            extension: file.split('/')[1],
+            name: file.name,
+          }
+
+          const reader = new FileReader()
+
+          reader.onload = () => {
+            image.data = reader.result
+
+            this.setState({
+              form: Object.assign({}, form, {
+                image: image,
+              })
+            })
+          }
+
+          reader.onabort = () => console.log('image reading was aborted')
+          reader.onerror = () => console.log('image reading has failed')
+          reader.readImageAsDataURL(file)
         })
     }
 
