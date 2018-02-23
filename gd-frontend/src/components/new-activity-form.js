@@ -157,7 +157,7 @@ class NewActivityForm extends Component {
           console.log(file);
 
           let image = {
-            extension: file.type.split('/')[1],
+            extension: file.type,
             name: file.name,
           }
 
