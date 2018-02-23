@@ -158,30 +158,31 @@ class NewActivityForm extends Component {
 
 
         //converting the filesToBeSent into base64
-        const form = this.state.form
+        const { form } = this.state
+
         let imageBase64 = form.imageFile
-        let imageType = form.imageType
+        let mimeType = form.imageType
 
         filesToBeSent.forEach(image => {
-            imageType.push(image[0].type)
+          console.log(image)
 
-            const reader = new FileReader();
+          // imageType.extension = image[0].type
 
-            reader.readAsDataURL(image[0])
+          const reader = new FileReader()
 
-            reader.onload = () => {
-              imageBase64.base64Data = reader.result
+          reader.onload = () => {
+            console.log(reader.result)
 
-              console.log(imageBase64)
-            }
+            this.setState({
+                imageFile: imageBase64,
+                imageType: mimeType,
+            })
+          }
 
-            reader.onabort = () => console.log('image reading was aborted')
-            reader.onerror = () => console.log('image reading has failed')
-        })
+          reader.onabort = () => console.log('image reading was aborted')
+          reader.onerror = () => console.log('image reading has failed')
 
-        this.setState({
-            imageFile: imageBase64,
-            imageType: imageType,
+          reader.readAsDataURL(image)
         })
     }
 
