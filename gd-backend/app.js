@@ -219,22 +219,25 @@ app.post('/api/activities', (req, res) => {
     // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult().then((validationErrors) => {
         if (validationErrors.isEmpty()) {
-            let base64 = req.body.imageFile[0]
-            let fileType = req.body.imageType[0]
+          let { image } = req.body.image
+          let { name, data, extension } = image
 
-            let ext = fileType.split('/')
-            let extension = ext[(ext.length-1)]
+            // let base64 = req.body.imageFile[0]
+            // let fileType = req.body.imageType[0]
+            //
+            // let ext = fileType.split('/')
+            // let extension = ext[(ext.length-1)]
             // console.log("extension: ",extension);
             // hashing the image name to store with the activity (to avoid duplicate name problem)
-            let fileprefix = crypto.createHash('md5').update(base64).digest('hex')
+            let fileprefix = crypto.createHash('md5').update(data).digest('hex')
+
             let filename = `${fileprefix}.${extension}`
             //converting base64 string back into an image and saving to /user-uploads/ folder
 
-            console.log(base64.data)
+            const base64Data = new Buffer(data)
 
-            const base64Data = new Buffer(base64.data)
-
-            // console.log('base64Data= ', base64Data );
+            console.log('base64Data= ', base64Data)
+            
             // const type = image.split(';')[0].split('/')[1]
             // console.log('type= ', type);
 

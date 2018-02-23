@@ -158,11 +158,13 @@ class NewActivityForm extends Component {
 
           let { name, type } = file
 
+          type = type.split('/')[1]
+
           console.log("name:", name, " type:", type)
 
           let image = {
-            extension: file.type,
-            name: file.name,
+            extension: type,
+            name: name,
           }
 
           const reader = new FileReader()
@@ -179,6 +181,7 @@ class NewActivityForm extends Component {
 
           reader.onabort = () => console.log('image reading was aborted')
           reader.onerror = () => console.log('image reading has failed')
+          
           reader.readAsDataURL(file)
         })
     }
