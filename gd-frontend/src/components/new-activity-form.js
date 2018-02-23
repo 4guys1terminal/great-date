@@ -156,6 +156,10 @@ class NewActivityForm extends Component {
         acceptedFiles.forEach(file => {
           console.log(file);
 
+          let { name, type } = file
+
+          console.log("name:", name, " type:", type)
+
           let image = {
             extension: file.type,
             name: file.name,
