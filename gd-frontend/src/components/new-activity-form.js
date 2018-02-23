@@ -358,10 +358,12 @@ class NewActivityForm extends Component {
                         <div>
                           File Preview:
                           {this.state.form.image.name != '' &&
-                            <pre>{JSON.stringify(this.state.form.image)}</pre>
-                            <img src={this.state.form.image.data} className="image-preview" alt="preview" />
-                            <p>{this.state.form.image.name}.{this.state.form.image.extension}</p>
-                            <br/>
+                            <div>
+                              <pre>{JSON.stringify(this.state.form.image)}</pre>
+                              <img src={this.state.form.image.data} className="image-preview" alt="preview" />
+                              <p>{this.state.form.image.name}.{this.state.form.image.extension}</p>
+                              <br/>
+                            </div>
                           }
                         </div>
 
