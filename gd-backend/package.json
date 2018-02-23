@@ -9,6 +9,7 @@
     "start:prod": "node ./gd-backend/build/index.js"
   },
   "dependencies": {
+    "aws-sdk": "^2.201.0",
     "babel-cli": "^6.26.0",
     "base64-to-image": "^1.0.2",
     "body-parser": "^1.18.2",

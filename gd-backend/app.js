@@ -6,6 +6,7 @@ const crypto = require('crypto')
 var sequelize = require('sequelize');
 const fs = require('fs');
 var path = require('path');
+const aws = require('aws-sdk')
 
 var app = express();
 
@@ -22,6 +23,11 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(validator());
 app.use(cors());
+
+
+aws.config.region = 'us-west-1';
+const S3_BUCKET = process.env.S3S3_BUCKET;
+
 
 
 // authorization token
