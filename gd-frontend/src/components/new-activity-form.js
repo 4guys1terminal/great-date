@@ -16,6 +16,8 @@ import Dropzone from 'react-dropzone';
 
 const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
+const IMAGES_ALLOWED = 1
+
 class NewActivityForm extends Component {
     constructor(props) {
         super(props)
@@ -26,11 +28,12 @@ class NewActivityForm extends Component {
                 locations: {},
                 cost: '',
                 tags: {},
-                imageFile: [],
-                imageType: []
+                image: {
+                  name: '',
+                  data: '',
+                  extension: '',
+                },
             },
-            filesToBeSent:[],
-            imagesAllowed: 1,
             locations: [],
             tags: []
         }
@@ -145,28 +148,13 @@ class NewActivityForm extends Component {
     }
 
 
-    onDrop = (acceptedFiles,rejectedFiles) => {
-        let filesToBeSent = this.state.filesToBeSent
-
-        // sending all accepted files to state as filesToBeSent
-        if(filesToBeSent.length < this.state.imagesAllowed) {
-            filesToBeSent.push(acceptedFiles);
-            this.setState({filesToBeSent});
-        } else {
-            alert("Please, only one image per date.")
-        }
-
-
+    onDrop = (acceptedFiles, rejectedFiles) => {
         //converting the filesToBeSent into base64
         const { form } = this.state
-
-        let imageBase64 = form.imageFile
-        let mimeType = form.imageType
+        let { extension, data } = form.image
 
         filesToBeSent.forEach(images => {
           let image = images[0] // images is an array -- we don't really need it to be
-
-          // imageType.extension = image[0].type
 
           const reader = new FileReader()
 
@@ -174,15 +162,19 @@ class NewActivityForm extends Component {
             console.log(reader.result)
 
             this.setState({
-                imageFile: imageBase64,
-                imageType: mimeType,
+              form: Object.assign({}, form, {
+                image: {
+                  data: reader.result,
+                  extension: '',
+                }
+              })
             })
           }
 
           reader.onabort = () => console.log('image reading was aborted')
           reader.onerror = () => console.log('image reading has failed')
 
-          reader.readAsBinaryString(image)
+          reader.readImageAsDataURL(image)
         })
     }
 
@@ -365,22 +357,9 @@ class NewActivityForm extends Component {
                         <div>
                           File Preview:
 
-                          {this.state.filesToBeSent.map((image, index) => {
-                            return (
-                              <div
-                                key={index}
-                              >
-                                <img src={image[0].preview} className="image-preview" alt="preview"/>
-                                <p> {image[0].name} </p>
-                                <br/>
-                                <Button onClick={(event) =>
-                                  this.handleClear(event)}>
-                                  Clear
-                                </Button>
-                              </div>
-                            )
-                          })}
-
+                          <img src={this.state.form.image.data} className="image-preview" alt="preview" />
+                          <p>{this.state.form.image.name}</p>
+                          <br/>
                         </div>
 
 
