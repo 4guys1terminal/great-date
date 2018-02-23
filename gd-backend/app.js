@@ -219,41 +219,46 @@ app.post('/api/activities', (req, res) => {
     // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult().then((validationErrors) => {
         if (validationErrors.isEmpty()) {
-            let fileContent = req.body.imageFile[0]
+            let base64 = req.body.imageFile[0]
             let fileType = req.body.imageType[0]
 
             let ext = fileType.split('/')
-            let extension = '.' + ext[(ext.length-1)]
+            let extension = ext[(ext.length-1)]
 
             // hashing the image name to store with the activity (to avoid duplicate name problem)
             let hashedImageContent = crypto.createHash('md5').update(fileContent).digest('hex');
-            console.log(hashedImageContent);
             //converting base64 string back into an image and saving to /user-uploads/ folder
+
+            // const base64Data = new Buffer(base64.replace(/^data:base64\/\w+;base64,/,""), 'base64')
+            //
+            // console.log('base64Data= ', base64Data );
+            // const type = image.split(';')[0].split('/')[1]
+            // console.log('type= ', type);
+
+            const s3params = {
+              Bucket: 'great-date',
+              Key: `${hashedImageContent}.${extension}`,
+              Body: base64,
+              ACL: 'public-read',
+              ContentEncoding: 'base64',
+              ContentType: `image/${type}`
+            }
+
+            console.log('s3params= ', s3params);
+
+            s3.upload(s3params, (err, data) => {
+              if (err) {return console.log(err) }
+              console.log('Image successfully uploaded.');
+            })
+
+
+
 
             let images = req.body.imageFile.map((image) => {
 
 
-              const base64Data = new Buffer(image.replace(/^data:image\/\w+;image,/,""), 'base64')
-              console.log('base64Data= ', base64Data );
-              const type = image.split(';')[0].split('/')[1]
-              console.log('type= ', type);
-              const s3params = {
-                Bucket: 'great-date',
-                Key: `${hashedImageContent+extension}`,
-                Body: base64Data,
-                ACL: 'public-read',
-                ContentEncoding: 'base64',
-                ContentType: `image/${type}`
-              }
 
-              console.log('s3params= ', s3params);
 
-              s3.upload(s3params, (err, data) => {
-                if (err) {return console.log(err) }
-                console.log('Image successfully uploaded.');
-              })
-
-              
 
                 // const base64ToImage = require('base64-to-image');
                 //
