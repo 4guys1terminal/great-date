@@ -8,7 +8,7 @@ const { fetchTags, fetchActivities } = api
 
 const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
-const path = "public/user-uploads/"
+const path = "/public/user-uploads/"
 const imgSrc = imageFactory(host, path)
 
 
