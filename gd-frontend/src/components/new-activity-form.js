@@ -163,19 +163,16 @@ class NewActivityForm extends Component {
         let imageType = form.imageType
 
         filesToBeSent.forEach(image => {
-            console.log(image[0]);
-
-            console.log(image[0].type);
-            // imageBase64.push(image[0].preview) //blob instead of image encoding
             imageType.push(image[0].type)
+
             const reader = new FileReader();
 
             reader.readAsDataURL(image[0])
 
             reader.onload = () => {
-                console.log(reader.result)
+              imageBase64.base64Data = reader.result
 
-                imageBase64.base64Data = reader.result
+              console.log(imageBase64)
             }
 
             reader.onabort = () => console.log('image reading was aborted')
