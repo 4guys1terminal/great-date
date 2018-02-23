@@ -173,9 +173,9 @@ class NewActivityForm extends Component {
             reader.readAsDataURL(image[0])
 
             reader.onload = () => {
-                console.log(reader.result.data)
+                console.log(reader.result)
 
-                imageBase64.concat(reader.result.data)
+                imageBase64.base64Data = reader.result
             }
 
             reader.onabort = () => console.log('image reading was aborted')
