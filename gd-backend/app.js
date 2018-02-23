@@ -223,7 +223,7 @@ app.post('/api/activities', (req, res) => {
             console.log(hashedImageContent);
             //converting base64 string back into an image and saving to /user-uploads/ folder
             let images = req.body.imageFile.map((image) => {
-              
+
                 const base64ToImage = require('base64-to-image');
 
                 var path = './public/user-uploads/'
@@ -339,7 +339,7 @@ app.get('/api/login', authorization, (req, res) => {
     res.json({user: request.currentUser})
 })
 //
-app.get('/user-uploads/:name', (req,res) => {
+app.get('/api/user-uploads/:name', (req,res) => {
   res.sendFile(path.resolve(__dirname, './public/user-uploads', req.params.name))
 })
 
