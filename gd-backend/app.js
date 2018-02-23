@@ -229,7 +229,7 @@ app.post('/api/activities', (req, res) => {
             let hashedImageContent = crypto.createHash('md5').update(base64).digest('hex');
             //converting base64 string back into an image and saving to /user-uploads/ folder
 
-            // const base64Data = new Buffer(base64.replace(/^data:base64\/\w+;base64,/,""), 'base64')
+            const base64Data = new Buffer(base64.replace(/^data:base64\/\w+;base64,/,""), 'base64')
             //
             // console.log('base64Data= ', base64Data );
             // const type = image.split(';')[0].split('/')[1]
@@ -238,7 +238,7 @@ app.post('/api/activities', (req, res) => {
             const s3params = {
               Bucket: 'great-date',
               Key: `${hashedImageContent}.${extension}`,
-              Body: base64,
+              Body: base64Data,
               ACL: 'public-read',
               ContentEncoding: 'base64',
               ContentType: `image/${extension}`
