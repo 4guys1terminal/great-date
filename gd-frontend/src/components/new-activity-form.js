@@ -157,7 +157,7 @@ class NewActivityForm extends Component {
           console.log(file);
 
           let image = {
-            extension: file.split('/')[1],
+            extension: file.type.split('/')[1],
             name: file.name,
           }
 
@@ -357,10 +357,12 @@ class NewActivityForm extends Component {
                         <br/>
                         <div>
                           File Preview:
-
-                          <img src={this.state.form.image.data} className="image-preview" alt="preview" />
-                          <p>{this.state.form.image.name}</p>
-                          <br/>
+                          {this.state.form.image.name != '' &&
+                            <pre>{JSON.stringify(this.state.form.image)}</pre>
+                            <img src={this.state.form.image.data} className="image-preview" alt="preview" />
+                            <p>{this.state.form.image.name}.{this.state.form.image.extension}</p>
+                            <br/>
+                          }
                         </div>
 
 
