@@ -219,6 +219,10 @@ app.post('/api/activities', (req, res) => {
     // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult().then((validationErrors) => {
         if (validationErrors.isEmpty()) {
+          console.log(req.body)
+
+          const { title, description, location, cost, image } = req.body
+
           let { image } = req.body.image
           let { name, data, extension } = image
 
@@ -237,7 +241,7 @@ app.post('/api/activities', (req, res) => {
             const base64Data = new Buffer(data)
 
             console.log('base64Data= ', base64Data)
-            
+
             // const type = image.split(';')[0].split('/')[1]
             // console.log('type= ', type);
 
@@ -259,8 +263,6 @@ app.post('/api/activities', (req, res) => {
               console.log("data:", data);
               console.log("error:", err);
             })
-
-            const { title, description, location, cost } = req.body
 
             Activity.create({
                 title: title,
