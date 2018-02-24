@@ -247,12 +247,15 @@ app.post('/api/activities', (req, res) => {
             console.log("error:", err);
           })
 
+
+          const awsUrl = 'https://great-date.s3.us-west-1.amazonaws.com'
+          
           Activity.create({
               title: title,
               description: description,
               location: location,
               cost: cost,
-              imageName: filename,
+              imageName: awsUrl + filename,
           }).then((activity) => {
               res.status(201)
               res.json({activity: activity})
