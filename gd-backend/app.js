@@ -222,13 +222,6 @@ app.post('/api/activities', (req, res) => {
           const { title, description, location, cost, image } = req.body
           let { data, extension } = image
 
-            // let base64 = req.body.imageFile[0]
-            // let fileType = req.body.imageType[0]
-            //
-            // let ext = fileType.split('/')
-            // let extension = ext[(ext.length-1)]
-            // console.log("extension: ",extension);
-            // hashing the image name to store with the activity (to avoid duplicate name problem)
           let fileprefix = crypto.createHash('md5').update(data).digest('hex')
 
           let filename = `${fileprefix}.${extension}`
