@@ -221,77 +221,77 @@ app.post('/api/activities', (req, res) => {
         if (validationErrors.isEmpty()) {
           console.log(req.body)
 
-          const { title, description, location, cost, image } = req.body
-
-          let { image } = req.body.image
-          let { name, data, extension } = image
-
-            // let base64 = req.body.imageFile[0]
-            // let fileType = req.body.imageType[0]
-            //
-            // let ext = fileType.split('/')
-            // let extension = ext[(ext.length-1)]
-            // console.log("extension: ",extension);
-            // hashing the image name to store with the activity (to avoid duplicate name problem)
-            let fileprefix = crypto.createHash('md5').update(data).digest('hex')
-
-            let filename = `${fileprefix}.${extension}`
-            //converting base64 string back into an image and saving to /user-uploads/ folder
-
-            const base64Data = new Buffer(data)
-
-            console.log('base64Data= ', base64Data)
-
-            // const type = image.split(';')[0].split('/')[1]
-            // console.log('type= ', type);
-
-            const s3params = {
-              Bucket: 'great-date',
-              Key: filename,
-              Body: base64Data,
-              ACL: 'public-read',
-              ContentEncoding: 'base64',
-              ContentType: `${fileType}`
-            }
-
-            console.log('s3params:', s3params);
-
-            s3.upload(s3params, (err, data) => {
-              // if (err) {return console.log(err) }
-              // console.log('Image successfully uploaded.');
-
-              console.log("data:", data);
-              console.log("error:", err);
-            })
-
-            Activity.create({
-                title: title,
-                description: description,
-                location: location,
-                cost: cost,
-                imageName: filename,
-            }).then((activity) => {
-                res.status(201)
-                res.json({activity: activity})
-                // Takes the tag checkbox from our form
-                tags = req.body.tags
-                let tagArr = []
-                // Pushes Id of newly made activity and any tag selected to an array to use for our ActivityTag Table
-                for (var property in tags) {
-                    let val = {
-                        ActivityId: activity.id,
-                        TagId: property,
-                    }
-                    // Checks if a tag is checked or not
-                    tags[property] === true
-                        ? tagArr.push(val)
-                        : ''
-                }
-                // Takes the array with new ActivityId and selected TagId and pushes them to our join table (ActivityTag)
-                ActivityTag.bulkCreate(tagArr).then(() => {
-                    return ActivityTag.findAll();
-                })
-            })
+          // const { title, description, location, cost, image } = req.body
+          //
+          // let { image } = req.body.image
+          // let { name, data, extension } = image
+          //
+          //   // let base64 = req.body.imageFile[0]
+          //   // let fileType = req.body.imageType[0]
+          //   //
+          //   // let ext = fileType.split('/')
+          //   // let extension = ext[(ext.length-1)]
+          //   // console.log("extension: ",extension);
+          //   // hashing the image name to store with the activity (to avoid duplicate name problem)
+          // let fileprefix = crypto.createHash('md5').update(data).digest('hex')
+          //
+          // let filename = `${fileprefix}.${extension}`
+          //   //converting base64 string back into an image and saving to /user-uploads/ folder
+          //
+          // const base64Data = new Buffer(data)
+          //
+          // console.log('base64Data= ', base64Data)
+          //
+          //   // const type = image.split(';')[0].split('/')[1]
+          //   // console.log('type= ', type);
+          //
+          // const s3params = {
+          //   Bucket: 'great-date',
+          //   Key: filename,
+          //   Body: base64Data,
+          //   ACL: 'public-read',
+          //   ContentEncoding: 'base64',
+          //   ContentType: `${fileType}`
+          // }
+          //
+          // console.log('s3params:', s3params);
+          //
+          // s3.upload(s3params, (err, data) => {
+          //   // if (err) {return console.log(err) }
+          //   // console.log('Image successfully uploaded.');
+          //
+          //   console.log("data:", data);
+          //   console.log("error:", err);
+          // })
+          //
+          // Activity.create({
+          //     title: title,
+          //     description: description,
+          //     location: location,
+          //     cost: cost,
+          //     imageName: filename,
+          // }).then((activity) => {
+          //     res.status(201)
+          //     res.json({activity: activity})
+          //     // Takes the tag checkbox from our form
+          //     tags = req.body.tags
+          //     let tagArr = []
+          //     // Pushes Id of newly made activity and any tag selected to an array to use for our ActivityTag Table
+          //     for (var property in tags) {
+          //         let val = {
+          //             ActivityId: activity.id,
+          //             TagId: property,
+          //         }
+          //         // Checks if a tag is checked or not
+          //         tags[property] === true
+          //             ? tagArr.push(val)
+          //             : ''
+          //     }
+          //     // Takes the array with new ActivityId and selected TagId and pushes them to our join table (ActivityTag)
+          //     ActivityTag.bulkCreate(tagArr).then(() => {
+          //         return ActivityTag.findAll();
+          //     })
+          // })
         } else {
             res.status(400)
             res.json({
