@@ -219,8 +219,6 @@ app.post('/api/activities', (req, res) => {
     // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult().then((validationErrors) => {
         if (validationErrors.isEmpty()) {
-          console.log(req.body)
-
           const { title, description, location, cost, image } = req.body
           let { data, extension } = image
 
@@ -234,8 +232,6 @@ app.post('/api/activities', (req, res) => {
           let fileprefix = crypto.createHash('md5').update(data).digest('hex')
 
           let filename = `${fileprefix}.${extension}`
-
-          console.log('base64Data= ', data)
 
           const s3params = {
             Bucket: 'great-date',
