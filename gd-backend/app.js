@@ -226,6 +226,8 @@ app.post('/api/activities', (req, res) => {
 
           let filename = `${fileprefix}.${extension}`
 
+          data = new Buffer(data.replace(/^data:image\/\w+;base64,/, ""),'base64')
+
           const s3params = {
             Bucket: 'great-date',
             Key: filename,
