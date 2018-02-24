@@ -232,7 +232,7 @@ app.post('/api/activities', (req, res) => {
             Body: data,
             ACL: 'public-read',
             ContentEncoding: 'base64',
-            ContentType: `image/${fileType}`
+            ContentType: `image/${extension}`
           }
 
           console.log('s3params:', s3params);
