@@ -3,16 +3,16 @@ import '../App.css';
 import LoggedInNav from '../components/logged-in-navbar';
 import NavbarBootstrap from '../components/navbar-bootstrap.js';
 import DateComponent from '../components/date-component.js';
-import api from '../functions/fetch.js';
-import imageFactory from '../functions/imgSrc.js';
+import fetches from '../functions/fetch.js';
+// import imageFactory from '../functions/imgSrc.js';
 import bgImage from '../functions/bgImage'
 
-const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
-const path = "/user-uploads/"
+// const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
+// const path = "/user-uploads/"
 
 // const imgSrc = imageFactory(host, path)
 
-const { fetchActivity } = api
+const { fetchActivity } = fetches
 
 
 class DatePage extends Component {
@@ -24,10 +24,16 @@ class DatePage extends Component {
     componentWillMount() {
         const { id } = this.props.match.params
 
-        fetchActivity(id).then((resp) => {
-            this.setState({activity: resp.activity})
-            console.log(this.state);
-        })
+        fetchActivity(id)
+        .then((res) => {
+            const { activity } = res
+
+            if(!activity) {
+              return
+            }
+
+            this.setState({activity: activity})
+        }).catch(e => console.log('mount catch:', e))
     }
 
     isUserLoggedIn() {
@@ -40,7 +46,8 @@ class DatePage extends Component {
 
     render() {
         const { activity } = this.state
-
+        const {imageName, title, description, location, cost} = activity
+        
         if (!activity) {
             return (
                 <div className="container">
@@ -50,9 +57,6 @@ class DatePage extends Component {
                 </div>
             )
         }
-
-        const {imageName, title, description, location, cost} = activity
-        console.log(imageName);
 
         return (<div style={bgImage}>
             <div className='datePageTest'>

@@ -91,6 +91,7 @@ class DateGenerator extends Component {
         }
     }
 
+
     render() {
         const {randomSuccess} = this.state
 
@@ -111,12 +112,8 @@ class DateGenerator extends Component {
                         <Row>
                             <Col xs={10} xsOffset={1}>
                                 <FormGroup id='tags-form-group'>
-                                    <br/> {this.createTagCheckboxes()}
-
-                                    {/*
-                                        {this.errorsFor('tags') && <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>}
-                                        */
-                                    }
+                                    <br/>
+                                {this.createTagCheckboxes()}
 
                                 </FormGroup>
                             </Col>
@@ -135,11 +132,3 @@ class DateGenerator extends Component {
 }
 
 export default DateGenerator;
-
-// browse page stuff
-//
-// const tags = Object.assign([], this.state.tags)
-// tags.push(resp.tag)
-//
-// console.log("tags",tags);
-// console.log("resp.tag",resp.tag)

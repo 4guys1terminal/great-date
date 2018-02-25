@@ -103,10 +103,10 @@ app.post('/api/browse', (req, res) => {
     }
 
     Tags.sequelize.query(`
-        SELECT "ActivityId"
+        SELECT *
         FROM "ActivityTags"
         WHERE "TagId" in (${tagArr})
-        GROUP BY "ActivityId"
+        GROUP BY "ActivityTags".id
         HAVING COUNT (distinct "TagId") = (${tagArr.length});`
         , {type: sequelize.QueryTypes.SELECT})
     .then(allExclusiveActivities => {

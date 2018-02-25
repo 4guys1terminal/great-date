@@ -4,21 +4,51 @@ import TitleBlock from '../components/title-block.js';
 import {Link} from 'react-router-dom';
 import Grid from '../components/grid';
 import LoggedInNav from '../components/logged-in-navbar';
-
+import fetches from '../functions/fetch.js';
 import bgImage from '../functions/bgImage'
 import NavbarBootstrap from '../components/navbar-bootstrap.js';
+
+const { fetchActivities } = fetches
 
 var backgroundTexture = {
     backgroundImage: 'url(/images/grid_noise.png)'
 };
 
+
+
 class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            acitvities: [],
+            activities: [],
             tags: []
         }
+    }
+
+    componentWillMount() {
+        fetchActivities()
+        .then((res) => {
+            const { activities } = res
+            let limitedActivities = []
+
+            if(!activities) {
+              return
+            }
+
+            if (activities > 9) {
+                for (var i = 0; i < 9; i++) {
+                    limitedActivities.push(activities[i])
+                }
+                this.setState({
+                  activities: limitedActivities
+                })
+            } else {
+                this.setState({
+                  activities: activities
+                })
+            }
+        })
+        .catch(e => console.log(e))
     }
 
     isUserLoggedIn() {
