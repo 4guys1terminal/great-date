@@ -56,7 +56,7 @@ class Grid extends Component {
                             <DatePreview
                                 key={a.id}
                                 id={a.id}
-                                image={this.imgSrc(path,a.imageName)}
+                                image={imgSrc(path,a.imageName)}
                                 title={a.title}
                                 description={a.description}
                             />
