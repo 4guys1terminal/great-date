@@ -10,7 +10,7 @@ const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app
 
 const path = "https://s3-us-west-1.amazonaws.com/great-date"
 
-const {imgSrc} = imageFactory()
+const {imgSrc} = imageFactory
 
 
 class Grid extends Component {
