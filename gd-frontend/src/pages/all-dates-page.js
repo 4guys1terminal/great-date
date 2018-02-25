@@ -1,21 +1,18 @@
 import React, {Component} from 'react';
 import Grid from '../components/grid.js';
 
-import {
-    Col,
-    FormGroup,
-    Checkbox,
-    Row
-} from 'react-bootstrap'
+import {Col, FormGroup, Checkbox, Row,} from 'react-bootstrap'
 import LoggedInNav from '../components/logged-in-navbar';
 import NavbarBootstrap from '../components/navbar-bootstrap.js';
 import bgImage from '../functions/bgImage'
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import fetches from '../functions/fetch.js';
 
-const { fetchTags, fetchActivities } = fetches
+const {fetchTags, fetchActivities,} = fetches
 
-const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
+const API = process.env.NODE_ENV === 'production'
+    ? 'https://the-great-date-app.herokuapp.com'
+    : 'http://localhost:3000'
 
 var backgroundTexture = {
     backgroundImage: 'url(/images/grid_noise.png)'
@@ -28,38 +25,30 @@ class AllDatesPage extends Component {
             form: {
                 tags: {}
             },
-            tags: [],
+            tags: []
         }
     }
 
     componentWillMount() {
-        fetchTags()
-        .then((resp) => {
-          const { tags } = resp
+        fetchTags().then((res) => {
+            const {tags} = res
 
-            if(!tags) {
-              return
+            if (!tags) {
+                return
             }
 
-            this.setState({
-              tags: tags
-            })
-        })
-        .catch(e => console.log(e))
+            this.setState({tags: tags})
+        }).catch(e => console.log(e))
 
-        fetchActivities()
-        .then((resp) => {
-          const { activities } = resp
+        fetchActivities().then((res) => {
+            const {activities} = res
 
-            if(!activities) {
-              return
+            if (!activities) {
+                return
             }
 
-            this.setState({
-              activities: activities
-            })
-        })
-        .catch(e => console.log(e))
+            this.setState({allActivities: activities})
+        }).catch(e => console.log(e))
     }
 
     isUserLoggedIn() {
@@ -91,25 +80,23 @@ class AllDatesPage extends Component {
     }
 
     createTagCheckbox = (tag) => {
-        return (
-          <Checkbox inline type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
+        return (<Checkbox inline type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
             <span className="generatorTags">
                 <i className="fas fa-tag"></i>
                 {tag.title}</span>
-        </Checkbox>
-      )
+        </Checkbox>)
     }
 
     createTagCheckboxes = () => {
-      const { tags } = this.state
+        const {tags} = this.state
 
-      if(!tags) {
-        return
-      }
+        if (!tags) {
+            return
+        }
 
-      return tags.map((tag) => {
-        return this.createTagCheckbox(tag)
-      })
+        return tags.map((tag) => {
+            return this.createTagCheckbox(tag)
+        })
     }
 
     toggleCheckbox = (tagID, e) => {
@@ -122,25 +109,35 @@ class AllDatesPage extends Component {
         this.setState({form: form})
     }
 
-    renderGrid = () => {
-        const { browseResp, activities, exclusiveActivities, inclusiveActivities } = this.state
+    createExclusive = () => {
+        const { exclusiveActivities } = this.state
+
+        if (exclusiveActivities.length === 0) {
+            return <h4>No dates exactly matched your search! Please pick different options and try again.</h4>
+        } else {
+            return (<Grid
+                    activities={exclusiveActivities}
+                />)
+        }
+    }
+
+    renderGrids = () => {
+        const {browseResp, allActivities, exclusiveActivities, inclusiveActivities,} = this.state
 
         if (browseResp === true) {
-            return <div>
-                <Grid
-                    activities={exclusiveActivities}
-                />
+            return (<div>
+                <h3>Dates that exactly match:</h3>
 
-                <Grid
-                    activities={inclusiveActivities}
-                />
-            </div>
+            {this.createExclusive()}
+
+
+                <h3>All dates that match your tags:</h3>
+                <Grid activities={inclusiveActivities}/>
+            </div>)
         } else {
-            return <div>
-                <Grid
-                    activities={activities}
-                />
-            </div>
+            return (<div>
+                <Grid activities={allActivities}/>
+            </div>)
         }
     }
 
@@ -167,35 +164,35 @@ class AllDatesPage extends Component {
 
     handleSubmit() {
         const {form} = this.state
+
         fetch(`${API}/api/browse`, {
             method: "POST", //specifying our correct endpoint in the server
             headers: { //specifying that we're sending JSON, and want JSON back
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(form),
+            body: JSON.stringify(form)
         }).then((res) => { //stringifying json for the fetch
-            console.log('success');
-            res.json()
+            return res.json()
         }).then((res) => {
-            console.log(res.inclusiveIds);
-            console.log(res.exclusiveIds);
-            this.setState({
-                browseResp: true
-            })
-        }).catch( (e) => console.log("error:", e))
-    }
+            const {allActivities} = this.state
+            let exclusiveActivities = []
+            let inclusiveActivities = []
 
-    // handleBrowse(params) {
-    //     return fetch(`${API}/browse`, {
-    //         method: "POST", //specifying our correct endpoint in the server
-    //         headers: { //specifying that we're sending JSON, and want JSON back
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(params),
-    //     }).then((resp) => { //stringifying json for the fetch
-    //         return resp.json()
-    //     })
-    // }
+            for (var i = 0; i < allActivities.length; i++) {
+                if (res.exclusiveIds.includes(allActivities[i].id)) {
+                    exclusiveActivities.push(allActivities[i])
+                }
+            }
+
+            for (var i = 0; i < allActivities.length; i++) {
+                if (res.inclusiveIds.includes(allActivities[i].id)) {
+                    inclusiveActivities.push(allActivities[i])
+                }
+            }
+            console.log('success', 'excl', exclusiveActivities, 'incl', inclusiveActivities);
+            this.setState({exclusiveActivities: exclusiveActivities, inclusiveActivities: inclusiveActivities, browseResp: true})
+        }).catch((e) => console.log("error:", e))
+    }
 
     render() {
         return (<div>
@@ -212,14 +209,7 @@ class AllDatesPage extends Component {
                             <Row>
                                 <Col xs={10} xsOffset={1}>
                                     <FormGroup id='tags-form-group'>
-                                        <br/>
-
-                                        {this.createTagCheckboxes()}
-
-                                        {/*
-                                            {this.errorsFor('tags') && <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>}
-                                            */
-                                        }
+                                        <br/> {this.createTagCheckboxes()}
 
                                     </FormGroup>
                                 </Col>
@@ -248,16 +238,7 @@ class AllDatesPage extends Component {
 
                     <div style={backgroundTexture} className='all-dates-page'>
 
-
-                        {this.renderGrid()}
-                        {/* <Grid
-                            activities={this.state.exclusiveActivities}
-                        />
-
-                        <Grid
-                            activities={this.state.inclusiveActivities}
-                        /> */}
-
+                        {this.renderGrids()}
 
                         {this.renderCreateButton()}
                     </div>
