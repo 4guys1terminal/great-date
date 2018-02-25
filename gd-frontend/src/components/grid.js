@@ -19,29 +19,21 @@ class Grid extends Component {
     }
 
     componentWillMount() {
-        fetchTags()
-        .then(res => {
-            this.setState({
-                tags: res.tags
-            })
-        })
+        const { activities } = this.props
 
-        fetchActivities()
-        .then(res => {
-            this.setState({
-                activities: res.activities
-            })
+        this.setState({
+            activities: activities
         })
     }
 
     render() {
-        const { activities } = this.state
+        const { activities } = this.props
 
         if(!activities) {
             return (
                 <div className="container">
                     <div className="grid">
-                        <h1>Loading...</h1>
+                        <h1 style={style}>Loading...</h1>
                     </div>
                 </div>
             )
@@ -68,3 +60,8 @@ class Grid extends Component {
 }
 
 export default Grid;
+
+
+const style = {
+    color: 'rgb(6, 144, 185)',
+}

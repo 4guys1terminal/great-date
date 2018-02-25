@@ -13,7 +13,7 @@ import bgImage from '../functions/bgImage'
 import { Link } from 'react-router-dom';
 import fetches from '../functions/fetch.js';
 
-const { fetchTags } = fetches
+const { fetchTags, fetchActivities } = fetches
 
 const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
@@ -43,6 +43,20 @@ class AllDatesPage extends Component {
 
             this.setState({
               tags: tags
+            })
+        })
+        .catch(e => console.log(e))
+
+        fetchActivities()
+        .then((resp) => {
+          const { activities } = resp
+
+            if(!activities) {
+              return
+            }
+
+            this.setState({
+              activities: activities
             })
         })
         .catch(e => console.log(e))
@@ -108,6 +122,28 @@ class AllDatesPage extends Component {
         this.setState({form: form})
     }
 
+    renderGrid = () => {
+        const { browseResp, activities, exclusiveActivities, inclusiveActivities } = this.state
+
+        if (browseResp === true) {
+            return <div>
+                <Grid
+                    activities={exclusiveActivities}
+                />
+
+                <Grid
+                    activities={inclusiveActivities}
+                />
+            </div>
+        } else {
+            return <div>
+                <Grid
+                    activities={activities}
+                />
+            </div>
+        }
+    }
+
     handleChange(e) {
         const {form} = this.state
         form[e.target.name] = e.target.value
@@ -131,17 +167,22 @@ class AllDatesPage extends Component {
 
     handleSubmit() {
         const {form} = this.state
-        return fetch(`${API}/api/browse`, {
+        fetch(`${API}/api/browse`, {
             method: "POST", //specifying our correct endpoint in the server
             headers: { //specifying that we're sending JSON, and want JSON back
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(form),
-        }).then((resp) => { //stringifying json for the fetch
+        }).then((res) => { //stringifying json for the fetch
             console.log('success');
-            return resp.json()
-
-        })
+            res.json()
+        }).then((res) => {
+            console.log(res.inclusiveIds);
+            console.log(res.exclusiveIds);
+            this.setState({
+                browseResp: true
+            })
+        }).catch( (e) => console.log("error:", e))
     }
 
     // handleBrowse(params) {
@@ -207,7 +248,18 @@ class AllDatesPage extends Component {
 
                     <div style={backgroundTexture} className='all-dates-page'>
 
-                        <Grid/> {this.renderCreateButton()}
+
+                        {this.renderGrid()}
+                        {/* <Grid
+                            activities={this.state.exclusiveActivities}
+                        />
+
+                        <Grid
+                            activities={this.state.inclusiveActivities}
+                        /> */}
+
+
+                        {this.renderCreateButton()}
                     </div>
                 </div>
 

@@ -52,7 +52,7 @@ class DatePage extends Component {
         }
 
         const {imageName, title, description, location, cost} = activity
-        console.log(imageName);
+        // console.log(imageName);
 
         return (<div style={bgImage}>
             <div className='datePageTest'>

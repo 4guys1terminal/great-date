@@ -145,6 +145,7 @@ app.post('/api/browse', (req, res) => {
 
             console.log("exclusiveIds",exclusiveIds, "inclusiveIds",inclusiveIds);
             res.status(201)
+            console.log('ids: ',exclusiveIds, inclusiveIds);
             res.json({exclusiveIds: exclusiveIds,
                     inclusiveIds: inclusiveIds})
             })
