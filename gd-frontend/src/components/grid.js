@@ -12,6 +12,8 @@ const path = "https://s3-us-west-1.amazonaws.com/great-date"
 
 const {imgSrc} = imageFactory
 
+const test = imgSrc(path, a.imageName)
+
 
 class Grid extends Component {
     constructor(props) {
@@ -56,7 +58,7 @@ class Grid extends Component {
                             <DatePreview
                                 key={a.id}
                                 id={a.id}
-                                image={imgSrc(path,a.imageName)}
+                                image={this.test}
                                 title={a.title}
                                 description={a.description}
                             />
