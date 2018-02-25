@@ -28,15 +28,25 @@ class Home extends Component {
     componentWillMount() {
         fetchActivities()
         .then((res) => {
-          const { activities } = res
+            const { activities } = res
+            let limitedActivities = []
 
             if(!activities) {
               return
             }
 
-            this.setState({
-              activities: activities
-            })
+            if (activities > 9) {
+                for (var i = 0; i < 9; i++) {
+                    limitedActivities.push(activities[i])
+                }
+                this.setState({
+                  activities: limitedActivities
+                })
+            } else {
+                this.setState({
+                  activities: activities
+                })
+            }
         })
         .catch(e => console.log(e))
     }

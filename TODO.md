@@ -7,6 +7,7 @@
 - [ ] Description box on Create A Date page glitches when you click into it
 - [ ] Login w/ FB takes you to a failed page first
 - [ ] Validations on Create A Date page don't work right
+- [X] Error when running the date generator w/out any tags chosen
 
 
 ### PHASE 1 : Usability
@@ -17,7 +18,7 @@
 - [ ] Form & Content Scaling for smaller screen sizes
 - [X] Image Upload Agreement
 - [ ] Image handling/processing
-- [ ] FE Browse search display - JD
+- [X] FE Browse search display - JD
 - [ ] FE Home page grid limited to 9 dates
 - [ ] Tag generation componentization
 - [ ] Generator routing / added to nav bar

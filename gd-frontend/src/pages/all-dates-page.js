@@ -30,6 +30,7 @@ class AllDatesPage extends Component {
     }
 
     componentWillMount() {
+
         fetchTags().then((res) => {
             const {tags} = res
 
@@ -189,8 +190,12 @@ class AllDatesPage extends Component {
                     inclusiveActivities.push(allActivities[i])
                 }
             }
-            console.log('success', 'excl', exclusiveActivities, 'incl', inclusiveActivities);
-            this.setState({exclusiveActivities: exclusiveActivities, inclusiveActivities: inclusiveActivities, browseResp: true})
+
+            this.setState({
+                exclusiveActivities: exclusiveActivities,
+                inclusiveActivities: inclusiveActivities,
+                browseResp: true
+            })
         }).catch((e) => console.log("error:", e))
     }
 
@@ -223,18 +228,6 @@ class AllDatesPage extends Component {
                         </span>
                     </button>
 
-                    {/* will need to adjust all of this to give us browse options */}
-
-                    {/* <ToggleButtonGroup type="checkbox" bsSize='large' className="search-tags">
-                        <ToggleButton value={1}>Romantic</ToggleButton>
-                        <ToggleButton value={2}>Thrilling</ToggleButton>
-                        <ToggleButton value={3}>Outdoors</ToggleButton>
-                        <ToggleButton value={4}>Fancy</ToggleButton>
-                        <ToggleButton value={5}>Morning</ToggleButton>
-                        <ToggleButton value={6}>Afternoon</ToggleButton>
-                        <ToggleButton value={7}>Evening</ToggleButton>
-                        </ToggleButtonGroup> */
-                    }
 
                     <div style={backgroundTexture} className='all-dates-page'>
 
@@ -242,6 +235,7 @@ class AllDatesPage extends Component {
 
                         {this.renderCreateButton()}
                     </div>
+
                 </div>
 
             </div>

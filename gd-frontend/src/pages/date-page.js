@@ -46,7 +46,8 @@ class DatePage extends Component {
 
     render() {
         const { activity } = this.state
-
+        const {imageName, title, description, location, cost} = activity
+        
         if (!activity) {
             return (
                 <div className="container">
@@ -56,9 +57,6 @@ class DatePage extends Component {
                 </div>
             )
         }
-
-        const {imageName, title, description, location, cost} = activity
-        // console.log(imageName);
 
         return (<div style={bgImage}>
             <div className='datePageTest'>
