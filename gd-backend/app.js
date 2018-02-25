@@ -164,14 +164,26 @@ app.post('/api/home', (req, res) => {
             : ''
     }
 
-    Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
-    .then(shuffle => {
-        console.log("yo sup", shuffle[0] );
-        let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId
-        res.status(201)
-        res.json({randomTag: randomTag})
-    })
-    .catch(e => console.log(e))
+    // need to handle case of no tags
+
+    if (tagArr.length === 0) {
+        Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId";`, {type: sequelize.QueryTypes.SELECT})
+        .then(shuffle => {
+            let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId
+            res.status(201)
+            res.json({randomTag: randomTag})
+        })
+        .catch(e => console.log(e))
+    } else {
+        Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
+        .then(shuffle => {
+            let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId
+            res.status(201)
+            res.json({randomTag: randomTag})
+        })
+        .catch(e => console.log(e))
+    }
+
 });
 
 
@@ -357,9 +369,13 @@ app.get('/api/user-uploads/:name', (req,res) => {
   res.sendFile(path.resolve(__dirname, './public/user-uploads', req.params.name))
 })
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../gd-frontend/build', 'index.html'))
-});
+
+
+// uncomment for production
+
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../gd-frontend/build', 'index.html'))
+// });
 
 
 module.exports = app
