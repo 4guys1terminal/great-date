@@ -8,9 +8,8 @@ const { fetchTags, fetchActivities } = api
 
 const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
-const path = "https://s3-us-west-1.amazonaws.com/great-date"
-
-const {imgSrc} = imageFactory()
+const path = "/api/user-uploads/"
+const imgSrc = imageFactory(host, path)
 
 
 class Grid extends Component {
@@ -56,7 +55,7 @@ class Grid extends Component {
                             <DatePreview
                                 key={a.id}
                                 id={a.id}
-                                image={imgSrc(path,a.imageName)}
+                                image={a.imageName}
                                 title={a.title}
                                 description={a.description}
                             />
