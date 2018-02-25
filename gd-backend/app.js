@@ -350,7 +350,7 @@ app.put('/api/activities/edit/:id', (req, res) => {
 
 // runs authorization check, responds with JSON to current user
 app.get('/api/login', authorization, (req, res) => {
-    res.json({user: request.currentUser})
+    res.json({user: req.currentUser})
 })
 //
 app.get('/api/user-uploads/:name', (req,res) => {

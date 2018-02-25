@@ -10,7 +10,7 @@ import bgImage from '../functions/bgImage'
 const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 const path = "/user-uploads/"
 
-const imgSrc = imageFactory(host, path)
+// const imgSrc = imageFactory(host, path)
 
 const { fetchActivity } = api
 
@@ -59,7 +59,7 @@ class DatePage extends Component {
                 {this.isUserLoggedIn()}
 
                 <DateComponent
-                    image={imgSrc(imageName)}
+                    image={imageName}
                     title={title}
                     description={description}
                     location={location}
