@@ -81,9 +81,9 @@ class DateGenerator extends Component {
         const {form} = this.state
 
         if (onSubmit) {
-            onSubmit(form).then((resp) => {
-                fetchActivity(resp.randomTag).then((resp) => {
-                    this.setState({randomTag: resp.activity.id, activity: resp.activity, randomSuccess: true,})
+            onSubmit(form).then((res) => {
+                fetchActivity(res.randomTag).then((res) => {
+                    this.setState({randomTag: res.activity.id, activity: res.activity, randomSuccess: true,})
                 })
             })
         } else {
