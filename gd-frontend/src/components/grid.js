@@ -10,9 +10,7 @@ const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app
 
 const path = "https://s3-us-west-1.amazonaws.com/great-date"
 
-const {imgSrc} = imageFactory
-
-const test = imgSrc(path, a.imageName)
+const {imgSrc} = imageFactory()
 
 
 class Grid extends Component {
@@ -58,7 +56,7 @@ class Grid extends Component {
                             <DatePreview
                                 key={a.id}
                                 id={a.id}
-                                image={`${test}`}
+                                image={imgSrc(path,a.imageName)}
                                 title={a.title}
                                 description={a.description}
                             />
