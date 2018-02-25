@@ -248,7 +248,7 @@ app.post('/api/activities', (req, res) => {
           })
 
 
-          const awsUrl = 'https://great-date.s3.us-west-1.amazonaws.com'
+          const awsUrl = 'https://great-date.s3.us-west-1.amazonaws.com/'
 
           Activity.create({
               title: title,
