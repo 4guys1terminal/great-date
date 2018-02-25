@@ -19,10 +19,11 @@
 - [X] Image Upload Agreement
 - [ ] Image handling/processing
 - [X] FE Browse search display - JD
-- [ ] FE Home page grid limited to 9 dates
+- [X] FE Home page grid limited to 9 dates
 - [ ] Tag generation componentization
 - [ ] Generator routing / added to nav bar
 - [ ] Footer w/ boilerplate legal info and such
+- [ ] Hamburger nav bar float right
 
 
 ### PHASE 2 : Feature Addition
