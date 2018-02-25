@@ -59,7 +59,7 @@ class DatePage extends Component {
                 {this.isUserLoggedIn()}
 
                 <DateComponent
-                    image={imageName}
+                    image={imgSrc(imageName)}
                     title={title}
                     description={description}
                     location={location}
