@@ -122,7 +122,7 @@ class AllDatesPage extends Component {
     }
 
     renderGrids = () => {
-        const {browseResp, allActivities, exclusiveActivities, inclusiveActivities,} = this.state
+        const {browseResp, allActivities, inclusiveActivities,} = this.state
 
         if (browseResp === true) {
             return (<div>
@@ -178,13 +178,13 @@ class AllDatesPage extends Component {
             let exclusiveActivities = []
             let inclusiveActivities = []
 
-            for (var i = 0; i < allActivities.length; i++) {
+            for (let i = 0; i < allActivities.length; i++) {
                 if (res.exclusiveIds.includes(allActivities[i].id)) {
                     exclusiveActivities.push(allActivities[i])
                 }
             }
 
-            for (var i = 0; i < allActivities.length; i++) {
+            for (let i = 0; i < allActivities.length; i++) {
                 if (res.inclusiveIds.includes(allActivities[i].id)) {
                     inclusiveActivities.push(allActivities[i])
                 }

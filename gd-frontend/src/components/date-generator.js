@@ -112,7 +112,8 @@ class DateGenerator extends Component {
                         <Row>
                             <Col xs={10} xsOffset={1}>
                                 <FormGroup id='tags-form-group'>
-                                    <br/> {this.createTagCheckboxes()}
+                                    <br/>
+                                {this.createTagCheckboxes()}
 
                                 </FormGroup>
                             </Col>

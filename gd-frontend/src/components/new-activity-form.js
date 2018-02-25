@@ -5,7 +5,6 @@ import {
     ControlLabel,
     FormGroup,
     FormControl,
-    Button,
     Row,
     Alert,
     Checkbox
@@ -16,7 +15,6 @@ import Dropzone from 'react-dropzone';
 
 const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
-const IMAGES_ALLOWED = 1
 
 class NewActivityForm extends Component {
     constructor(props) {
@@ -149,9 +147,7 @@ class NewActivityForm extends Component {
 
 
     onDrop = (acceptedFiles, rejectedFiles) => {
-        //converting the filesToBeSent into base64
         const { form } = this.state
-        let { extension, data } = form.image
 
         acceptedFiles.forEach(file => {
           console.log(file);
@@ -364,7 +360,7 @@ class NewActivityForm extends Component {
                         <br/>
                         <div>
                           File Preview:
-                          {this.state.form.image.name != '' &&
+                          {this.state.form.image.name !== '' &&
                             <div>
                               <pre>{JSON.stringify(this.state.form.image)}</pre>
                               <img src={this.state.form.image.data} className="image-preview" alt="preview" />
