@@ -95,6 +95,7 @@ class DateGenerator extends Component {
     render() {
         const {randomSuccess} = this.state
 
+        // this is where we want to add our redirect/show modal
         if (randomSuccess) {
             return <Redirect to={`/activities/${this.state.activity.id}`}/>
         }
@@ -123,7 +124,7 @@ class DateGenerator extends Component {
                 </div>
                 <button id='submit' className='shuffle-btn' onClick={this.handleSubmit.bind(this)}>
                     <span>
-                        Shuffle  <i class="fas fa-random"></i>
+                        Shuffle  <i className="fas fa-random"></i>
                     </span>
                 </button>
             </div>

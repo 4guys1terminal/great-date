@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import '../App.css';
+import { Link } from 'react-router-dom';
 
 class Title extends Component {
     render() {
@@ -17,11 +18,13 @@ class Title extends Component {
             </div>
 
             <div>
-                <button className="success-btns" onClick={this.props.onClick}>
+                <Link to='/date-generator-page'>
+                <button className="success-btns">
                     <span>
                     Let's Date
                     </span>
                 </button>
+                </Link>
             </div>
 
         </div>);

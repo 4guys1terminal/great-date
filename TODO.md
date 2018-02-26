@@ -25,6 +25,7 @@
 - [ ] Footer w/ boilerplate legal info and such
 - [ ] Hamburger nav bar float right
 - [ ] Add tags to individual date page
+- [ ] Adjust routes for browse page - if activity in exclusive, do not include in inclusive
 
 ### PHASE 2 : Feature Addition
 - [ ] Date ratings

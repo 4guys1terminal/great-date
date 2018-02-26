@@ -27,6 +27,12 @@ class NavBarBootstrap extends Component {
                             </NavItem>
                         </LinkContainer>
 
+                        <LinkContainer to='/date-generator-page'>
+                            <NavItem>
+                                Date Generator
+                            </NavItem>
+                        </LinkContainer>
+
                         <LinkContainer to='/all-dates-page'>
                             <NavItem>
                                 Browse Dates
