@@ -7,10 +7,10 @@ import fetches from '../functions/fetch.js';
 // import imageFactory from '../functions/imgSrc.js';
 import bgImage from '../functions/bgImage'
 
-const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
-const path = "/user-uploads/"
-
-const imgSrc = imageFactory(host, path)
+// const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
+// const path = "/user-uploads/"
+//
+// const imgSrc = imageFactory(host, path)
 
 const { fetchActivity } = fetches
 
@@ -46,7 +46,6 @@ class DatePage extends Component {
 
     render() {
         const { activity } = this.state
-        const {imageName, title, description, location, cost} = activity
 
         if (!activity) {
             return (
@@ -57,6 +56,8 @@ class DatePage extends Component {
                 </div>
             )
         }
+
+        const {imageName, title, description, location, cost} = activity
 
         return (<div style={bgImage}>
             <div className='datePageTest'>
