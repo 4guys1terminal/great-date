@@ -334,20 +334,20 @@ input[type=file] {
 }
 
 .fa-facebook-square {
-  position: relative;
-  top: 5px;
-  right: 5px;
+    position: relative;
+    top: 5px;
+    right: 5px;
 }
 
 .fa-google {
-  position: relative;
-  top: 5px;
-  right: 12px;
+    position: relative;
+    top: 5px;
+    right: 12px;
 }
 
 #fb-text {
-  position: relative;
-  left: 6px;
+    position: relative;
+    left: 6px;
 }
 
 .login-btn:hover {
@@ -361,9 +361,9 @@ input[type=file] {
 }
 
 #google-login {
-  background-color: #db3236;
-  margin-top: 0px;
-  padding-top: 0px;
+    background-color: #db3236;
+    margin-top: 0px;
+    padding-top: 0px;
 }
 
 ::-webkit-input-placeholder {
@@ -924,6 +924,46 @@ ul li {
 }
 
 .success-btns:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.shuffle-btn {
+    border-radius: 4px;
+    background-color: rgb(13, 194, 181);
+    border: rgba(256, 256, 256, 0.1) 1px solid;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    padding: 20px;
+    width: 200px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin-bottom: 50px;
+    margin: 10px;
+}
+
+.shuffle-btn span {
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.shuffle-btn span:after {
+    font-family: FontAwesome;
+    content: 'f074';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.shuffle-btn:hover span {
+    padding-right: 25px;
+}
+
+.shuffle-btn:hover span:after {
     opacity: 1;
     right: 0;
 }
