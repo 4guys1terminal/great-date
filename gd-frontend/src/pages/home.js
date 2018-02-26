@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import '../App.css';
-import TitleBlock from '../components/title-block.js';
+import Title from '../components/title.js';
 import {Link} from 'react-router-dom';
 import Grid from '../components/grid';
 import LoggedInNav from '../components/logged-in-navbar';
 import fetches from '../functions/fetch.js';
 import bgImage from '../functions/bgImage'
 import NavbarBootstrap from '../components/navbar-bootstrap.js';
+
 
 const { fetchActivities } = fetches
 
@@ -68,7 +69,7 @@ class Home extends Component {
                 <div style={bgImage} className='titleBlock'>
                     {this.isUserLoggedIn()}
 
-                    <TitleBlock/>
+                        <Title />
 
                 </div>
             </div>

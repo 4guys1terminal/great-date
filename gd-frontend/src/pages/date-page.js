@@ -31,7 +31,8 @@ class DatePage extends Component {
             if(!activity) {
               return
             }
-
+            console.log("activity success");
+            console.log(activity);
             this.setState({activity: activity})
         }).catch(e => console.log('mount catch:', e))
     }

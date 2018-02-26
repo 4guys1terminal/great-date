@@ -31,6 +31,12 @@ class Navigation extends Component {
                             </NavItem>
                         </LinkContainer>
 
+                        <LinkContainer to='/date-generator-page'>
+                            <NavItem>
+                                Date Generator
+                            </NavItem>
+                        </LinkContainer>
+                        
                         <LinkContainer to='/all-dates-page'>
                             <NavItem eventKey={2} >
                                 Browse Dates

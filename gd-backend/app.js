@@ -102,54 +102,75 @@ app.post('/api/browse', (req, res) => {
             : ''
     }
 
-    Tags.sequelize.query(`
-        SELECT *
-        FROM "ActivityTags"
-        WHERE "TagId" in (${tagArr})
-        GROUP BY "ActivityTags".id
-        HAVING COUNT (distinct "TagId") = (${tagArr.length});`
-        , {type: sequelize.QueryTypes.SELECT})
-    .then(allExclusiveActivities => {
 
-        // Browse Activities Exclusive
+    if (tagArr.length === 0) {
+        Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId";`, {type: sequelize.QueryTypes.SELECT})
+        .then(allActivities => {
+            let allIds = []
 
-        let exclusiveIds = []
+            for (var i = 0; i < allActivities.length; i++) {
+                allIds.push(allActivities[i].ActivityId)
+            }
 
-        for (var i = 0; i < allExclusiveActivities.length; i++) {
-            exclusiveIds.push(allExclusiveActivities[i].ActivityId)
-        }
+            allIds = allIds.filter((elem, pos, arr) => {
+                    return arr.indexOf(elem) == pos;
+            });
 
-        exclusiveIds = exclusiveIds.filter((elem, pos, arr) => {
-                return arr.indexOf(elem) == pos;
-        });
-
-        // Browse Activities Inclusive
-
+        res.status(201)
+        res.json({exclusiveIds: allIds,
+                inclusiveIds: allIds})
+        })
+        .catch(e => console.log(e))
+    } else {
         Tags.sequelize.query(`
             SELECT *
-            FROM "Activities"
-            JOIN "ActivityTags"
-            ON "Activities".id="ActivityId"
-            WHERE "TagId" IN (${tagArr});`
+            FROM "ActivityTags"
+            WHERE "TagId" in (${tagArr})
+            GROUP BY "ActivityTags".id
+            HAVING COUNT (distinct "TagId") = (${tagArr.length});`
             , {type: sequelize.QueryTypes.SELECT})
-        .then(allInclusiveActivities => {
-                let inclusiveIds = []
+        .then(allExclusiveActivities => {
 
-                for (var i = 0; i < allInclusiveActivities.length; i++) {
-                    inclusiveIds.push(allInclusiveActivities[i].ActivityId)
-                }
+            // Browse Activities Exclusive
 
-                inclusiveIds = inclusiveIds.filter((elem, pos, arr) => {
-                        return arr.indexOf(elem) == pos;
-                });
+            let exclusiveIds = []
 
-            console.log("exclusiveIds",exclusiveIds, "inclusiveIds",inclusiveIds);
-            res.status(201)
-            res.json({exclusiveIds: exclusiveIds,
-                    inclusiveIds: inclusiveIds})
+            for (var i = 0; i < allExclusiveActivities.length; i++) {
+                exclusiveIds.push(allExclusiveActivities[i].ActivityId)
+            }
+
+            exclusiveIds = exclusiveIds.filter((elem, pos, arr) => {
+                    return arr.indexOf(elem) == pos;
+            });
+
+            // Browse Activities Inclusive
+
+            Tags.sequelize.query(`
+                SELECT *
+                FROM "Activities"
+                JOIN "ActivityTags"
+                ON "Activities".id="ActivityId"
+                WHERE "TagId" IN (${tagArr});`
+                , {type: sequelize.QueryTypes.SELECT})
+            .then(allInclusiveActivities => {
+                    let inclusiveIds = []
+
+                    for (var i = 0; i < allInclusiveActivities.length; i++) {
+                        inclusiveIds.push(allInclusiveActivities[i].ActivityId)
+                    }
+
+                    inclusiveIds = inclusiveIds.filter((elem, pos, arr) => {
+                            return arr.indexOf(elem) == pos;
+                    });
+
+                console.log("exclusiveIds",exclusiveIds, "inclusiveIds",inclusiveIds);
+                res.status(201)
+                res.json({exclusiveIds: exclusiveIds,
+                        inclusiveIds: inclusiveIds})
+                })
+                .catch(e => console.log(e))
             })
-            .catch(e => console.log(e))
-        })
+    }
 });
 
 

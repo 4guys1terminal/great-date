@@ -12,19 +12,20 @@
 
 ### PHASE 1 : Usability
 - [ ] Overall user flow
-- [ ] FB Login / Auth
-- [ ] Google Login / Auth
-- [ ] Tag Icon Design/Checkbox Button - Jake
+- [X] FB Login / Auth
+- [X] Google Login / Auth
+- [ ] Tag Icon Design/Checkbox Button
 - [ ] Form & Content Scaling for smaller screen sizes
 - [X] Image Upload Agreement
 - [ ] Image handling/processing
-- [X] FE Browse search display - JD
+- [X] FE Browse search display
 - [X] FE Home page grid limited to 9 dates
 - [ ] Tag generation componentization
 - [ ] Generator routing / added to nav bar
 - [ ] Footer w/ boilerplate legal info and such
 - [ ] Hamburger nav bar float right
-
+- [ ] Add tags to individual date page
+- [ ] Adjust routes for browse page - if activity in exclusive, do not include in inclusive
 
 ### PHASE 2 : Feature Addition
 - [ ] Date ratings

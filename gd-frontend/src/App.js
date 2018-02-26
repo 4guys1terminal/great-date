@@ -10,7 +10,10 @@ import AllDatesPage from './pages/all-dates-page.js';
 import DatePage from './pages/date-page.js';
 import NewActivityPage from './pages/new-activity-page.js';
 import NewActivitySuccess from './pages/new-activity-success.js';
+import DateGeneratorPage from './pages/date-generator-page.js';
+
 import ScrollToTop from './functions/scrollToTop.js';
+
 
 class App extends Component {
     constructor(props) {
@@ -40,6 +43,8 @@ class App extends Component {
                             <SignUpPage errors={this.state.errors && this.state.errors.validations}/>
                         </div>)}/>
 
+
+                    <Route path='/date-generator-page' component={DateGeneratorPage}/>
                     <Route path='/browse' />
 
                 </ScrollToTop>
