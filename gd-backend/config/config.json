@@ -1,13 +1,13 @@
 {
   "development": {
-    "username": "Jordan",
+    "username": "jakeparolin",
     "password": null,
     "database": "great-date",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "username": "Jordan",
+    "username": "jakeparolin",
     "password": null,
     "database": "great-date",
     "host": "127.0.0.1",
