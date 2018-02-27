@@ -185,8 +185,6 @@ app.post('/api/home', (req, res) => {
             : ''
     }
 
-    // need to handle case of no tags
-
     if (tagArr.length === 0) {
         Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId";`, {type: sequelize.QueryTypes.SELECT})
         .then(shuffle => {
@@ -394,9 +392,9 @@ app.get('/api/user-uploads/:name', (req,res) => {
 
 // uncomment for production
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../gd-frontend/build', 'index.html'))
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../gd-frontend/build', 'index.html'))
+// });
 
 
 module.exports = app
