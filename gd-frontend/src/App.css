@@ -88,17 +88,15 @@ li {
 }
 
 .date-page {
+    width: 80%;
+    margin: 0 auto;
     margin-top: 25px;
-    margin-left: 25%;
-    margin-right: 25%;
     padding-bottom: 40px;
     margin-bottom: 5%;
-    /* border: 4px solid black; */
-    /* padding: 10px; */
+    max-width: 650px;
     color: rgb(56, 55, 56);
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    /* border-radius: 10px; */
 }
 
 .date-page h1, h2, h3, h4, p, a, nav {
@@ -114,7 +112,7 @@ li {
 
 .createDateForm {
     margin: auto;
-    /* width: 800px; */
+    max-width: 1000px;
     display: block;
 }
 
@@ -933,8 +931,7 @@ ul li {
 }
 
 .shuffle-btn span:after {
-    font-family: FontAwesome;
-    content: 'f074';
+    content: '\00bb';
     position: absolute;
     opacity: 0;
     top: 0;
@@ -966,14 +963,15 @@ ul li {
 }
 
 .generatorTags {
-    display: block;
+    display: inline-block;
     background-color: white;
     width: 115%;
     height: 25px;
     border-radius: 5px;
     /* color: rgb(0, 177, 186); */
     color: hsl(0, 0%, 30%);
-    margin: 10px;
+    margin: 8px;
+    margin-left: 20px;
     vertical-align: middle;
 }
 
@@ -1052,4 +1050,8 @@ ul li {
     .instCell {
         width: calc((100% / 3) -2rem);
     }
+}
+
+.shuffleI {
+    margin: 0 10px;
 }

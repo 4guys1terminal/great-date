@@ -156,10 +156,10 @@ class DateGeneratorPage extends Component {
                             </form>
 
                         </div>
-                        <button id='submit' className='shuffle-btn' onClick={this.handleSubmit.bind(this)}>
+                        <button className='shuffle-btn' onClick={this.handleSubmit.bind(this)}>
                             <span>
                                 Shuffle
-                                <i className="fas fa-random"></i>
+                                <i className="fas fa-random shuffleI"></i>
                             </span>
                         </button>
                     </div>

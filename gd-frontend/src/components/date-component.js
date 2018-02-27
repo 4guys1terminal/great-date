@@ -68,24 +68,25 @@ class DateComponent extends Component {
         const {imageName, title, description, location, cost} = activity
 
         return (
-            <div className="date-page">
+            <div>
+                <div className="date-page">
 
-                <div className='activityPicDiv'>
-                    <img className="activityPic" src={`${imageName}`} alt="date"/>
+                    <div className='activityPicDiv'>
+                        <img className="activityPic" src={`${imageName}`} alt="date"/>
+                    </div>
+
+                    <h3>{title}</h3>
+
+                    <div className="date-information">
+                        <h4>
+                            <strong>Date Information</strong>
+                        </h4>
+
+                        <p>{description}</p>
+                        <p>Location: {location}</p>
+                        <p>Cost: {this.createCostIcon(cost)}</p>
+                    </div>
                 </div>
-
-                <h3>{title}</h3>
-
-                <div className="date-information">
-                    <h4>
-                        <strong>Date Information</strong>
-                    </h4>
-
-                    <p>{description}</p>
-                    <p>Location: {location}</p>
-                    <p>Cost: {this.createCostIcon(cost)}</p>
-                </div>
-
             </div>
         );
     }
