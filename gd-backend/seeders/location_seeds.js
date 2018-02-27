@@ -44,7 +44,12 @@ module.exports = {
         name: 'North County',
         createdAt: new Date(),
         updatedAt: new Date()
-      }
+    },
+    {
+      name: 'East County',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
     ])
   },
 
