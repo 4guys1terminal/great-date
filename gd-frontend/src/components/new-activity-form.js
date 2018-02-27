@@ -108,7 +108,9 @@ class NewActivityForm extends Component {
                 name={tag.title}
                 value={tag.id}
                 onChange={this.toggleCheckbox.bind(this, tag.id)}>
-                    {tag.title}
+                    <span className="generatorTags">
+                      <i class="fas fa-tag"></i>
+                    {tag.title}</span>
             </Checkbox>
         )
     }
@@ -316,10 +318,11 @@ class NewActivityForm extends Component {
                   {/*Tags*/}
                   <Row>
                     <Col xs={10} xsOffset={1}>
+                        <ControlLabel id="tag">Tags</ControlLabel>
                       <FormGroup
                         id = "tags-form-group"
                         validationState = {this.errorsFor('tags') && 'error'}>
-                        <ControlLabel id="tag">Tags</ControlLabel>
+
                         <br/>
 
                         {this.createTagCheckboxes()}

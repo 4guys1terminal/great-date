@@ -9,7 +9,7 @@ module.exports = {
         description:"Rent bikes from ____ in Pacific Beach and explore the eclectic and exciting beach scene of San Diego's Pacific Beach. Grab a bite to eat.",
         location:"Pacific Beach",
         cost:0.33,
-        imageName: 'pacific_beach.jpg',
+        imageName: 'https://s3-us-west-1.amazonaws.com/great-date/pacific_beach.jpg',
         createdAt: new Date(), // we need to add the manually for seeds
         updatedAt: new Date()
       },
@@ -18,7 +18,7 @@ module.exports = {
         description:"Head to San Diego's hip up and coming North Park neighborhood to hang with the hipsters and Dan. If you're a fan of whiskey",
         location:"North Park",
         cost: .66,
-        imageName: 'north_park.jpg',
+        imageName: 'https://s3-us-west-1.amazonaws.com/great-date/north_park.jpg',
         createdAt: new Date(), // we need to add the manually for seeds
         updatedAt: new Date()
       },
@@ -27,7 +27,7 @@ module.exports = {
         description:"Grab your favorite date, a bottle of your preference, and some nice cheeses/crackers.",
         location:"Sunset Cliffs",
         cost:0,
-        imageName: 'sunset_cliffs.jpg',
+        imageName: 'https://s3-us-west-1.amazonaws.com/great-date/sunset_cliffs.jpg',
         createdAt: new Date(), // we need to add the manually for seeds
         updatedAt: new Date()
       },

@@ -968,11 +968,6 @@ ul li {
     right: 0;
 }
 
-.generatorTags {
-    color: white;
-    margin: 7px;
-}
-
 .cardTitle {
     text-decoration: none;
     padding-left: 15px;
@@ -981,4 +976,39 @@ ul li {
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
     background: none;
+}
+
+/*
+#tags-form-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+} */
+
+#tags-form-group input[type=checkbox] {
+    display: none;
+}
+
+.generatorTags {
+    display: inline-block;
+    background-color: white;
+    width: 115%;
+    height: 24px;
+    border-radius: 5px;
+    /* color: rgb(0, 177, 186); */
+    color: hsl(0, 0%, 30%);
+    margin: 10px;
+}
+
+.fa-tag {
+    position: relative;
+    right: 5px;
+}
+
+#tags-form-group input[type=checkbox]:checked+.generatorTags {
+    background-color: rgb(191, 4, 54);
+    /* background-color: hsl(0, 0%, 30%); */
+    /* background-color: white; */
+    color: white;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, .9);
 }
