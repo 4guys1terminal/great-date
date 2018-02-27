@@ -64,7 +64,7 @@ class AllDatesPage extends Component {
         if (typeof localStorage.name === 'undefined') {
             return <div>
                 {
-                    <Link to='/sign-up-page'>
+                    <Link to='/create-date-redirect'>
                             <button className="newActivityButton">Create New Date</button>
                         </Link>
                 }

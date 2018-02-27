@@ -74,6 +74,15 @@ class Home extends Component {
                 </div>
             </div>
 
+            <div>
+
+                {/* Great Date Instructions Component w/ 3 col grid*/}
+
+
+            </div>
+
+
+
             <div style={backgroundTexture}>
 
                 <div className="browse-title">

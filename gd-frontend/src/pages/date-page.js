@@ -21,21 +21,20 @@ class DatePage extends Component {
         this.state = {}
     }
 
-    componentWillMount() {
-        const { id } = this.props.match.params
-
-        fetchActivity(id)
-        .then((res) => {
-            const { activity } = res
-
-            if(!activity) {
-              return
-            }
-            console.log("activity success");
-            console.log(activity);
-            this.setState({activity: activity})
-        }).catch(e => console.log('mount catch:', e))
-    }
+    // componentWillMount() {
+    //     const { id } = this.props.match.params
+    //
+    //     fetchActivity(id)
+    //     .then((res) => {
+    //         const { activity } = res
+    //
+    //         if(!activity) {
+    //           return
+    //         }
+    //
+    //         this.setState({activity: activity})
+    //     }).catch(e => console.log('mount catch:', e))
+    // }
 
     isUserLoggedIn() {
         if (typeof localStorage.name === 'undefined') {
@@ -47,6 +46,7 @@ class DatePage extends Component {
 
     render() {
         const { activity } = this.state
+        const { id } = this.props.match.params
 
         if (!activity) {
             return (
@@ -58,21 +58,17 @@ class DatePage extends Component {
             )
         }
 
-        const {imageName, title, description, location, cost} = activity
+        return (
+            <div style={bgImage}>
+                <div className='datePageTest'>
+                    {this.isUserLoggedIn()}
 
-        return (<div style={bgImage}>
-            <div className='datePageTest'>
-                {this.isUserLoggedIn()}
-
-                <DateComponent
-                    image={imageName}
-                    title={title}
-                    description={description}
-                    location={location}
-                    cost={cost}/>
+                    <DateComponent
+                        id={id}
+                    />
+                </div>
             </div>
-
-        </div>);
+        );
     }
 }
 

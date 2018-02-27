@@ -2,10 +2,41 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 
+import fetches from '../functions/fetch';
+
+const { fetchActivity } = fetches;
+
 class DateComponent extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {}
+    }
+
+    componentWillMount() {
+        const { id } = this.props
+
+        fetchActivity(id)
+        .then((res) => {
+            const { activity } = res
+
+            if(!activity) {
+              return
+            }
+
+            this.setState({activity: activity})
+        }).catch(e => console.log('mount catch:', e))
+    }
+
+
     // Function to turn our Cost from database into a dollar sign. Adjust cost converter to scale the ratings
     createCostIcon = () => {
-        const costConverter = Math.round(this.props.cost * 3)
+        const { cost } = this.state
+
+        if(!cost) {
+            return
+        }
+
+        const costConverter = Math.round(cost * 3)
         switch (costConverter) {
             case 0:
                 return "Free";
@@ -25,21 +56,35 @@ class DateComponent extends Component {
     }
 
     render() {
+        const { activity } = this.state
+
+        if (!activity) {
+            return (
+                <div className="container">
+                    <div className="grid">
+                        <h1>Loading...</h1>
+                    </div>
+                </div>
+            )
+        }
+
+        const {imageName, title, description, location, cost} = activity
+
         return (
             <div className="date-page">
 
                 <div className='activityPicDiv'>
-                    <img className="activityPic" src={`${this.props.image}`} alt="date"/>
+                    <img className="activityPic" src={`${imageName}`} alt="date"/>
                 </div>
 
-                <h3>{this.props.title}</h3>
+                <h3>{title}</h3>
 
                 <div className="date-information">
                     <h4>
                         <strong>Date Information</strong>
                     </h4>
-                    <p>{this.props.description}</p>
-                    <p>Location: {this.props.location}</p>
+                    <p>{description}</p>
+                    <p>Location: {location}</p>
                     <p>Cost: {this.createCostIcon()}</p>
                 </div>
 
