@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import '../App.css';
+import { Link } from 'react-router-dom';
+import {Button} from 'react-bootstrap';
 import LoggedInNav from '../components/logged-in-navbar';
 import NavbarBootstrap from '../components/navbar-bootstrap.js';
 import DateComponent from '../components/date-component.js';
@@ -21,20 +23,20 @@ class DatePage extends Component {
         this.state = {}
     }
 
-    // componentWillMount() {
-    //     const { id } = this.props.match.params
-    //
-    //     fetchActivity(id)
-    //     .then((res) => {
-    //         const { activity } = res
-    //
-    //         if(!activity) {
-    //           return
-    //         }
-    //
-    //         this.setState({activity: activity})
-    //     }).catch(e => console.log('mount catch:', e))
-    // }
+    componentWillMount() {
+        const { id } = this.props.match.params
+
+        fetchActivity(id)
+        .then((res) => {
+            const { activity } = res
+
+            if(!activity) {
+              return
+            }
+
+            this.setState({activity: activity})
+        }).catch(e => console.log('mount catch:', e))
+    }
 
     isUserLoggedIn() {
         if (typeof localStorage.name === 'undefined') {
@@ -46,7 +48,7 @@ class DatePage extends Component {
 
     render() {
         const { activity } = this.state
-        const { id } = this.props.match.params
+
 
         if (!activity) {
             return (
@@ -64,8 +66,12 @@ class DatePage extends Component {
                     {this.isUserLoggedIn()}
 
                     <DateComponent
-                        id={id}
-                    />
+                        id={this.state.activity.id}/>
+
+                    <Link to='/all-dates-page' id='all-dates-back' className='back-button'>
+                        <Button className='back-button' bsStyle='primary' bsSize='large'>Back</Button>
+                    </Link>
+
                 </div>
             </div>
         );

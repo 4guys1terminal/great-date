@@ -11,7 +11,7 @@
 
 
 ### PHASE 1 : Usability
-- [ ] Overall user flow
+- [X] Overall user flow
 - [X] FB Login / Auth
 - [X] Google Login / Auth
 - [ ] Tag Icon Design/Checkbox Button

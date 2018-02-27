@@ -88,10 +88,6 @@ class DateComponent extends Component {
                     <p>Cost: {this.createCostIcon()}</p>
                 </div>
 
-                <Link to='/all-dates-page' id='all-dates-back' className='back-button'>
-                    <Button className='back-button' bsStyle='primary' bsSize='large'>Back</Button>
-                </Link>
-
             </div>
         );
     }
