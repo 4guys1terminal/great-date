@@ -109,7 +109,7 @@ class NewActivityForm extends Component {
                 value={tag.id}
                 onChange={this.toggleCheckbox.bind(this, tag.id)}>
                     <span className="generatorTags">
-                      <i class="fas fa-tag"></i>
+                      <i className="fas fa-tag"></i>
                     {tag.title}</span>
             </Checkbox>
         )

@@ -185,8 +185,6 @@ app.post('/api/home', (req, res) => {
             : ''
     }
 
-    // need to handle case of no tags
-
     if (tagArr.length === 0) {
         Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId";`, {type: sequelize.QueryTypes.SELECT})
         .then(shuffle => {

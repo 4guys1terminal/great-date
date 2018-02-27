@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../App.css';
-import {Link, Redirect,} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Grid from '../components/grid';
 import {Col, FormGroup, Row, Checkbox} from 'react-bootstrap';
 
@@ -103,9 +103,12 @@ class DateGeneratorPage extends Component {
     handleSubmit() {
         const {form} = this.state
 
+        this.setState({randomSuccess: false})
+
         if (handleDateGenerator) {
             handleDateGenerator(form).then((res) => {
                 fetchActivity(res.randomTag).then((res) => {
+                    console.log(res.activity);
                     this.setState({randomTag: res.activity.id, activity: res.activity, randomSuccess: true})
                 })
             })
@@ -123,7 +126,6 @@ class DateGeneratorPage extends Component {
     }
 
     render() {
-        const {randomSuccess} = this.state
         const {activities} = this.state
 
         return (<div className='home'>
