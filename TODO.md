@@ -21,7 +21,7 @@
 - [X] FE Browse search display
 - [X] FE Home page grid limited to 9 dates
 - [ ] Tag generation componentization
-- [ ] Generator routing / added to nav bar
+- [X] Generator routing / added to nav bar
 - [ ] Footer w/ boilerplate legal info and such
 - [ ] Hamburger nav bar float right
 - [ ] Add tags to individual date page

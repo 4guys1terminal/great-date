@@ -128,6 +128,7 @@ class DateGeneratorPage extends Component {
 
         return (<div className='home'>
             <div className="shadow">
+
                 <div style={bgImage} className='titleBlock'>
                     {this.isUserLoggedIn()}
 
@@ -160,10 +161,13 @@ class DateGeneratorPage extends Component {
                     </div>
 
                 </div>
+
             </div>
 
-            <div style={backgroundTexture}>
 
+
+            <div style={backgroundTexture}>
+                <br/>
                 {
                     this.state && this.state.randomSuccess
                         ? <DateComponent id={this.state.activity.id}/>
