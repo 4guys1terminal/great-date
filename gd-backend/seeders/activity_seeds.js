@@ -6,7 +6,7 @@ module.exports = {
     [
       {
         title:"Bike the boardwalk in PB then grab a drink at The Local",
-        description:"Rent bikes from ____ in Pacific Beach and explore the eclectic and exciting beach scene of San Diego's Pacific Beach. Grab a bite to eat.",
+        description:"Rent bikes from a bike shop in Pacific Beach and explore the eclectic and exciting beach scene of San Diego's Pacific Beach. Grab a bite to eat.",
         location:"Pacific Beach",
         cost:0.33,
         imageName: 'https://s3-us-west-1.amazonaws.com/great-date/pacific_beach.jpg',

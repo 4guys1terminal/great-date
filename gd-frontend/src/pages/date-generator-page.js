@@ -103,9 +103,12 @@ class DateGeneratorPage extends Component {
     handleSubmit() {
         const {form} = this.state
 
+        this.setState({randomSuccess: false})
+
         if (handleDateGenerator) {
             handleDateGenerator(form).then((res) => {
                 fetchActivity(res.randomTag).then((res) => {
+                    console.log(res.activity);
                     this.setState({randomTag: res.activity.id, activity: res.activity, randomSuccess: true})
                 })
             })
