@@ -65,25 +65,51 @@ class Home extends Component {
 
         return (
             <div className='home'>
-            <div className="shadow">
-                <div style={bgImage} className='titleBlock'>
-                    {this.isUserLoggedIn()}
+                <div className="shadow">
+                    <div
+                        style={bgImage}
+                        className='titleBlock'>
+                        {this.isUserLoggedIn()}
 
-                        <Title />
+                            <Title />
 
+                    </div>
+                </div>
+
+            <div style={backgroundTexture}>
+                <br/>
+            <div className="instContainer">
+                <div className="instGrid">
+                    <div className="instCell hvr-grow-shadow">
+                        <div className="instText">
+                            <h2>Step 1</h2>
+                            <h3>
+                                Set your ideal date preferences... or don't, and let
+                                Great Date decide for you.
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div className="instCell hvr-grow-shadow">
+                        <div className="instText">
+                            <h2>Step 2</h2>
+                            <h3>Click the shuffle button and...</h3>
+                        </div>
+                    </div>
+
+                    <div className="instCell hvr-grow-shadow">
+                        <div className="instText">
+                            <h2>Step 3</h2>
+                            <h3>Go have yourself a Great Date!</h3>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div>
-
-                {/* Great Date Instructions Component w/ 3 col grid*/}
-
-
-            </div>
 
 
 
-            <div style={backgroundTexture}>
+
 
                 <div className="browse-title">
                     <Link to='/all-dates-page' id='all-dates-link' className='browse-title'>Browse Dates</Link>

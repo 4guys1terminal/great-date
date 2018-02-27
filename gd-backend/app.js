@@ -394,9 +394,9 @@ app.get('/api/user-uploads/:name', (req,res) => {
 
 // uncomment for production
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../gd-frontend/build', 'index.html'))
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../gd-frontend/build', 'index.html'))
+});
 
 
 module.exports = app

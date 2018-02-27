@@ -67,7 +67,7 @@ class DateGeneratorPage extends Component {
         return (<Checkbox inline type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
             <span className="generatorTags">
                 <i className="fas fa-tag"></i>
-                {tag.title}</span>
+            <span className="generatorText">{tag.title}</span></span>
         </Checkbox>)
     }
 
@@ -142,9 +142,13 @@ class DateGeneratorPage extends Component {
                         <div className="createDateDiv">
                             <form className="createDateForm">
                                 <Row>
-                                    <Col xs={10} xsOffset={1}>
+                                    <Col xs={8}>
                                         <FormGroup id='tags-form-group'>
-                                            <br/> {this.createTagCheckboxes()}
+                                            <br/>
+
+                                        <div className='checkbox-container'>
+                                            {this.createTagCheckboxes()}
+                                        </div>
 
                                         </FormGroup>
                                     </Col>
@@ -152,10 +156,10 @@ class DateGeneratorPage extends Component {
                             </form>
 
                         </div>
-                        <button id='submit' className='shuffle-btn' onClick={this.handleSubmit.bind(this)}>
+                        <button className='shuffle-btn' onClick={this.handleSubmit.bind(this)}>
                             <span>
                                 Shuffle
-                                <i className="fas fa-random"></i>
+                                <i className="fas fa-random shuffleI"></i>
                             </span>
                         </button>
                     </div>
