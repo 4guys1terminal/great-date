@@ -84,7 +84,7 @@ class Home extends Component {
                         <div className="instText">
                             <h2>Step 1</h2>
                             <h3>
-                                Set your ideal date preferences... or don't, and let
+                                Set your ideal date preferences... or get spontaneous and let
                                 Great Date decide for you.
                             </h3>
                         </div>

@@ -109,7 +109,10 @@ class DateGeneratorPage extends Component {
             handleDateGenerator(form).then((res) => {
                 fetchActivity(res.randomTag).then((res) => {
                     console.log(res.activity);
-                    this.setState({randomTag: res.activity.id, activity: res.activity, randomSuccess: true})
+                    this.setState({
+                        randomTag: res.activity.id,
+                        activity: res.activity,
+                        randomSuccess: true})
                 })
             })
         } else {
@@ -174,6 +177,7 @@ class DateGeneratorPage extends Component {
 
             <div style={backgroundTexture}>
                 <br/>
+
                 {
                     this.state && this.state.randomSuccess
                         ? <DateComponent id={this.state.activity.id}/>

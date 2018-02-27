@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Activity = sequelize.define('Activity', {
-    description: DataTypes.STRING,
+    description: DataTypes.TEXT,
     location: DataTypes.STRING,
     title: DataTypes.STRING,
     cost: DataTypes.FLOAT,
