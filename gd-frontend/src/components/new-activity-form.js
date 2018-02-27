@@ -191,7 +191,7 @@ class NewActivityForm extends Component {
               <form className="createDateForm" onSubmit={this.handleSubmit.bind(this)}>
 
                 <Row>
-                  <Col xs={10} xsOffset={1}>
+                  <Col xs={10} >
                     {this.props.errors &&
                       <Alert bsStyle="danger">
                         Please check the form and try again.
@@ -206,7 +206,7 @@ class NewActivityForm extends Component {
 
                   {/*Title*/}
                   <Row>
-                    <Col xs={10} xsOffset={1}>
+                    <Col xs={10} >
                       <FormGroup
                         id = "title-form-group"
                         validationState = {this.errorsFor('title') && 'error'}>
@@ -231,7 +231,7 @@ class NewActivityForm extends Component {
 
                   {/*Description*/}
                   <Row>
-                    <Col xs={10} xsOffset={1}>
+                    <Col xs={10} >
                       <FormGroup
                         id = "description-form-group"
                         validationState = {this.errorsFor('description') && 'error'}>
@@ -257,7 +257,7 @@ class NewActivityForm extends Component {
 
 
                   <Row>
-                    <Col xs={10} xsOffset={1}>
+                    <Col xs={10} >
                       <FormGroup
                         id = "location-form-group"
                         validationState = {this.errorsFor('location') && 'error'}>
@@ -283,7 +283,7 @@ class NewActivityForm extends Component {
 
                   {/*Cost*/}
                   <Row>
-                    <Col xs={10} xsOffset={1}>
+                    <Col xs={10} >
                       <FormGroup
                         id = "cost-form-group"
                         validationState = {this.errorsFor('cost') && 'error'}>
@@ -317,15 +317,17 @@ class NewActivityForm extends Component {
 
                   {/*Tags*/}
                   <Row>
-                    <Col xs={10} xsOffset={1}>
-                        <ControlLabel id="tag">Tags</ControlLabel>
+                    <Col xs={8}>
+
                       <FormGroup
                         id = "tags-form-group"
                         validationState = {this.errorsFor('tags') && 'error'}>
+                        <ControlLabel id="tag">Tags</ControlLabel>
 
                         <br/>
-
-                        {this.createTagCheckboxes()}
+                        <div className='checkbox-container'>
+                            {this.createTagCheckboxes()}
+                        </div>
 
                         {/*}
                           {this.errorsFor('tags') &&
@@ -339,7 +341,7 @@ class NewActivityForm extends Component {
 
                   {/*Image*/}
                   <Row>
-                    <Col xs={10} xsOffset={1}>
+                    <Col xs={10} >
                       <FormGroup
                         id = "image-form-group"
                         validationState = {this.errorsFor('image') && 'error'}>
@@ -386,7 +388,7 @@ class NewActivityForm extends Component {
 
 
                   <Row>
-                    <Col xs={10} xsOffset={1}>
+                    <Col xs={10} >
                       <br/>
 
                   <button
@@ -399,7 +401,7 @@ class NewActivityForm extends Component {
                   </Row>
 
 {/*
-                  <Col xs={10} xsOffset={1}>
+                  <Col xs={10} >
                     <div className='map'>
                                     </div>
                                 </Col> */}

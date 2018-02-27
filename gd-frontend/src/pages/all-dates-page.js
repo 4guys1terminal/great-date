@@ -212,9 +212,13 @@ class AllDatesPage extends Component {
                     <div className="createDateDiv">
                         <form className="createDateForm">
                             <Row>
-                                <Col xs={10} xsOffset={1}>
+                                <Col xs={8}>
                                     <FormGroup id='tags-form-group'>
-                                        <br/> {this.createTagCheckboxes()}
+                                        <br/>
+
+                                        <div className='checkbox-container'>
+                                            {this.createTagCheckboxes()}
+                                        </div>
 
                                     </FormGroup>
                                 </Col>

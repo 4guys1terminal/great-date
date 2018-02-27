@@ -14,8 +14,8 @@
 - [X] Overall user flow
 - [X] FB Login / Auth
 - [X] Google Login / Auth
-- [ ] Tag Icon Design/Checkbox Button
-- [ ] Form & Content Scaling for smaller screen sizes
+- [X] Tag Icon Design/Checkbox Button
+- [X] Form & Content Scaling for smaller screen sizes
 - [X] Image Upload Agreement
 - [ ] Image handling/processing
 - [X] FE Browse search display
