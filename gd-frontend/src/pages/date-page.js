@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import '../App.css';
+import { Link } from 'react-router-dom';
+import {Button} from 'react-bootstrap';
 import LoggedInNav from '../components/logged-in-navbar';
 import NavbarBootstrap from '../components/navbar-bootstrap.js';
 import DateComponent from '../components/date-component.js';
@@ -31,8 +33,7 @@ class DatePage extends Component {
             if(!activity) {
               return
             }
-            console.log("activity success");
-            console.log(activity);
+
             this.setState({activity: activity})
         }).catch(e => console.log('mount catch:', e))
     }
@@ -48,6 +49,7 @@ class DatePage extends Component {
     render() {
         const { activity } = this.state
 
+
         if (!activity) {
             return (
                 <div className="container">
@@ -58,21 +60,21 @@ class DatePage extends Component {
             )
         }
 
-        const {imageName, title, description, location, cost} = activity
+        return (
+            <div style={bgImage}>
+                <div className='datePageTest'>
+                    {this.isUserLoggedIn()}
 
-        return (<div style={bgImage}>
-            <div className='datePageTest'>
-                {this.isUserLoggedIn()}
+                    <DateComponent
+                        id={this.state.activity.id}/>
 
-                <DateComponent
-                    image={imageName}
-                    title={title}
-                    description={description}
-                    location={location}
-                    cost={cost}/>
+                    <Link to='/all-dates-page' id='all-dates-back' className='back-button'>
+                        <Button className='back-button' bsStyle='primary' bsSize='large'>Back</Button>
+                    </Link>
+
+                </div>
             </div>
-
-        </div>);
+        );
     }
 }
 

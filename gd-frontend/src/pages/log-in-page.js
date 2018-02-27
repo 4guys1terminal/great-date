@@ -9,7 +9,7 @@ class LoginPage extends Component {
     render() {
         return (
             <div style={bgImage}>
-                < NavbarBootstrap />
+                <NavbarBootstrap />
                     <div className='login-page'>
                         <LogIn />
                     </div>

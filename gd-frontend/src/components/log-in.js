@@ -36,6 +36,7 @@ class Login extends Component {
     WHERE email === form email and encrypt the password(backend), and check if
     it matches. If it does, set auth state === true.
     */
+   
     authorize = (e) => {
         e.preventDefault()
         const { email, password } = this.state.form
