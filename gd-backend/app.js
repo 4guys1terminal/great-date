@@ -390,8 +390,6 @@ app.get('/api/user-uploads/:name', (req,res) => {
   res.sendFile(path.resolve(__dirname, './public/user-uploads', req.params.name))
 })
 
-
-
 // uncomment for production
 
 // app.get('*', (req, res) => {
