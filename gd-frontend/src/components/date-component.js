@@ -29,9 +29,7 @@ class DateComponent extends Component {
 
 
     // Function to turn our Cost from database into a dollar sign. Adjust cost converter to scale the ratings
-    createCostIcon = () => {
-        const { cost } = this.state
-
+    createCostIcon = (cost) => {
         if(!cost) {
             return
         }
@@ -67,7 +65,6 @@ class DateComponent extends Component {
                 </div>
             )
         }
-
         const {imageName, title, description, location, cost} = activity
 
         return (
@@ -83,9 +80,10 @@ class DateComponent extends Component {
                     <h4>
                         <strong>Date Information</strong>
                     </h4>
+
                     <p>{description}</p>
                     <p>Location: {location}</p>
-                    <p>Cost: {this.createCostIcon()}</p>
+                    <p>Cost: {this.createCostIcon(cost)}</p>
                 </div>
 
             </div>

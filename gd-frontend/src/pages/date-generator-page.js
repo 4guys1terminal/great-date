@@ -64,7 +64,7 @@ class DateGeneratorPage extends Component {
     }
 
     createTagCheckbox = (tag) => {
-        return (<Checkbox inline="inline" type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
+        return (<Checkbox inline type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
             <span className="generatorTags">
                 <i className="fas fa-tag"></i>
                 {tag.title}</span>
