@@ -27,9 +27,6 @@ class DateComponent extends Component {
 
     // Function to turn our Cost from database into a dollar sign. Adjust cost converter to scale the ratings
     createCostIcon = (cost) => {
-        if(!cost) {
-            return
-        }
 
         const costConverter = Math.round(cost * 3)
         switch (costConverter) {
