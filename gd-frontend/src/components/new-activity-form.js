@@ -7,7 +7,8 @@ import {
     FormControl,
     Row,
     Alert,
-    Checkbox
+    Checkbox,
+    HelpBlock
 } from 'react-bootstrap';
 import RadioGroup from './radio-group.js';
 import Dropzone from 'react-dropzone';
@@ -32,6 +33,7 @@ class NewActivityForm extends Component {
                   extension: '',
                 },
             },
+            // QUESTION: why are these separated from state? I'm sure they could be combined -JD
             locations: [],
             tags: []
         }
@@ -52,11 +54,11 @@ class NewActivityForm extends Component {
         })
     }
 
-    handleChange(e) {
-        const { form } = this.state
-        form[e.target.name] = e.target.value
+    handleChange(event) {
+        const { formState } = Object.assign({}, this.state.form)
+        formState[event.target.name] = event.target.value
         this.setState({
-            form: form
+            form: formState
         })
     }
 
@@ -65,7 +67,7 @@ class NewActivityForm extends Component {
       e.preventDefault()
       const { onSubmit } = this.props
       const { form } = this.state
-
+      console.log("form",form);
       if(onSubmit) {
         onSubmit(form)
       }
@@ -75,6 +77,7 @@ class NewActivityForm extends Component {
     errorsFor(attribute) {
         var errorString = "";
         if(this.props.errors) {
+          console.log("errors", this.props.errors); // errors for tags and image are NOT showing up here, therefore they are not being passed in on props
             const errors = this.props.errors.filter(error => error.param === attribute)
             if(errors) {
                 errorString = errors.map(error => error.msg ).join(", ")
@@ -221,11 +224,11 @@ class NewActivityForm extends Component {
                           onChange={this.handleChange.bind(this)}
                         />
 
-                          {/* {this.errorsFor('title') &&
+                          {this.errorsFor('title') &&
                           <HelpBlock
-                          id="title-help-block">{this.errorFor('title')}</HelpBlock>
+                          id="title-help-block">{this.errorsFor('title')}</HelpBlock>
                           }
-                        */}
+
 
                       </FormGroup>
                     </Col>
@@ -247,11 +250,11 @@ class NewActivityForm extends Component {
                           onChange={this.handleChange.bind(this)}
                         />
 
-                        {/*
+
                           {this.errorsFor('description') &&
-                          <HelpBlock id="description-help-block">{this.errorFor('description')}</HelpBlock>
+                          <HelpBlock id="description-help-block">{this.errorsFor('description')}</HelpBlock>
                           }
-                        */}
+
 
                       </FormGroup>
                     </Col>
@@ -277,7 +280,9 @@ class NewActivityForm extends Component {
                         </FormControl>
 
 
-
+                          {this.errorsFor('location') &&
+                          <HelpBlock id="location-help-block">{this.errorsFor('location')}</HelpBlock>
+                          }
 
                       </FormGroup>
                     </Col>
@@ -307,11 +312,11 @@ class NewActivityForm extends Component {
                         />
 
 
-                        {/*
+
                           {this.errorsFor('cost') &&
-                          <HelpBlock id="cost-help-block">{this.errorFor('cost')}</HelpBlock>
+                          <HelpBlock id="cost-help-block">{this.errorsFor('cost')}</HelpBlock>
                           }
-                        */}
+
 
                       </FormGroup>
                     </Col>
@@ -331,11 +336,11 @@ class NewActivityForm extends Component {
                             {this.createTagCheckboxes()}
                         </div>
 
-                        {/*}
+
                           {this.errorsFor('tags') &&
-                          <HelpBlock id="tags-help-block">{this.errorFor('tags')}</HelpBlock>
+                          <HelpBlock id="tags-help-block">{this.errorsFor('tags')}</HelpBlock>
                           }
-                        */}
+
 
                       </FormGroup>
                     </Col>
@@ -378,11 +383,11 @@ class NewActivityForm extends Component {
                         </div>
 
 
-                        {/*
+
                           {this.errorsFor('image') &&
-                          <HelpBlock id="image-help-block">{this.errorFor('images')}</HelpBlock>
+                          <HelpBlock id="image-help-block">{this.errorsFor('images')}</HelpBlock>
                           }
-                        */}
+
 
                       </FormGroup>
                     </Col>
@@ -402,11 +407,6 @@ class NewActivityForm extends Component {
                     </Col>
                   </Row>
 
-{/*
-                  <Col xs={10} >
-                    <div className='map'>
-                                    </div>
-                                </Col> */}
 
                         </div>
 

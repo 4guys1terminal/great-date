@@ -1,25 +1,27 @@
-var express = require('express');
-var cors = require('cors');
-var bodyParser = require('body-parser');
-var validator = require('express-validator');
-
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const validator = require('express-validator');
 const crypto = require('crypto')
-var sequelize = require('sequelize');
+const sequelize = require('sequelize');
 
+// filesystem import
 const fs = require('fs');
-var path = require('path');
+const path = require('path');
 
 const aws = require('aws-sdk')
 
-var app = express();
+const app = express();
 
-var Tag = require('./models').Tag
-var User = require('./models').User;
-var Activity = require('./models').Activity;
-var Tags = require('./models').Tag;
-var ActivityTag = require('./models').ActivityTag;
-var Location = require('./models').Location;
+// Model Imports for Sequelize
+const Tag = require('./models').Tag
+const User = require('./models').User;
+const Activity = require('./models').Activity;
+const Tags = require('./models').Tag;
+const ActivityTag = require('./models').ActivityTag;
+const Location = require('./models').Location;
 
+// Middleware (order matters! run from top to bottom)
 app.use(express.static('public'))
 app.use(express.static(path.resolve(__dirname, '../gd-frontend/build')));
 app.use(bodyParser.json({limit: '50mb'}));
@@ -28,12 +30,10 @@ app.use(validator());
 app.use(cors());
 
 
-// aws s3 bucket setup for images
+// AWS S3 bucket setup for images
 aws.config.region = 'us-west-1';
 const s3 = new aws.S3();
 const BUCKETNAME = process.env.S3_BUCKET;
-
-
 
 // authorization token
 const authorization = (req, res, next) => {
@@ -252,21 +252,26 @@ app.post('/api/activities', (req, res) => {
     req.checkBody('description', 'is required').notEmpty()
     req.checkBody('location', 'is required').notEmpty()
     req.checkBody('cost', 'is required').notEmpty()
-    // req.checkBody('tag','is required').notEmpty() --------               Need to
-    // req.checkBody('imageFile', 'is required').notEmpty() ---------   Figure these out
+    req.checkBody('tags','are required').isLength({ min: 1 })
+    req.checkBody('image', 'is required').notEmpty()
 
     // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult().then((validationErrors) => {
         if (validationErrors.isEmpty()) {
+          // destructures the request data from the front end form
           const { title, description, location, cost, image } = req.body
           let { data, extension } = image
 
+          // sets up hashed file name
           let fileprefix = crypto.createHash('md5').update(data).digest('hex')
 
+          // creates full file name for the database by appending the image extension to the new hashed name
           let filename = `${fileprefix}.${extension}`
 
+          // decodes base64 info from front end
           data = new Buffer(data.replace(/^data:image\/\w+;base64,/, ""),'base64')
 
+          // s3 information for image upload to AWS cloud (uses hashed name (to ensure no data/name duplicate crossover))
           const s3params = {
             Bucket: 'great-date',
             Key: filename,
@@ -276,17 +281,13 @@ app.post('/api/activities', (req, res) => {
             ContentType: `image/${extension}`
           }
 
-          // console.log('s3params:', s3params);
-
+          // uploads to S3 bucket
           s3.upload(s3params, (err, data) => {
-            // if (err) {return console.log(err) }
-            // console.log('Image successfully uploaded.');
-
             console.log("data:", data);
             console.log("error:", err);
           })
 
-
+          // sets up AWS s3 bucket URL to be saved with the specific activity so that we can display the src url on the front end
           const awsUrl = 'https://great-date.s3.us-west-1.amazonaws.com/'
 
           Activity.create({
@@ -391,14 +392,15 @@ app.put('/api/activities/edit/:id', (req, res) => {
 app.get('/api/login', authorization, (req, res) => {
     res.json({user: req.currentUser})
 })
-//
+
+
 app.get('/api/user-uploads/:name', (req,res) => {
   res.sendFile(path.resolve(__dirname, './public/user-uploads', req.params.name))
 })
 
 
 
-// uncomment for production
+// ------- !!NOTE!!: UNCOMMENT FOR PRODUCTION -------
 
 // app.get('*', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '../gd-frontend/build', 'index.html'))
@@ -408,8 +410,8 @@ app.get('/api/user-uploads/:name', (req,res) => {
 module.exports = app
 
 
-//NOTE: this is random excess code, unused
- 
+//NOTE: this is random excess code, unused. consider for deletion
+
 // let images = req.body.imageFile.map((image) => {
 // const base64ToImage = require('base64-to-image');
 //
