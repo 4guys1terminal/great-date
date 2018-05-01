@@ -2,10 +2,13 @@ var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var validator = require('express-validator');
+
 const crypto = require('crypto')
 var sequelize = require('sequelize');
+
 const fs = require('fs');
 var path = require('path');
+
 const aws = require('aws-sdk')
 
 var app = express();
@@ -25,6 +28,7 @@ app.use(validator());
 app.use(cors());
 
 
+// aws s3 bucket setup for images
 aws.config.region = 'us-west-1';
 const s3 = new aws.S3();
 const BUCKETNAME = process.env.S3_BUCKET;
@@ -53,9 +57,10 @@ const authorization = (req, res, next) => {
         res.json({message: 'Authorization Token Required'})
     }
 }
+
 // homepage
 app.get('/api/home', (req, res) => {
-    res.json({message: 'API example app'});
+    res.json({message: 'API example, app running'});
 });
 
 // displays respective route  w/ raw json from database onto page
@@ -93,9 +98,12 @@ app.get('/api/activities/:id', (req, res) => {
 });
 
 
+
 app.post('/api/browse', (req, res) => {
     tags = req.body.tags
     let tagArr = []
+
+    // TODO: needs comments
     for (var property in tags) {
         tags[property] === true
             ? tagArr.push(parseInt(property))
@@ -268,7 +276,7 @@ app.post('/api/activities', (req, res) => {
             ContentType: `image/${extension}`
           }
 
-          console.log('s3params:', s3params);
+          // console.log('s3params:', s3params);
 
           s3.upload(s3params, (err, data) => {
             // if (err) {return console.log(err) }
@@ -400,7 +408,8 @@ app.get('/api/user-uploads/:name', (req,res) => {
 module.exports = app
 
 
-
+//NOTE: this is random excess code, unused
+ 
 // let images = req.body.imageFile.map((image) => {
 // const base64ToImage = require('base64-to-image');
 //

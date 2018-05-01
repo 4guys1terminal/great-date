@@ -36,7 +36,8 @@ class NewActivityForm extends Component {
             tags: []
         }
     }
-      //Gets our tag and location database
+
+    //Gets our tag and location database
     componentDidMount() {
         fetch(`${API}/api/tags`).then(resp => {
             return resp.json()
@@ -70,7 +71,7 @@ class NewActivityForm extends Component {
       }
     }
 
-
+    // check for errors passed in on props, if yes, then return errors as errorString
     errorsFor(attribute) {
         var errorString = "";
         if(this.props.errors) {
@@ -82,7 +83,7 @@ class NewActivityForm extends Component {
         return errorString === "" ? null : errorString
     }
 
-
+    // creates a dropdown option for each location passed in
     createLocation = (location, i) => {
         return(
             <option key={i}>
@@ -91,14 +92,14 @@ class NewActivityForm extends Component {
         )
     }
 
-
+    // maps through the locations in database and returns the createLocation fxn, which creates a unique dropdown for each location w/ the relevant key
     createLocations = () => {
         return this.state.locations.map((location, i) => {
             return this.createLocation(location, i)
         })
     }
 
-
+    // creates tag checkbox for each tag passed in
     createTagCheckbox = (tag) => {
         return (
             <Checkbox
@@ -115,7 +116,7 @@ class NewActivityForm extends Component {
         )
     }
 
-
+    // maps through the tags in database and returns the createTagCheckbox fxn
     createTagCheckboxes = () => {
         return this.state.tags.map((tag) => {
             return this.createTagCheckbox(tag)
@@ -136,18 +137,20 @@ class NewActivityForm extends Component {
         })
     }
 
-    //Image shit (Jordan Needs To Comment)
+    // image handling
+
+    // handleClear splices and clears the filesToBeSent and imageFile in state on
     handleClear(event,index){
-        var filesToBeSent=this.state.filesToBeSent;
+        var filesToBeSent = this.state.filesToBeSent;
         filesToBeSent.splice(index,1);
 
-        var imageFile=this.state.form.imageFile;
+        var imageFile = this.state.form.imageFile;
         imageFile.splice(index,1)
 
         this.setState({filesToBeSent,imageFile});
     }
 
-
+    // onDrop fxn takes img files from dropzone and then processes them to be sent to the backend
     onDrop = (acceptedFiles, rejectedFiles) => {
         const { form } = this.state
 
@@ -156,15 +159,16 @@ class NewActivityForm extends Component {
 
           let { name, type } = file
 
+          // uses split to set type variable (img extension)
           type = type.split('/')[1]
 
-          console.log("name:", name, " type:", type)
+          // console.log("name:", name, " type:", type)
 
           let image = {
             extension: type,
             name: name,
           }
-
+          // creates new fileReader for base64 encoding
           const reader = new FileReader()
 
           reader.onload = () => {
@@ -202,8 +206,6 @@ class NewActivityForm extends Component {
 
                 <div className='forms'>
 
-                  {/* All form inputs labeled and minimized because DAMN that's a lot of code. Highly consider componentizing each of these form inputs out in the future.*/}
-
                   {/*Title*/}
                   <Row>
                     <Col xs={10} >
@@ -218,8 +220,8 @@ class NewActivityForm extends Component {
                           value={this.state.form.title}
                           onChange={this.handleChange.bind(this)}
                         />
-                        {/*
-                          {this.errorsFor('title') &&
+
+                          {/* {this.errorsFor('title') &&
                           <HelpBlock
                           id="title-help-block">{this.errorFor('title')}</HelpBlock>
                           }
