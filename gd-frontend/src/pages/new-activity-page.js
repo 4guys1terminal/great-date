@@ -50,6 +50,7 @@ class NewActivity extends Component {
         }
     }
 
+    // fxn that creates new activity
     handleNewActivity(params) {
         fetch(`${API}/api/activities`, {
             method: "POST", //specifying our correct endpoint in the server
@@ -57,15 +58,21 @@ class NewActivity extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(params),
-        }).then((resp) => { //stringifying json for the fetch
+        }).then((resp) => {
+            //stringifying json for the fetch
             return resp.json()
         }).then((resp) => {
-            if (resp.errors) { //checking for any server side errors
-                this.setState({errors: resp.errors})
+            if (resp.errors) {
+              console.log("errors",resp.errors);
+                //checking for any server side errors
+              this.setState({errors: resp.errors})
             } else {
                 const activities = Object.assign([], this.state.activities)
                 const tags = Object.assign([], this.state.tags)
                 const locations = Object.assign([], this.state.locations)
+
+                // QUESTION: what is happening here... why does the activity get pushed within the component? shouldn't this be reaching into the backend to get the activity?
+
                 activities.push(resp.activity) //add new activity to list of activities
                 this.setState({
                     activities: activities, // update activities in state

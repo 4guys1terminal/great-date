@@ -1,25 +1,26 @@
-var express = require('express');
-var cors = require('cors');
-var bodyParser = require('body-parser');
-var validator = require('express-validator');
-
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const validator = require('express-validator');
 const crypto = require('crypto')
-var sequelize = require('sequelize');
+const sequelize = require('sequelize');
 
+// filesystem import & aws for image processing
 const fs = require('fs');
-var path = require('path');
-
+const path = require('path');
 const aws = require('aws-sdk')
 
-var app = express();
+const app = express();
 
-var Tag = require('./models').Tag
-var User = require('./models').User;
-var Activity = require('./models').Activity;
-var Tags = require('./models').Tag;
-var ActivityTag = require('./models').ActivityTag;
-var Location = require('./models').Location;
+// Model Imports for Sequelize
+const Tag = require('./models').Tag
+const User = require('./models').User;
+const Activity = require('./models').Activity;
+const Tags = require('./models').Tag;
+const ActivityTag = require('./models').ActivityTag;
+const Location = require('./models').Location;
 
+// Middleware (order matters! run from top to bottom)
 app.use(express.static('public'))
 app.use(express.static(path.resolve(__dirname, '../gd-frontend/build')));
 app.use(bodyParser.json({limit: '50mb'}));
@@ -28,12 +29,10 @@ app.use(validator());
 app.use(cors());
 
 
-// aws s3 bucket setup for images
+// AWS S3 bucket setup for images
 aws.config.region = 'us-west-1';
 const s3 = new aws.S3();
 const BUCKETNAME = process.env.S3_BUCKET;
-
-
 
 // authorization token
 const authorization = (req, res, next) => {
@@ -219,8 +218,11 @@ app.post('/api/home', (req, res) => {
 
 app.post('/api/users', (req, res) => {
 
+    // TODO: add validations for lastName, email
+    // TODO: add actual filters to the password and email validations so they aren't just checking "isEmpty"
     req.checkBody('firstName', 'Is required').notEmpty()
     req.checkBody('password', 'Is required').notEmpty()
+
 
     req.getValidationResult().then(valErrors => {
         if (valErrors.isEmpty()) {
@@ -247,46 +249,50 @@ app.post('/api/users', (req, res) => {
 // post route for creating activities
 app.post('/api/activities', (req, res) => {
 
+    // console.log("req.body",req.body);
+
     //sets up validation checks on all submit fields
     req.checkBody('title', 'is required').notEmpty()
     req.checkBody('description', 'is required').notEmpty()
     req.checkBody('location', 'is required').notEmpty()
     req.checkBody('cost', 'is required').notEmpty()
-    // req.checkBody('tag','is required').notEmpty() --------               Need to
-    // req.checkBody('imageFile', 'is required').notEmpty() ---------   Figure these out
+    req.checkBody('tagQty','are required').isInt({gt:0})
+    req.checkBody('image_data', 'is required').notEmpty()
 
     // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult().then((validationErrors) => {
         if (validationErrors.isEmpty()) {
-          const { title, description, location, cost, image } = req.body
-          let { data, extension } = image
+          // destructures the request data from the front end form
+          const { title, description, location, cost, image_extension } = req.body
 
-          let fileprefix = crypto.createHash('md5').update(data).digest('hex')
+          let { image_data } = req.body
 
-          let filename = `${fileprefix}.${extension}`
+          // sets up hashed file name
+          let filePrefix = crypto.createHash('md5').update(image_data).digest('hex')
 
-          data = new Buffer(data.replace(/^data:image\/\w+;base64,/, ""),'base64')
+          // creates full file name for the image_database by appending the image extension to the new hashed name
+          let fileName = `${filePrefix}.${image_extension}`
 
+          // decodes base64 info from front end
+          image_data = new Buffer(image_data.replace(/^data:image\/\w+;base64,/, ""),'base64')
+
+          // s3 information for image upload to AWS cloud (uses hashed name (to ensure no data/name duplicate crossover))
           const s3params = {
             Bucket: 'great-date',
-            Key: filename,
-            Body: data,
+            Key: fileName,
+            Body: image_data,
             ACL: 'public-read',
             ContentEncoding: 'base64',
-            ContentType: `image/${extension}`
+            ContentType: `image/${image_extension}`
           }
 
-          // console.log('s3params:', s3params);
-
-          s3.upload(s3params, (err, data) => {
-            // if (err) {return console.log(err) }
-            // console.log('Image successfully uploaded.');
-
-            console.log("data:", data);
+          // uploads to S3 bucket
+          s3.upload(s3params, (err, image_data) => {
+            console.log("data:", image_data);
             console.log("error:", err);
           })
 
-
+          // sets up AWS s3 bucket URL to be saved with the specific activity so that we can display the src url on the front end
           const awsUrl = 'https://great-date.s3.us-west-1.amazonaws.com/'
 
           Activity.create({
@@ -294,14 +300,17 @@ app.post('/api/activities', (req, res) => {
               description: description,
               location: location,
               cost: cost,
-              imageName: awsUrl + filename,
+              imageName: awsUrl + fileName,
           }).then((activity) => {
               res.status(201)
               res.json({activity: activity})
               // Takes the tag checkbox from our form
               tags = req.body.tags
               let tagArr = []
+
               // Pushes Id of newly made activity and any tag selected to an array to use for our ActivityTag Table
+
+              // NOTE: this is where i'm going to have to make some adjustments to how tags are handled now that they're an array
               for (var property in tags) {
                   let val = {
                       ActivityId: activity.id,
@@ -391,14 +400,15 @@ app.put('/api/activities/edit/:id', (req, res) => {
 app.get('/api/login', authorization, (req, res) => {
     res.json({user: req.currentUser})
 })
-//
+
+
 app.get('/api/user-uploads/:name', (req,res) => {
   res.sendFile(path.resolve(__dirname, './public/user-uploads', req.params.name))
 })
 
 
 
-// uncomment for production
+// ------- !!NOTE!!: UNCOMMENT FOR PRODUCTION -------
 
 // app.get('*', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '../gd-frontend/build', 'index.html'))
@@ -408,8 +418,8 @@ app.get('/api/user-uploads/:name', (req,res) => {
 module.exports = app
 
 
-//NOTE: this is random excess code, unused
- 
+//NOTE: this is random excess code, unused. consider for deletion
+
 // let images = req.body.imageFile.map((image) => {
 // const base64ToImage = require('base64-to-image');
 //
