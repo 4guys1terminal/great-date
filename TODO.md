@@ -6,7 +6,7 @@
 - [X] Facebook login doesnt work for anyone but Dan
 - [ ] Description box on Create A Date page glitches when you click into it
 - [ ] Login w/ FB takes you to a failed page first
-- [ ] Validations on Create A Date page don't work right
+- [X] Validations on Create A Date page don't work right
 - [X] Error when running the date generator w/out any tags chosen
 
 
