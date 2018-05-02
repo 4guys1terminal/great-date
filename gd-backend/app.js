@@ -5,10 +5,9 @@ const validator = require('express-validator');
 const crypto = require('crypto')
 const sequelize = require('sequelize');
 
-// filesystem import
+// filesystem import & aws for image processing
 const fs = require('fs');
 const path = require('path');
-
 const aws = require('aws-sdk')
 
 const app = express();
@@ -247,43 +246,47 @@ app.post('/api/users', (req, res) => {
 // post route for creating activities
 app.post('/api/activities', (req, res) => {
 
+    // console.log("req.body",req.body);
+    //QUESTION: can i set up some processing to turn my tags object into a readable string or array? what about setting up a different form of validation on the tags?
+
     //sets up validation checks on all submit fields
     req.checkBody('title', 'is required').notEmpty()
     req.checkBody('description', 'is required').notEmpty()
     req.checkBody('location', 'is required').notEmpty()
     req.checkBody('cost', 'is required').notEmpty()
     req.checkBody('tags','are required').isLength({ min: 1 })
-    req.checkBody('image', 'is required').notEmpty()
+    req.checkBody('image_data', 'is required').notEmpty()
 
     // if there are no errors logged, then it allows the activity to be created
     req.getValidationResult().then((validationErrors) => {
         if (validationErrors.isEmpty()) {
           // destructures the request data from the front end form
-          const { title, description, location, cost, image } = req.body
-          let { data, extension } = image
+          const { title, description, location, cost, image_extension } = req.body
 
+          let { image_data } = req.body
+          
           // sets up hashed file name
-          let fileprefix = crypto.createHash('md5').update(data).digest('hex')
+          let filePrefix = crypto.createHash('md5').update(image_data).digest('hex')
 
-          // creates full file name for the database by appending the image extension to the new hashed name
-          let filename = `${fileprefix}.${extension}`
+          // creates full file name for the image_database by appending the image extension to the new hashed name
+          let fileName = `${filePrefix}.${image_extension}`
 
           // decodes base64 info from front end
-          data = new Buffer(data.replace(/^data:image\/\w+;base64,/, ""),'base64')
+          image_data = new Buffer(image_data.replace(/^data:image\/\w+;base64,/, ""),'base64')
 
           // s3 information for image upload to AWS cloud (uses hashed name (to ensure no data/name duplicate crossover))
           const s3params = {
             Bucket: 'great-date',
-            Key: filename,
-            Body: data,
+            Key: fileName,
+            Body: image_data,
             ACL: 'public-read',
             ContentEncoding: 'base64',
-            ContentType: `image/${extension}`
+            ContentType: `image/${image_extension}`
           }
 
           // uploads to S3 bucket
-          s3.upload(s3params, (err, data) => {
-            console.log("data:", data);
+          s3.upload(s3params, (err, image_data) => {
+            console.log("data:", image_data);
             console.log("error:", err);
           })
 
@@ -295,14 +298,17 @@ app.post('/api/activities', (req, res) => {
               description: description,
               location: location,
               cost: cost,
-              imageName: awsUrl + filename,
+              imageName: awsUrl + fileName,
           }).then((activity) => {
               res.status(201)
               res.json({activity: activity})
               // Takes the tag checkbox from our form
               tags = req.body.tags
               let tagArr = []
+
               // Pushes Id of newly made activity and any tag selected to an array to use for our ActivityTag Table
+
+              // NOTE: this is where i'm going to have to make some adjustments to how tags are handled now that they're an array
               for (var property in tags) {
                   let val = {
                       ActivityId: activity.id,
