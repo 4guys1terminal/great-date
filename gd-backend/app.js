@@ -218,8 +218,11 @@ app.post('/api/home', (req, res) => {
 
 app.post('/api/users', (req, res) => {
 
+    // TODO: add validations for lastName, email
+    // TODO: add actual filters to the password and email validations so they aren't just checking "isEmpty"
     req.checkBody('firstName', 'Is required').notEmpty()
     req.checkBody('password', 'Is required').notEmpty()
+
 
     req.getValidationResult().then(valErrors => {
         if (valErrors.isEmpty()) {
@@ -247,14 +250,13 @@ app.post('/api/users', (req, res) => {
 app.post('/api/activities', (req, res) => {
 
     // console.log("req.body",req.body);
-    //QUESTION: can i set up some processing to turn my tags object into a readable string or array? what about setting up a different form of validation on the tags?
 
     //sets up validation checks on all submit fields
     req.checkBody('title', 'is required').notEmpty()
     req.checkBody('description', 'is required').notEmpty()
     req.checkBody('location', 'is required').notEmpty()
     req.checkBody('cost', 'is required').notEmpty()
-    req.checkBody('tags','are required').isLength({ min: 1 })
+    req.checkBody('tagQty','are required').isInt({gt:0})
     req.checkBody('image_data', 'is required').notEmpty()
 
     // if there are no errors logged, then it allows the activity to be created
@@ -264,7 +266,7 @@ app.post('/api/activities', (req, res) => {
           const { title, description, location, cost, image_extension } = req.body
 
           let { image_data } = req.body
-          
+
           // sets up hashed file name
           let filePrefix = crypto.createHash('md5').update(image_data).digest('hex')
 

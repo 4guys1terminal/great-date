@@ -63,9 +63,9 @@ class NewActivity extends Component {
             return resp.json()
         }).then((resp) => {
             if (resp.errors) {
+              console.log("errors",resp.errors);
                 //checking for any server side errors
-                console.log("errors2", resp.errors);
-                this.setState({errors: resp.errors})
+              this.setState({errors: resp.errors})
             } else {
                 const activities = Object.assign([], this.state.activities)
                 const tags = Object.assign([], this.state.tags)

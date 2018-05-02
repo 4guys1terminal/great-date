@@ -27,9 +27,10 @@ class NewActivityForm extends Component {
         location: '',
         cost: '',
         tags: {},
+        tagQty: 0,
         image_name: '',
         image_data: '',
-        image_extension: ''
+        image_extension: '',
       },
       // below: refer to lists pulled from database, as opposed to the above tags and location which are specific to the newly created date
       locationsList: [],
@@ -59,20 +60,35 @@ class NewActivityForm extends Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault()
-    const {onSubmit} = this.props
-    const {form} = this.state
-    console.log("form", form);
+    e.preventDefault();
+    const {onSubmit} = this.props;
+    const {form} = this.state;
+
+    // extra processing to create tags quantity int for backend validations
+    let trueTagsArray = Object.values(form.tags);
+    let tagQty = 0;
+
+    for (var i = 0; i < trueTagsArray.length; i++) {
+      if(trueTagsArray[i] === true) {
+        tagQty++;
+      }
+    }
+
+    let updatedForm = Object.assign({}, form, {
+      tagQty: tagQty,
+    })
+
+    console.log("form", updatedForm);
     if (onSubmit) {
-      onSubmit(form)
+      onSubmit(updatedForm);
     }
   }
 
   // check for errors passed in on props, if yes, then return errors as errorString
   errorsFor(attribute) {
     var errorString = "";
+
     if (this.props.errors) {
-      console.log("errors", this.props.errors); // errors for tags and image are NOT showing up here, therefore they are not being passed in on props
       const errors = this.props.errors.filter(error => error.param === attribute)
       if (errors) {
         errorString = errors.map(error => error.msg).join(", ")
@@ -124,21 +140,21 @@ class NewActivityForm extends Component {
     this.setState({form: form})
   }
 
-  // image handling - ask JD w/ questions
+  // Image Handling - ask JD w/ questions
 
-  // handleClear splices and clears the filesToBeSent and imageFile in state
-  // honestly i may have taken the "Clear" functionality out haha - JD
-  handleClear(event, index) {
-    var filesToBeSent = this.state.filesToBeSent;
-    filesToBeSent.splice(index, 1);
+  // handleClear clears the filesToBeSent and imageFile in state
+  // I took the "Clear" functionality out though haha. keep for future needs - JD
+  // handleClear(event, index) {
+  //   var filesToBeSent = this.state.filesToBeSent;
+  //   filesToBeSent.splice(index, 1);
+  //
+  //   var imageFile = this.state.form.imageFile;
+  //   imageFile.splice(index, 1)
+  //
+  //   this.setState({filesToBeSent, imageFile,});
+  // }
 
-    var imageFile = this.state.form.imageFile;
-    imageFile.splice(index, 1)
-
-    this.setState({filesToBeSent, imageFile,});
-  }
-
-  // onDrop fxn takes img files from dropzone and then processes them to be sent to the backend
+  // onDrop fxn takes img files from dropzone and then processes them to base64 to be sent to the backend
   onDrop = (acceptedFiles, rejectedFiles) => {
     const {form} = this.state
 
@@ -146,7 +162,7 @@ class NewActivityForm extends Component {
       let {name, type,} = file
 
       // uses split to set type variable (img extension)
-      type = type.split('/')[1]
+      let image_extension = type.split('/')[1]
 
       // creates new fileReader for base64 encoding
       const reader = new FileReader()
@@ -157,7 +173,7 @@ class NewActivityForm extends Component {
         this.setState({form: Object.assign({}, form, {
             image_name: name,
             image_data: image_data,
-            image_extension: type
+            image_extension: image_extension
           })})
       }
 
@@ -253,15 +269,16 @@ class NewActivityForm extends Component {
           <Row>
             <Col xs={8}>
 
-              <FormGroup id="tags-form-group" validationState={this.errorsFor('tags') && 'error'}>
+              <FormGroup id="tags-form-group" validationState={this.errorsFor('tagQty') && 'error'}>
                 <ControlLabel id="tag">Tags</ControlLabel>
+
+              {this.errorsFor('tagQty') && <HelpBlock id="tags-help-block">{this.errorsFor('tagQty')}</HelpBlock>}
 
                 <br/>
                 <div className='checkbox-container'>
                   {this.createTagCheckboxes()}
                 </div>
 
-                {this.errorsFor('tags') && <HelpBlock id="tags-help-block">{this.errorsFor('tags')}</HelpBlock>}
 
               </FormGroup>
             </Col>
@@ -273,7 +290,10 @@ class NewActivityForm extends Component {
               <FormGroup id="image-form-group" validationState={this.errorsFor('image_data') && 'error'}>
                 <ControlLabel id="image">Image</ControlLabel>
 
-                {this.errorsFor('image_data') && <HelpBlock id="image-help-block">{this.errorsFor('image_data')}</HelpBlock>}
+                {
+                this.errorsFor('image_data') &&
+                <HelpBlock id="image-help-block">{this.errorsFor('image_data')}</HelpBlock>
+                }
 
                 <div className="image-upload-div">
                   <Dropzone className='dropzone' accept='image/*' onDrop={(files) => {
@@ -287,14 +307,17 @@ class NewActivityForm extends Component {
                   </Dropzone>
                 </div>
                 <br/>
+
                 <div>
-                  File Preview: {
-                    this.state.form.image_name !== '' && <div>
-                        {/* <pre>{JSON.stringify(this.state.form.image)}</pre> */}©
-                        <img src={this.state.form.image_data} className="image-preview" alt="preview"/>
-                        <p>{this.state.form.image_name}.{this.state.form.image_extension}</p>
-                        <br/>
-                      </div>
+                  File Preview:
+                  {
+                    this.state.form.image_name !== '' &&
+                    <div>
+                      {/* <pre>{JSON.stringify(this.state.form.image)}</pre> */}
+                      <img src={this.state.form.image_data} className="image-preview" alt="preview"/>
+                      <p>{this.state.form.image_name}.{this.state.form.image_extension}</p>
+                      <br/>
+                    </div>
                   }
                 </div>
 
@@ -305,7 +328,6 @@ class NewActivityForm extends Component {
           <Row>
             <Col xs={10}>
               <br/>
-
               <button id="submit" onClick={this.handleSubmit.bind(this)}>
                 <span>Submit</span>
               </button>
