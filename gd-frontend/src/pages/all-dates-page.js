@@ -81,11 +81,15 @@ class AllDatesPage extends Component {
     }
 
     createTagCheckbox = (tag) => {
-        return (<Checkbox inline type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
-            <span className="generatorTags">
-                <i className="fas fa-tag"></i>
-                {tag.title}</span>
-        </Checkbox>)
+        return (
+        	
+	        	<Checkbox inline type="checkbox" style={{padding: 3, marginRight: 10}} key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
+	            <span className="generatorTags">
+	                <i className="fas fa-tag"></i>
+	                {tag.title}</span>
+	        </Checkbox>
+        
+        )
     }
 
     createTagCheckboxes = () => {
