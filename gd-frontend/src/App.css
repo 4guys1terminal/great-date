@@ -962,8 +962,10 @@ ul li {
     display: none;
 }
 
+
 .generatorTags {
-    display: inline-block;
+    /*display: inline-block;*/
+    align-self: flex-start;
     background-color: white;
     width: 115%;
     height: 25px;
@@ -975,6 +977,13 @@ ul li {
     vertical-align: middle;
 }
 
+span.generatorTags {
+	margin: 0 !important;
+	padding: 5px 10px 5px 10px !important;
+	width: 30px;
+	height: 15px;
+}
+
 .generatorText {
     vertical-align: middle;
 }
@@ -982,7 +991,11 @@ ul li {
 .checkbox-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
+}
+
+label.checkbox-inline {
+	margin: 0 !important;
 }
 
 .fa-tag {
