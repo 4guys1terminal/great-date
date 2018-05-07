@@ -45,7 +45,10 @@ class App extends Component {
                         </div>)}/>
                     <Route path='/date-generator-page' component={DateGeneratorPage}/>
                     <Route path='/create-date-redirect' component={CreateDateRedirect}/>
-                
+
+                  {/* TODO: create components for the login and dashboard */}
+                    <Route path='/admin-login' />
+                    <Route path='/admin-dash' />
                 </ScrollToTop>
             </Switch>
         </Router>);
