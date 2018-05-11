@@ -11,7 +11,8 @@ import DatePage from './pages/date-page';
 import NewActivityPage from './pages/new-activity-page';
 import NewActivitySuccess from './pages/new-activity-success';
 import DateGeneratorPage from './pages/date-generator-page';
-import CreateDateRedirect from './pages/create-date-redirect'
+import CreateDateRedirect from './pages/create-date-redirect';
+import AdminLoginPage from './pages/admin-login';
 
 import ScrollToTop from './functions/scrollToTop.js';
 
@@ -30,7 +31,7 @@ class App extends Component {
       <Switch>
         <ScrollToTop>
 
-          <Route exact="exact" path='/' component={Home}/>
+          <Route exact path='/' component={Home}/>
           <Route path='/home' component={Home}/>
           <Route path='/activities/:id' component={DatePage}/>
           <Route path='/login-page' component={LogInPage}/>
@@ -38,18 +39,17 @@ class App extends Component {
           <Route path='/new-activity' component={NewActivityPage}/>
           <Route path='/success' component={NewActivitySuccess}/>
           <Route path='/logged-in-page' component={LoggedInPage}/>
-          <Route exact="exact" path="/sign-up-page" render={props => (<div>
+          <Route exact path="/sign-up-page" render={props => (<div>
               <SignUpPage errors={this.state.errors && this.state.errors.validations}/>
             </div>)}/>
           <Route path='/date-generator-page' component={DateGeneratorPage}/>
           <Route path='/create-date-redirect' component={CreateDateRedirect}/>
 
           {/* TODO: create components for the login and dashboard */}
+          <Route path='/admin-login' component={AdminLoginPage}/>
+          <Route path='/admin-dash' />
 
-          {/* <Route path='/admin-login' />
-                    <Route path='/admin-dash' />
-                   */
-          }
+
 
         </ScrollToTop>
       </Switch>

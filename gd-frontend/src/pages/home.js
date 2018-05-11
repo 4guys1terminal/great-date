@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import '../App.css';
+
 import Title from '../components/title.js';
 import {Link} from 'react-router-dom';
 import Grid from '../components/grid';

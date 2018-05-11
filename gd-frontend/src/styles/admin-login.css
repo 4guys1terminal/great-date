@@ -1,0 +1,19 @@
+.admin-login-page {
+  background-color: rgb(6, 144, 185);
+  width: 101vw;
+  height: 101vh;
+}
+
+.admin-login-form {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  border-radius: 10px;
+  height: 250px;
+  width: 300px;
+  box-shadow: 4px 4px 10px rgba(255, 0, 0, 0.3);
+}
