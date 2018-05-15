@@ -166,7 +166,7 @@ class AllDatesPage extends Component {
     handleSubmit() {
         const {form} = this.state
 
-        fetch(`${API}/api/browse`, {
+        fetch(`${`API`}/api/browse`, {
             method: "POST", //specifying our correct endpoint in the server
             headers: { //specifying that we're sending JSON, and want JSON back
                 'Content-Type': 'application/json'
