@@ -43,8 +43,13 @@ class AdminLogin extends Component {
           <br/>
           <input type="text" placeholder="Password" name="password" onChange={this.onChange}></input>
           <br/>
-          <input type="submit"></input>
+          <button className="admin-login-btn">
+              <span>
+              Log In
+              </span>
+          </button>
         </div>
+
       </div>
     );
   }
