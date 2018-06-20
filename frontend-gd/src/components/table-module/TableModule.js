@@ -17,7 +17,8 @@ import "./table-module.css";
 class Tables extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+    }
   }
 
   componentWillMount() {
@@ -27,7 +28,7 @@ class Tables extends Component {
       })
   }
 
-  //TODO: fxn that takes all dates on props and creates <tr> for each
+
   //TODO: btn that lets admin accept or reject date submission
   //TODO: fxn that processes accept or reject btn click and changes the date in the database to reflect (needs to actively change the FE as well & log admin modified)
   //TODO: have to handle image sizing and preview, size of description as well
@@ -37,8 +38,20 @@ class Tables extends Component {
 
 
   getTableHeaders() {
+
+    // const headers = [
+    //   "Date Title",
+    //   "Description",
+    //   "Cost",
+    //   "Image",
+    //   "Created On",
+    //   "Status",
+    //   "Last Modified",
+    //   "Admin Modified"
+    // ]
+
       return [
-        <thead>
+        <thead className="headers admin-table-body">
           <tr>
             <th>Date Title</th>
             <th>Description</th>
@@ -53,6 +66,7 @@ class Tables extends Component {
       ]
   }
 
+  // <tr>
   // <td>'"The Local" Bike Ride Along Mission Bay'</td>
   // <td>"Rent Bikes at the nearby Pacific Beach Bike shop (1277 Garnet Ave) before heading down to Mission Bay."</td>
   // <td>.33</td>
@@ -61,22 +75,46 @@ class Tables extends Component {
   // <td><Badge color="success">Approved</Badge></td>
   // <td></td>
   // <td></td>
+  // </tr>
 
+// TODO: need to come back to this once i have the BE routes and DB fields figured out
+  getTableRows(dateData) {
+    return dateData.map((date) => {
+      return(
+        <tr key={date.id}>
+          <td>{date.title}</td>
+          <td>{date.description}</td>
+          <td>{date.cost}</td>
+          {/* <td>image goes here</td> */}
+          <td><img src={date.imageName} alt={date.title} style={{width: "100px"}}/></td>
+          <td>{date.createdAt}</td>
+          <td><Badge color="success">Approved</Badge></td>
+          <td>{date.updatedAt}</td>
+          <td>Jordan</td>
+        </tr>
+    )
+    })
+  }
 
 
 
   render() {
+    console.log("this.state",this.state);
+
     return (<div className="animated fadeIn admin-table">
       <Row>
         <Col>
           <Card>
             <CardBody>
-              <Table hover bordered striped responsive size="lg">
+              <Table className="admin-" bordered responsive>
 
               {this.getTableHeaders()}
 
-                <tbody>
-                  <tr>
+                <tbody className="admin-table-body">
+
+                  {this.getTableRows(this.state.activities)}
+
+                  {/* <tr>
 
                     <td>'"The Local" Bike Ride Along Mission Bay'</td>
                     <td>"Rent Bikes at the nearby Pacific Beach Bike shop (1277 Garnet Ave) before heading down to Mission Bay."</td>
@@ -87,7 +125,8 @@ class Tables extends Component {
                     <td></td>
                     <td></td>
 
-                  </tr><tr>
+                  </tr>
+                  <tr>
 
                     <td>Zbyněk Phoibos</td>
                     <td>Staff</td>
@@ -109,9 +148,11 @@ class Tables extends Component {
                     <td></td>
                     <td></td>
 
-                  </tr>
+                  </tr> */}
                 </tbody>
               </Table>
+
+
               <nav>
                 <Pagination>
                   <PaginationItem>

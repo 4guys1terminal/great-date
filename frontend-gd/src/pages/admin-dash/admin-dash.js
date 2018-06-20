@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import TableModule from '../../components/table-module/TableModule';
+import './admin-dash.css'
 
 import {CardHeader} from 'reactstrap'
 import fetches from '../../functions/fetch.js';
+import bgImage from '../../functions/bgImage.js';
 
 const {fetchActivities} = fetches;
 
@@ -46,10 +48,10 @@ export default class AdminDash extends Component {
     }
 
     return (
-      <div>
+      <div className="admin-dash" style={bgImage}>
 
         <CardHeader>
-          <h2>Great Date Submissions</h2>
+          <h2 className="admin-dash-header">Great Date Submissions</h2>
         </CardHeader>
 
         <TableModule activities={this.state.activities}/>
