@@ -11,6 +11,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from 'reactstrap';
+import "./table-module.css";
 
 
 class Tables extends Component {
@@ -35,80 +36,88 @@ class Tables extends Component {
   //NOTE: Date status's: Needs Approval, Approved, Needs Review (for questionable ones), Rejected, Deleted (for one's with 0 value)
 
 
+  getTableHeaders() {
+      return [
+        <thead>
+          <tr>
+            <th>Date Title</th>
+            <th>Description</th>
+            <th>Cost</th>
+            <th>Image</th>
+            <th>Created On</th>
+            <th>Status</th>
+            <th>Last Modified</th>
+            <th>Admin Modified</th>
+          </tr>
+        </thead>
+      ]
+  }
+
+  // <td>'"The Local" Bike Ride Along Mission Bay'</td>
+  // <td>"Rent Bikes at the nearby Pacific Beach Bike shop (1277 Garnet Ave) before heading down to Mission Bay."</td>
+  // <td>.33</td>
+  // <td></td>
+  // <td>05/15/2018</td>
+  // <td><Badge color="success">Approved</Badge></td>
+  // <td></td>
+  // <td></td>
+
+
+
+
   render() {
-    return (<div className="animated fadeIn">
+    return (<div className="animated fadeIn admin-table">
       <Row>
         <Col>
           <Card>
-            <CardHeader>
-              <h2>Great Date Submissions</h2>
-            </CardHeader>
             <CardBody>
-              <Table hover="hover" bordered="bordered" striped="striped" responsive="responsive" size="lg">
-                <thead>
-                  <tr>
-                    <th>Date Title</th>
-                    <th>Description</th>
-                    <th>Cost</th>
-                    <th>Image</th>
-                    <th>Created On</th>
-                    <th>Created By</th>
-                    <th>Status</th>
-                    <th>Last Modified</th>
-                    <th>Admin Modified</th>
-                  </tr>
-                </thead>
+              <Table hover bordered striped responsive size="lg">
+
+              {this.getTableHeaders()}
+
                 <tbody>
                   <tr>
+
                     <td>'"The Local" Bike Ride Along Mission Bay'</td>
                     <td>"Rent Bikes at the nearby Pacific Beach Bike shop (1277 Garnet Ave) before heading down to Mission Bay."</td>
                     <td>.33</td>
                     <td></td>
                     <td>05/15/2018</td>
+                    <td><Badge color="success">Approved</Badge></td>
                     <td></td>
-                    <td>
-                      <Badge color="success">Approved</Badge>
-                    </td>
                     <td></td>
 
-                    <td></td>
-                  </tr>
-                  <tr>
+                  </tr><tr>
+
                     <td>Zbyněk Phoibos</td>
                     <td>Staff</td>
                     <td>.33</td>
                     <td></td>
                     <td>05/15/2018</td>
+                    <td><Badge color="danger">Rejected</Badge></td>
                     <td></td>
-                    <td>
-                      <Badge color="danger">Rejected</Badge>
-                    </td>
                     <td></td>
 
-                    <td></td>
-                  </tr>
-                  <tr>
+                  </tr><tr>
+
                     <td>Einar Randall</td>
                     <td>Admin</td>
                     <td>.33</td>
                     <td></td>
                     <td>05/15/2018</td>
+                    <td><Badge color="secondary">Needs Approval</Badge></td>
                     <td></td>
-                    <td>
-                      <Badge color="secondary">Needs Approval</Badge>
-                    </td>
                     <td></td>
 
-                    <td></td>
                   </tr>
                 </tbody>
               </Table>
               <nav>
                 <Pagination>
                   <PaginationItem>
-                    <PaginationLink previous="previous" href="#">Prev</PaginationLink>
+                    <PaginationLink previous href="#">Prev</PaginationLink>
                   </PaginationItem>
-                  <PaginationItem active="active">
+                  <PaginationItem active>
                     <PaginationLink href="#">1</PaginationLink>
                   </PaginationItem>
                   <PaginationItem>
@@ -121,7 +130,7 @@ class Tables extends Component {
                     <PaginationLink href="#">4</PaginationLink>
                   </PaginationItem>
                   <PaginationItem>
-                    <PaginationLink next="next" href="#">Next</PaginationLink>
+                    <PaginationLink next href="#">Next</PaginationLink>
                   </PaginationItem>
                 </Pagination>
               </nav>

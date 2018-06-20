@@ -1,19 +1,6 @@
 import React, {Component} from 'react';
 import '../App.css';
 import '../styles/admin-login.css';
-import {
-  Container,
-  Row,
-  Col,
-  CardGroup,
-  Card,
-  CardBody,
-  Button,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-} from 'reactstrap';
 import bgImage from '../functions/bgImage.js'
 
 class AdminLogin extends Component {

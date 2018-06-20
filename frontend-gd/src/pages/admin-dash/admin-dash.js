@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import Tables from '../components/tables.js'
+import TableModule from '../../components/table-module/TableModule';
 
-import fetches from '../functions/fetch.js'
+import {CardHeader} from 'reactstrap'
+import fetches from '../../functions/fetch.js';
 
-const {fetchTags, fetchActivities} = fetches
-
-const API = process.env.NODE_ENV === 'production'
-    ? 'https://the-great-date-app.herokuapp.com'
-    : 'http://localhost:3000'
+const {fetchActivities} = fetches;
 
 const style = {
     color: 'rgb(6, 144, 185)',
@@ -16,7 +13,6 @@ const style = {
 export default class AdminDash extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
 
     };
@@ -51,7 +47,12 @@ export default class AdminDash extends Component {
 
     return (
       <div>
-        <Tables activities={this.state.activities}/>
+
+        <CardHeader>
+          <h2>Great Date Submissions</h2>
+        </CardHeader>
+
+        <TableModule activities={this.state.activities}/>
       </div>
     );
   }

@@ -10,10 +10,6 @@ import fetches from '../functions/fetch.js';
 
 const {fetchTags, fetchActivities,} = fetches
 
-const API = process.env.NODE_ENV === 'production'
-    ? 'https://the-great-date-app.herokuapp.com'
-    : 'http://localhost:3000'
-
 var backgroundTexture = {
     backgroundImage: 'url(/images/grid_noise.png)'
 };

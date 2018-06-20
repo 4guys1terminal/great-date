@@ -13,7 +13,7 @@ import NewActivitySuccess from './pages/new-activity-success';
 import DateGeneratorPage from './pages/date-generator-page';
 import CreateDateRedirect from './pages/create-date-redirect';
 import AdminLoginPage from './pages/admin-login';
-import AdminDash from './pages/admin-dash'
+import AdminDash from './pages/admin-dash/admin-dash'
 
 import ScrollToTop from './functions/scrollToTop.js';
 

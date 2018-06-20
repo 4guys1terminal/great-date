@@ -247,6 +247,7 @@ app.post('/api/users', (req, res) => {
 })
 
 // post route for creating activities
+// TODO: add handling for assigning an Approval status to the date
 app.post('/api/activities', (req, res) => {
 
     // console.log("req.body",req.body);
@@ -373,28 +374,28 @@ app.post('/api/sessions/new', (req, res) => {
 
 //TODO: put route for editing activities
 //
-app.put('/api/activities/edit/:id', (req, res) => {
-
-    const {name, content} = req.params;
-    let id = parseInt(req.params.id);
-
-    Activity.findById(id).then(page => {
-        Activity.update({
-            title: title,
-            description: description,
-            location: location,
-            cost: cost,
-            tags: tags
-        }, {
-            where: {
-                id: id
-            }
-        }).then(activity => {
-            res.status(201);
-            res.json({activity: activity});
-        });
-    });
-});
+// app.put('/api/activities/edit/:id', (req, res) => {
+//
+//     const {name, content} = req.params;
+//     let id = parseInt(req.params.id);
+//
+//     Activity.findById(id).then(page => {
+//         Activity.update({
+//             title: title,
+//             description: description,
+//             location: location,
+//             cost: cost,
+//             tags: tags
+//         }, {
+//             where: {
+//                 id: id
+//             }
+//         }).then(activity => {
+//             res.status(201);
+//             res.json({activity: activity});
+//         });
+//     });
+// });
 
 // runs authorization check, responds with JSON to current user
 app.get('/api/login', authorization, (req, res) => {
