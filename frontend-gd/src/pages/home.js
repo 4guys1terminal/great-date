@@ -10,7 +10,7 @@ import bgImage from '../functions/bgImage'
 import NavbarBootstrap from '../components/navbar-bootstrap.js';
 
 
-const { fetchActivities } = fetches
+const { fetchApprovedActivities } = fetches
 
 var backgroundTexture = {
     backgroundImage: 'url(/images/grid_noise.png)'
@@ -28,25 +28,25 @@ class Home extends Component {
     }
 
     componentWillMount() {
-        fetchActivities()
+        fetchApprovedActivities()
         .then((res) => {
-            const { activities } = res
+            const { approvedActivities } = res
             let limitedActivities = []
 
-            if(!activities) {
+            if(!approvedActivities) {
               return
             }
 
-            if (activities > 9) {
+            if (approvedActivities > 9) {
                 for (var i = 0; i < 9; i++) {
-                    limitedActivities.push(activities[i])
+                    limitedActivities.push(approvedActivities[i])
                 }
                 this.setState({
-                  activities: limitedActivities
+                  approvedActivities: limitedActivities
                 })
             } else {
                 this.setState({
-                  activities: activities
+                  activities: approvedActivities
                 })
             }
         })
@@ -106,7 +106,6 @@ class Home extends Component {
                     </div>
                 </div>
             </div>
-
 
 
 

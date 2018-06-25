@@ -11,11 +11,21 @@ const fetches = {
       })
   },
 
-  fetchActivities() {
+  fetchAllActivities() {
       return fetch(`${API}/api/activities`)
       .then(res => res.json())
       .catch(e => {
         console.log('fetchActivities catch:', e)
+
+        return e
+      })
+  },
+
+  fetchApprovedActivities() {
+      return fetch(`${API}/api/approvedActivities`)
+      .then(res => res.json())
+      .catch(e => {
+        console.log('fetchApprovedActivities catch:', e)
 
         return e
       })

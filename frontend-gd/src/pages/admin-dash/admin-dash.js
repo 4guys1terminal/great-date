@@ -6,7 +6,7 @@ import {CardHeader} from 'reactstrap'
 import fetches from '../../functions/fetch.js';
 import bgImage from '../../functions/bgImage.js';
 
-const {fetchActivities} = fetches;
+const {fetchAllActivities} = fetches;
 
 const style = {
     color: 'rgb(6, 144, 185)',
@@ -21,7 +21,7 @@ export default class AdminDash extends Component {
   }
 
   componentWillMount() {
-    fetchActivities().then((res) => {
+    fetchAllActivities().then((res) => {
         const {activities} = res
 
         if (!activities) {

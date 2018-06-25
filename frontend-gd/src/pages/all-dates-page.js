@@ -8,7 +8,7 @@ import bgImage from '../functions/bgImage'
 import {Link} from 'react-router-dom';
 import fetches from '../functions/fetch.js';
 
-const {fetchTags, fetchActivities,} = fetches
+const {fetchTags, fetchApprovedActivities,} = fetches
 
 var backgroundTexture = {
     backgroundImage: 'url(/images/grid_noise.png)'
@@ -37,14 +37,14 @@ class AllDatesPage extends Component {
             this.setState({tags: tags})
         }).catch(e => console.log(e))
 
-        fetchActivities().then((res) => {
-            const {activities} = res
+        fetchApprovedActivities().then((res) => {
+            const {approvedActivities} = res
 
-            if (!activities) {
+            if (!approvedActivities) {
                 return
             }
 
-            this.setState({allActivities: activities})
+            this.setState({allActivities: approvedActivities})
         }).catch(e => console.log(e))
     }
 
@@ -77,11 +77,11 @@ class AllDatesPage extends Component {
     }
 
     createTagCheckbox = (tag) => {
-        return (<Checkbox inline type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
-            <span className="generatorTags">
-                <i className="fas fa-tag"></i>
-                {tag.title}</span>
-        </Checkbox>)
+        return (
+          <Checkbox inline type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
+            <span className="generatorTags"><i className="fas fa-tag"></i>{tag.title}</span>
+          </Checkbox>
+        )
     }
 
     createTagCheckboxes = () => {
@@ -122,19 +122,23 @@ class AllDatesPage extends Component {
         const {browseResp, allActivities, inclusiveActivities,} = this.state
 
         if (browseResp === true) {
-            return (<div>
+            return (
+              <div>
                 <h3>Dates that exactly match:</h3>
 
-            {this.createExclusive()}
+                {this.createExclusive()}
 
 
                 <h3>All dates that match your tags:</h3>
                 <Grid activities={inclusiveActivities}/>
-            </div>)
+              </div>
+            )
         } else {
-            return (<div>
+            return (
+              <div>
                 <Grid activities={allActivities}/>
-            </div>)
+              </div>
+            )
         }
     }
 

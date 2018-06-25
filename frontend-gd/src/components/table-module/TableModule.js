@@ -31,7 +31,6 @@ class Tables extends Component {
 
   //TODO: btn that lets admin accept or reject date submission
   //TODO: fxn that processes accept or reject btn click and changes the date in the database to reflect (needs to actively change the FE as well & log admin modified)
-  //TODO: have to handle image sizing and preview, size of description as well
 
   //NOTE: would be nice to log ALL date history until date is deleted from the system by an admin permanently.
   //NOTE: Date status's: Needs Approval, Approved, Needs Review (for questionable ones), Rejected, Deleted (for one's with 0 value)
@@ -66,16 +65,6 @@ class Tables extends Component {
       ]
   }
 
-  // <tr>
-  // <td>'"The Local" Bike Ride Along Mission Bay'</td>
-  // <td>"Rent Bikes at the nearby Pacific Beach Bike shop (1277 Garnet Ave) before heading down to Mission Bay."</td>
-  // <td>.33</td>
-  // <td></td>
-  // <td>05/15/2018</td>
-  // <td><Badge color="success">Approved</Badge></td>
-  // <td></td>
-  // <td></td>
-  // </tr>
 
 // TODO: need to come back to this once i have the BE routes and DB fields figured out
   getTableRows(dateData) {
@@ -88,7 +77,7 @@ class Tables extends Component {
           {/* <td>image goes here</td> */}
           <td><img src={date.imageName} alt={date.title} style={{width: "100px"}}/></td>
           <td>{date.createdAt}</td>
-          <td><Badge color="success">Approved</Badge></td>
+        <td><Badge color="success">{date.status.toUpperCase()}</Badge></td>
           <td>{date.updatedAt}</td>
           <td>Jordan</td>
         </tr>
@@ -114,41 +103,6 @@ class Tables extends Component {
 
                   {this.getTableRows(this.state.activities)}
 
-                  {/* <tr>
-
-                    <td>'"The Local" Bike Ride Along Mission Bay'</td>
-                    <td>"Rent Bikes at the nearby Pacific Beach Bike shop (1277 Garnet Ave) before heading down to Mission Bay."</td>
-                    <td>.33</td>
-                    <td></td>
-                    <td>05/15/2018</td>
-                    <td><Badge color="success">Approved</Badge></td>
-                    <td></td>
-                    <td></td>
-
-                  </tr>
-                  <tr>
-
-                    <td>Zbyněk Phoibos</td>
-                    <td>Staff</td>
-                    <td>.33</td>
-                    <td></td>
-                    <td>05/15/2018</td>
-                    <td><Badge color="danger">Rejected</Badge></td>
-                    <td></td>
-                    <td></td>
-
-                  </tr><tr>
-
-                    <td>Einar Randall</td>
-                    <td>Admin</td>
-                    <td>.33</td>
-                    <td></td>
-                    <td>05/15/2018</td>
-                    <td><Badge color="secondary">Needs Approval</Badge></td>
-                    <td></td>
-                    <td></td>
-
-                  </tr> */}
                 </tbody>
               </Table>
 

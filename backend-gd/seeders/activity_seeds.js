@@ -9,6 +9,7 @@ module.exports = {
         description:"Rent Bikes at the nearby Pacific Beach Bike shop (1277 Garnet Ave) before heading down to Mission Bay. Take in the beautiful views at sunset as you ride along the bike path. Next, cross over to the San Diego boardwalk on San Rafael St. Head north up through the character-filled area and stop at The Local Pacific Beach (809 Thomas Ave) for a post-bike ride bite and a local IPA. Ahh, drink it in…",
         cost:0.33,
         imageName: 'https://s3-us-west-1.amazonaws.com/great-date/pacific_beach.jpg',
+        status: "approved",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -18,6 +19,7 @@ module.exports = {
         location:"North Park",
         cost: .66,
         imageName: 'https://s3-us-west-1.amazonaws.com/great-date/north_park.jpg',
+        status: "approved",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -27,6 +29,7 @@ module.exports = {
         location:"Sunset Cliffs",
         cost:0,
         imageName: 'https://s3-us-west-1.amazonaws.com/great-date/sunset_cliffs.jpg',
+        status: "approved",
         createdAt: new Date(),
         updatedAt: new Date()
       },

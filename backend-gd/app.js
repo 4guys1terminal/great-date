@@ -57,16 +57,28 @@ const authorization = (req, res, next) => {
     }
 }
 
-// homepage
+// Home Page
 app.get('/api/home', (req, res) => {
     res.json({message: 'API example, app running'});
 });
 
-// displays respective route  w/ raw json from database onto page
+// All API Gets
+// Displays respective route  w/ raw json from database onto page
 app.get('/api/activities', (req, res) => {
     Activity.findAll().then(activities => {
         res.json({activities: activities});
     });
+});
+
+app.get('/api/approvedActivities', (req, res) => {
+    Activity.sequelize.query(
+      `SELECT *
+      FROM "Activities"
+      WHERE status = 'approved';`
+      , {type: sequelize.QueryTypes.SELECT})
+    .then(approvedActivities => {
+      res.json({approvedActivities: approvedActivities})
+    })
 });
 
 app.get('/api/tags', (req, res) => {
@@ -97,21 +109,26 @@ app.get('/api/activities/:id', (req, res) => {
 });
 
 
-
+// Post route for pulling up all relevant dates by tag
 app.post('/api/browse', (req, res) => {
     tags = req.body.tags
     let tagArr = []
 
-    // TODO: needs comments
     for (var property in tags) {
         tags[property] === true
             ? tagArr.push(parseInt(property))
             : ''
     }
 
-
+    // If there are no tags chosen, the route returns all the activities
     if (tagArr.length === 0) {
-        Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId";`, {type: sequelize.QueryTypes.SELECT})
+        Tags.sequelize.query(
+          `SELECT *
+          FROM "Activities"
+          JOIN "ActivityTags"
+          ON "Activities".id="ActivityId";`,
+          {type: sequelize.QueryTypes.SELECT}
+        )
         .then(allActivities => {
             let allIds = []
 
@@ -129,6 +146,7 @@ app.post('/api/browse', (req, res) => {
         })
         .catch(e => console.log(e))
     } else {
+      // Otherwise, the browse route pulls up all activities that match the chosen tags
         Tags.sequelize.query(`
             SELECT *
             FROM "ActivityTags"
@@ -147,7 +165,7 @@ app.post('/api/browse', (req, res) => {
             }
 
             exclusiveIds = exclusiveIds.filter((elem, pos, arr) => {
-                    return arr.indexOf(elem) == pos;
+                    return arr.indexOf(elem) === pos;
             });
 
             // Browse Activities Inclusive
@@ -209,19 +227,19 @@ app.post('/api/home', (req, res) => {
         })
         .catch(e => console.log(e))
     }
-
 });
 
 
 
-//Creating New User   (Need Kevin and dan to comment)
+// Creating New User   (Need Kevin and Dan to comment)
 
 app.post('/api/users', (req, res) => {
 
-    // TODO: add validations for lastName, email
     // TODO: add actual filters to the password and email validations so they aren't just checking "isEmpty"
     req.checkBody('firstName', 'Is required').notEmpty()
+    req.checkBody('lastName', 'Is required').notEmpty()
     req.checkBody('password', 'Is required').notEmpty()
+    req.checkBody('email', 'Is required').notEmpty()
 
 
     req.getValidationResult().then(valErrors => {
@@ -235,7 +253,6 @@ app.post('/api/users', (req, res) => {
                 res.json({message: 'success', user: user})
             })
         } else {
-            // console.log(validationErrors.array())
             res.status(400)
             res.json({
                 errors: {
@@ -302,6 +319,7 @@ app.post('/api/activities', (req, res) => {
               location: location,
               cost: cost,
               imageName: awsUrl + fileName,
+              status: "pending",
           }).then((activity) => {
               res.status(201)
               res.json({activity: activity})
@@ -338,7 +356,7 @@ app.post('/api/activities', (req, res) => {
     })
 })
 
-
+// TODO: route for changing date status's and approval/edit flow
 
 // login form
 app.post('/api/sessions/new', (req, res) => {
@@ -372,6 +390,11 @@ app.post('/api/sessions/new', (req, res) => {
     }
 })
 
+// runs authorization check, responds with JSON to current user
+app.get('/api/login', authorization, (req, res) => {
+    res.json({user: req.currentUser})
+})
+
 //TODO: put route for editing activities
 //
 // app.put('/api/activities/edit/:id', (req, res) => {
@@ -397,12 +420,6 @@ app.post('/api/sessions/new', (req, res) => {
 //     });
 // });
 
-// runs authorization check, responds with JSON to current user
-app.get('/api/login', authorization, (req, res) => {
-    res.json({user: req.currentUser})
-})
-
-
 app.get('/api/user-uploads/:name', (req,res) => {
   res.sendFile(path.resolve(__dirname, './public/user-uploads', req.params.name))
 })
@@ -417,20 +434,3 @@ app.get('/api/user-uploads/:name', (req,res) => {
 
 
 module.exports = app
-
-
-//NOTE: this is random excess code, unused. consider for deletion
-
-// let images = req.body.imageFile.map((image) => {
-// const base64ToImage = require('base64-to-image');
-//
-// var path = '/api/public/user-uploads/'
-// var bucket =
-//
-// var optionalObj = {
-//     'fileName': hashedImageContent
-// };
-//
-// console.log(base64ToImage(image, path, optionalObj));
-// base64ToImage(image, path, optionalObj)
-// })

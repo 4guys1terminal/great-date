@@ -13,15 +13,6 @@ import DatePreview from './date-preview';
 class Grid extends Component {
     constructor(props) {
         super(props)
-        this.state = {}
-    }
-
-    componentWillMount() {
-        const { activities } = this.props
-
-        this.setState({
-            activities: activities
-        })
     }
 
     render() {

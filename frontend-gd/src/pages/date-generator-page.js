@@ -10,7 +10,7 @@ import bgImage from '../functions/bgImage'
 import NavbarBootstrap from '../components/navbar-bootstrap.js';
 import DateComponent from '../components/date-component.js';
 
-const {fetchActivities, fetchTags, fetchActivity,} = fetches
+const {fetchApprovedActivities, fetchTags, fetchActivity,} = fetches
 
 var backgroundTexture = {
     backgroundImage: 'url(/images/grid_noise.png)'
@@ -33,21 +33,21 @@ class DateGeneratorPage extends Component {
     }
 
     componentWillMount() {
-        fetchActivities().then((res) => {
-            const {activities} = res
+        fetchApprovedActivities().then((res) => {
+            const {approvedActivities} = res
             let limitedActivities = []
 
-            if (!activities) {
+            if (!approvedActivities) {
                 return
             }
 
-            if (activities > 9) {
+            if (approvedActivities > 9) {
                 for (var i = 0; i < 9; i++) {
-                    limitedActivities.push(activities[i])
+                    limitedActivities.push(approvedActivities[i])
                 }
                 this.setState({activities: limitedActivities})
             } else {
-                this.setState({activities: activities})
+                this.setState({activities: approvedActivities})
             }
         }).catch(e => console.log(e))
 
