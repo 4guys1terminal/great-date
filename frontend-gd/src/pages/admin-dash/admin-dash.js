@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import TableModule from '../../components/table-module/TableModule';
 import './admin-dash.css'
 
-import {CardHeader} from 'reactstrap'
+import { CardHeader } from 'reactstrap'
 import fetches from '../../functions/fetch.js';
 import bgImage from '../../functions/bgImage.js';
 
-const {fetchAllActivities} = fetches;
+const { fetchAllActivities } = fetches;
 
 const style = {
     color: 'rgb(6, 144, 185)',
