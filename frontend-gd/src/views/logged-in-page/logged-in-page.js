@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import '../App.css';
-import LoggedInNav from '../components/logged-in-navbar';
-import bgImage from '../functions/bgImage'
+import '../../App.css';
+import LoggedInNav from '../../components/logged-in-navbar';
+import bgImage from '../../functions/bgImage'
 
 
 class LoggedIn extends Component {

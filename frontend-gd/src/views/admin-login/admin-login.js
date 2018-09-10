@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import '../App.css';
-import '../styles/admin-login.css';
-import bgImage from '../functions/bgImage.js'
+import '../../App.css';
+import './admin-login.css';
+import bgImage from '../../functions/bgImage'
 
 class AdminLogin extends Component {
   constructor(props) {
@@ -13,13 +13,11 @@ class AdminLogin extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
-
-  onChange(e) {
+  onChange(event) {
     let change = {}
-    change[e.target.name] = e.target.value
+    change[event.target.name] = event.target.value
     this.setState(change);
   }
-
 
   render() {
     return (

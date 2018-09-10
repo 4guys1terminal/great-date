@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import '../App.css';
+import '../../App.css';
 import { Link } from 'react-router-dom';
 import {Button} from 'react-bootstrap';
-import LoggedInNav from '../components/logged-in-navbar';
-import NavbarBootstrap from '../components/navbar-bootstrap.js';
-import DateComponent from '../components/date-component.js';
-import fetches from '../functions/fetch.js';
-// import imageFactory from '../functions/imgSrc.js';
-import bgImage from '../functions/bgImage'
+import LoggedInNav from '../../components/logged-in-navbar';
+import NavbarBootstrap from '../../components/navbar-bootstrap.js';
+import DateComponent from '../../components/date-component.js';
+import fetches from '../../functions/fetch.js';
+// import imageFactory from '../../functions/imgSrc.js';
+import bgImage from '../../functions/bgImage'
 
 // const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 // const path = "/user-uploads/"

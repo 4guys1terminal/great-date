@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import '../App.css';
+import '../../App.css';
 
-import Title from '../components/title.js';
+import Title from '../../components/title';
 import {Link} from 'react-router-dom';
-import Grid from '../components/grid';
-import LoggedInNav from '../components/logged-in-navbar';
-import fetches from '../functions/fetch.js';
-import bgImage from '../functions/bgImage'
-import NavbarBootstrap from '../components/navbar-bootstrap.js';
+import Grid from '../../components/grid';
+import LoggedInNav from '../../components/logged-in-navbar';
+import fetches from '../../functions/fetch';
+import bgImage from '../../functions/bgImage'
+import NavbarBootstrap from '../../components/navbar-bootstrap';
 
 
 const { fetchApprovedActivities } = fetches

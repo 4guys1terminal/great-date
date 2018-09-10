@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import Grid from '../components/grid.js';
+import Grid from '../../components/grid.js';
 
 import {Col, FormGroup, Checkbox, Row,} from 'react-bootstrap'
-import LoggedInNav from '../components/logged-in-navbar';
-import NavbarBootstrap from '../components/navbar-bootstrap.js';
-import bgImage from '../functions/bgImage'
+import LoggedInNav from '../../components/logged-in-navbar.js';
+import NavbarBootstrap from '../../components/navbar-bootstrap.js';
+import bgImage from '../../functions/bgImage.js'
 import {Link} from 'react-router-dom';
-import fetches from '../functions/fetch.js';
+import fetches from '../../functions/fetch.js';
 
 const {fetchTags, fetchApprovedActivities,} = fetches
 

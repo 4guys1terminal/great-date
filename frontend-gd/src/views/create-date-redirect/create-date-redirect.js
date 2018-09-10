@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import '../App.css';
-import NavbarBootstrap from '../components/navbar-bootstrap.js';
+import '../../App.css';
+import NavbarBootstrap from '../../components/navbar-bootstrap';
 // import bgImage from '../functions/bgImage'
 import { Link } from 'react-router-dom';
 

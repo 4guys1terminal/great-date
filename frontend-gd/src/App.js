@@ -2,18 +2,18 @@ import React, {Component} from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
-import Home from './pages/home';
-import LogInPage from './pages/log-in-page';
-import SignUpPage from './pages/sign-up-page';
-import LoggedInPage from './pages/logged-in-page';
-import AllDatesPage from './pages/all-dates-page';
-import DatePage from './pages/date-page';
-import NewActivityPage from './pages/new-activity-page';
-import NewActivitySuccess from './pages/new-activity-success';
-import DateGeneratorPage from './pages/date-generator-page';
-import CreateDateRedirect from './pages/create-date-redirect';
-import AdminLoginPage from './pages/admin-login';
-import AdminDash from './pages/admin-dash/admin-dash'
+import Home from './views/home/home';
+import LogInPage from './views/log-in-page/log-in-page';
+import SignUpPage from './views/sign-up-page/sign-up-page';
+import LoggedInPage from './views/logged-in-page/logged-in-page';
+import AllDatesPage from './views/all-dates-page/all-dates-page';
+import DatePage from './views/date-page';
+import NewActivityPage from './views/new-activity-page/new-activity-page';
+import NewActivitySuccess from './views/new-activity-success/new-activity-success';
+import DateGeneratorPage from './views/date-generator-page/date-generator-page';
+import CreateDateRedirect from './views/create-date-redirect/create-date-redirect';
+import AdminLoginPage from './views/admin-login';
+import AdminDash from './views/admin-dash'
 
 import ScrollToTop from './functions/scrollToTop.js';
 

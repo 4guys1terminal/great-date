@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import '../App.css';
-import SignUp from '../components/sign-up.js';
+import '../../App.css';
+import SignUp from '../../components/sign-up';
 import { Redirect } from 'react-router-dom';
-import bgImage from '../functions/bgImage'
-import NavbarBootstrap from '../components/navbar-bootstrap.js'
+import bgImage from '../../functions/bgImage'
+import NavbarBootstrap from '../../components/navbar-bootstrap'
 
 const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 

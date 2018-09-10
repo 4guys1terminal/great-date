@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import '../App.css';
-import LogIn from '../components/log-in.js';
-import NavbarBootstrap from '../components/navbar-bootstrap.js';
-import bgImage from '../functions/bgImage'
+import '../../App.css';
+import LogIn from '../../components/log-in';
+import NavbarBootstrap from '../../components/navbar-bootstrap';
+import bgImage from '../../functions/bgImage'
 
 
 class LoginPage extends Component {
