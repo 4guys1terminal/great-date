@@ -45,7 +45,7 @@ class Navigation extends Component {
 
                         <LinkContainer to='/new-activity'>
                             <NavItem >
-                                {localStorage.name}
+								Create A Date
                             </NavItem>
                         </LinkContainer>
 

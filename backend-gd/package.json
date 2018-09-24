@@ -18,7 +18,7 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "express-validator": "^4.3.0",
-    "nodemon": "^1.14.12",
+    "nodemon": "^1.18.4",
     "pg": "6.1.5",
     "sequelize": "3.30.4",
     "sequelize-cli": "^3.2.0",

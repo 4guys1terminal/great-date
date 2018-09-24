@@ -18,6 +18,8 @@ class Tables extends Component {
   constructor(props) {
     super(props)
     this.state = {
+		filters: {
+		}
     }
   }
 
@@ -29,11 +31,11 @@ class Tables extends Component {
   }
 
 
-  //TODO: btn that lets admin accept or reject date submission
-  //TODO: fxn that processes accept or reject btn click and changes the date in the database to reflect (needs to actively change the FE as well & log admin modified)
+  //TODO: btn that lets admin change date approval status
+  //TODO: fxn that processes status change btn click and changes the date in the database to reflect (needs to actively change the FE as well & log admin modified)
 
   //NOTE: would be nice to log ALL date history until date is deleted from the system by an admin permanently.
-  //NOTE: Date status's: Needs Approval, Approved, Needs Review (for questionable ones), Rejected, Deleted (for one's with 0 value)
+  //NOTE: Date status's: "pendingApproval", "approved", "pendingReview" (for questionable ones), "rejected", "deleted" (for one's with 0 value)
 
 
   getTableHeaders() {

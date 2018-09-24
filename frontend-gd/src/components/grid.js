@@ -9,7 +9,6 @@ const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app
 const path = "/api/user-uploads/"
 const imgSrc = imageFactory(host)
 
-
 class Grid extends Component {
     constructor(props) {
         super(props)

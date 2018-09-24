@@ -74,7 +74,7 @@ app.get('/api/approvedActivities', (req, res) => {
     Activity.sequelize.query(
       `SELECT *
       FROM "Activities"
-      WHERE status = 'approved';`
+      WHERE status = 'Approved';`
       , {type: sequelize.QueryTypes.SELECT})
     .then(approvedActivities => {
       res.json({approvedActivities: approvedActivities})
@@ -264,7 +264,6 @@ app.post('/api/users', (req, res) => {
 })
 
 // post route for creating activities
-// TODO: add handling for assigning an Approval status to the date
 app.post('/api/activities', (req, res) => {
 
     // console.log("req.body",req.body);
@@ -319,7 +318,7 @@ app.post('/api/activities', (req, res) => {
               location: location,
               cost: cost,
               imageName: awsUrl + fileName,
-              status: "pending",
+              status: "pendingApproval",
           }).then((activity) => {
               res.status(201)
               res.json({activity: activity})
@@ -358,6 +357,9 @@ app.post('/api/activities', (req, res) => {
 
 // TODO: route for changing date status's and approval/edit flow
 
+
+
+
 // login form
 app.post('/api/sessions/new', (req, res) => {
     const email = req.body.email
@@ -375,7 +377,7 @@ app.post('/api/sessions/new', (req, res) => {
                 let check = user.veryifyPassword(password)
                 if (check) {
                     res.json({message: 'login success'})
-                    // user.setAuthToken()
+                    user.setAuthToken()
                 } else {
                     res.json({message: 'Password Invalid'})
                 }
