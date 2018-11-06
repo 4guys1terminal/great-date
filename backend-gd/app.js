@@ -22,7 +22,7 @@ const Location = require('./models').Location;
 
 // Middleware (order matters! run from top to bottom)
 app.use(express.static('public'))
-app.use(express.static(path.resolve(__dirname, '../gd-frontend/build')));
+app.use(express.static(path.resolve(__dirname, '../frontend-gd/build')));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(validator());
