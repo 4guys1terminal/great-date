@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import '../../App.scss';
+import '../../../../App.scss';
 import {
   Col,
   ControlLabel,
@@ -17,7 +17,7 @@ const API = process.env.NODE_ENV === 'production'
   ? 'https://the-great-date-app.herokuapp.com'
   : 'http://localhost:3000'
 
-class NewActivityForm extends Component {
+class NewDateForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -341,4 +341,4 @@ class NewActivityForm extends Component {
   }
 }
 
-export default NewActivityForm;
+export default NewDateForm;

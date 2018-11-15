@@ -10,7 +10,7 @@ import LoggedInNav from '../../components/logged-in-navbar';
 import NavbarBootstrap from '../../components/navbar-bootstrap';
 
 // Component Specfic Imports
-import NewActivityForm from './NewActivityForm';
+import NewDateForm from './NewDateForm';
 
 // Styles
 import '../../../App.scss';
@@ -20,7 +20,7 @@ import '../../../App.scss';
 const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
 
-class NewActivity extends Component {
+class NewDate extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -106,7 +106,7 @@ class NewActivity extends Component {
 
 					<h1>Create a Date</h1>
 
-					<NewActivityForm
+					<NewDateForm
 						onSubmit={this.handleNewActivity.bind(this)}
 						errors={this.state.errors && this.state.errors.validations}
 					/>
@@ -121,4 +121,4 @@ class NewActivity extends Component {
 	}
 }
 
-export default NewActivity;
+export default NewDate;
