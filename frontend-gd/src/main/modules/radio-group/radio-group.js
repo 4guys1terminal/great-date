@@ -1,10 +1,14 @@
+// React Imports
 import React, { Component } from 'react';
+// Globals
+// Modules && General Components
 import { Button , ButtonGroup } from 'react-bootstrap';
-
+// Component Specfic Imports
+// Styles
+// Documentation/Notes
 class RadioGroup extends Component {
 	render() {
 		const { disabled, name, onChange, options, value, ...props } = this.props;
-
 		return (
 			<ButtonGroup {...props}>
 				{options.map(option =>

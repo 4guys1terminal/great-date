@@ -1,7 +1,14 @@
-import React, {Component} from 'react';
-import '../../App.scss';
+// React Imports
+import React, { Component } from 'react';
+// Globals
+// Modules && General Components
+// Component Specfic Imports
 import DatePreview from './date-preview';
 import imageFactory from '../../tools/imgSrc.js';
+// Styles
+import '../../App.scss';
+// Documentation/Notes
+
 
 const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
@@ -30,14 +37,14 @@ class Grid extends Component {
         return (
             <div className="container">
                 <div className="grid">
-                    {activities.map((a) => {
+                    {activities.map((activiy) => {
                         return (
                             <DatePreview
-                                key={a.id}
-                                id={a.id}
-                                image={a.imageName}
-                                title={a.title}
-                                description={a.description}
+                                key={activiy.id}
+                                id={activiy.id}
+                                image={activiy.imageName}
+                                title={activiy.title}
+                                description={activiy.description}
                             />
                         )
                     })}

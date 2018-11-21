@@ -1,7 +1,11 @@
+// React Imports
 import React, {Component} from 'react';
-import fetches from '../../tools/fetch';
-
-const { fetchActivity } = fetches;
+// Globals
+// Modules && General Components
+// Component Specfic Imports
+import controller from '../../tools/controller'
+// Styles
+// Documentation/Notes
 
 class DateComponent extends Component {
     constructor(props) {
@@ -9,29 +13,32 @@ class DateComponent extends Component {
         this.state = {}
     }
 
-    componentWillMount() {
-        const { id } = this.props
+    componentDidMount = () => {
+        this.loadData();
+    }
 
-        fetchActivity(id)
-        .then((res) => {
-            const { activity } = res
+    loadData = () => {
+        let activity;
+
+        controller.fetchActivity(this.props.id).then((res) => {
+            activity = res;
 
             if(!activity) {
-              return
+              return;
             }
 
-            this.setState({activity: activity})
-        }).catch(e => console.log('mount catch:', e))
+            this.setState({activity: activity});
+        }).catch(e => console.log('mount catch:', e));
     }
 
 
     // Function to turn our Cost from database into a dollar sign. Adjust cost converter to scale the ratings
     createCostIcon = (cost) => {
         if(!cost) {
-            return
+            return;
         }
 
-        const costConverter = Math.round(cost * 3)
+        const costConverter = Math.round(cost * 3);
         switch (costConverter) {
             case 0:
                 return "Free";
@@ -51,7 +58,7 @@ class DateComponent extends Component {
     }
 
     render() {
-        const { activity } = this.state
+        const { activity } = this.state;
 
         if (!activity) {
             return (
@@ -62,26 +69,25 @@ class DateComponent extends Component {
                 </div>
             )
         }
-        const {imageName, title, description, location, cost} = activity
 
         return (
             <div>
                 <div className="date-page">
 
                     <div className='activityPicDiv'>
-                        <img className="activityPic" src={`${imageName}`} alt="date"/>
+                        <img className="activityPic" src={`${activity.imageName}`} alt="date"/>
                     </div>
 
-                    <h3>{title}</h3>
+                    <h3>{activity.title}</h3>
 
                     <div className="date-information">
                         <h4>
                             <strong>Date Information</strong>
                         </h4>
 
-                        <p>{description}</p>
-                        <p>Location: {location}</p>
-                        <p>Cost: {this.createCostIcon(cost)}</p>
+                        <p>{activity.description}</p>
+                        <p>Location: {activity.location}</p>
+                        <p>Cost: {this.createCostIcon(activity.cost)}</p>
                     </div>
                 </div>
             </div>

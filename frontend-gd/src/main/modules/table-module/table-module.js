@@ -1,34 +1,33 @@
+// React Imports
 import React, {Component} from 'react';
+
+// Globals
+// Modules && General Components
 import {
-  Badge,
-  Row,
-  Col,
-  Card,
-  CardHeader,
-  CardBody,
-  Table,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
+    Badge,
+    Row,
+    Col,
+    Card,
+    CardHeader,
+    CardBody,
+    Table,
+    Pagination,
+    PaginationItem,
+    PaginationLink,
 } from 'reactstrap';
+// Component Specfic Imports
+// Styles
 import "./table-module.css";
+// Documentation/Notes
 
 
 class Tables extends Component {
   constructor(props) {
-    super(props)
-    this.state = {
-		filters: {
-		}
-    }
-  }
-
-  componentWillMount() {
-      const { activities } = this.props
-      this.setState({
-          activities: activities
-      })
-  }
+        super(props);
+        this.state = {
+                filters: {}
+        }
+	}
 
 
   //TODO: btn that lets admin change date approval status
@@ -73,15 +72,15 @@ getTableRows(dateData) {
 	return dateData.map((date) => {
 		return (
 			<tr key={date.id}>
-			<td>{date.title}</td>
-			<td>{date.description}</td>
-			<td>{date.cost}</td>
-			{/* <td>image goes here</td> */}
-			<td><img src={date.imageName} alt={date.title} style={{width: "100px"}}/></td>
-			<td>{date.createdAt}</td>
-			<td><Badge color="success">{date.status.toUpperCase()}</Badge></td>
-			<td>{date.updatedAt}</td>
-			<td>Jordan</td>
+			    <td>{date.title}</td>
+			    <td>{date.description}</td>
+			    <td>{date.cost}</td>
+			    {/* <td>image goes here</td> */}
+			    <td><img src={date.imageName} alt={date.title} style={{width: "100px"}}/></td>
+			    <td>{date.createdAt}</td>
+			    <td><Badge color="success">{date.status.toUpperCase()}</Badge></td>
+			    <td>{date.updatedAt}</td>
+			<   td>Jordan</td>
 			</tr>
 		)
 	})
@@ -94,44 +93,45 @@ getTableRows(dateData) {
 			<div className="animated fadeIn admin-table">
 				<Row>
 					<Col>
-					<Card>
-						<CardBody>
-						<Table className="admin-" bordered responsive>
+                        <Card>
+                            <CardBody>
+                                <Table className="admin-" bordered responsive>
 
-						{this.getTableHeaders()}
+                                    {this.getTableHeaders()}
 
-							<tbody className="admin-table-body">
+                                    <tbody className="admin-table-body">
+                                        {this.getTableRows(this.props.activities)}
+                                    </tbody>
+                                </Table>
+                                <nav>
+                                    <Pagination>
+                                        <PaginationItem>
+                                            <PaginationLink previous href="#">Prev</PaginationLink>
+                                        </PaginationItem>
 
-							{this.getTableRows(this.state.activities)}
+                                        <PaginationItem active>
+                                            <PaginationLink href="#">1</PaginationLink>
+                                        </PaginationItem>
 
-							</tbody>
-						</Table>
+                                        <PaginationItem>
+                                            <PaginationLink href="#">2</PaginationLink>
+                                        </PaginationItem>
 
+                                        <PaginationItem>
+                                            <PaginationLink href="#">3</PaginationLink>
+                                        </PaginationItem>
 
-						<nav>
-							<Pagination>
-							<PaginationItem>
-								<PaginationLink previous href="#">Prev</PaginationLink>
-							</PaginationItem>
-							<PaginationItem active>
-								<PaginationLink href="#">1</PaginationLink>
-							</PaginationItem>
-							<PaginationItem>
-								<PaginationLink href="#">2</PaginationLink>
-							</PaginationItem>
-							<PaginationItem>
-								<PaginationLink href="#">3</PaginationLink>
-							</PaginationItem>
-							<PaginationItem>
-								<PaginationLink href="#">4</PaginationLink>
-							</PaginationItem>
-							<PaginationItem>
-								<PaginationLink next href="#">Next</PaginationLink>
-							</PaginationItem>
-							</Pagination>
-						</nav>
-						</CardBody>
-					</Card>
+                                        <PaginationItem>
+                                            <PaginationLink href="#">4</PaginationLink>
+                                        </PaginationItem>
+
+                                        <PaginationItem>
+                                            <PaginationLink next href="#">Next</PaginationLink>
+                                        </PaginationItem>
+                                    </Pagination>
+                                </nav>
+                            </CardBody>
+                        </Card>
 					</Col>
 				</Row>
 			</div>

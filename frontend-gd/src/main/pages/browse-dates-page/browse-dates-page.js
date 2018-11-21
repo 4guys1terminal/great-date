@@ -12,6 +12,7 @@ import NavbarBootstrap from '../../components/navbar-bootstrap.js';
 import Grid from '../../components/grid.js';
 
 // Component Specfic Imports
+import TagController from '../../controllers/TagController'
 // Styles
 // Documentation/Notes
 
@@ -32,25 +33,34 @@ class BrowseDatesPage extends Component {
         }
     }
 
-    componentWillMount() {
-        fetchTags().then((res) => {
-            const {tags} = res
+    componentDidMount = () => {
+        this.loadData
+    }
+
+    loadData = () => {
+        let tags;
+        let approvedActivities;
+
+        TagController.fetchTags().then((res) => {
+            tags = res;
 
             if (!tags) {
-                return
+                return;
             }
 
-            this.setState({tags: tags})
         }).catch(e => console.log(e))
 
-        fetchApprovedActivities().then((res) => {
-            const {approvedActivities} = res
+        TagController.fetchApprovedActivities().then((res) => {
+            approvedActivities = res;
 
             if (!approvedActivities) {
-                return
+                return;
             }
 
-            this.setState({allActivities: approvedActivities})
+            this.setState({
+                allActivities: approvedActivities,
+                tags: tags
+            })
         }).catch(e => console.log(e))
     }
 
@@ -64,52 +74,34 @@ class BrowseDatesPage extends Component {
 
     renderCreateButton() {
         if (typeof localStorage.name === 'undefined') {
-            return <div>
-                {
-                    <Link to='/create-date-redirect'>
+            return ( 
+                <div>
+                    {
+                        <Link to='/create-date-redirect'>
                             <button className="newActivityButton">Create New Date</button>
                         </Link>
-                }
-            </div>
+                    }
+                </div>
+            )
         } else {
-            return <div>
-                {
-                    <Link to='/new-activity'>
+            return (
+                <div>
+                    {
+                        <Link to='/new-activity'>
                             <button className="newActivityButton">Create New Date</button>
                         </Link>
-                }
-            </div>
+                    }
+                </div>
+            )
         }
-    }
-
-    createTagCheckbox = (tag) => {
-        return (
-          <Checkbox inline type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
-            <span className="generatorTags"><i className="fas fa-tag"></i>{tag.title}</span>
-          </Checkbox>
-        )
-    }
-
-    createTagCheckboxes = () => {
-        const {tags} = this.state
-
-        if (!tags) {
-            return
-        }
-
-        return tags.map((tag) => {
-            return this.createTagCheckbox(tag)
-        })
     }
 
     toggleCheckbox = (tagID, e) => {
-        const {form} = this.state
-        const {tags} = form
+        let formCopy = Object.assign({}, this.state.form)
 
-        tags[tagID] = e.target.checked
+        formCopy.tags[tagID] = e.target.checked;
 
-        form.tags = tags
-        this.setState({form: form})
+        this.setState({form: formCopy})
     }
 
     createExclusive = () => {
@@ -206,6 +198,7 @@ class BrowseDatesPage extends Component {
     }
 
     render() {
+        const { tags } = this.state;
         return (
 			<div>
 				<div style={variables.backgroundStyle}>
@@ -224,9 +217,23 @@ class BrowseDatesPage extends Component {
 											<br/>
 
 											<div className='checkbox-container'>
-												{this.createTagCheckboxes()}
+                                                {tags.map((tag, i) => {
+                                                    return(
+                                                        <Checkbox 
+                                                            inline type="checkbox" 
+                                                            key={tag.id} 
+                                                            name={tag.title} 
+                                                            value={tag.id} 
+                                                            onChange={this.toggleCheckbox.bind(this, tag.id)}
+                                                        >
+                                                            <span className="generatorTags">
+                                                                <i className="fas fa-tag"></i>
+                                                                {tag.title}
+                                                            </span>
+                                                        </Checkbox>
+                                                    )
+                                                })}
 											</div>
-
 										</FormGroup>
 									</Col>
 								</Row>

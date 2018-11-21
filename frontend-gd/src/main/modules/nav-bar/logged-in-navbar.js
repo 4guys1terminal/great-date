@@ -1,8 +1,17 @@
+// React Imports
 import React, {Component} from 'react';
+// Globals
+// Modules && General Components
+import {
+    Navbar, 
+    Nav, 
+    NavItem
+} from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+// Component Specfic Imports
+// Styles
 import '../../App.scss';
-import {Navbar, Nav, NavItem} from 'react-bootstrap';
-import {LinkContainer} from 'react-router-bootstrap'
-
+// Documentation/Notes
 
 class Navigation extends Component {
     signOut() {
@@ -10,55 +19,60 @@ class Navigation extends Component {
     }
 
     render() {
-        return (<div>
-            <Navbar   className='bootStrapNav'>
+        return (
+            <div>
+                <Navbar className='bootStrapNav'>
+                    <Navbar.Header>
 
-                <Navbar.Header>
-                    <LinkContainer to='/home'>
-                        <Navbar.Brand id="logo">
-                            Great Date
-                        </Navbar.Brand>
-                    </LinkContainer>
-
-                    <Navbar.Toggle/>
-                </Navbar.Header>
-
-                <Navbar.Collapse>
-                    <Nav pullRight>
-                        <LinkContainer to='/home' >
-                            <NavItem eventKey={1} >
-                                Home
-                            </NavItem>
+                        <LinkContainer to='/home'>
+                            <Navbar.Brand id="logo">
+                                Great Date
+                            </Navbar.Brand>
                         </LinkContainer>
 
-                        <LinkContainer to='/date-generator'>
-                            <NavItem>
-                                Date Generator
-                            </NavItem>
-                        </LinkContainer>
+                        <Navbar.Toggle/>
 
-                        <LinkContainer to='/browse-dates'>
-                            <NavItem eventKey={2} >
-                                Browse Dates
-                            </NavItem>
-                        </LinkContainer>
+                    </Navbar.Header>
 
-                        <LinkContainer to='/new-activity'>
-                            <NavItem >
-								Create A Date
-                            </NavItem>
-                        </LinkContainer>
+                    <Navbar.Collapse>
+                        <Nav pullRight>
 
-                        <LinkContainer to='/login-page'
-                            onClick={this.signOut}>
-                            <NavItem eventKey={3} >
-                                Sign Out
-                            </NavItem>
-                        </LinkContainer>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
-        </div>);
+                            <LinkContainer to='/home' >
+                                <NavItem eventKey={1} >
+                                    Home
+                                </NavItem>
+                            </LinkContainer>
+
+                            <LinkContainer to='/date-generator'>
+                                <NavItem>
+                                    Date Generator
+                                </NavItem>
+                            </LinkContainer>
+
+                            <LinkContainer to='/browse-dates'>
+                                <NavItem eventKey={2} >
+                                    Browse Dates
+                                </NavItem>
+                            </LinkContainer>
+
+                            <LinkContainer to='/new-activity'>
+                                <NavItem >
+                                    Create A Date
+                                </NavItem>
+                            </LinkContainer>
+
+                            <LinkContainer to='/login-page'
+                                onClick={this.signOut}>
+                                <NavItem eventKey={3} >
+                                    Sign Out
+                                </NavItem>
+                            </LinkContainer>
+                            
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+            </div>
+        );
     }
 }
 
