@@ -34,6 +34,7 @@ class RegistrationStore {
 
     validateEmail(fieldName) {
         const filter = /^\w+([\.-]?\ w+)*@\w+([\.-]?\ w+)*(\.\w{2,3})+$/
+
         if (!filter.test(this.fields[fieldName])) {
             this.addError(fieldName, 'is not a valid email')
         }

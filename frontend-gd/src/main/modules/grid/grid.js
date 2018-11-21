@@ -1,22 +1,9 @@
-import React, {Component} from 'react';
-import '../../../App.scss';
+import React, { Component } from 'react';
 import DatePreview from '../date-preview/date-preview';
-import imageFactory from '../../tools/imgSrc.js';
-// Styles
-// Documentation/Notes
+import '../../../App.scss';
 
-
-const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
-
-// for development image processing, not used in production
-const path = "/api/user-uploads/"
-const imgSrc = imageFactory(host)
 
 class Grid extends Component {
-    constructor(props) {
-        super(props)
-    }
-
     render() {
         const { activities } = this.props
 

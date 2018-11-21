@@ -3,9 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import './App.scss';
 
-
 import Home from './main/pages/home';
-
 import LogInPage from './main/pages/log-in-page/log-in-page';
 import SignUpPage from './main/pages/sign-up-page/sign-up-page';
 import BrowseDatesPage from './main/pages/browse-dates-page/browse-dates-page';
@@ -14,7 +12,6 @@ import NewDatePage from './main/pages/new-date-page/new-date-page';
 import NewDateSuccess from './main/pages/new-date-page/components/new-date-success/new-date-success';
 import DateGeneratorPage from './main/pages/date-generator-page/date-generator';
 import CreateDateRedirect from './main/pages/log-in-page/create-date-redirect/create-date-redirect';
-// import AdminLoginPage from './main/pages/admin-login';
 import AdminDash from './main/pages/admin-dash'
 
 import ScrollToTop from './main/tools/scrollToTop.js';

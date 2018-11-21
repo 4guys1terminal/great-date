@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 
 // Globals
 import variables from '../../tools/variables';
-import fetches from '../../tools/fetch.js';
 
 // Modules && General Components
 import { CardHeader } from 'reactstrap';

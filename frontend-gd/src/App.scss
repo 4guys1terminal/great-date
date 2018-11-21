@@ -577,7 +577,7 @@ input[type=file] {
     justify-content: center;
   }
   .cell {
-    width: 50% - 2rem;
+    width: calc(50% - 2rem);
   }
 }
 
@@ -1045,7 +1045,7 @@ ul li {
     margin: 50px 0;
   }
   .instCell {
-    width: 50% - 2rem;
+    width: calc(50% - 2rem);
   }
 }
 

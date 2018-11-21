@@ -4,9 +4,8 @@ import {Link} from 'react-router-dom';
 import {Col, FormGroup, Checkbox, Row,} from 'react-bootstrap'
 
 // Globals
+import Controller from '../../tools/Controller'
 import variables from '../../tools/variables';
-import DateController from '../../controllers/DateController';
-import TagController from '../../controllers/TagController';
 
 // Modules && General Components
 import LoggedInNav from '../../modules/nav-bar/logged-in-navbar.js';
@@ -14,15 +13,9 @@ import NavbarBootstrap from '../../modules/nav-bar/navbar-bootstrap.js';
 import Grid from '../../modules/grid';
 
 // Component Specfic Imports
-import Controller from '../../tools/Controller'
 // Styles
 import './browse-dates-page.scss'
 // Documentation/Notes
-
-
-import fetches from '../../tools/fetch.js';
-
-const {fetchTags, fetchApprovedActivities} = fetches
 
 
 class BrowseDatesPage extends Component {
@@ -37,12 +30,11 @@ class BrowseDatesPage extends Component {
     }
 
     componentDidMount = () => {
-        this.loadData
+        this.loadData();
     }
 
     loadData = () => {
-        let tags;
-        let approvedActivities;
+		let tags;
 
         Controller.fetchTags().then((res) => {
             tags = res;
@@ -54,7 +46,7 @@ class BrowseDatesPage extends Component {
         }).catch(e => console.log(e))
 
         Controller.fetchApprovedActivities().then((res) => {
-            approvedActivities = res;
+            const approvedActivities = res;
 
             if (!approvedActivities) {
                 return;

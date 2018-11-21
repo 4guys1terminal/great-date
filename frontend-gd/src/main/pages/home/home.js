@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 
 // Globals
 import variables from '../../tools/variables';
-import DateController from '../../controllers/DateController';
+import Controller from '../../tools/Controller';
+
 
 // Modules && General Components
 import LoggedInNav from '../../modules/nav-bar/logged-in-navbar';
@@ -31,7 +32,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-		DateController.fetchApprovedActivities()
+		Controller.fetchApprovedActivities()
 			.then((res) => {
 				const { approvedActivities } = res;
 				let limitedActivities = [];
