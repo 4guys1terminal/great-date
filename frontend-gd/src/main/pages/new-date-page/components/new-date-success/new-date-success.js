@@ -4,6 +4,7 @@ import variables from '../../tools/variables';
 
 import '../../../App.scss';
 
+// TODO: this will become either a rendered stateless component or a modal pop up after new date success
 class NewActivitySuccess extends Component {
 	render() {
 		return (

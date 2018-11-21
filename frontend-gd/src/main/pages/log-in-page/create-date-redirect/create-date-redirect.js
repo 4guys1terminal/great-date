@@ -5,6 +5,7 @@ import NavbarBootstrap from '../../components/navbar-bootstrap';
 import '../../../App.scss';
 import './create-date-redirect.scss';
 
+// TODO: this will be a part of the auth flow
 class CreateDateRedirect extends Component {
 	render() {
 		return (

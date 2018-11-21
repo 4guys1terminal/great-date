@@ -26,7 +26,7 @@ class DatePage extends Component {
 		this.state = {}
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		const { id } = this.props.match.params
 
 		DateController.fetchActivity(id).then((res) => {

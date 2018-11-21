@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import '../../App.scss';
 import {Link} from 'react-router-dom';
 import {
-    Row,
-    Col,
-    FormGroup,
-    FormControl
+	Row,
+	Col,
+	FormGroup,
+	FormControl
 } from 'react-bootstrap';
 import RegistrationStore from './registration-store';
 

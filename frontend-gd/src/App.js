@@ -8,7 +8,6 @@ import Home from './main/pages/home';
 
 import LogInPage from './main/pages/log-in-page/log-in-page';
 import SignUpPage from './main/pages/sign-up-page/sign-up-page';
-import LoggedInPage from './main/pages/logged-in-page/logged-in-page';
 import BrowseDatesPage from './main/pages/browse-dates-page/browse-dates-page';
 import DatePage from './main/pages/date-page';
 import NewDatePage from './main/pages/new-date-page/new-date-page';
@@ -47,8 +46,6 @@ class App extends Component {
 					<Route path='/new-date' component={NewDatePage}/>
 
 					<Route path='/success' component={NewDateSuccess}/>
-
-					<Route path='/logged-in-page' component={LoggedInPage}/>
 
 					<Route exact path="/sign-up-page" render={props => (
 						<div>

@@ -1,1 +1,1 @@
-export { default } from './browse-dates'
+export { default } from './browse-dates';

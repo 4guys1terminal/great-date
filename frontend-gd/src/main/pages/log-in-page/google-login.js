@@ -20,15 +20,15 @@ const STYLE = {
   marginLeft: 5
 }
 
-class GoogleLog extends Component {
-  constructor(props) {
-      super(props);
-      this.state = {
-          username: '',
-          authorized: false
-      }
-  }
-  render() {
+class GoogleLogin extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			username: '',
+			authorized: false
+		}
+	}
+	render() {
 
 
     const { authorized, username } = this.state
@@ -68,5 +68,5 @@ class GoogleLog extends Component {
 }
 
 
-export default GoogleLog
+export default GoogleLogin
 // document.getElementById('googleButton')

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import fetches from '../tools/fetch';
+import fetches from '../../tools/fetch';
 
 const { fetchActivity } = fetches;
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../../App.scss';
 import DatePreview from './date-preview';
-import imageFactory from '../tools/imgSrc.js';
+import imageFactory from '../../tools/imgSrc.js';
 
 const host = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 
