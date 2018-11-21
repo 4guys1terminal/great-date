@@ -3,14 +3,19 @@ import request from '../tools/request.js';
 
 
 class UserController {
-	// TEMPLATE
+	static fetchAllUsers() {
+		return request('api/users', 'GET')
+			.catch(err => {
+				throw new Error(err);
+			})
+	}
 
-	// static fetchAllActivities() {
-	// 	return request('api/activities', 'GET')
-	// 		.catch(err => {
-	// 			throw new Error(err);
-	// 		})
-	// }
+	static createUser(params) {
+		return request('api/users', 'POST', params)
+			.catch(err => {
+				throw new Error(err);
+			})
+	}
 }
 
 export default UserController;

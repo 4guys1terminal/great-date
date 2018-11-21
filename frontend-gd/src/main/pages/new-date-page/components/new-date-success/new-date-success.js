@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import variables from '../../tools/variables';
 
-import '../../../App.scss';
+import '../../../../../App.scss'
 
 // TODO: this will become either a rendered stateless component or a modal pop up after new date success
 class NewActivitySuccess extends Component {

@@ -1,33 +1,41 @@
 // NOTE: This file is for placing all global SCSS themes
 
 /* Colors */
+
 // Basic
 $primary-color:#027B9C;
 $secondary-color:#B2C1D9;
+
 // Statuses
 $error: #CF3031;
 $success: #2D834E;
 $draft: #F16900;
 $active: #027B9C;
 $inactive: #4b5058;
+
 // Text
 $text-primary-color: #4b5058;
 $text-secondary-color: #777777;
 $text-tertiary-color: #027b9c;
 $text-disabled-color: #D6D6D6;
+
 // Backgrounds
 $background-primary-color: #ffffff;
 $background-secondary-color: #ebeef0;
 $background-tertiary-color: #FAFBFC;
+
 // Buttons
 $button-primary-color: $primary-color;
 $button-secondary-color: #333333;
 $button-primary-text-color: #ffffff;
+
 // Icons
 $icon-primary-color: #4B5058;
 $icon-secondary-color: #027B9C;
+
 // Borders
 $border-primary-color: #d6d6d6;
+
 // Elements
 $element-disabled-color: #D6D6D6;
 

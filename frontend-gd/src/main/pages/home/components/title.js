@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import '../../App.scss';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import '../../../../App.scss';
 
 class Title extends Component {
     render() {

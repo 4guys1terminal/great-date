@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import '../../App.scss';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
-import {LinkContainer} from 'react-router-bootstrap'
+import {LinkContainer} from 'react-router-bootstrap';
 
+import '../../../App.scss';
 
 class NavBarBootstrap extends Component {
     render() {

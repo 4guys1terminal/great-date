@@ -7,7 +7,7 @@ import {
     CardTitle,
     Button,
 } from 'reactstrap';
-import '../../App.scss';
+import '../../../App.scss';
 
 class DatePreview extends Component {
     render() {

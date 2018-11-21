@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 // Globals
 import variables from '../../tools/variables';
+import Controller from '../../tools/Controller';
 
 // Modules && General Components
 import LoggedInNav from '../../components/logged-in-navbar';
@@ -33,26 +34,22 @@ class NewDate extends Component {
     }
 
 	//TODO: replace all of these with controller calls
-    componentWillMount() {
-        fetch(`${API}/api/activities`).then((resp) => {
-            return resp.json()
-        }).then((resp) => {
-            this.setState({activities: resp.activities})
-        })
+	componentWillMount() {
+		Controller.fetchAllActivities()
+			.then((resp) => {
+				this.setState({activities: resp.activities})
+			})
 
-        fetch(`${API}/api/tags`).then((resp) => {
-            return resp.json()
-        }).then((resp) => {
-            this.setState({tags: resp.tags})
-        })
+		Controller.fetchTags()
+			.then((resp) => {
+				this.setState({tags: resp.tags})
+			})
 
-        fetch(`${API}/api/locations`).then((resp) => {
-            return resp.json()
-        }).then((resp) => {
-            this.setState({locations: resp.tags})
-        })
-
-    }
+		Controller.fetchLocations()
+			.then((resp) => {
+				this.setState({locations: resp.tags})
+			})
+	}
 
 	//TODO: export to top level
     isUserLoggedIn() {

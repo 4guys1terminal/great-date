@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../App.scss';
+
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import FBlogin from '../pages/log-in-page/fb-login';
@@ -12,6 +12,7 @@ import {
 	FormControl
 } from 'react-bootstrap';
 
+import '../../../../App.scss';
 
 const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
 

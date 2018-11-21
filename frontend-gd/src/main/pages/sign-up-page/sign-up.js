@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import '../../App.scss';
+import '../../../App.scss';
+
 import {Link} from 'react-router-dom';
 import {
 	Row,
@@ -7,7 +8,7 @@ import {
 	FormGroup,
 	FormControl
 } from 'react-bootstrap';
-import RegistrationStore from './registration-store';
+import RegistrationStore from '../tools/registration-store';
 
 class SignUp extends Component {
     constructor(props) {

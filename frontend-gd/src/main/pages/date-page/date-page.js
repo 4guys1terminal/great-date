@@ -12,7 +12,8 @@ import { Button } from 'react-bootstrap';
 
 // Component Specfic Imports
 import DateController from '../../controllers/DateController';
-import DateComponent from '../../components/date-component.js';
+import DateComponent from '../../modules/date-component';
+
 
 // Styles
 import '../../../App.scss';
