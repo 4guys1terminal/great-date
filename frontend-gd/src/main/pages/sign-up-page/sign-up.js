@@ -8,7 +8,7 @@ import {
 	FormGroup,
 	FormControl
 } from 'react-bootstrap';
-import RegistrationStore from '../tools/registration-store';
+import RegistrationStore from '../../tools/registration-store';
 
 class SignUp extends Component {
     constructor(props) {

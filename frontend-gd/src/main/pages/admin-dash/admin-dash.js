@@ -7,7 +7,7 @@ import fetches from '../../tools/fetch.js';
 
 // Modules && General Components
 import { CardHeader } from 'reactstrap';
-import TableModule from '../../components/table-module/TableModule';
+import TableModule from '../../modules/table-module/table-module';
 
 // Component Specfic Imports
 import DateController from '../../controllers/DateController';

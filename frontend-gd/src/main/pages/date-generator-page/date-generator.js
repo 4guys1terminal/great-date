@@ -6,15 +6,15 @@ import { Link } from 'react-router-dom';
 import variables from '../../tools/variables';
 
 // Modules && General Components
-import NavbarBootstrap from '../../components/navbar-bootstrap';
-import LoggedInNav from '../../components/logged-in-navbar';
+import NavbarBootstrap from '../../modules/nav-bar/navbar-bootstrap';
+import LoggedInNav from '../../modules/nav-bar/logged-in-navbar';
 import { Col, FormGroup, Row, Checkbox } from 'react-bootstrap';
-import Grid from '../../components/grid';
+import Grid from '../../modules/grid';
 
 // Component Specfic Imports
 import DateController from '../../controllers/DateController';
 import TagController from '../../controllers/TagController';
-import DateComponent from '../../components/date-component';
+import DateComponent from '../../modules/date-component/';
 
 // Styles
 import '../../../App.scss';

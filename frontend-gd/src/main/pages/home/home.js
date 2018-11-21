@@ -7,12 +7,12 @@ import variables from '../../tools/variables';
 import DateController from '../../controllers/DateController';
 
 // Modules && General Components
-import LoggedInNav from '../../components/logged-in-navbar';
-import NavbarBootstrap from '../../components/navbar-bootstrap';
+import LoggedInNav from '../../modules/nav-bar/logged-in-navbar';
+import NavbarBootstrap from '../../modules//nav-bar/navbar-bootstrap';
 import Grid from "../../modules/grid/";
 
 // Component Specfic Imports
-import Title from '../../components/title';
+import Title from './components/title';
 
 // Styles
 import '../../../App.scss';

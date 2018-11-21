@@ -11,10 +11,10 @@ import SignUpPage from './main/pages/sign-up-page/sign-up-page';
 import BrowseDatesPage from './main/pages/browse-dates-page/browse-dates-page';
 import DatePage from './main/pages/date-page';
 import NewDatePage from './main/pages/new-date-page/new-date-page';
-import NewDateSuccess from './main/pages/new-date-success/new-date-success';
-import DateGeneratorPage from './main/pages/date-generator/date-generator';
-import CreateDateRedirect from './main/pages/create-date-redirect/create-date-redirect';
-import AdminLoginPage from './main/pages/admin-login';
+import NewDateSuccess from './main/pages/new-date-page/components/new-date-success/new-date-success';
+import DateGeneratorPage from './main/pages/date-generator-page/date-generator';
+import CreateDateRedirect from './main/pages/log-in-page/create-date-redirect/create-date-redirect';
+// import AdminLoginPage from './main/pages/admin-login';
 import AdminDash from './main/pages/admin-dash'
 
 import ScrollToTop from './main/tools/scrollToTop.js';
@@ -57,7 +57,7 @@ class App extends Component {
 
 					<Route path='/create-date-redirect' component={CreateDateRedirect}/>
 
-					<Route path='/admin-login' component={AdminLoginPage}/>
+					{/* <Route path='/admin-login' component={AdminLoginPage}/> */}
 					<Route path='/admin-dash' component={AdminDash}/>
 					</ScrollToTop>
 				</Switch>

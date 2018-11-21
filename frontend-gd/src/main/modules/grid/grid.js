@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../../../App.scss';
-import DatePreview from './date-preview';
+import DatePreview from '../date-preview/date-preview';
 import imageFactory from '../../tools/imgSrc.js';
 // Styles
 // Documentation/Notes

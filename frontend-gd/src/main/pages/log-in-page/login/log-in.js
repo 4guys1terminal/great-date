@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
-import FBlogin from '../pages/log-in-page/fb-login';
-import GoogleLog from '../pages/log-in-page/google-login';
+import FBlogin from '../fb-login';
+import GoogleLog from '../google-login';
 import {
 	Row,
 	Col,

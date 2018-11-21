@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 // Globals
 // Modules && General Components
 // Component Specfic Imports
-import controller from '../../tools/controller'
+import Controller from '../../tools/Controller'
 // Styles
 // Documentation/Notes
 
@@ -20,7 +20,7 @@ class DateComponent extends Component {
     loadData = () => {
         let activity;
 
-        controller.fetchActivity(this.props.id).then((res) => {
+        Controller.fetchActivity(this.props.id).then((res) => {
             activity = res;
 
             if(!activity) {

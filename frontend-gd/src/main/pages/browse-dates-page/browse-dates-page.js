@@ -11,7 +11,7 @@ import TagController from '../../controllers/TagController';
 // Modules && General Components
 import LoggedInNav from '../../modules/nav-bar/logged-in-navbar.js';
 import NavbarBootstrap from '../../modules/nav-bar/navbar-bootstrap.js';
-import Grid from '../../modules/grid.js';
+import Grid from '../../modules/grid';
 
 // Component Specfic Imports
 import Controller from '../../tools/Controller'

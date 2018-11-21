@@ -11,7 +11,7 @@ Alert,
 Checkbox,
 HelpBlock,
 } from 'react-bootstrap';
-import RadioGroup from '../../../components/radio-group.js';
+import RadioGroup from '../../../../modules/radio-group/radio-group';
 import '../../../../../App.scss';
 
 class NewDateForm extends Component {

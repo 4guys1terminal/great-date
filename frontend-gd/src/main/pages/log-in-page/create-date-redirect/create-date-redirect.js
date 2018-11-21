@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import NavbarBootstrap from '../../components/navbar-bootstrap';
+import NavbarBootstrap from '../../../modules/nav-bar/navbar-bootstrap';
 
-import '../../../App.scss';
+// import '../../../../App.cscss';
 import './create-date-redirect.scss';
 
 // TODO: this will be a part of the auth flow

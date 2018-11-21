@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 import variables from '../../tools/variables'
 
 // Modules && General Components
-import LoggedInNav from '../../components/logged-in-navbar';
-import NavbarBootstrap from '../../components/navbar-bootstrap.js';
+import LoggedInNav from '../../modules/nav-bar/logged-in-navbar';
+import NavbarBootstrap from '../../modules//nav-bar/navbar-bootstrap';
 import { Button } from 'react-bootstrap';
 
 // Component Specfic Imports

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import variables from '../../tools/variables'
 
-import LogIn from '../../components/log-in';
-import NavbarBootstrap from '../../modules/NavBar/navbar-bootstrap';
+import LogIn from './login/log-in';
+import NavbarBootstrap from '../../modules//nav-bar/navbar-bootstrap';
 
 import '../../../App.scss';
 

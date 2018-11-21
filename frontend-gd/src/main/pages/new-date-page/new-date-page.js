@@ -7,11 +7,11 @@ import variables from '../../tools/variables';
 import Controller from '../../tools/Controller';
 
 // Modules && General Components
-import LoggedInNav from '../../components/logged-in-navbar';
-import NavbarBootstrap from '../../components/navbar-bootstrap';
+import LoggedInNav from '../../modules/nav-bar/logged-in-navbar';
+import NavbarBootstrap from '../../modules//nav-bar/navbar-bootstrap';
 
 // Component Specfic Imports
-import NewDateForm from './NewDateForm';
+import NewDateForm from './components/new-date-form'
 
 // Styles
 import '../../../App.scss';

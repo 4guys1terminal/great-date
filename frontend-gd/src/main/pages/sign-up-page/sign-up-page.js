@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 // Globals
 import variables from '../../tools/variables';
-import UserController from '../../controllers/UserController';
+import Controller from '../../tools/Controller';
 
 // Modules && General Components
 import NavbarBootstrap from '../../modules/nav-bar/navbar-bootstrap.js';
@@ -33,7 +33,7 @@ class SignUpPage extends Component {
 	}
 
 	componentDidMount() {
-		UserController.fetchAllUsers()
+		Controller.fetchAllUsers()
 			.then((res) => {
 				this.setState({ users: res.users });
 			})
@@ -41,7 +41,7 @@ class SignUpPage extends Component {
 	}
 
 	handleNewUser(params) {
-		UserController.createUser(params)
+		Controller.createUser(params)
 			.then((res) => {
 				if (res.errors) {
 					this.setState({

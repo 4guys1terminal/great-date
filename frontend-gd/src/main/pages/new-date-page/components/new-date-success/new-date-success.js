@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import variables from '../../tools/variables';
+import variables from '../../../../tools/variables';
 
 import '../../../../../App.scss'
 
