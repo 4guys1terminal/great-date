@@ -3,7 +3,7 @@ import FacebookAuth from 'react-facebook-auth';
 import { Redirect } from 'react-router-dom';
 
 const STYLE = {
-marginLeft: 5
+	marginLeft: 5
 }
 
 const MyFacebookButton = ({ onClick }) => (
@@ -20,42 +20,37 @@ class FBlogin extends Component {
 			authorized: false
 		}
 	}
-/**
- * If there is a response, set the state to authorized and set
- * name to facebook name in local storage
- */
-render(){
-	const authenticate = (res) => {
-		// console.log(res);
+	/**
+	 * If there is a response, set the state to authorized and set
+	 * name to facebook name in local storage
+	 */
+	render(){
+		//NOTE: work on looking at the FB response object to create an actual user in the DB
+		const authenticate = (res) => {
 			if (res) {
-			this.setState({ authorized: true, username: res.name })
-		}
-	};
-	const { authorized, username } = this.state
-	// const check = username.length
-	// console.log('authorized?', check)
+				this.setState({ authorized: true, username: res.name })
+			}
+		};
+		const { authorized, username } = this.state;
 
-	return(
-	<div>
-	<FacebookAuth
-		appId="1761739337205998"
-		callback={authenticate}
-		component={MyFacebookButton}
-	/>
-
-	{
-		authorized
-			? <Redirect to={"/"}/>
-			: null
+		return(
+			<div>
+				<FacebookAuth
+					appId="1761739337205998"
+					callback={authenticate}
+					component={MyFacebookButton}
+				/>
+				{authorized
+					? <Redirect to={"/"}/>
+					: null
+				}
+				{authorized
+					? localStorage.setItem('name', username)
+					: null
+				}
+			</div>
+		)
 	}
-	{
-		authorized
-			? localStorage.setItem('name', username)
-			: null
-	}
-	</div>
-	)
-}
 }
 
 export default FBlogin

@@ -1,11 +1,22 @@
+// React Imports
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+
+// Globals
 import variables from '../../tools/variables';
-import NavbarBootstrap from '../../components/navbar-bootstrap'
-import SignUp from '../../components/sign-up';
+import UserController from '../../controllers/UserController';
+
+// Modules && General Components
+import NavbarBootstrap from '../../modules/nav-bar/navbar-bootstrap.js';
+
+// Component Specfic Imports
+import SignUp from './sign-up';
+
+// Styles
 import '../../../App.scss';
 
-const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
+// Documentation/Notes
+
 
 //TODO: add USER controller and export all user related API calls
 class SignUpPage extends Component {
@@ -17,13 +28,12 @@ class SignUpPage extends Component {
 			newUserSuccess: false,
 			email: ''
 		};
+
+		this.handleNewUser = this.handleNewUser.bind(this)
 	}
 
-	componentWillMount() {
-		fetch(`${API}/api/users`)
-			.then((raw) => {
-				return raw.json();
-			})
+	componentDidMount() {
+		UserController.fetchAllUsers()
 			.then((res) => {
 				this.setState({ users: res.users });
 			})
@@ -31,34 +41,20 @@ class SignUpPage extends Component {
 	}
 
 	handleNewUser(params) {
-		fetch(`${API}/api/users`, {
-			body: JSON.stringify(params),
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			method: "POST"
-		})
-		.then(raw => raw.json())
-		.then((res) => {
-			if (res.errors) {
-				this.setState({
-					errors: res.errors
-				})
-				console.log("errors", this.state.errors.validations)
-			} else {
-				const { users } = this.state
-
-				users.push(res.user)
-
-				this.setState({
-					users: users,
-					errors: ["this has been reset"],
-					newUserSuccess: true,
-					email: res.user.email
-				})
-			}
-		})
-		.catch(e => console.log(e))
+		UserController.createUser(params)
+			.then((res) => {
+				if (res.errors) {
+					this.setState({
+						errors: res.errors
+					})
+					console.log("errors", this.state.errors.validations);
+				} else {
+					localStorage.setItem('name', this.state.email);
+					// NOTE: see if this works
+					this.props.history.push('/')
+				}
+			})
+			.catch(e => console.log(e));
 	}
 
 	render() {
@@ -66,18 +62,9 @@ class SignUpPage extends Component {
 			<div style={variables.backgroundStyle}>
 				<NavbarBootstrap />
 				<SignUp
-					onSubmit={this.handleNewUser.bind(this)}
+					onSubmit={this.handleNewUser}
 					errors={this.state.errors}
 				/>
-					{this.state.newUserSuccess
-						? <Redirect to={"/"} />
-						: null
-					}
-
-					{this.state.newUserSuccess
-						? localStorage.setItem('name', this.state.email)
-						: null
-					}
 			</div>
 		);
 	}

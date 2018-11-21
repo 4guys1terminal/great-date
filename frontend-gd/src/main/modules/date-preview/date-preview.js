@@ -12,8 +12,8 @@ import {
 import { Link } from 'react-router-dom';
 // Component Specfic Imports
 // Styles
-import '../../App.scss';
 // Documentation/Notes
+import '../../../App.scss';
 
 class DatePreview extends Component {
     render() {
@@ -42,7 +42,7 @@ class DatePreview extends Component {
                 </li>
 
             </div>
-        ;
+        )
     }
 }
 

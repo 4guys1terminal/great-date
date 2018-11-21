@@ -5,15 +5,18 @@ import {Col, FormGroup, Checkbox, Row,} from 'react-bootstrap'
 
 // Globals
 import variables from '../../tools/variables';
+import DateController from '../../controllers/DateController';
+import TagController from '../../controllers/TagController';
 
 // Modules && General Components
-import LoggedInNav from '../../components/logged-in-navbar.js';
-import NavbarBootstrap from '../../components/navbar-bootstrap.js';
-import Grid from '../../components/grid.js';
+import LoggedInNav from '../../modules/nav-bar/logged-in-navbar.js';
+import NavbarBootstrap from '../../modules/nav-bar/navbar-bootstrap.js';
+import Grid from '../../modules/grid.js';
 
 // Component Specfic Imports
-import TagController from '../../controllers/TagController'
+import Controller from '../../tools/Controller'
 // Styles
+import './browse-dates-page.scss'
 // Documentation/Notes
 
 
@@ -41,7 +44,7 @@ class BrowseDatesPage extends Component {
         let tags;
         let approvedActivities;
 
-        TagController.fetchTags().then((res) => {
+        Controller.fetchTags().then((res) => {
             tags = res;
 
             if (!tags) {
@@ -50,7 +53,7 @@ class BrowseDatesPage extends Component {
 
         }).catch(e => console.log(e))
 
-        TagController.fetchApprovedActivities().then((res) => {
+        Controller.fetchApprovedActivities().then((res) => {
             approvedActivities = res;
 
             if (!approvedActivities) {
@@ -105,14 +108,16 @@ class BrowseDatesPage extends Component {
     }
 
     createExclusive = () => {
-        const { exclusiveActivities } = this.state
+        const { exclusiveActivities } = this.state;
 
         if (exclusiveActivities.length === 0) {
-            return <h4>No dates exactly matched your search! Please pick different options and try again.</h4>
+            return (
+				<h4>No dates exactly matched your search! Please pick different options and try again.</h4>
+			)
         } else {
-            return (<Grid
-                    activities={exclusiveActivities}
-                />)
+            return (
+				<Grid activities={exclusiveActivities}/>
+			)
         }
     }
 
@@ -162,7 +167,7 @@ class BrowseDatesPage extends Component {
     // }
 
     handleSubmit() {
-        const {form} = this.state
+        const {form} = this.state;
 
         fetch(`${`API`}/api/browse`, {
             method: "POST", //specifying our correct endpoint in the server

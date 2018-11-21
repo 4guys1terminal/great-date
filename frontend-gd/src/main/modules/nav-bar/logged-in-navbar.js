@@ -1,17 +1,8 @@
-// React Imports
-import React, {Component} from 'react';
-// Globals
-// Modules && General Components
-import {
-    Navbar, 
-    Nav, 
-    NavItem
-} from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
-// Component Specfic Imports
-// Styles
-import '../../App.scss';
-// Documentation/Notes
+import React, { Component } from 'react';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap'
+import '../../../App.scss';
+
 
 class Navigation extends Component {
     signOut() {
@@ -67,7 +58,7 @@ class Navigation extends Component {
                                     Sign Out
                                 </NavItem>
                             </LinkContainer>
-                            
+
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

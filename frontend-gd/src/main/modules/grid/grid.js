@@ -1,12 +1,8 @@
-// React Imports
-import React, { Component } from 'react';
-// Globals
-// Modules && General Components
-// Component Specfic Imports
+import React, {Component} from 'react';
+import '../../../App.scss';
 import DatePreview from './date-preview';
 import imageFactory from '../../tools/imgSrc.js';
 // Styles
-import '../../App.scss';
 // Documentation/Notes
 
 
