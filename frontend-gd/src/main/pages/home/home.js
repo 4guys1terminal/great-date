@@ -22,18 +22,18 @@ import '../../../App.scss';
 
 
 class Home extends Component {
-    constructor(props) {
+	constructor(props) {
 		super(props);
+		this.state = {
+			activities: []
+		};
+	}
 
-        this.state = {
-            activities: [],
-            tags: []
-        }
-    }
-
-    componentDidMount() {
+	componentDidMount() {
+		console.log("CDM");
+		
 		Controller.fetchApprovedActivities()
-			.then((res) => {
+			.then(res => {
 				const { approvedActivities } = res;
 				let limitedActivities = [];
 
@@ -47,7 +47,7 @@ class Home extends Component {
 					}
 
 					this.setState({
-						approvedActivities: limitedActivities
+						activities: limitedActivities
 					})
 				} else {
 					this.setState({
@@ -83,33 +83,34 @@ class Home extends Component {
 
 				<div style={variables.backgroundTexture}>
 					<br/>
-				<div className="instContainer">
-					<div className="instGrid">
-						<div className="instCell hvr-grow-shadow">
-							<div className="instText">
-								<h2>Step 1</h2>
-								<h3>
-									Set your ideal date preferences... or get spontaneous and let
-									Great Date decide for you.
-								</h3>
+					<div className="instContainer">
+					
+						<div className="instGrid">
+							<div className="instCell hvr-grow-shadow">
+								<div className="instText">
+									<h2>Step 1</h2>
+									<h3>
+										Set your ideal date preferences... or get spontaneous and let
+										Great Date decide for you.
+									</h3>
+								</div>
 							</div>
-						</div>
 
-						<div className="instCell hvr-grow-shadow">
-							<div className="instText">
-								<h2>Step 2</h2>
-								<h3>Click the shuffle button and...</h3>
+							<div className="instCell hvr-grow-shadow">
+								<div className="instText">
+									<h2>Step 2</h2>
+									<h3>Click the shuffle button and...</h3>
+								</div>
 							</div>
-						</div>
 
-						<div className="instCell hvr-grow-shadow">
-							<div className="instText">
-								<h2>Step 3</h2>
-								<h3>Go have yourself a Great Date!</h3>
+							<div className="instCell hvr-grow-shadow">
+								<div className="instText">
+									<h2>Step 3</h2>
+									<h3>Go have yourself a Great Date!</h3>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
 					<div className="browse-title">
 						<Link to='/browse-dates' id='browse-dates-link' className='browse-title'>Browse Dates</Link>

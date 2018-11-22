@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 // Globals
+import Controller from '../../tools/Controller';
 import variables from '../../tools/variables';
 
 // Modules && General Components
@@ -12,8 +13,6 @@ import { Col, FormGroup, Row, Checkbox } from 'react-bootstrap';
 import Grid from '../../modules/grid';
 
 // Component Specfic Imports
-import DateController from '../../controllers/DateController';
-import TagController from '../../controllers/TagController';
 import DateComponent from '../../modules/date-component/';
 
 // Styles
@@ -22,12 +21,8 @@ import './date-generator.scss';
 
 // Documentation/Notes
 
-
-const API = process.env.NODE_ENV === 'production'
-    ? 'https://the-great-date-app.herokuapp.com'
-    : 'http://localhost:3000'
-
-
+// NOTE: leave this for now, will have to figure out what 'handleDateGenerator' function is actually doing later
+const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000';
 
 class DateGenerator extends Component {
 	constructor(props) {
@@ -44,26 +39,26 @@ class DateGenerator extends Component {
 	}
 
 	componentWillMount() {
-		DateController.fetchApprovedActivities().then((res) => {
-			const {approvedActivities} = res;
-			let limitedActivities = [];
+		Controller.fetchApprovedActivities()
+			.then(res => {
+				const {approvedActivities} = res;
+				let limitedActivities = [];
 
-			if (!approvedActivities) {
-				return;
-			}
-
-			if (approvedActivities > 9) {
-				for (var i = 0; i < 9; i++) {
-					limitedActivities.push(approvedActivities[i]);
+				if (!approvedActivities) {
+					return;
 				}
-				this.setState({activities: limitedActivities});
-			} else {
-				this.setState({activities: approvedActivities});
-			}
-		}).catch(e => console.log(e))
 
+				if (approvedActivities > 9) {
+					for (var i = 0; i < 9; i++) {
+						limitedActivities.push(approvedActivities[i]);
+					}
+					this.setState({activities: limitedActivities});
+				} else {
+					this.setState({activities: approvedActivities});
+				}
+			})
 
-		TagController.fetchTags().then((resp) => {
+		Controller.fetchTags().then((resp) => {
 			const {tags} = resp
 
 			if (!tags) {
@@ -126,7 +121,7 @@ class DateGenerator extends Component {
 
 		if (handleDateGenerator) {
 			handleDateGenerator(form).then((res) => {
-				DateController.fetchActivity(res.randomTag).then((res) => {
+				Controller.fetchActivity(res.randomTag).then((res) => {
 					this.setState({
 						randomTag: res.activity.id,
 						activity: res.activity,

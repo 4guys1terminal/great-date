@@ -17,186 +17,204 @@ import Grid from '../../modules/grid';
 import './browse-dates-page.scss'
 // Documentation/Notes
 
+const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000';
 
 class BrowseDatesPage extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            form: {
-                tags: {}
-            },
-            tags: []
-        }
-    }
+	constructor(props) {
+		super(props)
+		this.state = {
+			form: {
+				tags: {}
+			},
+			tags: [],
+			exclusiveActivities: [],
+			inclusiveActivities: [],
+			browseResp: false
+		}
+	}
 
-    componentDidMount = () => {
-        this.loadData();
-    }
+	componentDidMount = () => {
+		this.loadData();
+	}
 
-    loadData = () => {
-		let tags;
+	loadData = () => {
+		Controller.fetchTags().then(res => {
+			const { tags } = res;
 
-        Controller.fetchTags().then((res) => {
-            tags = res;
+			if (!tags) {
+				return;
+			}
+			
+			this.setState({tags: tags})
+		}).catch(e => console.log(e))
 
-            if (!tags) {
-                return;
-            }
+		Controller.fetchApprovedActivities().then((res) => {
+			const { approvedActivities } = res;
 
-        }).catch(e => console.log(e))
+			if (!approvedActivities) {
+				return;
+			}
 
-        Controller.fetchApprovedActivities().then((res) => {
-            const approvedActivities = res;
+			this.setState({
+				allActivities: approvedActivities,
+			})
+		}).catch(e => console.log(e))
+	}
 
-            if (!approvedActivities) {
-                return;
-            }
+	isUserLoggedIn() {
+		if (typeof localStorage.name === 'undefined') {
+			return <NavbarBootstrap/>;
+		} else {
+			return <LoggedInNav/>;
+		}
+	}
 
-            this.setState({
-                allActivities: approvedActivities,
-                tags: tags
-            })
-        }).catch(e => console.log(e))
-    }
+	renderCreateButton() {
+		if (typeof localStorage.name === 'undefined') {
+			return ( 
+				<div>
+					{
+						<Link to='/create-date-redirect'>
+							<button className="newActivityButton">Create New Date</button>
+						</Link>
+					}
+				</div>
+			)
+		} else {
+			return (
+				<div>
+					{
+						<Link to='/new-activity'>
+							<button className="newActivityButton">Create New Date</button>
+						</Link>
+					}
+				</div>
+			)
+		}
+	}
 
-    isUserLoggedIn() {
-        if (typeof localStorage.name === 'undefined') {
-            return <NavbarBootstrap/>;
-        } else {
-            return <LoggedInNav/>;
-        }
-    }
+	toggleCheckbox = (tagID, e) => {
+		let formCopy = Object.assign({}, this.state.form)
 
-    renderCreateButton() {
-        if (typeof localStorage.name === 'undefined') {
-            return ( 
-                <div>
-                    {
-                        <Link to='/create-date-redirect'>
-                            <button className="newActivityButton">Create New Date</button>
-                        </Link>
-                    }
-                </div>
-            )
-        } else {
-            return (
-                <div>
-                    {
-                        <Link to='/new-activity'>
-                            <button className="newActivityButton">Create New Date</button>
-                        </Link>
-                    }
-                </div>
-            )
-        }
-    }
+		formCopy.tags[tagID] = e.target.checked;
 
-    toggleCheckbox = (tagID, e) => {
-        let formCopy = Object.assign({}, this.state.form)
+		this.setState({form: formCopy})
+	}
 
-        formCopy.tags[tagID] = e.target.checked;
+	createExclusive = () => {
+		const { exclusiveActivities } = this.state;
 
-        this.setState({form: formCopy})
-    }
-
-    createExclusive = () => {
-        const { exclusiveActivities } = this.state;
-
-        if (exclusiveActivities.length === 0) {
-            return (
+		if (exclusiveActivities.length === 0) {
+			return (
 				<h4>No dates exactly matched your search! Please pick different options and try again.</h4>
 			)
-        } else {
-            return (
+		} else {
+			return (
 				<Grid activities={exclusiveActivities}/>
 			)
-        }
-    }
+		}
+	}
 
-    renderGrids = () => {
-        const {browseResp, allActivities, inclusiveActivities,} = this.state
+	renderGrids = () => {
+		const {browseResp, allActivities, inclusiveActivities,} = this.state
 
-        if (browseResp === true) {
-            return (
-              <div>
-                <h3>Dates that exactly match:</h3>
+		if (browseResp === true) {
+			return (
+			<div>
+				<h3>Dates that exactly match:</h3>
+				{this.createExclusive()}
+				<h3>All dates that match your tags:</h3>
+				<Grid activities={inclusiveActivities}/>
+			</div>
+			)
+		} else {
+			return (
+			<div>
+				<Grid activities={allActivities}/>
+			</div>
+			)
+		}
+	}
 
-                {this.createExclusive()}
+	handleChange(e) {
+		const {form} = this.state
+		form[e.target.name] = e.target.value
+		this.setState({form: form})
+	}
 
+	// handleSubmit() {
+	//     const {onSubmit} = this.props
+	//     const {form} = this.state
+	//
+	//     if (onSubmit) {
+	//         onSubmit(form).then((resp) => {
+	//             fetchActivity(resp.randomTag).then((resp) => {
+	//                 this.setState({randomTag: resp.activity.id, activity: resp.activity, randomSuccess: true})
+	//             })
+	//         })
+	//     } else {
+	//         console.log("no onSubmit passed to date-generator");
+	//     }
+	// }
+	createTagCheckbox = (tag) => {
+		return (
+			<Checkbox inline type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
+				<span className="generatorTags"><i className="fas fa-tag"></i>{tag.title}</span>
+			</Checkbox>
+		)
+	}
 
-                <h3>All dates that match your tags:</h3>
-                <Grid activities={inclusiveActivities}/>
-              </div>
-            )
-        } else {
-            return (
-              <div>
-                <Grid activities={allActivities}/>
-              </div>
-            )
-        }
-    }
+	createTagCheckboxes = () => {
+		const {tags} = this.state;
 
-    handleChange(e) {
-        const {form} = this.state
-        form[e.target.name] = e.target.value
-        this.setState({form: form})
-    }
+		if (!tags) {
+			return
+		}
 
-    // handleSubmit() {
-    //     const {onSubmit} = this.props
-    //     const {form} = this.state
-    //
-    //     if (onSubmit) {
-    //         onSubmit(form).then((resp) => {
-    //             fetchActivity(resp.randomTag).then((resp) => {
-    //                 this.setState({randomTag: resp.activity.id, activity: resp.activity, randomSuccess: true})
-    //             })
-    //         })
-    //     } else {
-    //         console.log("no onSubmit passed to date-generator");
-    //     }
-    // }
+		return tags.map((tag) => {
+			return this.createTagCheckbox(tag)
+		})
+	}
 
-    handleSubmit() {
-        const {form} = this.state;
+	handleSubmit() {
+		const {form} = this.state;
 
-        fetch(`${`API`}/api/browse`, {
-            method: "POST", //specifying our correct endpoint in the server
-            headers: { //specifying that we're sending JSON, and want JSON back
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(form)
-        }).then((res) => { //stringifying json for the fetch
-            return res.json()
-        }).then((res) => {
-            const {allActivities} = this.state
-            let exclusiveActivities = []
-            let inclusiveActivities = []
+		fetch(`${API}/api/browse`, {
+			method: "POST", //specifying our correct endpoint in the server
+			headers: { //specifying that we're sending JSON, and want JSON back
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(form)
+		}).then((res) => { //stringifying json for the fetch
+			return res.json()
+		}).then((res) => {
+			const {allActivities} = this.state;
+			let exclusiveActivities = [];
+			let inclusiveActivities = [];
 
-            for (let i = 0; i < allActivities.length; i++) {
-                if (res.exclusiveIds.includes(allActivities[i].id)) {
-                    exclusiveActivities.push(allActivities[i])
-                }
-            }
+			for (let i = 0; i < allActivities.length; i++) {
+				if (res.exclusiveIds.includes(allActivities[i].id)) {
+					exclusiveActivities.push(allActivities[i]);
+				}
+			}
 
-            for (let i = 0; i < allActivities.length; i++) {
-                if (res.inclusiveIds.includes(allActivities[i].id)) {
-                    inclusiveActivities.push(allActivities[i])
-                }
-            }
+			for (let i = 0; i < allActivities.length; i++) {
+				if (res.inclusiveIds.includes(allActivities[i].id)) {
+					inclusiveActivities.push(allActivities[i]);
+				}
+			}
 
-            this.setState({
-                exclusiveActivities: exclusiveActivities,
-                inclusiveActivities: inclusiveActivities,
-                browseResp: true
-            })
-        }).catch((e) => console.log("error:", e))
-    }
+			this.setState({
+				exclusiveActivities: exclusiveActivities,
+				inclusiveActivities: inclusiveActivities,
+				browseResp: true
+			})
+		}).catch((e) => console.log("error:", e))
+	}
 
-    render() {
-        const { tags } = this.state;
-        return (
+	render() {
+		console.log('this.state:', this.state);
+		return (
 			<div>
 				<div style={variables.backgroundStyle}>
 
@@ -214,22 +232,7 @@ class BrowseDatesPage extends Component {
 											<br/>
 
 											<div className='checkbox-container'>
-                                                {tags.map((tag, i) => {
-                                                    return(
-                                                        <Checkbox 
-                                                            inline type="checkbox" 
-                                                            key={tag.id} 
-                                                            name={tag.title} 
-                                                            value={tag.id} 
-                                                            onChange={this.toggleCheckbox.bind(this, tag.id)}
-                                                        >
-                                                            <span className="generatorTags">
-                                                                <i className="fas fa-tag"></i>
-                                                                {tag.title}
-                                                            </span>
-                                                        </Checkbox>
-                                                    )
-                                                })}
+												{this.createTagCheckboxes()}
 											</div>
 										</FormGroup>
 									</Col>
