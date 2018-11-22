@@ -18,16 +18,14 @@ class DateComponent extends Component {
     }
 
     loadData = () => {
-        let activity;
-
         Controller.fetchActivity(this.props.id).then((res) => {
-            activity = res;
+            const { activity } = res;
 
             if(!activity) {
               return;
             }
 
-            this.setState({activity: activity});
+            this.setState({activity});
         }).catch(e => console.log('mount catch:', e));
     }
 
@@ -70,8 +68,8 @@ class DateComponent extends Component {
             <div>
                 <div className="date-page">
 
-                    <div className='activityPicDiv'>
-                        <img className="activityPic" src={`${activity.imageName}`} alt="date"/>
+                    <div className='activity-pic-div'>
+                        <img className="activity-pic" src={`${activity.imageName}`} alt="date"/>
                     </div>
 
                     <h3>{activity.title}</h3>

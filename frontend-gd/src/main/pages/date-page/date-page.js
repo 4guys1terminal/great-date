@@ -3,17 +3,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 // Globals
-import variables from '../../tools/variables'
+import variables from '../../tools/variables';
 
 // Modules && General Components
+import { Button } from 'react-bootstrap';
 import LoggedInNav from '../../modules/nav-bar/logged-in-navbar';
 import NavbarBootstrap from '../../modules//nav-bar/navbar-bootstrap';
-import { Button } from 'react-bootstrap';
 
 // Component Specfic Imports
-import DateController from '../../controllers/DateController';
 import DateComponent from '../../modules/date-component';
-
 
 // Styles
 import '../../../App.scss';
@@ -23,22 +21,10 @@ import '../../../App.scss';
 
 class DatePage extends Component {
 	constructor(props) {
-		super(props)
-		this.state = {}
-	}
-
-	componentDidMount() {
-		const { id } = this.props.match.params
-
-		DateController.fetchActivity(id).then((res) => {
-			const { activity } = res
-
-			if(!activity) {
-				return
-			}
-
-			this.setState({activity: activity})
-		}).catch(e => console.log('mount catch:', e))
+		super(props);
+		this.state = {
+			activity: {},
+		};
 	}
 
 	isUserLoggedIn() {
@@ -49,27 +35,13 @@ class DatePage extends Component {
 		}
 	}
 
-	render() {
-		const { activity } = this.state;
-
-
-		if (!activity) {
-			return (
-				<div className="container">
-					<div className="grid">
-						<h1>Loading...</h1>
-					</div>
-				</div>
-			)
-		}
-
+	render() {		
 		return (
 			<div style={variables.backgroundStyle}>
 				<div className='datePageTest'>
 					{this.isUserLoggedIn()}
 
-					<DateComponent
-						id={this.state.activity.id}/>
+					<DateComponent id={this.props.match.params.id}/>
 
 					<Link
 						to='/browse-dates'

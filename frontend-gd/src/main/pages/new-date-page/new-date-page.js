@@ -34,7 +34,8 @@ class NewDate extends Component {
     }
 
 	//TODO: replace all of these with controller calls
-	componentWillMount() {
+	componentDidMount() {
+		console.log('cdm');
 		Controller.fetchAllActivities()
 			.then((resp) => {
 				this.setState({activities: resp.activities})

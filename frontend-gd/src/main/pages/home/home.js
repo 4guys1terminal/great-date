@@ -29,9 +29,7 @@ class Home extends Component {
 		};
 	}
 
-	componentDidMount() {
-		console.log("CDM");
-		
+	componentDidMount() {		
 		Controller.fetchApprovedActivities()
 			.then(res => {
 				const { approvedActivities } = res;
