@@ -84,7 +84,7 @@ class BrowseDatesPage extends Component {
 			return (
 				<div>
 					{
-						<Link to='/new-activity'>
+						<Link to='/new-date'>
 							<button className="newActivityButton">Create New Date</button>
 						</Link>
 					}

@@ -46,7 +46,7 @@ class Navigation extends Component {
                                 </NavItem>
                             </LinkContainer>
 
-                            <LinkContainer to='/new-activity'>
+                            <LinkContainer to='/new-date'>
                                 <NavItem >
                                     Create A Date
                                 </NavItem>

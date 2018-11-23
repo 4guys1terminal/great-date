@@ -37,7 +37,7 @@ constructor(props) {
 
 //Gets our tag and location database
 componentDidMount() {
-	Controller.fetchAllTags()
+	Controller.fetchTags()
 		.then(resp => {
 			this.setState({tagsList: resp.tags})
 		})

@@ -31,6 +31,8 @@ class NewDate extends Component {
             newActivitySuccess: false,
             errors: null
         }
+
+		this.handleNewActivity = this.handleNewActivity.bind(this);
     }
 
 	//TODO: replace all of these with controller calls
@@ -105,7 +107,7 @@ class NewDate extends Component {
 					<h1>Create a Date</h1>
 
 					<NewDateForm
-						onSubmit={this.handleNewActivity.bind(this)}
+						onSubmit={this.handleNewActivity}
 						errors={this.state.errors && this.state.errors.validations}
 					/>
 
