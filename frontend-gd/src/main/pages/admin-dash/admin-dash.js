@@ -9,7 +9,7 @@ import { CardHeader } from 'reactstrap';
 import TableModule from '../../modules/table-module/table-module';
 
 // Component Specfic Imports
-import DateController from '../../controllers/DateController';
+import Controller from '../../tools/Controller';
 
 // Styles
 import './admin-dash.scss';
@@ -21,12 +21,12 @@ export default class AdminDash extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			activities: {}
+			activities: []
 		};
 	}
 
-	componentWillMount() {
-		DateController.fetchAllActivities()
+	componentDidMount() {
+		Controller.fetchAllActivities()
 			.then((res) => {
 				const { activities } = res;
 
@@ -59,7 +59,7 @@ export default class AdminDash extends Component {
 					<h2 className="admin-dash-header">Great Date Submissions</h2>
 				</CardHeader>
 
-				<TableModule activities={this.state.activities}/>
+				<TableModule activities={activities}/>
 			</div>
 		);
 	}

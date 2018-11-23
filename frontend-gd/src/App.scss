@@ -576,15 +576,6 @@ input[type=file] {
     flex-direction: row;
     justify-content: center;
   }
-  .cell {
-    width: calc(50% - 2rem);
-  }
-}
-
-@media screen and (min-width: 1000px) {
-  .cell {
-    width: calc((100% / 3) -2rem);
-  }
 }
 
 /* Float Shadow */
