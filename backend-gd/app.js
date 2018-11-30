@@ -110,6 +110,7 @@ app.get('/api/activities/:id', (req, res) => {
 
 
 // Post route for pulling up all relevant dates by tag
+// NOTE: why in the world is this a post route haha. change to get after checking for any potential issues (naming?)
 app.post('/api/browse', (req, res) => {
 	tags = req.body.tags
 	let tagArr = []
@@ -280,15 +281,15 @@ app.post('/api/activities', (req, res) => {
 	req.getValidationResult().then((validationErrors) => {
 		if (validationErrors.isEmpty()) {
 		// destructures the request data from the front end form
-		const { title, description, location, cost, image_extension } = req.body
+		const { title, description, location, cost, image_extension } = req.body;
 
-		let { image_data } = req.body
+		let { image_data } = req.body;
 
 		// sets up hashed file name
-		let filePrefix = crypto.createHash('md5').update(image_data).digest('hex')
+		let filePrefix = crypto.createHash('md5').update(image_data).digest('hex');
 
 		// creates full file name for the image_database by appending the image extension to the new hashed name
-		let fileName = `${filePrefix}.${image_extension}`
+		let fileName = `${filePrefix}.${image_extension}`;
 
 		// decodes base64 info from front end
 		image_data = new Buffer(image_data.replace(/^data:image\/\w+;base64,/, ""),'base64')
@@ -320,17 +321,17 @@ app.post('/api/activities', (req, res) => {
 			imageName: awsUrl + fileName,
 			status: "pendingApproval",
 		}).then((activity) => {
-			res.status(201)
-			res.json({activity: activity})
+			res.status(201);
+			res.json({activity: activity});
 			// Takes the tag checkbox from our form
-			tags = req.body.tags
-			let tagArr = []
+			tags = req.body.tags;
+			let tagArr = [];
 
 			// Pushes Id of newly made activity and any tag selected to an array to use for our ActivityTag Table
 
 			// NOTE: this is where i'm going to have to make some adjustments to how tags are handled now that they're an array
 			for (var property in tags) {
-				let val = {
+				const val = {
 					ActivityId: activity.id,
 					TagId: property,
 				}
@@ -364,8 +365,6 @@ app.post('/api/activities', (req, res) => {
 app.post('/api/sessions/new', (req, res) => {
 	const email = req.body.email
 	const password = req.body.password
-
-	// console.log(req.body)
 
 	if (email && password) {
 		User.findOne({
@@ -423,7 +422,7 @@ app.get('/api/login', authorization, (req, res) => {
 // });
 
 app.get('/api/user-uploads/:name', (req,res) => {
-res.sendFile(path.resolve(__dirname, './public/user-uploads', req.params.name))
+	res.sendFile(path.resolve(__dirname, './public/user-uploads', req.params.name))
 })
 
 

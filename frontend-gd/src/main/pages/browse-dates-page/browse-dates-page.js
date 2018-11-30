@@ -17,8 +17,6 @@ import Grid from '../../modules/grid';
 import './browse-dates-page.scss'
 // Documentation/Notes
 
-const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000';
-
 class BrowseDatesPage extends Component {
 	constructor(props) {
 		super(props)
@@ -44,9 +42,9 @@ class BrowseDatesPage extends Component {
 			if (!tags) {
 				return;
 			}
-			
+
 			this.setState({tags: tags})
-		}).catch(e => console.log(e))
+		})
 
 		Controller.fetchApprovedActivities().then((res) => {
 			const { approvedActivities } = res;
@@ -58,7 +56,7 @@ class BrowseDatesPage extends Component {
 			this.setState({
 				allActivities: approvedActivities,
 			})
-		}).catch(e => console.log(e))
+		})
 	}
 
 	isUserLoggedIn() {
@@ -71,7 +69,7 @@ class BrowseDatesPage extends Component {
 
 	renderCreateButton() {
 		if (typeof localStorage.name === 'undefined') {
-			return ( 
+			return (
 				<div>
 					{
 						<Link to='/create-date-redirect'>
@@ -116,22 +114,22 @@ class BrowseDatesPage extends Component {
 	}
 
 	renderGrids = () => {
-		const {browseResp, allActivities, inclusiveActivities,} = this.state
+		const {browseResp, allActivities, inclusiveActivities,} = this.state;
 
 		if (browseResp === true) {
 			return (
-			<div>
-				<h3>Dates that exactly match:</h3>
-				{this.createExclusive()}
-				<h3>All dates that match your tags:</h3>
-				<Grid activities={inclusiveActivities}/>
-			</div>
+				<div>
+					<h3>Dates that exactly match:</h3>
+					{this.createExclusive()}
+					<h3>All dates that match your tags:</h3>
+					<Grid activities={inclusiveActivities}/>
+				</div>
 			)
 		} else {
 			return (
-			<div>
-				<Grid activities={allActivities}/>
-			</div>
+				<div>
+					<Grid activities={allActivities}/>
+				</div>
 			)
 		}
 	}
@@ -177,43 +175,33 @@ class BrowseDatesPage extends Component {
 	}
 
 	handleSubmit() {
-		const {form} = this.state;
+		Controller.fetchActivityByTags(this.state.form)
+			.then((res) => {
+				const { allActivities } = this.state;
+				let exclusiveActivities = [];
+				let inclusiveActivities = [];
 
-		fetch(`${API}/api/browse`, {
-			method: "POST", //specifying our correct endpoint in the server
-			headers: { //specifying that we're sending JSON, and want JSON back
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(form)
-		}).then((res) => { //stringifying json for the fetch
-			return res.json()
-		}).then((res) => {
-			const {allActivities} = this.state;
-			let exclusiveActivities = [];
-			let inclusiveActivities = [];
-
-			for (let i = 0; i < allActivities.length; i++) {
-				if (res.exclusiveIds.includes(allActivities[i].id)) {
-					exclusiveActivities.push(allActivities[i]);
+				for (let i = 0; i < allActivities.length; i++) {
+					if (res.exclusiveIds.includes(allActivities[i].id)) {
+						exclusiveActivities.push(allActivities[i]);
+					}
 				}
-			}
 
-			for (let i = 0; i < allActivities.length; i++) {
-				if (res.inclusiveIds.includes(allActivities[i].id)) {
-					inclusiveActivities.push(allActivities[i]);
+				for (let i = 0; i < allActivities.length; i++) {
+					if (res.inclusiveIds.includes(allActivities[i].id)) {
+						inclusiveActivities.push(allActivities[i]);
+					}
 				}
-			}
 
-			this.setState({
-				exclusiveActivities: exclusiveActivities,
-				inclusiveActivities: inclusiveActivities,
-				browseResp: true
+				this.setState({
+					exclusiveActivities,
+					inclusiveActivities,
+					browseResp: true
+				})
 			})
-		}).catch((e) => console.log("error:", e))
 	}
 
 	render() {
-		console.log('this.state:', this.state);
 		return (
 			<div>
 				<div style={variables.backgroundStyle}>

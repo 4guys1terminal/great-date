@@ -24,6 +24,21 @@ import './date-generator.scss';
 // NOTE: leave this for now, will have to figure out what 'handleDateGenerator' function is actually doing later
 const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000';
 
+
+// NOTE: update - still have no clue what's going on or why this is outside the component, but at least it's not below the export now.
+function handleDateGenerator(params) {
+	return fetch(`${API}/api/home`, {
+		method: "POST", //specifying our correct endpoint in the server
+		headers: { //specifying that we're sending JSON, and want JSON back
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(params),
+	}).then((resp) => { //stringifying json for the fetch
+		return resp.json()
+	}).catch(e => console.log("ERROR/api/home", e))
+}
+
+
 class DateGenerator extends Component {
 	constructor(props) {
 		super(props);
@@ -38,10 +53,10 @@ class DateGenerator extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		Controller.fetchApprovedActivities()
 			.then(res => {
-				const {approvedActivities} = res;
+				const { approvedActivities } = res;
 				let limitedActivities = [];
 
 				if (!approvedActivities) {
@@ -212,17 +227,3 @@ class DateGenerator extends Component {
 }
 
 export default DateGenerator;
-
-
-// NOTE: Wtf is this doing down here hahaha
-function handleDateGenerator(params) {
-	return fetch(`${API}/api/home`, {
-		method: "POST", //specifying our correct endpoint in the server
-		headers: { //specifying that we're sending JSON, and want JSON back
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(params),
-	}).then((resp) => { //stringifying json for the fetch
-		return resp.json()
-	}).catch(e => console.log("ERROR/api/home", e))
-}

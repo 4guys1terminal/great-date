@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
-import FBlogin from '../fb-login';
-import GoogleLog from '../google-login';
 import {
 	Row,
 	Col,
@@ -12,9 +9,12 @@ import {
 	FormControl
 } from 'react-bootstrap';
 
-import '../../../../App.scss';
+import Controller from '../../../tools/Controller';
 
-const API = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000'
+import FBlogin from '../fb-login';
+import GoogleLogin from '../google-login';
+
+import '../../../../App.scss';
 
 class Login extends Component {
 	constructor(props) {
@@ -38,43 +38,31 @@ class Login extends Component {
 	*/
 
 	authorize = (e) => {
-		e.preventDefault()
-		const { email, password } = this.state.form
+		e.preventDefault();
+		const { email, password } = this.state.form;
 
-		fetch(`${API}/api/sessions/new` ,
-		{
-			method: "post",
-			headers: {
-				'content-type': 'application/json'
-			},
-			body: JSON.stringify({
-				email: email,
-				password: password
+		Controller.logUserIn({email: email, password: password})
+			.then((data) => {
+				if (data.message === "login success") {
+					this.setState({ authorized: true })
+				} else {
+					this.setState({ valid: false })
+				}
 			})
-		}).then((resp) => resp.json())
-		.then((data) => {
-			console.log("resp:", data);
-
-			if (data.message === "login success") {
-				this.setState({ authorized: true })
-			} else {
-				this.setState({valid: false})
-			}
-		}).catch( (e) => console.log("error:", e))
 	}
 
 	handleChange = (e) => {
-		const { form } = this.state
-		form[e.target.name] = e.target.value.trim() // trims white space (spacebar)
-		// console.log(e.target.value)  un-comment to understand .trim
-		this.setState({ form: form })
+		const { form } = this.state;
+		form[e.target.name] = e.target.value.trim(); // trims white space (spacebar)
+		this.setState({form})
 	}
 
 
 
 
 	render() {
-		const { authorized, form } = this.state
+		const { authorized, form } = this.state;
+
 		const login =
 		(<div className="login-wrapper">
 			<form className="login-form" onSubmit={this.authorize} onChange={this.handleChange.bind(this)}>
@@ -105,7 +93,7 @@ class Login extends Component {
 				<button className="login-btn" type="submit">
 					Log in
 				</button>
-				<GoogleLog />
+				<GoogleLogin />
 
 				<FBlogin />
 
@@ -129,6 +117,7 @@ class Login extends Component {
 		return(
 			<div>
 				<div id="authorization">
+				{/* noooooooo holy fuck this is bad */}
 					{
 						authorized
 							? <Redirect to={"/"}/>

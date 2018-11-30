@@ -17,7 +17,7 @@ class Controller {
 				throw new Error(err);
 			})
 	}
-	
+
 
 	/*
 	DATES
@@ -30,15 +30,30 @@ class Controller {
 	}
 
 	static fetchApprovedActivities() {
-		return request(`/api/approvedActivities`)	
+		return request(`/api/approvedActivities`)
 			.catch(err => {
 				throw new Error(err);
 			})
-		
+
 	}
 
 	static fetchActivity(id) {
 		return request(`/api/activities/${id}`)
+			.catch(err => {
+				throw new Error(err);
+			})
+	}
+
+	static createNewActivity(dateData) {
+		return request('/api/activities', 'POST', dateData)
+			.catch(err => {
+				throw new Error(err);
+			})
+	}
+
+
+	static fetchActivityByTags(form) {
+		return request('/api/browse', 'POST', form)
 			.catch(err => {
 				throw new Error(err);
 			})
@@ -65,7 +80,7 @@ class Controller {
 			})
 	}
 
-	/* 
+	/*
 	Handle Date Generator?
 	*/
 	static handleDateGenerator(params) {
@@ -73,7 +88,14 @@ class Controller {
 			.catch(err => {
 				throw new Error(err)
 			})
-	}
+		}
+
+		static logUserIn(credentials) {
+			return request('/api/sessions/new', 'POST', credentials)
+				.catch(err => {
+					throw new Error(err)
+				})
+		}
 
 }
 
