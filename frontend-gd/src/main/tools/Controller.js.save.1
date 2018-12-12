@@ -1,5 +1,5 @@
-import request from './request.js';
-
+Oimort request from './request.js';
+BBBO
 class Controller {
 	/*
 	USERS
@@ -64,7 +64,7 @@ class Controller {
 	// }
 
 	static updateDateStatus(id, dateStatus) {
-		return request(`/api/activities/status/${id}`, 'PUT', {dateStatus})
+		return request(`/api/activities/status/${id}`, 'PUT', dateStatus)
 			.catch(err => {
 				throw new Error(err);
 			})

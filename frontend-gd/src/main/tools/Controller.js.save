@@ -1,18 +1,17 @@
-import request from './request.js';
-
+Oimport request from './request.js';
+O
 class Controller {
 	/*
 	USERS
 	*/
-	static fetchAllUsers() {
-		return request('/api/users', 'GET')
+	static fetchAllUsers() {		return request('/api/users', 'GET')
 			.catch(err => {
 				throw new Error(err);
 			})
 	}
 
-	static createUser(params) {
-		return request('/api/users', 'POST', params)
+OOA	static createUser(params) {
+OO		return request('/api/users', 'POST', params)
 			.catch(err => {
 				throw new Error(err);
 			})
@@ -64,7 +63,7 @@ class Controller {
 	// }
 
 	static updateDateStatus(id, dateStatus) {
-		return request(`/api/activities/status/${id}`, 'PUT', {dateStatus})
+		return request(`/api/activities/status/${id}`, 'PUT', dateStatus)
 			.catch(err => {
 				throw new Error(err);
 			})

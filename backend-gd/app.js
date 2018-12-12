@@ -112,8 +112,8 @@ app.get('/api/activities/:id', (req, res) => {
 // Post route for pulling up all relevant dates by tag
 // NOTE: why in the world is this a post route haha. change to get after checking for any potential issues (naming?)
 app.post('/api/browse', (req, res) => {
-	tags = req.body.tags
-	let tagArr = []
+	tags = req.body.tags;
+	let tagArr = [];
 
 	for (var property in tags) {
 		tags[property] === true
@@ -201,11 +201,12 @@ app.post('/api/browse', (req, res) => {
 
 
 // route for random date generator
+// NOTE: this route name needs to be changed to something more relevant/descriptive
 app.post('/api/home', (req, res) => {
-	tags = req.body.tags
-	let tagArr = []
-	for (var property in tags) {
+	tags = req.body.tags;
+	let tagArr = [];
 
+	for (var property in tags) {
 		tags[property] === true
 			? tagArr.push(parseInt(property))
 			: ''
@@ -222,9 +223,9 @@ app.post('/api/home', (req, res) => {
 	} else {
 		Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
 		.then(shuffle => {
-			let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId
-			res.status(201)
-			res.json({randomTag: randomTag})
+			let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId;
+			res.status(201);
+			res.json({randomTag: randomTag});
 		})
 		.catch(e => console.log(e))
 	}
@@ -266,9 +267,6 @@ app.post('/api/users', (req, res) => {
 
 // post route for creating activities
 app.post('/api/activities', (req, res) => {
-
-	// console.log("req.body",req.body);
-
 	//sets up validation checks on all submit fields
 	req.checkBody('title', 'is required').notEmpty()
 	req.checkBody('description', 'is required').notEmpty()
@@ -357,7 +355,24 @@ app.post('/api/activities', (req, res) => {
 })
 
 // TODO: route for changing date status's and approval/edit flow
+app.put('/api/activities/status/:id', (req, res) => {
+	const id = parseInt(req.params.id);
+	const status = req.body.dateStatus;
 
+	console.log('req.params.id:', req.params.id);
+	console.log('req.body:', req.body);
+
+	Activity.update({
+		status,
+	}, {
+		where: {
+			id: id
+		}
+	}).then(activity => {
+		res.status(201);
+		res.json({activity});
+	});
+});
 
 
 
