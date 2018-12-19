@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const validator = require('express-validator');
-const crypto = require('crypto')
+const crypto = require('crypto');
 const sequelize = require('sequelize');
 
 // filesystem import & aws for image processing
@@ -21,7 +21,7 @@ const ActivityTag = require('./models').ActivityTag;
 const Location = require('./models').Location;
 
 // Middleware (order matters! run from top to bottom)
-app.use(express.static('public'))
+app.use(express.static('public'));
 app.use(express.static(path.resolve(__dirname, '../frontend-gd/build')));
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
@@ -33,6 +33,7 @@ app.use(cors());
 aws.config.region = 'us-west-1';
 const s3 = new aws.S3();
 const BUCKETNAME = process.env.S3_BUCKET;
+
 
 // authorization token
 const authorization = (req, res, next) => {
@@ -57,6 +58,7 @@ const authorization = (req, res, next) => {
 	}
 }
 
+
 // Home Page
 app.get('/api/home', (req, res) => {
 	res.json({message: 'API example, app running'});
@@ -65,16 +67,17 @@ app.get('/api/home', (req, res) => {
 // All API Gets
 // Displays respective route  w/ raw json from database onto page
 app.get('/api/activities', (req, res) => {
-	Activity.findAll().then(activities => {
-		res.json({activities: activities});
-	});
+	Activity.findAll()
+		.then(activities => {
+			res.json({activities: activities});
+		});
 });
 
 app.get('/api/approvedActivities', (req, res) => {
 	Activity.sequelize.query(
 		`SELECT *
 		FROM "Activities"
-		WHERE status = 'approved';`
+		WHERE status = 0;`
 		, {type: sequelize.QueryTypes.SELECT}
 	).then(approvedActivities => {
 		res.json({approvedActivities})
@@ -127,7 +130,8 @@ app.post('/api/browse', (req, res) => {
 		`SELECT *
 		FROM "Activities"
 		JOIN "ActivityTags"
-		ON "Activities".id="ActivityId";`,
+		ON "Activities".id="ActivityId"
+		WHERE status = 0;`,
 		{type: sequelize.QueryTypes.SELECT}
 		)
 		.then(allActivities => {
@@ -148,6 +152,7 @@ app.post('/api/browse', (req, res) => {
 		.catch(e => console.log(e))
 	} else {
 	// Otherwise, the browse route pulls up all activities that match the chosen tags
+	//TODO: adjust to only query status=0 dates
 		Tags.sequelize.query(`
 			SELECT *
 			FROM "ActivityTags"
@@ -156,10 +161,8 @@ app.post('/api/browse', (req, res) => {
 			HAVING COUNT (distinct "TagId") = (${tagArr.length});`
 			, {type: sequelize.QueryTypes.SELECT})
 		.then(allExclusiveActivities => {
-
 			// Browse Activities Exclusive
-
-			let exclusiveIds = []
+			let exclusiveIds = [];
 
 			for (var i = 0; i < allExclusiveActivities.length; i++) {
 				exclusiveIds.push(allExclusiveActivities[i].ActivityId)
@@ -170,26 +173,26 @@ app.post('/api/browse', (req, res) => {
 			});
 
 			// Browse Activities Inclusive
-
 			Tags.sequelize.query(`
 				SELECT *
 				FROM "Activities"
 				JOIN "ActivityTags"
 				ON "Activities".id="ActivityId"
-				WHERE "TagId" IN (${tagArr});`
+				WHERE "TagId" IN (${tagArr})
+				AND status = 0;`
+				//TODO: adjust to only query status=0 dates
 				, {type: sequelize.QueryTypes.SELECT})
 			.then(allInclusiveActivities => {
-					let inclusiveIds = []
+				let inclusiveIds = []
 
-					for (var i = 0; i < allInclusiveActivities.length; i++) {
-						inclusiveIds.push(allInclusiveActivities[i].ActivityId)
-					}
+				for (var i = 0; i < allInclusiveActivities.length; i++) {
+					inclusiveIds.push(allInclusiveActivities[i].ActivityId)
+				}
 
-					inclusiveIds = inclusiveIds.filter((elem, pos, arr) => {
-							return arr.indexOf(elem) == pos;
-					});
+				inclusiveIds = inclusiveIds.filter((elem, pos, arr) => {
+						return arr.indexOf(elem) == pos;
+				});
 
-				console.log("exclusiveIds",exclusiveIds, "inclusiveIds",inclusiveIds);
 				res.status(201)
 				res.json({exclusiveIds: exclusiveIds,
 						inclusiveIds: inclusiveIds})
@@ -213,16 +216,29 @@ app.post('/api/home', (req, res) => {
 	}
 
 	if (tagArr.length === 0) {
-		Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId";`, {type: sequelize.QueryTypes.SELECT})
-		.then(shuffle => {
-			let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId
-			res.status(201)
-			res.json({randomTag: randomTag})
-		})
+		Tags.sequelize.query(`
+			SELECT *
+			FROM "Activities"
+			JOIN "ActivityTags"
+			ON "Activities".id="ActivityId"
+			WHERE status = 0;`
+			, {type: sequelize.QueryTypes.SELECT}
+		).then(shuffle => {
+				let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId
+				res.status(201)
+				res.json({randomTag: randomTag})
+			})
 		.catch(e => console.log(e))
 	} else {
-		Tags.sequelize.query(`SELECT * FROM "Activities" JOIN "ActivityTags" ON "Activities".id="ActivityId"  WHERE "TagId" IN (${tagArr});`, {type: sequelize.QueryTypes.SELECT})
-		.then(shuffle => {
+		Tags.sequelize.query(`
+			SELECT *
+			FROM "Activities"
+			JOIN "ActivityTags"
+			ON "Activities".id="ActivityId"
+			WHERE "TagId" IN (${tagArr})
+			AND status = 0;`
+			, {type: sequelize.QueryTypes.SELECT}
+		).then(shuffle => {
 			let randomTag = shuffle[Math.floor(Math.random() * shuffle.length)].ActivityId;
 			res.status(201);
 			res.json({randomTag: randomTag});
@@ -264,6 +280,7 @@ app.post('/api/users', (req, res) => {
 		}
 	})
 })
+
 
 // post route for creating activities
 app.post('/api/activities', (req, res) => {
@@ -317,7 +334,7 @@ app.post('/api/activities', (req, res) => {
 			location: location,
 			cost: cost,
 			imageName: awsUrl + fileName,
-			status: "pendingApproval",
+			status: 1,
 		}).then((activity) => {
 			res.status(201);
 			res.json({activity: activity});
@@ -378,8 +395,8 @@ app.put('/api/activities/status/:id', (req, res) => {
 
 // login form
 app.post('/api/sessions/new', (req, res) => {
-	const email = req.body.email
-	const password = req.body.password
+	const email = req.body.email;
+	const password = req.body.password;
 
 	if (email && password) {
 		User.findOne({
@@ -388,21 +405,21 @@ app.post('/api/sessions/new', (req, res) => {
 			}
 		}).then(user => {
 			if (user) {
-				let check = user.veryifyPassword(password)
+				let check = user.veryifyPassword(password);
 				if (check) {
-					res.json({message: 'login success'})
-					user.setAuthToken()
+					res.json({message: 'login success'});
+					user.setAuthToken();
 				} else {
-					res.json({message: 'Password Invalid'})
+					res.json({message: 'Password Invalid'});
 				}
 			} else {
-				res.status(401)
-				res.json({message: 'Password Invalid'})
+				res.status(401);
+				res.json({message: 'Password Invalid'});
 			}
 		})
 	} else {
-		res.status(401)
-		res.json({message: 'Email/Password Required'})
+		res.status(401);
+		res.json({message: 'Email/Password Required'});
 	}
 })
 
@@ -437,7 +454,7 @@ app.get('/api/login', authorization, (req, res) => {
 // });
 
 app.get('/api/user-uploads/:name', (req,res) => {
-	res.sendFile(path.resolve(__dirname, './public/user-uploads', req.params.name))
+	res.sendFile(path.resolve(__dirname, './public/user-uploads', req.params.name));
 })
 
 
@@ -449,4 +466,4 @@ app.get('/api/user-uploads/:name', (req,res) => {
 // });
 
 
-module.exports = app
+module.exports = app;

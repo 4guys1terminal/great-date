@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = (sequelize, DataTypes) => {
 	var Activity = sequelize.define('Activity', {
 		description: DataTypes.TEXT,
@@ -9,8 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 		status: DataTypes.INTEGER,
 	}, {
 		classMethods: {
-			associate: function() {
-			}
+			associate: function() {}
 		}
 	});
 		return Activity;
