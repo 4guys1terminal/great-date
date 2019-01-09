@@ -59,6 +59,17 @@ class Controller {
 			})
 	}
 
+	// static editDate() {
+
+	// }
+
+	static updateDateStatus(id, dateStatus) {
+		return request(`/api/activities/status/${id}`, 'PUT', {dateStatus})
+			.catch(err => {
+				throw new Error(err);
+			})
+	}
+
 
 	/*
 	TAGS
