@@ -9,7 +9,6 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 // Modules && General Components
-import { CardHeader } from 'reactstrap';
 import TableModule from '../../modules/table-module/table-module';
 
 // Component Specfic Imports
