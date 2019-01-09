@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import '../../../App.scss';
 
 import {Link} from 'react-router-dom';
+//TODO:
 import {
 	Row,
 	Col,
 	FormGroup,
 	FormControl
 } from 'react-bootstrap';
+
 import RegistrationStore from '../../tools/registration-store';
 
 class SignUp extends Component {

@@ -1,7 +1,8 @@
 // React Imports
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {Col, FormGroup, Checkbox, Row,} from 'react-bootstrap'
+
+import {Col, FormGroup, Checkbox, Row,} from 'react-bootstrap';
 
 // Globals
 import Controller from '../../tools/Controller'

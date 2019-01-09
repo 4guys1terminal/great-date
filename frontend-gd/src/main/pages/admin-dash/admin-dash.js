@@ -4,6 +4,10 @@ import React, { Component } from 'react';
 // Globals
 import variables from '../../tools/variables';
 
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
 // Modules && General Components
 import { CardHeader } from 'reactstrap';
 import TableModule from '../../modules/table-module/table-module';
@@ -55,10 +59,7 @@ export default class AdminDash extends Component {
 
 		return (
 			<div className="admin-dash" style={variables.backgroundStyle}>
-				<CardHeader>
-					<h2 className="admin-dash-header">Great Date Submissions</h2>
-				</CardHeader>
-
+				<h2 className="admin-dash-header">Great Date Submissions</h2>
 				<TableModule activities={activities}/>
 			</div>
 		);
