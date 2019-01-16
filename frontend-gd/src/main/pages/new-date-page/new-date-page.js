@@ -64,7 +64,6 @@ class NewDate extends Component {
 	handleNewActivity(dateData) {
 		Controller.createNewActivity(dateData)
 			.then((resp) => {
-				console.log('resp:', resp);
 				this.props.history.push({pathname: '/success'});
 			})
 	}

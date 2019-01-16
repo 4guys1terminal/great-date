@@ -1,6 +1,4 @@
 // NOTE: This is a general request function to handle all of our API calls.
-// May need to play with this a little bit to fit our API response structure
-
 
 const API_URL = process.env.NODE_ENV === 'production' ? 'https://the-great-date-app.herokuapp.com' : 'http://localhost:3000';
 // TODO: this is going to have to change at some point, potentially using webpack configs?

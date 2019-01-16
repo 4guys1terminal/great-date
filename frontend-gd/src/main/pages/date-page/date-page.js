@@ -18,7 +18,6 @@ import '../../../App.scss';
 
 // Documentation/Notes
 
-
 class DatePage extends Component {
 	constructor(props) {
 		super(props);
@@ -35,7 +34,7 @@ class DatePage extends Component {
 		}
 	}
 
-	render() {		
+	render() {
 		return (
 			<div style={variables.backgroundStyle}>
 				<div className='datePageTest'>
