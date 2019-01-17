@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DatePreview from '../date-preview/date-preview';
+import DateCard from '../date-card';
 import '../../../App.scss';
 
 
@@ -22,7 +22,7 @@ class Grid extends Component {
                 <div className="grid">
                     {activities.map((activiy) => {
                         return (
-                            <DatePreview
+                            <DateCard
                                 key={activiy.id}
                                 id={activiy.id}
                                 image={activiy.imageName}
