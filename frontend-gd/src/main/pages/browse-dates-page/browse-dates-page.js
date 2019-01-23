@@ -213,8 +213,8 @@ class BrowseDatesPage extends Component {
 
 						<h1>Browse All Dates</h1>
 
-						<div className="createDateDiv">
-							<form className="createDateForm">
+						<div className="new-date-form">
+							<form className="create-date-form">
 								<Row>
 									<Col xs={8}>
 										<FormGroup id='tags-form-group'>

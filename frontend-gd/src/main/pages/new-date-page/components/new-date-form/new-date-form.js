@@ -1,352 +1,319 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import Controller from '../../../../tools/Controller';
+
 import {
-Col,
-ControlLabel,
-FormGroup,
-FormControl,
-Row,
-Alert,
-Checkbox,
-HelpBlock,
-} from 'react-bootstrap';
+	FormControl,
+	FormControlLabel,
+	InputLabel,
+	OutlinedInput,
+	Select,
+	MenuItem,
+	Checkbox,
+	TextField
+} from '@material-ui/core';
+
 import RadioGroup from '../../../../modules/radio-group/radio-group';
+
 import '../../../../../App.scss';
+import './new-date-form.scss';
+
+// TODO: add input validation and user feedback
 
 class NewDateForm extends Component {
-constructor(props) {
-	super(props)
-	this.state = {
-	form: {
-		title: '',
-		description: '',
-		location: '',
-		cost: '',
-		tags: {},
-		tagQty: 0,
-		image_name: '',
-		image_data: '',
-		image_extension: '',
-	},
-	// below: refer to lists pulled from database, as opposed to the above tags and location which are specific to the newly created date
-	locationsList: [],
-	tagsList: [],
-	}
-}
-
-//Gets our tag and location database
-componentDidMount() {
-	Controller.fetchTags()
-		.then(resp => {
-			this.setState({tagsList: resp.tags})
-		})
-
-	Controller.fetchLocations()
-		.then(resp => {
-			this.setState({locationsList: resp.locations})
-		})
-}
-
-handleChange(e) {
-	const {form} = this.state;
-	form[e.target.name] = e.target.value;
-	this.setState({form: form});
-}
-
-handleSubmit(e) {
-	e.preventDefault();
-	const {onSubmit} = this.props;
-	const {form} = this.state;
-
-	// extra processing to create tags quantity int for backend validations
-	let trueTagsArray = Object.values(form.tags);
-	let tagQty = 0;
-
-	for (var i = 0; i < trueTagsArray.length; i++) {
-		if(trueTagsArray[i] === true) {
-			tagQty++;
+	constructor(props) {
+		super(props)
+		this.state = {
+			data: {
+				title: '',
+				description: '',
+				location: '',
+				cost: '',
+				tags: {},
+				tagQty: 0,
+				image_name: '',
+				image_data: '',
+				image_extension: '',
+			},
+			// below: refer to lists pulled from database, as opposed to the above tags and location which are specific to the newly created date
+			locationsList: [],
+			tagsList: []
 		}
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
-	let updatedForm = Object.assign({}, form, {
-		tagQty,
-	})
+	//Gets our tag and location database
+	componentDidMount() {
+		Controller.fetchTags()
+			.then(({tags}) => {
+				this.setState({tagsList: tags})
+			})
 
-	if (onSubmit) {
-		onSubmit(updatedForm);
-	}
-}
-
-// check for errors passed in on props, if yes, then return errors as errorString
-errorsFor(attribute) {
-	var errorString = "";
-
-	if (this.props.errors) {
-		const errors = this.props.errors.filter(error => error.param === attribute);
-
-		if (errors) {
-			errorString = errors.map(error => error.msg).join(", ");
-		}
+		Controller.fetchLocations()
+			.then(({locations}) => {
+				this.setState({locationsList: locations})
+			})
 	}
 
-	//REFACTOR:
-	return errorString === ""
-		? null
-		: errorString
-}
-
-// creates a dropdown option for each location passed in
-createLocation = (location, i) => {
-	return (
-		<option key={i}>
-			{location.name}
-		</option>
-	)
-}
-
-// maps through the locations in database and returns the createLocation fxn, which creates a unique dropdown for each location w/ the relevant key
-createLocations = () => {
-	return this.state.locationsList.map((location, i) => {
-		return this.createLocation(location, i)
-	})
-}
-
-// creates tag checkbox for each tag passed in
-createTagCheckbox = (tag) => {
-	return (
-		<Checkbox
-			inline
-			type="checkbox"
-			key={tag.id}
-			name={tag.title}
-			value={tag.id}
-			onChange={this.toggleCheckbox.bind(this, tag.id)}
-		>
-			<span className="generatorTags">
-				<i className="fas fa-tag"></i>{tag.title}
-			</span>
-		</Checkbox>
-	)
-}
-
-// maps through the tags in database and returns the createTagCheckbox fxn
-createTagCheckboxes = () => {
-	return this.state.tagsList.map((tag) => {
-	return this.createTagCheckbox(tag)
-	})
-}
-
-toggleCheckbox = (tagID, e) => {
-	const {form} = this.state;
-	const {tags} = form;
-
-	tags[tagID] = e.target.checked;
-
-	form.tags = tags;
-
-	this.setState({form: form});
-}
-
-// Image Handling - ask JD w/ questions
-
-// handleClear clears the filesToBeSent and imageFile in state
-// I took the "Clear" functionality out though haha. keep for future needs - JD
-// handleClear(event, index) {
-//   var filesToBeSent = this.state.filesToBeSent;
-//   filesToBeSent.splice(index, 1);
-//
-//   var imageFile = this.state.form.imageFile;
-//   imageFile.splice(index, 1)
-//
-//   this.setState({filesToBeSent, imageFile,});
-// }
-
-// onDrop fxn takes img files from dropzone and then processes them to base64 to be sent to the backend
-onDrop = (acceptedFiles, rejectedFiles) => {
-	const {form} = this.state
-
-	acceptedFiles.forEach(file => {
-	let {name, type,} = file
-
-	// uses split to set type variable (img extension)
-	let image_extension = type.split('/')[1]
-
-	// creates new fileReader for base64 encoding
-	const reader = new FileReader()
-
-	reader.onload = () => {
-		let image_data = reader.result
-
-		this.setState({form: Object.assign({}, form, {
-			image_name: name,
-			image_data: image_data,
-			image_extension: image_extension
-		})})
-	}
-
-	reader.onabort = () => console.log('image reading was aborted')
-	reader.onerror = () => console.log('image reading has failed')
-
-	reader.readAsDataURL(file)
-	})
-}
-
-render() {
-	return (<div className="createDateDiv">
-	<form className="createDateForm" onSubmit={this.handleSubmit.bind(this)}>
-
-		<Row>
-		<Col xs={10}>
-			{
-			this.props.errors && <Alert bsStyle="danger">
-				Please check the form and try again.
-				</Alert>
+	handleChange({target: {name, value}}) {
+		this.setState({
+			data: {
+				...this.state.data,
+				[name]: value
 			}
-		</Col>
-		</Row>
+		})
+	}
 
-		<div className='forms'>
+	handleSubmit(e) {
+		e.preventDefault();
+		const {onSubmit} = this.props;
+		const {data} = this.state;
 
-		{/* Title */}
-		<Row>
-			<Col xs={10}>
-			<FormGroup id="title-form-group" validationState={this.errorsFor('title') && 'error'}>
-				<ControlLabel id="title">Title</ControlLabel>
-				<FormControl placeholder="Date Title" type="text" name="title" value={this.state.form.title} onChange={this.handleChange.bind(this)}/> {this.errorsFor('title') && <HelpBlock id="title-help-block">{this.errorsFor('title')}</HelpBlock>}
+		// extra processing to create tags quantity int for backend validations
+		let trueTagsArray = Object.values(data.tags);
+		let tagQty = 0;
 
-			</FormGroup>
-			</Col>
-		</Row>
+		for (var i = 0; i < trueTagsArray.length; i++) {
+			if(trueTagsArray[i] === true) {
+				tagQty++;
+			}
+		}
 
-		{/* Description */}
-		<Row>
-			<Col xs={10}>
-			<FormGroup id="description-form-group" validationState={this.errorsFor('description') && 'error'}>
-				<ControlLabel id="description">Description</ControlLabel>
-				<FormControl componentClass="textarea" placeholder="Description" type="text" name="description" value={this.state.form.description} onChange={this.handleChange.bind(this)}/> {this.errorsFor('description') && <HelpBlock id="description-help-block">{this.errorsFor('description')}</HelpBlock>}
+		let updatedForm = Object.assign({}, data, {
+			tagQty,
+		})
 
-			</FormGroup>
-			</Col>
-		</Row>
+		if (onSubmit) {
+			onSubmit(updatedForm);
+		}
+	}
 
-		<Row>
-			<Col xs={10}>
-			<FormGroup id="location-form-group" validationState={this.errorsFor('location') && 'error'}>
-				<ControlLabel id="location">Location</ControlLabel>
-				<FormControl componentClass="select" placeholder="select" type="select" name="location" onChange={this.handleChange.bind(this)}>
+	// check for errors passed in on props, if yes, then return errors as errorString
+	errorsFor(attribute) {
+		var errorString = "";
 
-				<option value="location">Location</option>
-				{this.createLocations()}
-				</FormControl>
+		if (this.props.errors) {
+			const errors = this.props.errors.filter(error => error.param === attribute);
 
-				{this.errorsFor('location') && <HelpBlock id="location-help-block">{this.errorsFor('location')}</HelpBlock>}
+			if (errors) {
+				errorString = errors.map(error => error.msg).join(", ");
+			}
+		}
 
-			</FormGroup>
-			</Col>
-		</Row>
-
-		{/* Cost */}
-		<Row>
-			<Col xs={10}>
-			<FormGroup id="cost-form-group" validationState={this.errorsFor('cost') && 'error'}>
-				<ControlLabel id="cost">Average Cost</ControlLabel>
-
-				<br/>
-
-				<RadioGroup name="cost" onChange={this.handleChange.bind(this)} options={[
-					[
-					'0', 'Free',
-					],
-					[
-					'0.33', '$',
-					],
-					[
-					'0.66', '$$',
-					],
-					[
-					'1', '$$$',
-					],
-				]} value={this.state.form.cost}/> {this.errorsFor('cost') && <HelpBlock id="cost-help-block">{this.errorsFor('cost')}</HelpBlock>}
-
-			</FormGroup>
-			</Col>
-		</Row>
-
-		{/* Tags */}
-		<Row>
-			<Col xs={8}>
-
-			<FormGroup id="tags-form-group" validationState={this.errorsFor('tagQty') && 'error'}>
-				<ControlLabel id="tag">Tags</ControlLabel>
-
-			{this.errorsFor('tagQty') && <HelpBlock id="tags-help-block">{this.errorsFor('tagQty')}</HelpBlock>}
-
-				<br/>
-				<div className='checkbox-container'>
-				{this.createTagCheckboxes()}
-				</div>
+		//REFACTOR:
+		return errorString === ""
+			? null
+			: errorString
+	}
 
 
-			</FormGroup>
-			</Col>
-		</Row>
+	// maps through the locations in database and returns the createLocation fxn, which creates a unique dropdown for each location w/ the relevant key
+	createLocations = () => {
+		return this.state.locationsList.map(({name}, i) => {
+			return (
+				<MenuItem value={name} key={i}>
+					{name}
+				</MenuItem>
+			)
+		})
+	}
 
-		{/* Image */}
-		<Row>
-			<Col xs={10}>
-			<FormGroup id="image-form-group" validationState={this.errorsFor('image_data') && 'error'}>
-				<ControlLabel id="image">Image</ControlLabel>
+	// maps through the tags in database and returns the createTagCheckbox fxn
+	createTagCheckboxes = () => {
+		return this.state.tagsList.map(({id, title}) => {
+			return (
+				 <FormControlLabel
+				 	key={id}
+					control={
+						<Checkbox
+							checked={id}
+							onChange={this.toggleCheckbox.bind(this, id)}
+							value={id}
+							color="primary"
+						/>
+					}
+					label={title}
+				/>
+			)
+		})
+	}
+		// <span className="generatorTags">
+		// 	<i className="fas fa-tag"></i>{title}
+		// </span>
 
-				{
-				this.errorsFor('image_data') &&
-				<HelpBlock id="image-help-block">{this.errorsFor('image_data')}</HelpBlock>
+	toggleCheckbox = (tagId, {target: {checked}}) => {
+		this.setState({
+			data: {
+				...this.state.data,
+				tags: {
+					...this.state.data.tags,
+					[tagId]: checked
 				}
+			}
+		})
+	}
 
-				<div className="image-upload-div">
-				<Dropzone className='dropzone' accept='image/*' onDrop={(files) => {
-					this.onDrop(files)
-					}}>
-					<div className='dropzone-text'>
-					<p>Try dropping some image files here, or click me to select files to upload.</p>
-					<br/>
-					<p>By uploading you are agreeing that you either own the image yourself, or are using an image with written permissions to share it.</p>
+	// Image Handling - ask JD w/ questions
+
+	// onDrop fxn takes img files from dropzone and then processes them to base64 to be sent to the backend
+	onDrop = (acceptedFiles, rejectedFiles) => {
+		const { data } = this.state;
+
+		acceptedFiles.forEach(file => {
+			let { name, type } = file;
+
+			// uses split to set type variable (img extension)
+			let image_extension = type.split('/')[1];
+
+			// creates new fileReader for base64 encoding
+			const reader = new FileReader();
+
+			reader.onload = () => {
+				let image_data = reader.result;
+
+				this.setState({data: Object.assign({}, data, {
+					image_name: name,
+					image_data: image_data,
+					image_extension: image_extension
+				})});
+			}
+
+			reader.onabort = () => console.log('image reading was aborted');
+			reader.onerror = () => console.log('image reading has failed');
+
+			reader.readAsDataURL(file);
+		})
+	}
+
+	render() {
+		const { data } = this.state;
+
+		return (
+			<div className="new-date-form">
+				<form
+					className="create-date-form"
+					onSubmit={() => this.handleSubmit()}
+				>
+					<div className='forms'>
+						{/* Title */}
+						<div>
+							<TextField
+								id="title"
+								label="Date Title"
+								margin="normal"
+								variant="outlined"
+								value={data.title}
+								onChange={this.handleChange}
+							/>
+						</div>
+
+						{/* Description */}
+						<div>
+							<TextField
+								id="description"
+								label="Description"
+								margin="normal"
+								variant="outlined"
+								value={data.description}
+								onChange={this.handleChange}
+							/>
+						</div>
+
+						{/* Location */}
+						<div>
+							<FormControl variant="outlined">
+								<InputLabel
+									ref={ref => {
+									this.InputLabelRef = ref;
+									}}
+									htmlFor="location"
+								>
+									Location
+								</InputLabel>
+								<Select
+									value={data.location}
+									onChange={this.handleChange}
+									input={
+										<OutlinedInput
+											labelWidth={this.state.labelWidth}
+											name="age"
+											id="location"
+										/>
+									}
+								>
+									{/* <MenuItem value="">
+									<em>None</em>
+									</MenuItem> */}
+									{this.createLocations()}
+								</Select>
+							</FormControl>
+						</div>
+
+						{/* Cost */}
+						<div>
+							<label id="cost">Average Cost</label>
+							<RadioGroup
+								name="cost"
+								onChange={this.handleChange}
+								options={[
+									['0', 'Free'],
+									['0.33', '$'],
+									['0.66', '$$'],
+									['1', '$$$'],
+								]}
+								value={data.cost}
+							/>
+						</div>
+
+						{/* Tags */}
+						<div>
+							<label id="tag">Tags</label>
+							<div className='checkbox-container'>
+								{this.createTagCheckboxes()}
+							</div>
+						</div>
+
+						{/* Image */}
+						<div>
+							<label id="image">Image</label>
+							<div className="image-upload-div">
+								<Dropzone
+									className='dropzone'
+									accept='image/*'
+									onDrop={files => {
+										this.onDrop(files)
+									}}
+								>
+									<div className='dropzone-text'>
+										<p>Try dropping some image files here, or click me to select files to upload.</p>
+
+										<p>By uploading you are agreeing that you either own the image yourself, or are using an image with written permissions to share it.</p>
+									</div>
+								</Dropzone>
+							</div>
+
+						</div>
+
+						<div>
+							File Preview:
+							{data.image_name !== '' &&
+								<div>
+									<img src={data.image_data} className="image-preview" alt="preview"/>
+									<p>{data.image_name}.{data.image_extension}</p>
+								</div>
+							}
+						</div>
+
+						<button id="submit" onClick={this.handleSubmit}>
+							<span>Submit</span>
+						</button>
 					</div>
-				</Dropzone>
-				</div>
-				<br/>
-
-				<div>
-				File Preview:
-				{
-					this.state.form.image_name !== '' &&
-					<div>
-					{/* <pre>{JSON.stringify(this.state.form.image)}</pre> */}
-					<img src={this.state.form.image_data} className="image-preview" alt="preview"/>
-					<p>{this.state.form.image_name}.{this.state.form.image_extension}</p>
-					<br/>
-					</div>
-				}
-				</div>
-
-			</FormGroup>
-			</Col>
-		</Row>
-
-		<Row>
-			<Col xs={10}>
-			<br/>
-			<button id="submit" onClick={this.handleSubmit.bind(this)}>
-				<span>Submit</span>
-			</button>
-			</Col>
-		</Row>
-
-		</div>
-
-	</form>
-	</div>);
-}
+				</form>
+			</div>
+		);
+	}
 }
 
 export default NewDateForm;

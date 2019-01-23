@@ -174,8 +174,8 @@ class DateGenerator extends Component {
 
 							<br/>
 							<br/>
-							<div className="createDateDiv">
-								<form className="createDateForm">
+							<div className="new-date-form">
+								<form className="create-date-form">
 									<Row>
 										<Col xs={8}>
 											<FormGroup id='tags-form-group'>
