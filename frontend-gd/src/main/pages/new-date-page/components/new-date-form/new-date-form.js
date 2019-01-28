@@ -298,6 +298,7 @@ class NewDateForm extends Component {
 
 						<div>
 							File Preview:
+							{/* hmmm this check vs empty string seems fishy. look into the whole image preview section/process a bit heavier */}
 							{data.image_name !== '' &&
 								<div>
 									<img src={data.image_data} className="image-preview" alt="preview"/>

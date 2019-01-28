@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import '../../../App.scss';
 
 import {Link} from 'react-router-dom';
-//TODO:
+//TODO: remove
 import {
 	Row,
 	Col,
