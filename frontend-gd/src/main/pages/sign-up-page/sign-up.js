@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
-import '../../../App.scss';
-
 import {Link} from 'react-router-dom';
-//TODO: remove
-import {
-	Row,
-	Col,
-	FormGroup,
-	FormControl
-} from 'react-bootstrap';
 
 import RegistrationStore from '../../tools/registration-store';
+
+import {
+	FormControl,
+	TextField
+} from '@material-ui/core';
+
+import '../../../App.scss';
+import "./sign-up.scss";
+
+
 
 class SignUp extends Component {
     constructor(props) {
@@ -62,7 +63,7 @@ class SignUp extends Component {
 
     render() {
         return (
-            <div>
+            <div className="sign-up-component">
                 <div className="signup-wrapper">
                     <form className="signup-form" onSubmit={this.handleSubmit.bind(this)}>
                         <p className="signup-form-title">Great Date</p>
@@ -73,42 +74,58 @@ class SignUp extends Component {
                             </span>
                         </div>
 
-                        <Row className="row row1">
-                            <Col xs={10}>
-                                <FormGroup >
-                                    <FormControl name="firstName" type="text" placeholder="First Name" onChange={this.handleChange.bind(this)} value={this.state.registration.firstName} errors={this.state.errors.firstName}/>
-                                </FormGroup>
-                            </Col>
-                        </Row>
+						<TextField 
+							name="firstName"
+							className="input-field"
+							label="First Name" 
+							type="text" 
+							placeholder="First Name" 
+							onChange={this.handleChange.bind(this)} 
+							value={this.state.registration.firstName} 
+							errors={this.state.errors.firstName}
+						/>
 
-                        <Row className="row">
-                            <Col xs={10}>
-                                <FormGroup>
-                                    <FormControl name="lastName" type="text" placeholder="Last Name" onChange={this.handleChange.bind(this)} value={this.state.registration.lastName} errors={this.state.errors.lastName}/>
-                                </FormGroup>
-                            </Col>
-                        </Row>
+						<TextField 
+							name="lastName" 
+							className="input-field"
+							label="Last Name" 
+							type="text" 
+							placeholder="Last Name" 
+							onChange={this.handleChange.bind(this)} 
+							value={this.state.registration.lastName} 
+							errors={this.state.errors.lastName}
+						/>
 
-                        <Row className="row">
-                            <Col xs={10}>
-                                <FormGroup>
-                                    <FormControl name="email" type="email" placeholder="Email" onChange={this.handleChange.bind(this)} value={this.state.registration.email} errors={this.state.errors.email}/>
-                                </FormGroup>
-                            </Col>
-                        </Row>
+						<TextField 
+							name="email" 
+							className="input-field"
+							label="Email" 
+							type="email" 
+							placeholder="Email" 
+							onChange={this.handleChange.bind(this)} 
+							value={this.state.registration.email} 
+							errors={this.state.errors.email}
+						/>
 
-                        <Row className="row">
-                            <Col xs={10}>
-                                <FormGroup>
-                                    <FormControl name="password" type="password" placeholder="Password" onChange={this.handleChange.bind(this)} value={this.state.registration.password} errors={this.state.errors.password}/>
-                                </FormGroup>
-                            </Col>
-                        </Row>
+			
+						<TextField 
+							name="password" 
+							label="Password" 
+							className="input-field"
+							type="password" 
+							placeholder="Password" 
+							onChange={this.handleChange.bind(this)} 
+							value={this.state.registration.password} 
+							errors={this.state.errors.password}
+						/>
 
-                        <Col xs={10} className="row">
-                            <button onSubmit={this.handleSubmit.bind(this)} id="" type="submit" className="create-account">Create Account</button>
-
-                        </Col>
+						<button 
+							onSubmit={this.handleSubmit.bind(this)} 
+							id="" type="submit" 
+							className="create-account"
+						>
+							Create Account
+						</button>
 
                         <a className="forgot" target="_blank" rel="noopener noreferrer" href="https://termsfeed.com/privacy-policy/fc335ac239bf69e28f95d5e7104179cc">
                             <p className="agree">By signing up, you agree to our
@@ -116,12 +133,15 @@ class SignUp extends Component {
                                 <span className="terms">Terms & Privacy Policy.</span>
                             </p>
                         </a>
-
                     </form>
 
                     <div className="login">
                         <p className="login-text">Have an account?
-                            <Link to='/login-page' className='login-link' id='login-link'>
+                            <Link 
+								to='/login-page' 
+								className='login-link' 
+								id='login-link'
+							>
                               <span> Log In</span>
                             </Link>
                         </p>
