@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+
+// TODO: remove react-bootstrap dependencies
 import { Button , ButtonGroup } from 'react-bootstrap';
 
 //TODO: update

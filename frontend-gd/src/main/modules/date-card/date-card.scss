@@ -1,0 +1,67 @@
+@import 'theme';
+
+.date-card {
+	margin: 1rem;
+	width: 300px;
+
+	.card-image {
+		height: 300px;
+	}
+
+	.card-content {
+		padding: 16px 22px 5px 22px !important;
+		text-align: left;
+
+		// h4, h5 {
+		// 	text-align: left;
+		// }
+
+		.top-content {
+			// text-align: left;
+			min-height: 40px;
+
+			.title-div {
+				display: inline-block;
+				width: 75%;
+			}
+
+			h4 {
+				font-size: 15px;
+				font-weight: bold;
+			}
+
+			.cost-icon {
+				float: right;
+				font-weight: bolder;
+				font-size: 20px;
+				padding-top: 6px;
+				padding-right: 2px;
+			}
+		}
+
+		.location {
+			font-size: 15px;
+			font-style: oblique;
+			margin-top: 5px;
+		}
+
+		.card-actions {
+			margin-top: 16px;
+			padding: 0;
+			padding-bottom: 7px;
+
+			button {
+				padding: 4px 0px;
+			}
+
+			.more-btn {
+				position: absolute;
+				right: 10px;
+			}
+		}
+	}
+
+	a:hover {
+		text-decoration: none;
+	}
+}
