@@ -9,8 +9,8 @@ import variables from '../../tools/variables';
 // Modules && General Components
 import NavbarBootstrap from '../../modules/nav-bar/navbar-bootstrap';
 import LoggedInNav from '../../modules/nav-bar/logged-in-navbar';
-import { Col, FormGroup, Row, Checkbox } from 'react-bootstrap';
 import Grid from '../../modules/grid';
+import { FormControlLabel, Checkbox } from '@material-ui/core'; 
 
 // Component Specfic Imports
 import DateComponent from '../../modules/date-component/';
@@ -84,33 +84,29 @@ class DateGenerator extends Component {
 		}).catch(e => console.log('mount catch:', e))
 	}
 
-	createTagCheckbox = (tag) => {
-		return (
-			<Checkbox
-				inline
-				type="checkbox"
-				key={tag.id}
-				name={tag.title}
-				value={tag.id}
-				onChange={this.toggleCheckbox.bind(this, tag.id)}
-			>
-				<span className="generatorTags">
-					<i className="fas fa-tag"></i>
-				<span className="generatorText">{tag.title}</span></span>
-			</Checkbox>
-		)
-	}
-
 	createTagCheckboxes = () => {
-		const {tags} = this.state
+		const { tags } = this.state;
 
 		if (!tags) {
-			return
+			return;
 		}
 
-		return tags.map((tag) => {
-			return this.createTagCheckbox(tag)
-		})
+		return this.state.tags.map(({id, title}) => {
+			return (
+				 <FormControlLabel
+				 	key={id}
+					control={
+						<Checkbox
+							checked={this.state.data.tags[id]}
+							onChange={this.toggleCheckbox.bind(this, id)}
+							value={id}
+							color="primary"
+						/>
+					}
+					label={title}
+				/>
+			)
+		});
 	}
 
 	toggleCheckbox = (tagID, event) => {
@@ -176,18 +172,18 @@ class DateGenerator extends Component {
 							<br/>
 							<div className="new-date-form">
 								<form className="create-date-form">
-									<Row>
+									{/* <Row>
 										<Col xs={8}>
-											<FormGroup id='tags-form-group'>
+											<FormGroup id='tags-form-group'> */}
 												<br/>
 
 											<div className='checkbox-container'>
 												{this.createTagCheckboxes()}
 											</div>
 
-											</FormGroup>
+											{/* </FormGroup>
 										</Col>
-									</Row>
+									</Row> */}
 								</form>
 
 							</div>
