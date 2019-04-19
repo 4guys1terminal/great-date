@@ -97,7 +97,7 @@ class DateGenerator extends Component {
 				 	key={id}
 					control={
 						<Checkbox
-							checked={this.state.data.tags[id]}
+							checked={this.state.form.tags[id]}
 							onChange={this.toggleCheckbox.bind(this, id)}
 							value={id}
 							color="primary"

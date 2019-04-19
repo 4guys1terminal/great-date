@@ -3,10 +3,7 @@ import {Link} from 'react-router-dom';
 
 import RegistrationStore from '../../tools/registration-store';
 
-import {
-	FormControl,
-	TextField
-} from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 
 import '../../../App.scss';
 import "./sign-up.scss";
