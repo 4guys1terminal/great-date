@@ -13,7 +13,7 @@ import {
 	TextField
 } from '@material-ui/core';
 
-import RadioGroup from '../../../../modules/radio-group/radio-group';
+import RadioGroupModule from '../../../../modules/radio-group/radio-group';
 
 import '../../../../../App.scss';
 import './new-date-form.scss';
@@ -128,7 +128,7 @@ class NewDateForm extends Component {
 				 	key={id}
 					control={
 						<Checkbox
-							checked={id}
+							checked={this.state.data.tags[id]}
 							onChange={this.toggleCheckbox.bind(this, id)}
 							value={id}
 							color="primary"
@@ -139,9 +139,6 @@ class NewDateForm extends Component {
 			)
 		})
 	}
-		// <span className="generatorTags">
-		// 	<i className="fas fa-tag"></i>{title}
-		// </span>
 
 	toggleCheckbox = (tagId, {target: {checked}}) => {
 		this.setState({
@@ -223,7 +220,7 @@ class NewDateForm extends Component {
 
 						{/* Location */}
 						<div>
-							<FormControl variant="outlined">
+							<FormControl className="location-dropdown" variant="outlined">
 								<InputLabel
 									ref={ref => {
 									this.InputLabelRef = ref;
@@ -254,8 +251,9 @@ class NewDateForm extends Component {
 						{/* Cost */}
 						<div>
 							<label id="cost">Average Cost</label>
-							<RadioGroup
+							<RadioGroupModule
 								name="cost"
+								className="cost-radio-group"
 								onChange={this.handleChange}
 								options={[
 									['0', 'Free'],
