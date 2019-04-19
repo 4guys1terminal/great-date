@@ -6,13 +6,11 @@ import { FormControl, FormControlLabel, RadioGroup, Radio } from '@material-ui/c
 class RadioGroupModule extends Component {
 	render() {
 		const {
-			disabled,
 			name,
 			onChange,
 			options,
 			value,
-			className,
-			...props
+			className
 		} = this.props;
 
 		return (
@@ -25,12 +23,13 @@ class RadioGroupModule extends Component {
 					onChange={onChange}
 				>
 					{options.map(option => {
-						console.log("option", option)
-						return <FormControlLabel
-							value={option[0]}
-							control={<Radio />}
-							label={option[1]}
-						/>
+						return (
+							<FormControlLabel
+								value={option[0]}
+								control={<Radio />}
+								label={option[1]}
+							/>
+						)
 					})}
 				</RadioGroup>
 			</FormControl>

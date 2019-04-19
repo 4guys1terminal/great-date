@@ -198,6 +198,7 @@ class NewDateForm extends Component {
 						<div>
 							<TextField
 								id="title"
+								name="title"
 								label="Date Title"
 								margin="normal"
 								variant="outlined"
@@ -210,6 +211,7 @@ class NewDateForm extends Component {
 						<div>
 							<TextField
 								id="description"
+								name="description"
 								label="Description"
 								margin="normal"
 								variant="outlined"
@@ -235,21 +237,19 @@ class NewDateForm extends Component {
 									input={
 										<OutlinedInput
 											labelWidth={this.state.labelWidth}
-											name="age"
+											name="location"
 											id="location"
+											className="location-input"
 										/>
 									}
 								>
-									{/* <MenuItem value="">
-									<em>None</em>
-									</MenuItem> */}
 									{this.createLocations()}
 								</Select>
 							</FormControl>
 						</div>
 
 						{/* Cost */}
-						<div>
+						<div className="cost-section">
 							<label id="cost">Average Cost</label>
 							<RadioGroupModule
 								name="cost"
