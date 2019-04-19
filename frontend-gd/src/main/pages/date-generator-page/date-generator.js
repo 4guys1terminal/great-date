@@ -12,7 +12,7 @@ import LoggedInNav from '../../modules/nav-bar/logged-in-navbar';
 import Grid from '../../modules/grid';
 import { FormControlLabel, Checkbox } from '@material-ui/core'; 
 
-// Component Specfic Imports
+// Component Specific Imports
 import DateComponent from '../../modules/date-component/';
 
 // Styles
