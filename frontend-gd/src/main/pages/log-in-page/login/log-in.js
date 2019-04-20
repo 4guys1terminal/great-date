@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
-import {
-	Row,
-	Col,
-	FormGroup,
-	ControlLabel,
-	FormControl
-} from 'react-bootstrap';
+import { Link, Redirect } from 'react-router-dom';
+
+import { TextField } from "@material-ui/core"
 
 import Controller from '../../../tools/Controller';
 
@@ -15,6 +9,7 @@ import FBlogin from '../fb-login';
 import GoogleLogin from '../google-login';
 
 import '../../../../App.scss';
+import './login.scss';
 
 class Login extends Component {
 	constructor(props) {
@@ -73,22 +68,23 @@ class Login extends Component {
 						{!this.state.valid && <div className="alert alert-danger">Invalid username or password. Please try again</div>}
 					</span>
 				</div>
-				<Row className="row">
-					<Col xs={10}>
-						<FormGroup id="email-form-group">
-							<ControlLabel id="email"></ControlLabel>
-							<FormControl placeholder="Email" type="text" name="email" value={this.state.form.email} onChange={this.handleChange.bind(this)}/>
-						</FormGroup>
-					</Col>
-				</Row>
-				<Row className="row">
-					<Col xs={10}>
-						<FormGroup id="password-form-group">
-							<ControlLabel id="password"></ControlLabel>
-							<FormControl placeholder="Password" type="password" name="password" value={this.state.form.password} onChange={this.handleChange.bind(this)}/>
-						</FormGroup>
-					</Col>
-				</Row>
+				<TextField 
+					placeholder="Email" 
+					type="text" 
+					name="email" 
+					className="input-field"
+					value={this.state.form.email} 
+					onChange={this.handleChange.bind(this)}
+				/>
+		
+				<TextField 
+					placeholder="Password" 
+					type="password" 
+					name="password" 
+					className="input-field"
+					value={this.state.form.password} 
+					onChange={this.handleChange.bind(this)}
+				/>
 
 				<button className="login-btn" type="submit">
 					Log in

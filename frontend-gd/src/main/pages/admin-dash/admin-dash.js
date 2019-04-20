@@ -5,27 +5,15 @@ import React, { Component } from 'react';
 import variables from '../../tools/variables';
 
 // Modules && General Components
-import {
-    Row,
-    Col,
-    Card,
-    CardBody,
-	Table
-} from 'reactstrap';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-
-// Modules && General Components
-import { CardHeader } from 'reactstrap';
 
 // Component Specfic Imports
 import Controller from '../../tools/Controller';
 
 // Styles
 import './admin-dash.scss';
-
-// Documentation/Notes
 
 
 //TODO: btn that lets admin change date approval status
@@ -68,27 +56,10 @@ export default class AdminDash extends Component {
 			.then(() => this.getAllActivities())
 	}
 
-	getTableHeaders() {
-		return [
-			<thead key={"table-header"} className="headers admin-table-body">
-				<tr>
-					<th>Date Title</th>
-					<th>Description</th>
-					<th>Cost</th>
-					<th>Image</th>
-					<th>Created On</th>
-					<th>Status</th>
-					<th>Last Modified</th>
-					<th>Admin Modified</th>
-				</tr>
-			</thead>
-		]
-	}
-
-
 	// TODO: need to come back to this once i have the BE routes and DB fields figured out
 	getTableRows(dateData) {
 		return dateData.map((date) => {
+			console.log('date:', date);
 			return (
 				<tr key={date.id}>
 					<td>{date.title}</td>
@@ -105,16 +76,16 @@ export default class AdminDash extends Component {
 								displayEmpty
 								name="status"
 							>
-								<MenuItem value={variables.approvalStatus["pendingApproval"]}>
-									Pending Approval
-								</MenuItem>
-								<MenuItem value={variables.approvalStatus["approved"]}>
+								<MenuItem value={variables.approvalEnum['approved']}>
 									Approve
 								</MenuItem>
-								<MenuItem value={variables.approvalStatus["pendingReview"]}>
+								<MenuItem value={variables.approvalEnum["pendingApproval"]}>
+									Pending Approval
+								</MenuItem>
+								<MenuItem value={variables.approvalEnum["pendingReview"]}>
 									Needs Review
 								</MenuItem>
-								<MenuItem value={variables.approvalStatus["rejected"]}>
+								<MenuItem value={variables.approvalEnum["rejected"]}>
 									Reject
 								</MenuItem>
 							</Select>
@@ -143,27 +114,26 @@ export default class AdminDash extends Component {
 
 		return (
 			<div className="admin-dash" style={variables.backgroundStyle}>
-				<CardHeader>
-					<h2 className="admin-dash-header">Great Date Submissions</h2>
-				</CardHeader>
+				<h2 className="admin-dash-header">Great Date Submissions</h2>
 
-				<div className="animated fadeIn admin-table">
-					<Row>
-						<Col>
-							<Card>
-								<CardBody>
-									<Table className="admin-" bordered responsive>
-										{this.getTableHeaders()}
+				<table className="admin-table">
+					<thead key="table-header" className="headers admin-table-header">
+						<tr>
+							<th>Date Title</th>
+							<th>Description</th>
+							<th>Cost</th>
+							<th>Image</th>
+							<th>Created On</th>
+							<th>Status</th>
+							<th>Last Modified</th>
+							<th>Admin Modified</th>
+						</tr>
+					</thead>
 
-										<tbody className="admin-table-body">
-											{this.getTableRows(activities)}
-										</tbody>
-									</Table>
-								</CardBody>
-							</Card>
-						</Col>
-					</Row>
-				</div>
+					<tbody className="admin-table-body">
+						{this.getTableRows(activities)}
+					</tbody>
+				</table>
 			</div>
 		);
 	}

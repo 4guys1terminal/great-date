@@ -9,10 +9,16 @@ export default {
 	backgroundTexture: {
 		backgroundImage: 'url(/images/grid_noise.png)'
 	},
-	approvalStatus: {
+	approvalEnum: {
 		approved: 0,
 		pendingApproval: 1,
 		pendingReview: 2,
 		rejected: 3
+	},
+	approvalStatus: {
+		0: "approved",
+		1: "pendingApproval",
+		2: "pendingReview",
+		3: "rejected"
 	}
 };
