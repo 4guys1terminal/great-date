@@ -1,30 +1,41 @@
-// React Imports
 import React, { Component } from 'react';
-// Globals
-// Modules && General Components
-import { Button , ButtonGroup } from 'react-bootstrap';
-// Component Specfic Imports
-// Styles
-// Documentation/Notes
-class RadioGroup extends Component {
+
+import { FormControl, FormControlLabel, RadioGroup, Radio } from '@material-ui/core';
+
+
+class RadioGroupModule extends Component {
 	render() {
-		const { disabled, name, onChange, options, value, ...props } = this.props;
+		const {
+			name,
+			onChange,
+			options,
+			value,
+			className
+		} = this.props;
+
 		return (
-			<ButtonGroup {...props}>
-				{options.map(option =>
-					<Button
-						key={option[0]}
-						bsStyle={option[0] === value ? 'success' : 'default'}
-						children={option[1]}
-						disabled={disabled}
-						name={name}
-						onClick={onChange}
-						value={option[0]}
-					/>
-				)}
-			</ButtonGroup>
+			<FormControl>
+				<RadioGroup
+					aria-label={name}
+					name={name}
+					className={className}
+					value={value}
+					onChange={onChange}
+				>
+					{options.map(option => {
+						return (
+							<FormControlLabel
+								value={option[0]}
+								control={<Radio />}
+								label={option[1]}
+							/>
+						)
+					})}
+				</RadioGroup>
+			</FormControl>
 		)
 	}
 }
 
-export default RadioGroup
+
+export default RadioGroupModule

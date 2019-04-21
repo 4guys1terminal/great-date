@@ -1,0 +1,20 @@
+@import 'theme';
+
+.new-date-form {
+	width: 700px;
+    margin: auto;
+
+
+	input {
+		width: 450px;
+	}
+
+	.location-dropdown div[role="button"] {
+		width: 433px;
+		text-align: left;
+	}
+
+	.cost-section {
+		display: inline-grid;
+	}
+}

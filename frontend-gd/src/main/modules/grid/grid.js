@@ -1,40 +1,34 @@
-import React, { Component } from 'react';
-import DatePreview from '../date-preview/date-preview';
+import React from 'react';
+import DateCard from '../date-card';
 import '../../../App.scss';
 
+const Grid = props => {
+	const { activities } = props;
 
-class Grid extends Component {
-    render() {
-        const { activities } = this.props
+	if(!activities) {
+		return (
+			<div className="container">
+				<div className="grid">
+					<h1 style={style}>Loading...</h1>
+				</div>
+			</div>
+		)
+	}
 
-        if(!activities) {
-            return (
-                <div className="container">
-                    <div className="grid">
-                        <h1 style={style}>Loading...</h1>
-                    </div>
-                </div>
-            )
-        }
-
-        return (
-            <div className="container">
-                <div className="grid">
-                    {activities.map((activiy) => {
-                        return (
-                            <DatePreview
-                                key={activiy.id}
-                                id={activiy.id}
-                                image={activiy.imageName}
-                                title={activiy.title}
-                                description={activiy.description}
-                            />
-                        )
-                    })}
-                </div>
-            </div>
-        )
-    }
+	return (
+		<div className="container">
+			<div className="grid">
+				{activities.map((activity) => {
+					return (
+						<DateCard
+							key={activity.id}
+							activity={activity}
+						/>
+					)
+				})}
+			</div>
+		</div>
+	)
 }
 
 export default Grid;

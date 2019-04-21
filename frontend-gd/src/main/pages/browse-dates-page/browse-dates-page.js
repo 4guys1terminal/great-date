@@ -1,18 +1,18 @@
 // React Imports
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {Col, FormGroup, Checkbox, Row,} from 'react-bootstrap'
 
 // Globals
 import Controller from '../../tools/Controller'
 import variables from '../../tools/variables';
 
 // Modules && General Components
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 import LoggedInNav from '../../modules/nav-bar/logged-in-navbar.js';
 import NavbarBootstrap from '../../modules/nav-bar/navbar-bootstrap.js';
 import Grid from '../../modules/grid';
 
-// Component Specfic Imports
+// Component Specific Imports
 // Styles
 import './browse-dates-page.scss'
 // Documentation/Notes
@@ -154,24 +154,30 @@ class BrowseDatesPage extends Component {
 	//         console.log("no onSubmit passed to date-generator");
 	//     }
 	// }
-	createTagCheckbox = (tag) => {
-		return (
-			<Checkbox inline type="checkbox" key={tag.id} name={tag.title} value={tag.id} onChange={this.toggleCheckbox.bind(this, tag.id)}>
-				<span className="generatorTags"><i className="fas fa-tag"></i>{tag.title}</span>
-			</Checkbox>
-		)
-	}
 
 	createTagCheckboxes = () => {
-		const {tags} = this.state;
+		const { tags } = this.state;
 
 		if (!tags) {
-			return
+			return;
 		}
 
-		return tags.map((tag) => {
-			return this.createTagCheckbox(tag)
-		})
+		return this.state.tags.map(({id, title}) => {
+			return (
+				 <FormControlLabel
+				 	key={id}
+					control={
+						<Checkbox
+							checked={this.state.form.tags[id]}
+							onChange={this.toggleCheckbox.bind(this, id)}
+							value={id}
+							color="primary"
+						/>
+					}
+					label={title}
+				/>
+			)
+		});
 	}
 
 	handleSubmit() {
@@ -212,19 +218,11 @@ class BrowseDatesPage extends Component {
 
 						<h1>Browse All Dates</h1>
 
-						<div className="createDateDiv">
-							<form className="createDateForm">
-								<Row>
-									<Col xs={8}>
-										<FormGroup id='tags-form-group'>
-											<br/>
-
-											<div className='checkbox-container'>
-												{this.createTagCheckboxes()}
-											</div>
-										</FormGroup>
-									</Col>
-								</Row>
+						<div className="new-date-form">
+							<form className="create-date-form">
+								<div className='checkbox-container'>
+									{this.createTagCheckboxes()}
+								</div>
 							</form>
 
 						</div>

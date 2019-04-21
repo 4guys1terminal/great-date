@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import NavbarBootstrap from '../../../modules/nav-bar/navbar-bootstrap';
 
@@ -6,23 +6,21 @@ import NavbarBootstrap from '../../../modules/nav-bar/navbar-bootstrap';
 import './create-date-redirect.scss';
 
 // TODO: this will be a part of the auth flow
-class CreateDateRedirect extends Component {
-	render() {
-		return (
-			<div style={style2}>
+const CreateDateRedirect = props => {
+	return (
+		<div style={style2}>
 
-				<NavbarBootstrap />
+			<NavbarBootstrap />
 
 
-				<h2 style={style}> Whoops! You have to be signed in to do that. </h2>
+			<h2 style={style}> Whoops! You have to be signed in to do that. </h2>
 
-			<Link to='/login-page'>
-				<button className='success-btn'><span>Log In/Sign Up</span></button>
-			</Link>
+		<Link to='/login-page'>
+			<button className='success-btn'><span>Log In/Sign Up</span></button>
+		</Link>
 
-			</div>
-		);
-	}
+		</div>
+	);
 }
 
 export default CreateDateRedirect;

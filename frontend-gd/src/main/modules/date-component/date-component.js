@@ -1,11 +1,5 @@
-// React Imports
 import React, {Component} from 'react';
-// Globals
-// Modules && General Components
-// Component Specfic Imports
 import Controller from '../../tools/Controller'
-// Styles
-// Documentation/Notes
 
 class DateComponent extends Component {
     constructor(props) {

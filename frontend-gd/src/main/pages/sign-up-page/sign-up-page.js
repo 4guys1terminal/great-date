@@ -15,7 +15,7 @@ import SignUp from './sign-up';
 import '../../../App.scss';
 
 // Documentation/Notes
-
+// NOTE: this or the signup.js component seem redundant, we can keep it all on one page. unless someone can think of a need for the signup to be reusable
 
 //TODO: add USER controller and export all user related API calls
 class SignUpPage extends Component {

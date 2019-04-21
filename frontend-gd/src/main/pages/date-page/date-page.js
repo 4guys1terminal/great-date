@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import variables from '../../tools/variables';
 
 // Modules && General Components
-import { Button } from 'react-bootstrap';
+import Button from '@material-ui/core/Button';
 import LoggedInNav from '../../modules/nav-bar/logged-in-navbar';
 import NavbarBootstrap from '../../modules//nav-bar/navbar-bootstrap';
 
@@ -48,9 +48,7 @@ class DatePage extends Component {
 						className='back-button'
 					>
 						<Button
-							className='back-button'
-							bsStyle='primary'
-							bsSize='large'
+							variant="contained" color="primary" size="large"
 						>
 							Back
 						</Button>
