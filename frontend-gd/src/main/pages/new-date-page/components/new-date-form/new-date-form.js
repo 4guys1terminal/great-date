@@ -18,20 +18,20 @@ class NewDateForm extends Component {
 constructor(props) {
 	super(props)
 	this.state = {
-	form: {
-		title: '',
-		description: '',
-		location: '',
-		cost: '',
-		tags: {},
-		tagQty: 0,
-		image_name: '',
-		image_data: '',
-		image_extension: '',
-	},
-	// below: refer to lists pulled from database, as opposed to the above tags and location which are specific to the newly created date
-	locationsList: [],
-	tagsList: [],
+		form: {
+			title: '',
+			description: '',
+			location: '',
+			cost: '',
+			tags: {},
+			tagQty: 0,
+			image_name: '',
+			image_data: '',
+			image_extension: ''
+		},
+		// below: refer to lists pulled from database, as opposed to the above tags and location which are specific to the newly created date
+		locationsList: [],
+		tagsList: []
 	}
 }
 

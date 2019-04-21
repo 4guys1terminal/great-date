@@ -1,7 +1,6 @@
 // React Imports
 import React, { Component } from 'react';
 
-
 // Globals
 import variables from '../../tools/variables';
 import Controller from '../../tools/Controller';
@@ -11,7 +10,7 @@ import LoggedInNav from '../../modules/nav-bar/logged-in-navbar';
 import NavbarBootstrap from '../../modules//nav-bar/navbar-bootstrap';
 
 // Component Specfic Imports
-import NewDateForm from './components/new-date-form'
+import NewDateForm from './components/new-date-form';
 
 // Styles
 import '../../../App.scss';
@@ -21,33 +20,33 @@ import '../../../App.scss';
 
 class NewDate extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             activities: [],
             tags: [],
             locations: [],
             newActivitySuccess: false,
             errors: null
-        }
+        };
 
 		this.handleNewActivity = this.handleNewActivity.bind(this);
     }
 
-	//TODO: replace all of these with controller calls
 	componentDidMount() {
 		Controller.fetchAllActivities()
-			.then((resp) => {
-				this.setState({activities: resp.activities})
+			.then(({activities}) => {
+				this.setState({activities})
 			})
 
 		Controller.fetchTags()
-			.then((resp) => {
-				this.setState({tags: resp.tags})
+			.then(({tags}) => {
+				this.setState({tags})
 			})
 
+		// TODO: take a look at this variable name in the API response
 		Controller.fetchLocations()
-			.then((resp) => {
-				this.setState({locations: resp.tags})
+			.then(({tags}) => {
+				this.setState({locations: tags})
 			})
 	}
 
