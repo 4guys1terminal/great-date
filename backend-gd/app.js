@@ -290,76 +290,76 @@ app.post('/api/activities', (req, res) => {
 	req.checkBody('location', 'is required').notEmpty()
 	req.checkBody('cost', 'is required').notEmpty()
 	req.checkBody('tagQty','are required').isInt({gt:0})
-	req.checkBody('image_data', 'is required').notEmpty()
+	req.checkBody('imageData', 'is required').notEmpty()
 
 	// if there are no errors logged, then it allows the activity to be created
 	req.getValidationResult().then((validationErrors) => {
 		if (validationErrors.isEmpty()) {
 		// destructures the request data from the front end form
-		const { title, description, location, cost, image_extension } = req.body;
+			const { title, description, location, cost, imageExtension } = req.body;
 
-		let { image_data } = req.body;
+			let { imageData } = req.body;
 
-		// sets up hashed file name
-		let filePrefix = crypto.createHash('md5').update(image_data).digest('hex');
+			// sets up hashed file name
+			let filePrefix = crypto.createHash('md5').update(imageData).digest('hex');
 
-		// creates full file name for the image_database by appending the image extension to the new hashed name
-		let fileName = `${filePrefix}.${image_extension}`;
+			// creates full file name for the imageDatabase by appending the image extension to the new hashed name
+			let fileName = `${filePrefix}.${imageExtension}`;
 
-		// decodes base64 info from front end
-		image_data = new Buffer(image_data.replace(/^data:image\/\w+;base64,/, ""),'base64')
+			// decodes base64 info from front end
+			imageData = new Buffer(imageData.replace(/^data:image\/\w+;base64,/, ""),'base64')
 
-		// s3 information for image upload to AWS cloud (uses hashed name (to ensure no data/name duplicate crossover))
-		const s3params = {
-			Bucket: 'great-date',
-			Key: fileName,
-			Body: image_data,
-			ACL: 'public-read',
-			ContentEncoding: 'base64',
-			ContentType: `image/${image_extension}`
-		}
-
-		// uploads to S3 bucket
-		s3.upload(s3params, (err, image_data) => {
-			console.log("data:", image_data);
-			console.log("error:", err);
-		})
-
-		// sets up AWS s3 bucket URL to be saved with the specific activity so that we can display the src url on the front end
-		const awsUrl = 'https://great-date.s3.us-west-1.amazonaws.com/'
-
-		Activity.create({
-			title: title,
-			description: description,
-			location: location,
-			cost: cost,
-			imageName: awsUrl + fileName,
-			status: 1,
-		}).then((activity) => {
-			res.status(201);
-			res.json({activity: activity});
-			// Takes the tag checkbox from our form
-			tags = req.body.tags;
-			let tagArr = [];
-
-			// Pushes Id of newly made activity and any tag selected to an array to use for our ActivityTag Table
-
-			// NOTE: this is where i'm going to have to make some adjustments to how tags are handled now that they're an array
-			for (var property in tags) {
-				const val = {
-					ActivityId: activity.id,
-					TagId: property,
-				}
-				// Checks if a tag is checked or not
-				tags[property] === true
-					? tagArr.push(val)
-					: ''
+			// s3 information for image upload to AWS cloud (uses hashed name (to ensure no data/name duplicate crossover))
+			const s3params = {
+				Bucket: 'great-date',
+				Key: fileName,
+				Body: imageData,
+				ACL: 'public-read',
+				ContentEncoding: 'base64',
+				ContentType: `image/${imageExtension}`
 			}
-			// Takes the array with new ActivityId and selected TagId and pushes them to our join table (ActivityTag)
-			ActivityTag.bulkCreate(tagArr).then(() => {
-				return ActivityTag.findAll();
+
+			// uploads to S3 bucket
+			s3.upload(s3params, (err, imageData) => {
+				console.log("data:", imageData);
+				console.log("error:", err);
 			})
-		})
+
+			// sets up AWS s3 bucket URL to be saved with the specific activity so that we can display the src url on the front end
+			const awsUrl = 'https://great-date.s3.us-west-1.amazonaws.com/'
+
+			Activity.create({
+				title: title,
+				description: description,
+				location: location,
+				cost: cost,
+				imageName: awsUrl + fileName,
+				status: 1,
+			}).then((activity) => {
+				res.status(201);
+				res.json({activity: activity});
+				// Takes the tag checkbox from our form
+				tags = req.body.tags;
+				let tagArr = [];
+
+				// Pushes Id of newly made activity and any tag selected to an array to use for our ActivityTag Table
+
+				// NOTE: this is where i'm going to have to make some adjustments to how tags are handled now that they're an array
+				for (var property in tags) {
+					const val = {
+						ActivityId: activity.id,
+						TagId: property,
+					}
+					// Checks if a tag is checked or not
+					tags[property] === true
+						? tagArr.push(val)
+						: ''
+				}
+				// Takes the array with new ActivityId and selected TagId and pushes them to our join table (ActivityTag)
+				ActivityTag.bulkCreate(tagArr).then(() => {
+					return ActivityTag.findAll();
+				})
+			})
 		} else {
 			res.status(400)
 			res.json({

@@ -8,7 +8,11 @@ class DateComponent extends Component {
     }
 
     componentDidMount = () => {
-        this.loadData();
+		if (this.props.id) {
+			this.loadData();
+		} else {
+			this.setState({ activity: this.props.activity })
+		}
     }
 
     loadData = () => {

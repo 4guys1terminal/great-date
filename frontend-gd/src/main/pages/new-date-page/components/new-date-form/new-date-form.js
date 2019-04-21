@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone';
-import Controller from '../../../../tools/Controller';
+
+import Button from '@material-ui/core/Button';
 
 import {
-	FormControl,
-	FormControlLabel,
-	InputLabel,
-	OutlinedInput,
-	Select,
-	MenuItem,
-	Checkbox,
-	TextField
-} from '@material-ui/core';
+	FormStep1,
+	FormStep2,
+	FormStep3,
+	FormStep4,
+	FormStep5,
+	FormStep6,
+	FormStep7,
+	FormStep8
 
-import RadioGroupModule from '../../../../modules/radio-group/radio-group';
+} from './form-steps';
 
 import '../../../../../App.scss';
 import './new-date-form.scss';
@@ -21,25 +20,6 @@ import './new-date-form.scss';
 // TODO: add input validation and user feedback
 
 class NewDateForm extends Component {
-<<<<<<< HEAD
-constructor(props) {
-	super(props)
-	this.state = {
-		form: {
-			title: '',
-			description: '',
-			location: '',
-			cost: '',
-			tags: {},
-			tagQty: 0,
-			image_name: '',
-			image_data: '',
-			image_extension: ''
-		},
-		// below: refer to lists pulled from database, as opposed to the above tags and location which are specific to the newly created date
-		locationsList: [],
-		tagsList: []
-=======
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -50,32 +30,25 @@ constructor(props) {
 				cost: '',
 				tags: {},
 				tagQty: 0,
-				image_name: '',
-				image_data: '',
-				image_extension: '',
+				imageName: '',
+				imageData: '',
+				imageExtension: '',
 			},
-			// below: refer to lists pulled from database, as opposed to the above tags and location which are specific to the newly created date
-			locationsList: [],
-			tagsList: []
+
+			// Form Functionality
+			currentStep: 1
 		}
 
+		this.totalSteps = 8;
+
 		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this)
->>>>>>> 986b15dfee9ae21dfe6b50824ff492ff9dc83020
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleImageUpload = this.handleImageUpload.bind(this);
+		this.toggleCheckbox = this.toggleCheckbox.bind(this);
+		this.nextStep = this.nextStep.bind(this);
+		this.previousStep = this.previousStep.bind(this);
 	}
 
-	//Gets our tag and location database
-	componentDidMount() {
-		Controller.fetchTags()
-			.then(({tags}) => {
-				this.setState({tagsList: tags})
-			})
-
-		Controller.fetchLocations()
-			.then(({locations}) => {
-				this.setState({locationsList: locations})
-			})
-	}
 
 	handleChange({target: {name, value}}) {
 		this.setState({
@@ -88,8 +61,8 @@ constructor(props) {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		const {onSubmit} = this.props;
-		const {data} = this.state;
+		const { onSubmit } = this.props;
+		const { data } = this.state;
 
 		// extra processing to create tags quantity int for backend validations
 		let trueTagsArray = Object.values(data.tags);
@@ -110,6 +83,62 @@ constructor(props) {
 		}
 	}
 
+	nextStep() {
+		const currentStep = this.state.currentStep;
+		const nextStep = currentStep < this.totalSteps ? currentStep + 1 : currentStep;
+
+		this.setState({
+			currentStep: nextStep
+		})
+	}
+
+	previousStep() {
+		const currentStep = this.state.currentStep;
+		const previousStep = currentStep > 2 ? currentStep - 1 : currentStep;
+
+		this.setState({
+			currentStep: previousStep
+		})
+	}
+
+	get nextButton() {
+		const { currentStep } = this.state;
+
+		if(currentStep < this.totalSteps) {
+			return (
+				<Button
+					variant="contained"
+					color="primary"
+					onClick={this.nextStep}
+				>
+
+					Next
+				</Button>
+			)
+		}
+
+		return null;
+	}
+
+	get previousButton() {
+		const { currentStep } = this.state;
+
+		if(currentStep > 2) {
+			return (
+				<Button
+					variant="contained"
+					color="primary"
+					onClick={this.previousStep}
+				>
+					Back
+				</Button>
+			)
+		}
+
+		return null;
+	}
+
+
 	// check for errors passed in on props, if yes, then return errors as errorString
 	errorsFor(attribute) {
 		var errorString = "";
@@ -129,37 +158,6 @@ constructor(props) {
 	}
 
 
-	// maps through the locations in database and returns the createLocation fxn, which creates a unique dropdown for each location w/ the relevant key
-	createLocations = () => {
-		return this.state.locationsList.map(({name}, i) => {
-			return (
-				<MenuItem value={name} key={i}>
-					{name}
-				</MenuItem>
-			)
-		})
-	}
-
-	// maps through the tags in database and returns the createTagCheckbox fxn
-	createTagCheckboxes = () => {
-		return this.state.tagsList.map(({id, title}) => {
-			return (
-				 <FormControlLabel
-				 	key={id}
-					control={
-						<Checkbox
-							checked={this.state.data.tags[id]}
-							onChange={this.toggleCheckbox.bind(this, id)}
-							value={id}
-							color="primary"
-						/>
-					}
-					label={title}
-				/>
-			)
-		})
-	}
-
 	toggleCheckbox = (tagId, {target: {checked}}) => {
 		this.setState({
 			data: {
@@ -172,36 +170,15 @@ constructor(props) {
 		})
 	}
 
-	// Image Handling - ask JD w/ questions
-
-	// onDrop fxn takes img files from dropzone and then processes them to base64 to be sent to the backend
-	onDrop = (acceptedFiles, rejectedFiles) => {
-		const { data } = this.state;
-
-		acceptedFiles.forEach(file => {
-			let { name, type } = file;
-
-			// uses split to set type variable (img extension)
-			let image_extension = type.split('/')[1];
-
-			// creates new fileReader for base64 encoding
-			const reader = new FileReader();
-
-			reader.onload = () => {
-				let image_data = reader.result;
-
-				this.setState({data: Object.assign({}, data, {
-					image_name: name,
-					image_data: image_data,
-					image_extension: image_extension
-				})});
+	handleImageUpload(name, imageData, imageExtension) {
+		this.setState({
+			data: {
+				...this.state.data,
+				imageName: name,
+				imageData: imageData,
+				imageExtension: imageExtension
 			}
-
-			reader.onabort = () => console.log('image reading was aborted');
-			reader.onerror = () => console.log('image reading has failed');
-
-			reader.readAsDataURL(file);
-		})
+		});
 	}
 
 	render() {
@@ -214,120 +191,58 @@ constructor(props) {
 					onSubmit={() => this.handleSubmit()}
 				>
 					<div className='forms'>
-						{/* Title */}
-						<div>
-							<TextField
-								id="title"
-								name="title"
-								label="Date Title"
-								margin="normal"
-								variant="outlined"
-								value={data.title}
-								onChange={this.handleChange}
-							/>
-						</div>
+						<FormStep1
+							currentStep={this.state.currentStep}
 
-						{/* Description */}
-						<div>
-							<TextField
-								id="description"
-								name="description"
-								label="Description"
-								margin="normal"
-								variant="outlined"
-								value={data.description}
-								onChange={this.handleChange}
-							/>
-						</div>
+						/>
 
-						{/* Location */}
-						<div>
-							<FormControl className="location-dropdown" variant="outlined">
-								<InputLabel
-									ref={ref => {
-									this.InputLabelRef = ref;
-									}}
-									htmlFor="location"
-								>
-									Location
-								</InputLabel>
-								<Select
-									value={data.location}
-									onChange={this.handleChange}
-									input={
-										<OutlinedInput
-											labelWidth={this.state.labelWidth}
-											name="location"
-											id="location"
-											className="location-input"
-										/>
-									}
-								>
-									{this.createLocations()}
-								</Select>
-							</FormControl>
-						</div>
+						<FormStep2
+							currentStep={this.state.currentStep}
+							handleChange={this.handleChange}
+							data={data}
+						/>
 
-						{/* Cost */}
-						<div className="cost-section">
-							<label id="cost">Average Cost</label>
-							<RadioGroupModule
-								name="cost"
-								className="cost-radio-group"
-								onChange={this.handleChange}
-								options={[
-									['0', 'Free'],
-									['0.33', '$'],
-									['0.66', '$$'],
-									['1', '$$$'],
-								]}
-								value={data.cost}
-							/>
-						</div>
+						<FormStep3
+							currentStep={this.state.currentStep}
+							handleChange={this.handleChange}
+							data={data}
+						/>
 
-						{/* Tags */}
-						<div>
-							<label id="tag">Tags</label>
-							<div className='checkbox-container'>
-								{this.createTagCheckboxes()}
-							</div>
-						</div>
+						<FormStep4
+							currentStep={this.state.currentStep}
+							handleChange={this.handleChange}
+							data={data}
+						/>
 
-						{/* Image */}
-						<div>
-							<label id="image">Image</label>
-							<div className="image-upload-div">
-								<Dropzone
-									className='dropzone'
-									accept='image/*'
-									onDrop={files => {
-										this.onDrop(files)
-									}}
-								>
-									<div className='dropzone-text'>
-										<p>Try dropping some image files here, or click me to select files to upload.</p>
+						<FormStep5
+							currentStep={this.state.currentStep}
+							handleChange={this.handleChange}
+							data={data}
+						/>
 
-										<p>By uploading you are agreeing that you either own the image yourself, or are using an image with written permissions to share it.</p>
-									</div>
-								</Dropzone>
-							</div>
+						<FormStep6
+							currentStep={this.state.currentStep}
+							toggleCheckbox={this.toggleCheckbox}
+							data={data}
+						/>
 
-						</div>
+						<FormStep7
+							currentStep={this.state.currentStep}
+							uploadImage={this.handleImageUpload}
+							data={data}
+						/>
 
-						<div>
-							File Preview:
-							{/* hmmm this check vs empty string seems fishy. look into the whole image preview section/process a bit heavier */}
-							{data.image_name !== '' &&
-								<div>
-									<img src={data.image_data} className="image-preview" alt="preview"/>
-									<p>{data.image_name}.{data.image_extension}</p>
-								</div>
-							}
-						</div>
 
-						<button id="submit" onClick={this.handleSubmit}>
-							<span>Submit</span>
-						</button>
+						<FormStep8
+							currentStep={this.state.currentStep}
+							handleSubmit={this.handleSubmit}
+							data={data}
+						/>
+
+
+						{this.previousButton}
+						{this.nextButton}
+
 					</div>
 				</form>
 			</div>

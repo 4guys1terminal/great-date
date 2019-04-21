@@ -22,33 +22,11 @@ class NewDate extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activities: [],
-            tags: [],
-            locations: [],
-            newActivitySuccess: false,
             errors: null
         };
 
 		this.handleNewActivity = this.handleNewActivity.bind(this);
     }
-
-	componentDidMount() {
-		Controller.fetchAllActivities()
-			.then(({activities}) => {
-				this.setState({activities})
-			})
-
-		Controller.fetchTags()
-			.then(({tags}) => {
-				this.setState({tags})
-			})
-
-		// TODO: take a look at this variable name in the API response
-		Controller.fetchLocations()
-			.then(({tags}) => {
-				this.setState({locations: tags})
-			})
-	}
 
 	//TODO: export to top level
     isUserLoggedIn() {

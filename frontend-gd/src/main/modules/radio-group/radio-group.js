@@ -25,6 +25,7 @@ class RadioGroupModule extends Component {
 					{options.map(option => {
 						return (
 							<FormControlLabel
+								key={option[0]}
 								value={option[0]}
 								control={<Radio />}
 								label={option[1]}

@@ -31,31 +31,31 @@ class App extends Component {
 			<Router>
 				<Switch>
 					<ScrollToTop>
-					<Route exact path='/' component={Home}/>
-					<Route path='/home' component={Home}/>
+						<Route exact path='/' component={Home}/>
+						<Route path='/home' component={Home}/>
 
-					<Route path='/activities/:id' component={DatePage}/>
+						<Route path='/activities/:id' component={DatePage}/>
 
-					<Route path='/login-page' component={LogInPage}/>
+						<Route path='/login-page' component={LogInPage}/>
 
-					<Route path='/browse-dates' component={BrowseDatesPage}/>
+						<Route path='/browse-dates' component={BrowseDatesPage}/>
 
-					<Route path='/new-date' component={NewDatePage}/>
+						<Route path='/new-date' component={NewDatePage}/>
 
-					<Route path='/success' component={NewDateSuccess}/>
+						<Route path='/success' component={NewDateSuccess}/>
 
-					<Route exact path="/sign-up-page" render={props => (
-						<div>
-							<SignUpPage errors={this.state.errors && this.state.errors.validations}/>
-						</div>
-					)}/>
+						<Route exact path="/sign-up-page" render={props => (
+							<div>
+								<SignUpPage errors={this.state.errors && this.state.errors.validations}/>
+							</div>
+						)}/>
 
-					<Route path='/date-generator' component={DateGeneratorPage}/>
+						<Route path='/date-generator' component={DateGeneratorPage}/>
 
-					<Route path='/create-date-redirect' component={CreateDateRedirect}/>
+						<Route path='/create-date-redirect' component={CreateDateRedirect}/>
 
-					{/* <Route path='/admin-login' component={AdminLoginPage}/> */}
-					<Route path='/admin-dash' component={AdminDash}/>
+						{/* <Route path='/admin-login' component={AdminLoginPage}/> */}
+						<Route path='/admin-dash' component={AdminDash}/>
 					</ScrollToTop>
 				</Switch>
 			</Router>
