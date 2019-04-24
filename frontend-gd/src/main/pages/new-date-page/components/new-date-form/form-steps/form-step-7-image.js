@@ -54,9 +54,7 @@ class FormStep7 extends Component {
 						<Dropzone
 							className='dropzone'
 							accept='image/*'
-							onDrop={files => {
-								this.onDrop(files)
-							}}
+							onDrop={files => this.onDrop(files)}
 						>
 							<div className='dropzone-text'>
 								<p>Try dropping some image files here, or click me to select files to upload.</p>

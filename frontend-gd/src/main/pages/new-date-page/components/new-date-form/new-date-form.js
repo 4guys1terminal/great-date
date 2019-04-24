@@ -11,7 +11,6 @@ import {
 	FormStep6,
 	FormStep7,
 	FormStep8
-
 } from './form-steps';
 
 import '../../../../../App.scss';
@@ -183,7 +182,7 @@ class NewDateForm extends Component {
 
 	render() {
 		const { data } = this.state;
-
+		console.log('this.state.currentStep:', this.state.currentStep);
 		return (
 			<div className="new-date-form">
 				<form
@@ -193,7 +192,6 @@ class NewDateForm extends Component {
 					<div className='forms'>
 						<FormStep1
 							currentStep={this.state.currentStep}
-
 						/>
 
 						<FormStep2

@@ -17,9 +17,9 @@ class FormStep8 extends Component {
 
 		return (
 			<div >
-				<h2>
+				<h3>
 					Confirm date information
-				</h2>
+				</h3>
 				<h4>
 					Make sure your date looks how you want it to before you submit
 				</h4>
