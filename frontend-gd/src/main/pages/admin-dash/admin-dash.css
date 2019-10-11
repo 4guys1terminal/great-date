@@ -1,0 +1,33 @@
+/* Colors */
+/* Fonts */
+.admin-dash-header {
+  color: white;
+  margin: 0;
+}
+
+.admin-dash {
+  height: 100vh;
+}
+
+.loading-text {
+  color: 'rgb(6, 144, 185)';
+}
+
+.admin-table {
+  width: 100%;
+  margin: auto;
+  padding: 10px 20px;
+}
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.admin-table-body {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.headers {
+  text-align: center;
+}
