@@ -16,7 +16,7 @@
     "express-validator": "^4.3.0",
     "nodemon": "^1.14.12",
     "pg": "6.1.5",
-    "sequelize": "3.30.4",
+    "sequelize": "5.15.1",
     "sequelize-cli": "^3.2.0",
     "uuid": "^3.2.1",
     "yelp-fusion": "^2.0.3"
